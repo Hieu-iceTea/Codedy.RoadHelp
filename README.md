@@ -15,7 +15,7 @@
 
 ## Information
 
-FoodMate by CODEDY team -, FPT Aptech
+FoodMate by CODEDY team - FPT Aptech
 
 The project has been deployed at the link: <b> [http://ars.hieu-icetea.epizy.com](http://ars.hieu-icetea.epizy.com). </b>
 
