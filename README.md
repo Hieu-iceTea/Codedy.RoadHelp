@@ -3,6 +3,7 @@
         <img src="https://raw.githubusercontent.com/Hieu-iceTea/ARS.CODEDY/master/public/img/logo/logo_animation.gif" height="100px">
     </a>
     <h1 align="center">Codedy.RoadHelp</h1>
+    <h3 align="center">Cứu hộ xe & Trợ giúp đi đường</h3>
     <br>
     <p align="center">
         <a href="http://github.com/Hieu-iceTea/Codedy.TechWiz.FoodMate"><img src="https://cdn.iconscout.com/icon/free/png-512/github-153-675523.png" height="25px"></a>
