@@ -13,5 +13,12 @@ public class NoteList extends BaseModel {
 
     @Size(min = 2, max = 64)
     private String description;
-    
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
 }

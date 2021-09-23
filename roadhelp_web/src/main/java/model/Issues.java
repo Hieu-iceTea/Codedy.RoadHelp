@@ -20,4 +20,28 @@ public class Issues extends BaseModel implements Serializable{
     @ManyToOne
     @JoinColumn(name = "issues_detail") //updatable = false, insertable = false
     private IssuesDetail issues_details;
+
+    public String getIssues_detail_id() {
+        return issues_detail_id;
+    }
+
+    public void setIssues_detail_id(String issues_detail_id) {
+        this.issues_detail_id = issues_detail_id;
+    }
+
+    public String getTotal_issue() {
+        return total_issue;
+    }
+
+    public void setTotal_issue(String total_issue) {
+        this.total_issue = total_issue;
+    }
+
+    public IssuesDetail getIssues_details() {
+        return issues_details;
+    }
+
+    public void setIssues_details(IssuesDetail issues_details) {
+        this.issues_details = issues_details;
+    }
 }
