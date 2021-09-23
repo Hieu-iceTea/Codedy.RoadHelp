@@ -1,8 +1,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.codedy.roadhelp">
    <application
-        android:label="roadhelp"
-        android:icon="@mipmap/ic_launcher">
+       android:label="Road Help"
+        android:icon="@drawable/ic_roadhelp">
+       <!--Nguồn icon: https://www.google.com/imgres?imgurl=https%3A%2F%2Fapprecs.org%2Fgp%2Fimages%2Fapp-icons%2F300%2Fc2%2Fcom.india.wildtrails.highwaycompanion.jpg&imgrefurl=https%3A%2F%2Fapprecs.com%2Fandroid%2Fcom.india.wildtrails.highwaycompanion%2Fhighway-help-india-road-travel&tbnid=H7Sj-MqhpgzR4M&vet=12ahUKEwivhKafi5XzAhWyNaYKHfJNA40QMygiegUIARD0AQ..i&docid=vRzE8RvnbnINeM&w=300&h=300&itg=1&q=road%20help%20icon&ved=2ahUKEwivhKafi5XzAhWyNaYKHfJNA40QMygiegUIARD0AQ-->
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"
