@@ -69,7 +69,7 @@ public class Garage extends BaseModel implements Serializable{
     private Partner partner;
 
     @OneToMany(mappedBy = "ratings") //updatable = false, insertable = false
-    private List<Rating> NoteLists;
+    private List<RatingGarage> NoteLists;
 
     public String getUsername() {
         return username;
@@ -207,11 +207,11 @@ public class Garage extends BaseModel implements Serializable{
         this.partner = partner;
     }
 
-    public List<Rating> getNoteLists() {
+    public List<RatingGarage> getNoteLists() {
         return NoteLists;
     }
 
-    public void setNoteLists(List<Rating> noteLists) {
+    public void setNoteLists(List<RatingGarage> noteLists) {
         NoteLists = noteLists;
     }
 
