@@ -6,6 +6,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "issues")
@@ -18,8 +19,11 @@ public class Issues extends BaseModel implements Serializable{
     private String total_issue;
 
     @ManyToOne
-    @JoinColumn(name = "issues_detail") //updatable = false, insertable = false
-    private IssuesDetail issues_details;
+    @JoinColumn(name = "id") //updatable = false, insertable = false
+    private IssuesDetail issuesdetails;
+
+    @OneToMany(mappedBy = "issues_details") //updatable = false, insertable = false
+    private List<IssuesDetail> issuesDetailList;
 
     public String getIssues_detail_id() {
         return issues_detail_id;
@@ -37,11 +41,19 @@ public class Issues extends BaseModel implements Serializable{
         this.total_issue = total_issue;
     }
 
-    public IssuesDetail getIssues_details() {
-        return issues_details;
+    public IssuesDetail getIssuesdetails() {
+        return issuesdetails;
     }
 
-    public void setIssues_details(IssuesDetail issues_details) {
-        this.issues_details = issues_details;
+    public void setIssuesdetails(IssuesDetail issuesdetails) {
+        this.issuesdetails = issuesdetails;
+    }
+
+    public List<IssuesDetail> getIssuesDetailList() {
+        return issuesDetailList;
+    }
+
+    public void setIssuesDetailList(List<IssuesDetail> issuesDetailList) {
+        this.issuesDetailList = issuesDetailList;
     }
 }

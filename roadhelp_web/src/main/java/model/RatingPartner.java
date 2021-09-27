@@ -1,5 +1,6 @@
 package model;
 
+
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -11,7 +12,7 @@ import java.io.Serializable;
 
 @Entity
 @Table(name = "ratings")
-public class Rating extends BaseModel implements Serializable {
+public class RatingPartner extends BaseModel implements Serializable{
     @NotNull
     private int ratePoint;
 
@@ -20,7 +21,7 @@ public class Rating extends BaseModel implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "id") //updatable = false, insertable = false
-    private Garage garages;
+    private Partner partners;
 
     @ManyToOne
     @JoinColumn(name = "id") //updatable = false, insertable = false
@@ -42,12 +43,12 @@ public class Rating extends BaseModel implements Serializable {
         this.comment = comment;
     }
 
-    public Garage getGarages() {
-        return garages;
+    public Partner getPartners() {
+        return partners;
     }
 
-    public void setGarages(Garage garages) {
-        this.garages = garages;
+    public void setPartners(Partner partners) {
+        this.partners = partners;
     }
 
     public User getUsers() {

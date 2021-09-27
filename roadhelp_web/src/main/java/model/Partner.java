@@ -55,17 +55,16 @@ public class Partner extends BaseModel implements Serializable {
     @Size(min = 2, max = 16)
     private String phone;
 
-    @Size(min = 2, max = 128)
-    private String address;
-
     // - - - - -
     @NotNull
     private Boolean active;
     //endregion
     //region - Relationship -
-    @OneToMany(mappedBy = "partner") //updatable = false, insertable = false
-    private List<Garage> garages;
+    @OneToMany(mappedBy = "ratings") //updatable = false, insertable = false
+    private List<RatingPartner> ratingPartnerLists;
     //endregion
+
+
     public String getUsername() {
         return username;
     }
@@ -162,20 +161,20 @@ public class Partner extends BaseModel implements Serializable {
         this.phone = phone;
     }
 
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
     public Boolean getActive() {
         return active;
     }
 
     public void setActive(Boolean active) {
         this.active = active;
+    }
+
+    public List<RatingPartner> getRatingPartnerLists() {
+        return ratingPartnerLists;
+    }
+
+    public void setRatingPartnerLists(List<RatingPartner> ratingPartnerLists) {
+        this.ratingPartnerLists = ratingPartnerLists;
     }
 
     @Override
@@ -193,7 +192,6 @@ public class Partner extends BaseModel implements Serializable {
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", phone='" + phone + '\'' +
-                ", address='" + address + '\'' +
                 ", active=" + active +
                 '}';
     }
