@@ -128,7 +128,6 @@ CREATE TABLE IF NOT EXISTS `garage`
     `rate`            FLOAT(1)            NULL,
 
     `image`               VARCHAR(128),
-    `gender`              BOOLEAN,
     `commune`          VARCHAR(64),
     `longitude`           VARCHAR(64),
     `latitude`           VARCHAR(64),
