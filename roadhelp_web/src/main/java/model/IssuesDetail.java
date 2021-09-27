@@ -13,11 +13,15 @@ public class IssuesDetail extends BaseModel {
 
     @NotNull
     @Size(min = 2, max = 64)
-    private String user_id;
+    private String userId;
 
     @NotNull
     @Size(min = 2, max = 64)
     private String commune;
+
+    @ManyToOne
+    @JoinColumn(name = "id") //updatable = false, insertable = false
+    private User userIds;
 
     // - - - - -
     private Date emailVerifiedAt;
@@ -27,7 +31,7 @@ public class IssuesDetail extends BaseModel {
 
 
     // - - - - -
-    @Size(max = 128)
+    @Size(max = 64)
     private String longitude;
 
     @Size(min = 2, max = 64)
@@ -46,121 +50,119 @@ public class IssuesDetail extends BaseModel {
     private String description;
 
     @ManyToOne
-    @JoinColumn(name = "note_list") //updatable = false, insertable = false
-    private NoteList noteLists;
+    @JoinColumn(name = "id") //updatable = false, insertable = false
+    private NoteList noteListsIds;
 
-    public String getUser_id() {
-        return user_id;
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public String getCommune() {
         return commune;
     }
 
-    public Date getEmailVerifiedAt() {
-        return emailVerifiedAt;
-    }
-
-    public String getVerificationCode() {
-        return verificationCode;
-    }
-
-    public String getResetPasswordCode() {
-        return resetPasswordCode;
-    }
-
-    public String getRememberToken() {
-        return rememberToken;
-    }
-
-    public String getLongitude() {
-        return longitude;
-    }
-
-    public String getLatitude() {
-        return latitude;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public String getNote_list_id() {
-        return note_list_id;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setUser_id(String user_id) {
-        this.user_id = user_id;
-    }
-
     public void setCommune(String commune) {
         this.commune = commune;
+    }
+
+    public User getUserIds() {
+        return userIds;
+    }
+
+    public void setUserIds(User userIds) {
+        this.userIds = userIds;
+    }
+
+    public Date getEmailVerifiedAt() {
+        return emailVerifiedAt;
     }
 
     public void setEmailVerifiedAt(Date emailVerifiedAt) {
         this.emailVerifiedAt = emailVerifiedAt;
     }
 
+    public String getVerificationCode() {
+        return verificationCode;
+    }
+
     public void setVerificationCode(String verificationCode) {
         this.verificationCode = verificationCode;
+    }
+
+    public String getResetPasswordCode() {
+        return resetPasswordCode;
     }
 
     public void setResetPasswordCode(String resetPasswordCode) {
         this.resetPasswordCode = resetPasswordCode;
     }
 
+    public String getRememberToken() {
+        return rememberToken;
+    }
+
     public void setRememberToken(String rememberToken) {
         this.rememberToken = rememberToken;
+    }
+
+    public String getLongitude() {
+        return longitude;
     }
 
     public void setLongitude(String longitude) {
         this.longitude = longitude;
     }
 
+    public String getLatitude() {
+        return latitude;
+    }
+
     public void setLatitude(String latitude) {
         this.latitude = latitude;
+    }
+
+    public String getPhone() {
+        return phone;
     }
 
     public void setPhone(String phone) {
         this.phone = phone;
     }
 
+    public String getAddress() {
+        return address;
+    }
+
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public String getNote_list_id() {
+        return note_list_id;
     }
 
     public void setNote_list_id(String note_list_id) {
         this.note_list_id = note_list_id;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
     public void setDescription(String description) {
         this.description = description;
     }
 
-    @Override
-    public String toString() {
-        return "IssuesDetail{" +
-                "user_id='" + user_id + '\'' +
-                ", commune='" + commune + '\'' +
-                ", emailVerifiedAt=" + emailVerifiedAt +
-                ", verificationCode='" + verificationCode + '\'' +
-                ", resetPasswordCode='" + resetPasswordCode + '\'' +
-                ", rememberToken='" + rememberToken + '\'' +
-                ", longitude='" + longitude + '\'' +
-                ", latitude='" + latitude + '\'' +
-                ", phone='" + phone + '\'' +
-                ", address='" + address + '\'' +
-                ", note_list_id='" + note_list_id + '\'' +
-                ", description='" + description + '\'' +
-                '}';
+    public NoteList getNoteListsIds() {
+        return noteListsIds;
+    }
+
+    public void setNoteListsIds(NoteList noteListsIds) {
+        this.noteListsIds = noteListsIds;
     }
 
     // - - - - -

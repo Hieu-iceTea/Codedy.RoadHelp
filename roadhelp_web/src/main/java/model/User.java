@@ -52,9 +52,6 @@ public class User extends BaseModel implements Serializable {
     @Size(min = 2, max = 16)
     private String phone;
 
-    @Size(min = 2, max = 128)
-    private String address;
-
     // - - - - -
     @NotNull
     private Boolean active;
@@ -156,14 +153,6 @@ public class User extends BaseModel implements Serializable {
         this.phone = phone;
     }
 
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
     public Boolean getActive() {
         return active;
     }
@@ -187,7 +176,6 @@ public class User extends BaseModel implements Serializable {
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", phone='" + phone + '\'' +
-                ", address='" + address + '\'' +
                 ", active=" + active +
                 '}';
     }
