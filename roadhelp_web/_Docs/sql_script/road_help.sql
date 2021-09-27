@@ -1,6 +1,3 @@
-# Created_by: Hieu_iceTea
-# Created_at: 08:00 2021-07-04
-# Updated_at: 15:45 2021-07-09
 
 # = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = #
 #                                           Create DataBase                                           #
@@ -8,7 +5,6 @@
 
 # SET @DATABASE_Name = 'road_help';
 
-# Create DataBase >> (Lúc nhập dữ liệu để deploy thì bỏ 2 dòng tạo DB này, nhớ đổi tên DB nữa nhé)
 DROP DATABASE IF EXISTS `road_help`;
 CREATE DATABASE IF NOT EXISTS `road_help` CHARACTER SET utf8 COLLATE utf8_unicode_ci;
 
@@ -44,8 +40,6 @@ CREATE TABLE IF NOT EXISTS `users`
     `first_name`          VARCHAR(64),
     `last_name`           VARCHAR(64),
     `phone`               VARCHAR(16),
-    `address`             VARCHAR(128),
-
     `active`             BOOLEAN      DEFAULT TRUE,
 
     `created_by`          NVARCHAR(32) DEFAULT 'Codedy',
@@ -76,7 +70,6 @@ CREATE TABLE IF NOT EXISTS `partner`
     `first_name`          VARCHAR(64),
     `last_name`           VARCHAR(64),
     `phone`               VARCHAR(16),
-    `address`             VARCHAR(128),
     `rate`            FLOAT(1)            NULL,
 
     `active`             BOOLEAN      DEFAULT TRUE NOT NULL,
@@ -154,7 +147,25 @@ CREATE TABLE IF NOT EXISTS `garage`
     PRIMARY KEY (`id`)
     ) ENGINE InnoDB;
 
-CREATE TABLE IF NOT EXISTS `rating`
+CREATE TABLE IF NOT EXISTS `ratingPartner`
+(
+    `id`                  INT AUTO_INCREMENT,
+    `garage_id`                  INT NOT NULL,
+    `user_id`                  INT NOT NULL,
+    `rate_point`                  INT NOT NULL,
+    `comment`            VARCHAR(256)         NULL,
+
+    `created_by`          NVARCHAR(32) DEFAULT 'Codedy',
+    `created_at`          TIMESTAMP    DEFAULT CURRENT_TIMESTAMP,
+    `updated_by`          NVARCHAR(32) DEFAULT NULL,
+    `updated_at`          TIMESTAMP    DEFAULT CURRENT_TIMESTAMP,
+    `version`             INT          DEFAULT 1,
+    `deleted`             BOOLEAN      DEFAULT FALSE,
+
+    PRIMARY KEY (`id`)
+    ) ENGINE InnoDB;
+
+CREATE TABLE IF NOT EXISTS `ratingGarage`
 (
     `id`                  INT AUTO_INCREMENT,
     `garage_id`                  INT NOT NULL,
