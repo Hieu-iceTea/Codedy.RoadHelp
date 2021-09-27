@@ -6,6 +6,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "users")
@@ -51,6 +52,17 @@ public class User extends BaseModel implements Serializable {
 
     @Size(min = 2, max = 16)
     private String phone;
+
+    @OneToMany(mappedBy = "user")
+    private List<IssuesDetail> issuesDetails;
+
+    public List<IssuesDetail> getIssuesDetails() {
+        return issuesDetails;
+    }
+
+    public void setIssuesDetails(List<IssuesDetail> issuesDetails) {
+        this.issuesDetails = issuesDetails;
+    }
 
     // - - - - -
     @NotNull
