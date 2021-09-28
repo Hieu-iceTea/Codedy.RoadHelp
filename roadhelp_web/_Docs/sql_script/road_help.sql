@@ -149,7 +149,7 @@ CREATE TABLE IF NOT EXISTS `garage`
 CREATE TABLE IF NOT EXISTS `ratingPartner`
 (
     `id`                  INT AUTO_INCREMENT,
-    `garage_id`                  INT NOT NULL,
+    `partner_id`                  INT NOT NULL,
     `user_id`                  INT NOT NULL,
     `rate_point`                  INT NOT NULL,
     `comment`            VARCHAR(256)         NULL,

@@ -1,21 +1,17 @@
 package com.codedy.roadhelp.model;
 
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "issues_detail")
-public class IssuesDetail extends BaseModel {
+public class IssuesDetail extends BaseModel implements Serializable {
 
     //region - Define Fields -
-    @NotNull
-    @Size(min = 2, max = 64)
-    private int userId;
 
     @NotNull
     @Size(min = 2, max = 64)
@@ -30,14 +26,11 @@ public class IssuesDetail extends BaseModel {
     @Size(min = 2, max = 64)
     private String latitude;
 
-    @Size( max = 10)
+    @Size(max = 10)
     private String phone;
 
     @Size(max = 200)
     private String address;
-
-    @Size(min = 2, max = 16)
-    private String note_list_id;
 
     @Size(min = 2, max = 500)
     private String description;
@@ -46,25 +39,21 @@ public class IssuesDetail extends BaseModel {
 
     //region - Relationship -
     @ManyToOne
-    @JoinColumn(name = "userId") //updatable = false, insertable = false
-    private User userIds;
+    @JoinColumn(name = "user_id") //updatable = false, insertable = false
+    private User users;
 
-//    @ManyToOne
-//    @JoinColumn(name = "id") //updatable = false, insertable = false
-//    private NoteList noteListsIds;
+    //    @OneToMany(mappedBy = "issues_detail") //updatable = false, insertable = false
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "issues_detail_id")
+    private List<Issues> issues;
+
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "note_list_id") //updatable = false, insertable = false
+    private NoteList noteLists;
     //endregion
 
 
     //region - Getter & Setter -
-
-
-    public int getUserId() {
-        return userId;
-    }
-
-    public void setUserId(int userId) {
-        this.userId = userId;
-    }
 
     public String getCommune() {
         return commune;
@@ -106,14 +95,6 @@ public class IssuesDetail extends BaseModel {
         this.address = address;
     }
 
-    public String getNote_list_id() {
-        return note_list_id;
-    }
-
-    public void setNote_list_id(String note_list_id) {
-        this.note_list_id = note_list_id;
-    }
-
     public String getDescription() {
         return description;
     }
@@ -122,21 +103,29 @@ public class IssuesDetail extends BaseModel {
         this.description = description;
     }
 
-    public User getUserIds() {
-        return userIds;
+    public User getUsers() {
+        return users;
     }
 
-    public void setUserIds(User userIds) {
-        this.userIds = userIds;
+    public void setUserIds(User users) {
+        this.users = users;
     }
 
-//    public NoteList getNoteListsIds() {
-//        return noteListsIds;
-//    }
-//
-//    public void setNoteListsIds(NoteList noteListsIds) {
-//        this.noteListsIds = noteListsIds;
-//    }
+    public List<Issues> getIssues() {
+        return issues;
+    }
+
+    public void setIssues(List<Issues> issues) {
+        this.issues = issues;
+    }
+
+        public NoteList getNoteLists() {
+        return noteLists;
+    }
+
+    public void setNoteLists(NoteList noteLists) {
+        this.noteLists = noteLists;
+    }
     //endregion
 
 }

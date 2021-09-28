@@ -60,9 +60,9 @@ public class Garage extends BaseModel implements Serializable {
 
 
     //region - Relationship -
-//    @ManyToOne
-//    @JoinColumn(name = "id") //updatable = false, insertable = false
-//    private Partner partner;
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "partner_id") //updatable = false, insertable = false
+    private Partner partner;
 //
 //    @OneToMany(mappedBy = "ratingGarage") //updatable = false, insertable = false
 //    private List<RatingGarage> NoteLists;
@@ -166,14 +166,14 @@ public class Garage extends BaseModel implements Serializable {
         this.active = active;
     }
 
-//    public Partner getPartner() {
-//        return partner;
-//    }
-//
-//    public void setPartner(Partner partner) {
-//        this.partner = partner;
-//    }
-//
+    public Partner getPartner() {
+        return partner;
+    }
+
+    public void setPartner(Partner partner) {
+        this.partner = partner;
+    }
+
 //    public List<RatingGarage> getNoteLists() {
 //        return NoteLists;
 //    }

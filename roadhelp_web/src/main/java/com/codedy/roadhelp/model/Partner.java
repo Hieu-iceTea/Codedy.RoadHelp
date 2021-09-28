@@ -63,7 +63,9 @@ public class Partner extends BaseModel implements Serializable {
 
     //region - Relationship -
 //    @OneToMany(mappedBy = "partner") //updatable = false, insertable = false
-//    private List<RatingPartner> ratingPartnerLists;
+//    private List<RatingPartner> ratingPartners;
+    @OneToMany(mappedBy = "partner")
+    private List<Garage> garages;
     //endregion
 
 
@@ -171,14 +173,23 @@ public class Partner extends BaseModel implements Serializable {
     public void setActive(Boolean active) {
         this.active = active;
     }
-//
-//    public List<RatingPartner> getRatingPartnerLists() {
-//        return ratingPartnerLists;
+
+//    public List<RatingPartner> getRatingPartners() {
+//        return ratingPartners;
 //    }
 //
-//    public void setRatingPartnerLists(List<RatingPartner> ratingPartnerLists) {
-//        this.ratingPartnerLists = ratingPartnerLists;
+//    public void setRatingPartners(List<RatingPartner> ratingPartners) {
+//        this.ratingPartners = ratingPartners;
 //    }
+
+    public List<Garage> getGarages() {
+        return garages;
+    }
+
+    public void setGarages(List<Garage> garages) {
+        this.garages = garages;
+    }
+
 
     //endregion
 
