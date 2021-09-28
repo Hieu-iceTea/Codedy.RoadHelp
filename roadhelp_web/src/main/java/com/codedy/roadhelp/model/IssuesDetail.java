@@ -15,7 +15,7 @@ public class IssuesDetail extends BaseModel {
     //region - Define Fields -
     @NotNull
     @Size(min = 2, max = 64)
-    private String userId;
+    private int userId;
 
     @NotNull
     @Size(min = 2, max = 64)
@@ -56,11 +56,13 @@ public class IssuesDetail extends BaseModel {
 
 
     //region - Getter & Setter -
-    public String getUserId() {
+
+
+    public int getUserId() {
         return userId;
     }
 
-    public void setUserId(String userId) {
+    public void setUserId(int userId) {
         this.userId = userId;
     }
 

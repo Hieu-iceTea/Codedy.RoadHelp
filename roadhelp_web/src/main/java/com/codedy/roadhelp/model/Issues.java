@@ -11,7 +11,7 @@ public class Issues extends BaseModel implements Serializable{
 
     //region - Define Fields -
     @Size(min = 2, max = 64)
-    private String issues_detail_id;
+    private int issues_detail_id;
 
     @Size(min = 2, max = 64)
     private String total_issue;
@@ -29,11 +29,13 @@ public class Issues extends BaseModel implements Serializable{
 
 
     //region - Getter & Setter -
-    public String getIssues_detail_id() {
+
+
+    public int getIssues_detail_id() {
         return issues_detail_id;
     }
 
-    public void setIssues_detail_id(String issues_detail_id) {
+    public void setIssues_detail_id(int issues_detail_id) {
         this.issues_detail_id = issues_detail_id;
     }
 
