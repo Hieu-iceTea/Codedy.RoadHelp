@@ -29,11 +29,11 @@ Power by: CODEDY team
 Contributors:
 
   * Nguyễn Đình Hiếu (Team Leader) [Contact now](http://hieu-icetea.github.io).
-  * Nông Phan Mạnh Hùng
-  * Vũ Quang Huy
-  * Nguyễn Trung Anh
-  * Hà Văn Vũ
-  * Đỗ Thị Chan Hòa
+  * Nông Phan Mạnh Hùng [(Facebook)](https://www.facebook.com/manhhungcb94)
+  * Vũ Quang Huy [(Facebook)](https://www.facebook.com/profile.php?id=100073105500003)
+  * Nguyễn Trung Anh [(Facebook)](https://www.facebook.com/profile.php?id=100051823263126)
+  * Hà Văn Vũ [(Facebook)](https://www.facebook.com/connha.nong.9216)
+  * Đỗ Thị Chan Hòa [(Facebook)](https://www.facebook.com/profile.php?id=100023632567398)
   
 ## Installation
 
