@@ -52,7 +52,9 @@ public class UserRestController {
 
         user.setId(0);
 
-        return userService.save(user);
+        User newUser = userService.save(user);
+
+        return userService.findById(newUser.getId());
 
     }
     //endregion
@@ -60,9 +62,18 @@ public class UserRestController {
 
     //region - Edit -
     @PutMapping(path = {"/{id}", "/{id}/"})
-    public User update(@RequestBody User user) {
+    public User update(@RequestBody User user, @PathVariable int id) {
 
-        return userService.save(user);
+        if (userService.findById(id) == null) {
+            throw new RestNotFoundException("User id not found - " + id);
+            //throw new RuntimeException("User id not found - " + id);
+        }
+
+        user.setId(id);
+
+        userService.save(user);
+
+        return userService.findById(user.getId());
 
     }
     //endregion
