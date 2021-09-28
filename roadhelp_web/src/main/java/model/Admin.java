@@ -8,7 +8,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 @Entity
-@Table(name = "admins")
+@Table(name = "admin")
 public class Admin extends BaseModel implements Serializable {
 
     //region - Define Fields -

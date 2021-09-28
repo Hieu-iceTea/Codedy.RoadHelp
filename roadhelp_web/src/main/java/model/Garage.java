@@ -8,7 +8,7 @@ import java.util.Date;
 import java.util.List;
 
 @Entity
-@Table(name = "garages")
+@Table(name = "garage")
 public class Garage extends BaseModel implements Serializable{
     // - - - - -
     //region - Define Fields -
@@ -27,11 +27,6 @@ public class Garage extends BaseModel implements Serializable{
 
 
     // - - - - -
-    private Date emailVerifiedAt;
-    private String verificationCode;
-    private String resetPasswordCode;
-    private String rememberToken;
-
 
     // - - - - -
     @Size(max = 128)
@@ -68,8 +63,8 @@ public class Garage extends BaseModel implements Serializable{
     @JoinColumn(name = "id") //updatable = false, insertable = false
     private Partner partner;
 
-    @OneToMany(mappedBy = "ratings") //updatable = false, insertable = false
-    private List<RatingGarage> NoteLists;
+    @OneToMany(mappedBy = "ratingGarage") //updatable = false, insertable = false
+    private List<RatingGarage> ratingGarages;
 
     public String getUsername() {
         return username;
@@ -93,38 +88,6 @@ public class Garage extends BaseModel implements Serializable{
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public Date getEmailVerifiedAt() {
-        return emailVerifiedAt;
-    }
-
-    public void setEmailVerifiedAt(Date emailVerifiedAt) {
-        this.emailVerifiedAt = emailVerifiedAt;
-    }
-
-    public String getVerificationCode() {
-        return verificationCode;
-    }
-
-    public void setVerificationCode(String verificationCode) {
-        this.verificationCode = verificationCode;
-    }
-
-    public String getResetPasswordCode() {
-        return resetPasswordCode;
-    }
-
-    public void setResetPasswordCode(String resetPasswordCode) {
-        this.resetPasswordCode = resetPasswordCode;
-    }
-
-    public String getRememberToken() {
-        return rememberToken;
-    }
-
-    public void setRememberToken(String rememberToken) {
-        this.rememberToken = rememberToken;
     }
 
     public String getImage() {
@@ -207,12 +170,12 @@ public class Garage extends BaseModel implements Serializable{
         this.partner = partner;
     }
 
-    public List<RatingGarage> getNoteLists() {
-        return NoteLists;
+    public List<RatingGarage> getRatingGarages() {
+        return ratingGarages;
     }
 
-    public void setNoteLists(List<RatingGarage> noteLists) {
-        NoteLists = noteLists;
+    public void setRatingGarages(List<RatingGarage> ratingGarages) {
+        this.ratingGarages = ratingGarages;
     }
 
     //endregion

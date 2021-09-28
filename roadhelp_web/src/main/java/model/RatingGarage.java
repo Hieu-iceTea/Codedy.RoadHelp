@@ -10,7 +10,7 @@ import javax.validation.constraints.Size;
 import java.io.Serializable;
 
 @Entity
-@Table(name = "ratingGarages")
+@Table(name = "ratingGarage")
 public class RatingGarage extends BaseModel implements Serializable {
     @NotNull
     private int ratePoint;

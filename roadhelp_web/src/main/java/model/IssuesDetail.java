@@ -8,7 +8,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 @Entity
-@Table(name = "issues_details")
+@Table(name = "issues_detail")
 public class IssuesDetail extends BaseModel {
 
     @NotNull

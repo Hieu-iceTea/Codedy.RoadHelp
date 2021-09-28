@@ -9,7 +9,7 @@ import java.util.Date;
 import java.util.List;
 
 @Entity
-@Table(name = "note_lists")
+@Table(name = "note_list")
 public class NoteList extends BaseModel {
 
     @Size(min = 2, max = 64)
@@ -17,6 +17,10 @@ public class NoteList extends BaseModel {
 
     @OneToMany(mappedBy = "note_list") //updatable = false, insertable = false
     private List<NoteList> NoteLists;
+
+    @ManyToOne
+    @JoinColumn(name = "id") //updatable = false, insertable = false
+    private Issues issues;
 
     public String getDescription() {
         return description;
@@ -32,5 +36,13 @@ public class NoteList extends BaseModel {
 
     public void setNoteLists(List<NoteList> noteLists) {
         NoteLists = noteLists;
+    }
+
+    public Issues getIssues() {
+        return issues;
+    }
+
+    public void setIssues(Issues issues) {
+        this.issues = issues;
     }
 }

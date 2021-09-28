@@ -11,7 +11,7 @@ import java.util.Date;
 import java.util.List;
 
 @Entity
-@Table(name = "partners")
+@Table(name = "partner")
 public class Partner extends BaseModel implements Serializable {
 
     //region - Define Fields -
@@ -60,7 +60,7 @@ public class Partner extends BaseModel implements Serializable {
     private Boolean active;
     //endregion
     //region - Relationship -
-    @OneToMany(mappedBy = "ratings") //updatable = false, insertable = false
+    @OneToMany(mappedBy = "ratingPartner") //updatable = false, insertable = false
     private List<RatingPartner> ratingPartnerLists;
     //endregion
 
