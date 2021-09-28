@@ -1,6 +1,8 @@
 package com.codedy.roadhelp.model;
 
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -20,13 +22,13 @@ public class RatingGarage extends BaseModel implements Serializable {
 
 
     //region - Relationship -
-    /*@ManyToOne
-    @JoinColumn(name = "id") //updatable = false, insertable = false
-    private Garage garages;
-
-    @ManyToOne
-    @JoinColumn(name = "id") //updatable = false, insertable = false
-    private User users;*/
+//    @ManyToOne
+//    @JoinColumn(name = "id") //updatable = false, insertable = false
+//    private Garage garages;
+//
+//    @ManyToOne
+//    @JoinColumn(name = "id") //updatable = false, insertable = false
+//    private User users;
     //endregion
 
 

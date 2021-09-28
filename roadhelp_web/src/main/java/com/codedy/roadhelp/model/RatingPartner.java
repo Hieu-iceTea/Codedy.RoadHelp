@@ -23,13 +23,13 @@ public class RatingPartner extends BaseModel implements Serializable{
 
 
     //region - Relationship -
-    /*@ManyToOne
-    @JoinColumn(name = "id") //updatable = false, insertable = false
-    private Partner partners;
-
-    @ManyToOne
-    @JoinColumn(name = "id") //updatable = false, insertable = false
-    private User users;*/
+//    @ManyToOne
+//    @JoinColumn(name = "id") //updatable = false, insertable = false
+//    private Partner partners;
+//
+//    @ManyToOne
+//    @JoinColumn(name = "id") //updatable = false, insertable = false
+//    private User users;
     //endregion
 
 
@@ -50,21 +50,21 @@ public class RatingPartner extends BaseModel implements Serializable{
         this.comment = comment;
     }
 
-    /*public Partner getPartners() {
-        return partners;
-    }
-
-    public void setPartners(Partner partners) {
-        this.partners = partners;
-    }
-
-    public User getUsers() {
-        return users;
-    }
-
-    public void setUsers(User users) {
-        this.users = users;
-    }*/
+//    public Partner getPartners() {
+//        return partners;
+//    }
+//
+//    public void setPartners(Partner partners) {
+//        this.partners = partners;
+//    }
+//
+//    public User getUsers() {
+//        return users;
+//    }
+//
+//    public void setUsers(User users) {
+//        this.users = users;
+//    }
     //endregion
 
 }

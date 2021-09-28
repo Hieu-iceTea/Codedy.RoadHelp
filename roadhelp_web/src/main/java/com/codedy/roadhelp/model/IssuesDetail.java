@@ -22,11 +22,6 @@ public class IssuesDetail extends BaseModel {
     private String commune;
 
     // - - - - -
-    private Date emailVerifiedAt;
-    private String verificationCode;
-    private String resetPasswordCode;
-    private String rememberToken;
-
 
     // - - - - -
     @Size(max = 64)
@@ -50,13 +45,13 @@ public class IssuesDetail extends BaseModel {
 
 
     //region - Relationship -
-    /*@ManyToOne
-    @JoinColumn(name = "id") //updatable = false, insertable = false
+    @ManyToOne
+    @JoinColumn(name = "userId") //updatable = false, insertable = false
     private User userIds;
 
-    @ManyToOne
-    @JoinColumn(name = "id") //updatable = false, insertable = false
-    private NoteList noteListsIds;*/
+//    @ManyToOne
+//    @JoinColumn(name = "id") //updatable = false, insertable = false
+//    private NoteList noteListsIds;
     //endregion
 
 
@@ -75,38 +70,6 @@ public class IssuesDetail extends BaseModel {
 
     public void setCommune(String commune) {
         this.commune = commune;
-    }
-
-    public Date getEmailVerifiedAt() {
-        return emailVerifiedAt;
-    }
-
-    public void setEmailVerifiedAt(Date emailVerifiedAt) {
-        this.emailVerifiedAt = emailVerifiedAt;
-    }
-
-    public String getVerificationCode() {
-        return verificationCode;
-    }
-
-    public void setVerificationCode(String verificationCode) {
-        this.verificationCode = verificationCode;
-    }
-
-    public String getResetPasswordCode() {
-        return resetPasswordCode;
-    }
-
-    public void setResetPasswordCode(String resetPasswordCode) {
-        this.resetPasswordCode = resetPasswordCode;
-    }
-
-    public String getRememberToken() {
-        return rememberToken;
-    }
-
-    public void setRememberToken(String rememberToken) {
-        this.rememberToken = rememberToken;
     }
 
     public String getLongitude() {
@@ -157,7 +120,7 @@ public class IssuesDetail extends BaseModel {
         this.description = description;
     }
 
-    /*public User getUserIds() {
+    public User getUserIds() {
         return userIds;
     }
 
@@ -165,13 +128,13 @@ public class IssuesDetail extends BaseModel {
         this.userIds = userIds;
     }
 
-    public NoteList getNoteListsIds() {
-        return noteListsIds;
-    }
-
-    public void setNoteListsIds(NoteList noteListsIds) {
-        this.noteListsIds = noteListsIds;
-    }*/
+//    public NoteList getNoteListsIds() {
+//        return noteListsIds;
+//    }
+//
+//    public void setNoteListsIds(NoteList noteListsIds) {
+//        this.noteListsIds = noteListsIds;
+//    }
     //endregion
 
 }

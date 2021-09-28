@@ -19,12 +19,12 @@ public class Issues extends BaseModel implements Serializable{
 
 
     //region - Relationship -
-    /*@ManyToOne
-    @JoinColumn(name = "id") //updatable = false, insertable = false
-    private IssuesDetail issuesdetails;
-
-    @OneToMany(mappedBy = "issues_details") //updatable = false, insertable = false
-    private List<IssuesDetail> issuesDetailList;*/
+//    @ManyToOne
+//    @JoinColumn(name = "id") //updatable = false, insertable = false
+//    private IssuesDetail issuesdetails;
+//
+//    @OneToMany(mappedBy = "issues") //updatable = false, insertable = false
+//    private List<IssuesDetail> issuesDetailList;
     //endregion
 
 
@@ -45,21 +45,22 @@ public class Issues extends BaseModel implements Serializable{
         this.total_issue = total_issue;
     }
 
-    /*public IssuesDetail getIssuesdetails() {
-        return issuesdetails;
-    }
+//    public IssuesDetail getIssuesdetails() {
+//        return issuesdetails;
+//    }
+//
+//    public void setIssuesdetails(IssuesDetail issuesdetails) {
+//        this.issuesdetails = issuesdetails;
+//    }
+//
+//    public List<IssuesDetail> getIssuesDetailList() {
+//        return issuesDetailList;
+//    }
+//
+//    public void setIssuesDetailList(List<IssuesDetail> issuesDetailList) {
+//        this.issuesDetailList = issuesDetailList;
+//    }
 
-    public void setIssuesdetails(IssuesDetail issuesdetails) {
-        this.issuesdetails = issuesdetails;
-    }
-
-    public List<IssuesDetail> getIssuesDetailList() {
-        return issuesDetailList;
-    }
-
-    public void setIssuesDetailList(List<IssuesDetail> issuesDetailList) {
-        this.issuesDetailList = issuesDetailList;
-    }*/
     //endregion
 
 }
