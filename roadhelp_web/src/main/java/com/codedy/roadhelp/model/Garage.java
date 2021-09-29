@@ -1,12 +1,12 @@
 package com.codedy.roadhelp.model;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "garage")
@@ -27,10 +27,6 @@ public class Garage extends BaseModel implements Serializable {
     private String password;
 
     // - - - - -
-    private Date emailVerifiedAt;
-    private String verificationCode;
-    private String resetPasswordCode;
-    private String rememberToken;
 
     // - - - - -
     @Size(max = 128)
@@ -64,12 +60,12 @@ public class Garage extends BaseModel implements Serializable {
 
 
     //region - Relationship -
-    /*@ManyToOne
-    @JoinColumn(name = "id") //updatable = false, insertable = false
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "partner_id") //updatable = false, insertable = false
     private Partner partner;
-
-    @OneToMany(mappedBy = "ratings") //updatable = false, insertable = false
-    private List<RatingGarage> NoteLists;*/
+//
+//    @OneToMany(mappedBy = "ratingGarage") //updatable = false, insertable = false
+//    private List<RatingGarage> NoteLists;
     //endregion
 
 
@@ -96,38 +92,6 @@ public class Garage extends BaseModel implements Serializable {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public Date getEmailVerifiedAt() {
-        return emailVerifiedAt;
-    }
-
-    public void setEmailVerifiedAt(Date emailVerifiedAt) {
-        this.emailVerifiedAt = emailVerifiedAt;
-    }
-
-    public String getVerificationCode() {
-        return verificationCode;
-    }
-
-    public void setVerificationCode(String verificationCode) {
-        this.verificationCode = verificationCode;
-    }
-
-    public String getResetPasswordCode() {
-        return resetPasswordCode;
-    }
-
-    public void setResetPasswordCode(String resetPasswordCode) {
-        this.resetPasswordCode = resetPasswordCode;
-    }
-
-    public String getRememberToken() {
-        return rememberToken;
-    }
-
-    public void setRememberToken(String rememberToken) {
-        this.rememberToken = rememberToken;
     }
 
     public String getImage() {
@@ -202,7 +166,7 @@ public class Garage extends BaseModel implements Serializable {
         this.active = active;
     }
 
-    /*public Partner getPartner() {
+    public Partner getPartner() {
         return partner;
     }
 
@@ -210,13 +174,14 @@ public class Garage extends BaseModel implements Serializable {
         this.partner = partner;
     }
 
-    public List<RatingGarage> getNoteLists() {
-        return NoteLists;
-    }
+//    public List<RatingGarage> getNoteLists() {
+//        return NoteLists;
+//    }
+//
+//    public void setNoteLists(List<RatingGarage> noteLists) {
+//        NoteLists = noteLists;
+//    }
 
-    public void setNoteLists(List<RatingGarage> noteLists) {
-        NoteLists = noteLists;
-    }*/
     //endregion
 
 }

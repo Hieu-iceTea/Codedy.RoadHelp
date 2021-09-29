@@ -56,8 +56,8 @@ public class User extends BaseModel implements Serializable {
 
 
     //region - Relationship -
-    /*@OneToMany(mappedBy = "user")
-    private List<IssuesDetail> issuesDetails;*/
+    @OneToMany(mappedBy = "users")
+    private List<IssuesDetail> issuesDetails;
     //endregion
 
 
@@ -166,14 +166,15 @@ public class User extends BaseModel implements Serializable {
         this.active = active;
     }
 
-    /*public List<IssuesDetail> getIssuesDetails() {
+    public List<IssuesDetail> getIssuesDetails() {
         return issuesDetails;
     }
 
     public void setIssuesDetails(List<IssuesDetail> issuesDetails) {
         this.issuesDetails = issuesDetails;
-    }*/
-    //endregion
+    }
+
+//endregion
 
     @Override
     public String toString() {

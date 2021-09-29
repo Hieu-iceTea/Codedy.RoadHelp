@@ -1,10 +1,7 @@
 package com.codedy.roadhelp.model;
 
 
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
@@ -23,13 +20,13 @@ public class RatingPartner extends BaseModel implements Serializable{
 
 
     //region - Relationship -
-    /*@ManyToOne
-    @JoinColumn(name = "id") //updatable = false, insertable = false
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "partner_id") //updatable = false, insertable = false
     private Partner partners;
 
-    @ManyToOne
-    @JoinColumn(name = "id") //updatable = false, insertable = false
-    private User users;*/
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id") //updatable = false, insertable = false
+    private User users;
     //endregion
 
 
@@ -50,7 +47,7 @@ public class RatingPartner extends BaseModel implements Serializable{
         this.comment = comment;
     }
 
-    /*public Partner getPartners() {
+    public Partner getPartners() {
         return partners;
     }
 
@@ -64,7 +61,8 @@ public class RatingPartner extends BaseModel implements Serializable{
 
     public void setUsers(User users) {
         this.users = users;
-    }*/
+    }
+
     //endregion
 
 }

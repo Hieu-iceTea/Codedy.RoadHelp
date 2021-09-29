@@ -128,7 +128,6 @@ CREATE TABLE IF NOT EXISTS `garage`
     `rate`            FLOAT(1)            NULL,
 
     `image`               VARCHAR(128),
-    `gender`              BOOLEAN,
     `commune`          VARCHAR(64),
     `longitude`           VARCHAR(64),
     `latitude`           VARCHAR(64),
@@ -150,7 +149,7 @@ CREATE TABLE IF NOT EXISTS `garage`
 CREATE TABLE IF NOT EXISTS `ratingPartner`
 (
     `id`                  INT AUTO_INCREMENT,
-    `garage_id`                  INT NOT NULL,
+    `partner_id`                  INT NOT NULL,
     `user_id`                  INT NOT NULL,
     `rate_point`                  INT NOT NULL,
     `comment`            VARCHAR(256)         NULL,
