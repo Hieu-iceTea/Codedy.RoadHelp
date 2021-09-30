@@ -1,8 +1,6 @@
 package com.codedy.roadhelp.model;
 
-import javax.persistence.Entity;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -17,7 +15,6 @@ public class Partner extends BaseModel implements Serializable {
     //region - Define Fields -
     //private int restaurantId; //Foreign key - Relationship
 
-
     // - - - - -
     @NotNull
     @Size(min = 2, max = 64)
@@ -28,10 +25,8 @@ public class Partner extends BaseModel implements Serializable {
     @Size(min = 2, max = 64)
     private String email;
 
-    //@NotNull
-    //@Size(min = 2, max = 128)
+    @Size(max = 128)
     private String password;
-
 
     // - - - - -
     private Date emailVerifiedAt;
@@ -55,17 +50,19 @@ public class Partner extends BaseModel implements Serializable {
     @Size(min = 2, max = 16)
     private String phone;
 
-    // - - - - -
+    private double rate;
+
     @NotNull
     private Boolean active;
     //endregion
 
 
     //region - Relationship -
-//    @OneToMany(mappedBy = "partner") //updatable = false, insertable = false
-//    private List<RatingPartner> ratingPartners;
     @OneToMany(mappedBy = "partner")
     private List<Garage> garages;
+
+    @OneToMany(mappedBy = "partner")
+    private List<RatingPartner> ratingPartners;
     //endregion
 
 
@@ -134,14 +131,6 @@ public class Partner extends BaseModel implements Serializable {
         this.image = image;
     }
 
-    public Boolean getGender() {
-        return gender;
-    }
-
-    public void setGender(Boolean gender) {
-        this.gender = gender;
-    }
-
     public String getFirstName() {
         return firstName;
     }
@@ -174,14 +163,6 @@ public class Partner extends BaseModel implements Serializable {
         this.active = active;
     }
 
-//    public List<RatingPartner> getRatingPartners() {
-//        return ratingPartners;
-//    }
-//
-//    public void setRatingPartners(List<RatingPartner> ratingPartners) {
-//        this.ratingPartners = ratingPartners;
-//    }
-
     public List<Garage> getGarages() {
         return garages;
     }
@@ -190,12 +171,33 @@ public class Partner extends BaseModel implements Serializable {
         this.garages = garages;
     }
 
+    public List<RatingPartner> getRatingPartners() {
+        return ratingPartners;
+    }
 
-    //endregion
+    public void setRatingPartners(List<RatingPartner> ratingPartners) {
+        this.ratingPartners = ratingPartners;
+    }
+
+    public Boolean getGender() {
+        return gender;
+    }
+
+    public void setGender(Boolean gender) {
+        this.gender = gender;
+    }
+
+    public double getRate() {
+        return rate;
+    }
+
+    public void setRate(double rate) {
+        this.rate = rate;
+    }
 
     @Override
     public String toString() {
-        return "User{" +
+        return "Partner{" +
                 "username='" + username + '\'' +
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
@@ -208,8 +210,12 @@ public class Partner extends BaseModel implements Serializable {
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", phone='" + phone + '\'' +
+                ", rate=" + rate +
                 ", active=" + active +
+                ", garages=" + garages +
+                ", ratingPartners=" + ratingPartners +
                 '}';
     }
 
+    //endregion
 }

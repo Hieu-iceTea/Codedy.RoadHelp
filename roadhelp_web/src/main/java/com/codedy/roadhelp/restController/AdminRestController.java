@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping(path = "/api/v1/garages")
+@RequestMapping(path = "/api/v1/admins")
 public class AdminRestController {
 
     @Autowired

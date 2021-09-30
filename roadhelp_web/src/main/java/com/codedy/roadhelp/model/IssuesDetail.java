@@ -17,23 +17,22 @@ public class IssuesDetail extends BaseModel implements Serializable {
     @Size(min = 2, max = 64)
     private String commune;
 
-    // - - - - -
-
-    // - - - - -
-    @Size(max = 64)
+    @Size(min = 2, max = 64)
     private String longitude;
 
     @Size(min = 2, max = 64)
     private String latitude;
 
-    @Size(max = 10)
+    @Size(max = 16)
     private String phone;
 
-    @Size(max = 200)
+    @Size(max = 128)
     private String address;
 
     @Size(min = 2, max = 500)
     private String description;
+
+    private Boolean status;
     //endregion
 
 
@@ -42,14 +41,12 @@ public class IssuesDetail extends BaseModel implements Serializable {
     @JoinColumn(name = "user_id") //updatable = false, insertable = false
     private User users;
 
-    //    @OneToMany(mappedBy = "issues_detail") //updatable = false, insertable = false
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "issues_detail_id")
+    @OneToMany(mappedBy = "issuesDetail")
     private List<Issues> issues;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "note_list_id") //updatable = false, insertable = false
-    private NoteList noteLists;
+    @OneToOne
+    @JoinColumn(name = "note_list_id")
+    private NoteList noteList;
     //endregion
 
 
@@ -119,13 +116,50 @@ public class IssuesDetail extends BaseModel implements Serializable {
         this.issues = issues;
     }
 
-        public NoteList getNoteLists() {
-        return noteLists;
+    public NoteList getNoteLists() {
+        return noteList;
     }
 
     public void setNoteLists(NoteList noteLists) {
-        this.noteLists = noteLists;
+        this.noteList = noteLists;
     }
+
+    public Boolean getStatus() {
+        return status;
+    }
+
+    public void setStatus(Boolean status) {
+        this.status = status;
+    }
+
+    public void setUsers(User users) {
+        this.users = users;
+    }
+
+    public NoteList getNoteList() {
+        return noteList;
+    }
+
+    public void setNoteList(NoteList noteList) {
+        this.noteList = noteList;
+    }
+
+    @Override
+    public String toString() {
+        return "IssuesDetail{" +
+                "commune='" + commune + '\'' +
+                ", longitude='" + longitude + '\'' +
+                ", latitude='" + latitude + '\'' +
+                ", phone='" + phone + '\'' +
+                ", address='" + address + '\'' +
+                ", description='" + description + '\'' +
+                ", status=" + status +
+                ", users=" + users +
+                ", issues=" + issues +
+                ", noteList=" + noteList +
+                '}';
+    }
+
     //endregion
 
 }
