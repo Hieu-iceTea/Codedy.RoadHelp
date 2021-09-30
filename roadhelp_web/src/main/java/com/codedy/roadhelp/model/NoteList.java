@@ -9,14 +9,14 @@ import java.util.List;
 public class NoteList extends BaseModel {
 
     //region - Define Fields -
-    @Size(min = 2, max = 64)
     private String description;
     //endregion
 
 
     //region - Relationship -
-//    @OneToMany(mappedBy = "note_list") //updatable = false, insertable = false
-//    private List<IssuesDetail> issuesDetails;
+
+    @OneToOne(mappedBy = "noteList")
+    private IssuesDetail issuesDetail;
 
     //endregion
 
@@ -30,13 +30,21 @@ public class NoteList extends BaseModel {
         this.description = description;
     }
 
-//    public List<IssuesDetail> getIssuesDetails() {
-//        return issuesDetails;
-//    }
-//
-//    public void setIssuesDetails(List<IssuesDetail> issuesDetails) {
-//        this.issuesDetails = issuesDetails;
-//    }
+    public IssuesDetail getIssuesDetail() {
+        return issuesDetail;
+    }
+
+    public void setIssuesDetail(IssuesDetail issuesDetail) {
+        this.issuesDetail = issuesDetail;
+    }
+
+    @Override
+    public String toString() {
+        return "NoteList{" +
+                "description='" + description + '\'' +
+                ", issuesDetail=" + issuesDetail +
+                '}';
+    }
 
     //endregion
 

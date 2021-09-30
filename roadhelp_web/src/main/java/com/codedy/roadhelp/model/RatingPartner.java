@@ -12,6 +12,7 @@ public class RatingPartner extends BaseModel implements Serializable{
 
     //region - Define Fields -
     @NotNull
+    @Size(max = 11)
     private int ratePoint;
 
     @Size(max = 256)
@@ -20,11 +21,11 @@ public class RatingPartner extends BaseModel implements Serializable{
 
 
     //region - Relationship -
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "partner_id") //updatable = false, insertable = false
-    private Partner partners;
+    private Partner partner;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "user_id") //updatable = false, insertable = false
     private User users;
     //endregion
@@ -47,12 +48,12 @@ public class RatingPartner extends BaseModel implements Serializable{
         this.comment = comment;
     }
 
-    public Partner getPartners() {
-        return partners;
+    public Partner getPartner() {
+        return partner;
     }
 
-    public void setPartners(Partner partners) {
-        this.partners = partners;
+    public void setPartner(Partner partners) {
+        this.partner = partners;
     }
 
     public User getUsers() {
@@ -61,6 +62,16 @@ public class RatingPartner extends BaseModel implements Serializable{
 
     public void setUsers(User users) {
         this.users = users;
+    }
+
+    @Override
+    public String toString() {
+        return "RatingPartner{" +
+                "ratePoint=" + ratePoint +
+                ", comment='" + comment + '\'' +
+                ", partner=" + partner +
+                ", users=" + users +
+                '}';
     }
 
     //endregion
