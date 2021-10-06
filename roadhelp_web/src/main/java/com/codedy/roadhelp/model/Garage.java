@@ -18,8 +18,6 @@ public class Garage extends BaseModel implements Serializable {
     @Size(max = 128)
     private String image;
 
-    private Boolean gender;
-
     private double rate;
 
     @Size(min = 2, max = 64)
@@ -63,14 +61,6 @@ public class Garage extends BaseModel implements Serializable {
 
     public void setImage(String image) {
         this.image = image;
-    }
-
-    public Boolean getGender() {
-        return gender;
-    }
-
-    public void setGender(Boolean gender) {
-        this.gender = gender;
     }
 
     public double getRate() {
@@ -166,7 +156,6 @@ public class Garage extends BaseModel implements Serializable {
         return "Garage{" +
                 "name='" + name + '\'' +
                 ", image='" + image + '\'' +
-                ", gender=" + gender +
                 ", rate='" + rate + '\'' +
                 ", address='" + address + '\'' +
                 ", phone='" + phone + '\'' +
