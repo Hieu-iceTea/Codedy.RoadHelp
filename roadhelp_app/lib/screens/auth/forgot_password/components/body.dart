@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import '/components/custom_surfix_icon.dart';
 import '/components/default_button.dart';
 import '/components/form_error.dart';
-import '/components/no_account_text.dart';
-import '/constants.dart';
-import '/size_config.dart';
+import '../../components/no_account_text.dart';
+import '../../../../config/constants.dart';
+import '../../../../config/size_config.dart';
 
 class Body extends StatelessWidget {
   @override

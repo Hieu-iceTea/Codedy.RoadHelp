@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import '/components/custom_surfix_icon.dart';
 import '/components/default_button.dart';
 import '/components/form_error.dart';
-import '/constants.dart';
+import '../../../../config/constants.dart';
 import '/screens/auth/otp/otp_screen.dart';
-import '/size_config.dart';
+import '../../../../config/size_config.dart';
 
 class CompleteProfileForm extends StatefulWidget {
   @override

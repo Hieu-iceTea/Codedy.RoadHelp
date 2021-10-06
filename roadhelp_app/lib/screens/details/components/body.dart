@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '/components/default_button.dart';
 import '/models/Product.dart';
-import '/size_config.dart';
+import '../../../config/size_config.dart';
 import 'color_dots.dart';
 import 'product_description.dart';
 import 'product_images.dart';

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-import '/constants.dart';
+import '../../../config/constants.dart';
 import '/models/Product.dart';
 import '/screens/details/details_screen.dart';
-import '/size_config.dart';
+import '../../../config/size_config.dart';
 
 class ProductCard extends StatelessWidget {
   const ProductCard({

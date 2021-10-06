@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import '/components/default_button.dart';
-import '/constants.dart';
-import '/size_config.dart';
+import '../../../config/constants.dart';
+import '../../../config/size_config.dart';
 
 class CheckoutCard extends StatelessWidget {
   const CheckoutCard({

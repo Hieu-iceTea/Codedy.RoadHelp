@@ -3,7 +3,7 @@ import 'package:flutter_svg/svg.dart';
 
 import '/models/Cart.dart';
 import '/screens/cart/components/cart_card.dart';
-import '/size_config.dart';
+import '../../../config/size_config.dart';
 
 class Body extends StatefulWidget {
   @override

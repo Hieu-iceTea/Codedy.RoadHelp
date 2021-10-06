@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 
 import '/components/rounded_icon_btn.dart';
 import '/models/Product.dart';
-import '/constants.dart';
-import '/size_config.dart';
+import '../../../config/constants.dart';
+import '../../../config/size_config.dart';
 
 class ColorDots extends StatelessWidget {
   const ColorDots({
