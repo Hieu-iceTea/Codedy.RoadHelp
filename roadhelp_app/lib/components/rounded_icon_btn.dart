@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:roadhelp/constants.dart';
+import 'package:roadhelp/config/constants.dart';
 
-import '../size_config.dart';
+import '../config/size_config.dart';
 
 class RoundedIconBtn extends StatelessWidget {
   const RoundedIconBtn({
