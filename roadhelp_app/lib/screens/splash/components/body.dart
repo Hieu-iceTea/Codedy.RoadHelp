@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '/components/default_button.dart';
 import '/constants.dart';
-import '/screens/sign_in/sign_in_screen.dart';
+import '/screens/auth/sign_in/sign_in_screen.dart';
 import '/size_config.dart';
 
 // This is the best practice
