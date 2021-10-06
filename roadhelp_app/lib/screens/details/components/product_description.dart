@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:roadhelp/models/Product.dart';
 
-import '../../../constants.dart';
-import '../../../size_config.dart';
+import '/constants.dart';
+import '/models/Product.dart';
+import '/size_config.dart';
 
 class ProductDescription extends StatelessWidget {
   const ProductDescription({

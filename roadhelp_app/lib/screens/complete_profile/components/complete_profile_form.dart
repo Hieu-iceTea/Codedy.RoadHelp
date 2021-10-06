@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:roadhelp/components/custom_surfix_icon.dart';
-import 'package:roadhelp/components/default_button.dart';
-import 'package:roadhelp/components/form_error.dart';
-import 'package:roadhelp/screens/otp/otp_screen.dart';
 
-import '../../../constants.dart';
-import '../../../size_config.dart';
+import '/components/custom_surfix_icon.dart';
+import '/components/default_button.dart';
+import '/components/form_error.dart';
+import '/constants.dart';
+import '/screens/otp/otp_screen.dart';
+import '/size_config.dart';
 
 class CompleteProfileForm extends StatefulWidget {
   @override

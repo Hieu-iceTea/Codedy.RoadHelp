@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:roadhelp/models/Cart.dart';
 
-import 'components/body.dart';
-import 'components/check_out_card.dart';
+import '/models/Cart.dart';
+import '/screens/cart/components/body.dart';
+import '/screens/cart/components/check_out_card.dart';
 
 class CartScreen extends StatelessWidget {
   static String routeName = "/cart";

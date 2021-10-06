@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:roadhelp/size_config.dart';
 
+import '/size_config.dart';
 import 'components/body.dart';
 
 class OtpScreen extends StatelessWidget {
