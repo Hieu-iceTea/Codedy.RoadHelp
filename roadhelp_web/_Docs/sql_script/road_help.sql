@@ -21,7 +21,6 @@ ALTER DATABASE `road_help` CHARACTER SET utf8 COLLATE utf8_unicode_ci;
 
 # Create Table users
 DROP TABLE IF EXISTS `users`;
-
 CREATE TABLE IF NOT EXISTS `users`
 (
     `id`                  INT AUTO_INCREMENT,
@@ -52,6 +51,7 @@ CREATE TABLE IF NOT EXISTS `users`
     PRIMARY KEY (`id`)
     ) ENGINE InnoDB;
 
+DROP TABLE IF EXISTS `partner`;
 CREATE TABLE IF NOT EXISTS `partner`
 (
     `id`                  INT AUTO_INCREMENT,
@@ -84,7 +84,7 @@ CREATE TABLE IF NOT EXISTS `partner`
     PRIMARY KEY (`id`)
     ) ENGINE InnoDB;
 
-
+DROP TABLE IF EXISTS `admin`;
 CREATE TABLE IF NOT EXISTS `admin`
 (
     `id`                  INT AUTO_INCREMENT,
@@ -117,6 +117,7 @@ CREATE TABLE IF NOT EXISTS `admin`
     PRIMARY KEY (`id`)
     ) ENGINE InnoDB;
 
+DROP TABLE IF EXISTS `garage`;
 CREATE TABLE IF NOT EXISTS `garage`
 (
     `id`                  INT AUTO_INCREMENT,
@@ -146,6 +147,7 @@ CREATE TABLE IF NOT EXISTS `garage`
     PRIMARY KEY (`id`)
     ) ENGINE InnoDB;
 
+DROP TABLE IF EXISTS `ratingPartner`;
 CREATE TABLE IF NOT EXISTS `ratingPartner`
 (
     `id`                  INT AUTO_INCREMENT,
@@ -164,6 +166,7 @@ CREATE TABLE IF NOT EXISTS `ratingPartner`
     PRIMARY KEY (`id`)
     ) ENGINE InnoDB;
 
+DROP TABLE IF EXISTS `ratingGarage`;
 CREATE TABLE IF NOT EXISTS `ratingGarage`
 (
     `id`                  INT AUTO_INCREMENT,
@@ -182,7 +185,7 @@ CREATE TABLE IF NOT EXISTS `ratingGarage`
     PRIMARY KEY (`id`)
     ) ENGINE InnoDB;
 
-
+DROP TABLE IF EXISTS `issues_detail`;
 CREATE TABLE IF NOT EXISTS `issues_detail`
 (
     `id`                  INT AUTO_INCREMENT,
@@ -207,6 +210,7 @@ CREATE TABLE IF NOT EXISTS `issues_detail`
 
     PRIMARY KEY (`id`)
     ) ENGINE InnoDB;
+DROP TABLE IF EXISTS `issues`;
 CREATE TABLE IF NOT EXISTS `issues`
 (
     `id`                  INT AUTO_INCREMENT,
@@ -223,6 +227,7 @@ CREATE TABLE IF NOT EXISTS `issues`
     PRIMARY KEY (`id`)
     ) ENGINE InnoDB;
 
+DROP TABLE IF EXISTS `note_list`;
 CREATE TABLE IF NOT EXISTS `note_list`
 (
     `id`                  INT AUTO_INCREMENT,
@@ -264,22 +269,349 @@ CREATE TABLE IF NOT EXISTS `authorities`
 # = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = #
 
 # Default password: 123456
+#
+# INSERT INTO users (id, username, email, password, email_verified_at, image, gender, first_name, last_name, phone, active)
+# VALUES
+# (13, 'Hieu_iceTea', 'DinhHieu8896@gmail.com', '{bcrypt}$2y$10$//Od0OmEqRwFepW3wynrYOwslyvaS.snzBbpWwskF1Zrg5fNI.eTe', '1996-08-08', 'Hieu_iceTea.jpg', 1, 'Nguyễn Đình', 'Hiếu', '0868 6633 15', TRUE),
+# (12, 'ThiDK', 'ThiDK@fpt.edu.vn ', '{bcrypt}$2y$10$//Od0OmEqRwFepW3wynrYOwslyvaS.snzBbpWwskF1Zrg5fNI.eTe', '2021-08-08', 'ThiDK.jpg', 2, 'Đặng Kim', 'Thi', '0868 6633 15', TRUE),
+# (11, 'DinhHieu8896', 'HieuNDTH1908028@fpt.edu.vn', '{bcrypt}$2y$10$//Od0OmEqRwFepW3wynrYOwslyvaS.snzBbpWwskF1Zrg5fNI.eTe', '2021-08-08', 'DinhHieu8896.jpg', 1, 'Nguyễn Đình', 'Hiếu', '0868 6633 15', TRUE),
+# (10, 'HungNPMTH1908050', 'HungNPMTH1908050@fpt.edu.vn', '{bcrypt}$2y$10$//Od0OmEqRwFepW3wynrYOwslyvaS.snzBbpWwskF1Zrg5fNI.eTe', '2021-08-08', 'HungNPMTH1908050.jpg', 1, 'Nông Phan Mạnh', 'Hùng', '0868 6633 15', TRUE),
+# (9, 'HuyVQTH1909003', 'HuyVQTH1909003@fpt.edu.vn', '{bcrypt}$2y$10$//Od0OmEqRwFepW3wynrYOwslyvaS.snzBbpWwskF1Zrg5fNI.eTe', '2021-08-08', 'HuyVQTH1909003.jpg', 1, 'Vũ Quang', 'Huy', '0868 6633 15', TRUE),
+# (8, 'AnhNTTH1908059', 'AnhNTTH1908059@fpt.edu.vn', '{bcrypt}$2y$10$//Od0OmEqRwFepW3wynrYOwslyvaS.snzBbpWwskF1Zrg5fNI.eTe', '2021-08-08', 'AnhNTTH1908059.jpg', 1, 'Nguyễn Trung', 'Anh', '0868 6633 15', TRUE),
+# (7, 'Customer', 'codedy.demo@gmail.com', '{bcrypt}$2y$10$//Od0OmEqRwFepW3wynrYOwslyvaS.snzBbpWwskF1Zrg5fNI.eTe', '2021-08-08', 'customer.jpg', 1, 'CODEDY', 'Customer', '0868 6633 15', TRUE),
+# (6, 'Staff_C', 'staff_c.codedy@gmail.com', '{bcrypt}$2y$10$//Od0OmEqRwFepW3wynrYOwslyvaS.snzBbpWwskF1Zrg5fNI.eTe', '2021-08-08', 'staff_c.jpg', 1, 'CODEDY', 'Staff C', '0868 6633 15', TRUE),
+# (5, 'Staff_B', 'staff_b.codedy@gmail.com', '{bcrypt}$2y$10$//Od0OmEqRwFepW3wynrYOwslyvaS.snzBbpWwskF1Zrg5fNI.eTe', '2021-08-08', 'staff_b.jpg', 2, 'CODEDY', 'Staff B', '0868 6633 15', TRUE),
+# (4, 'Staff_A', 'staff_a.codedy@gmail.com', '{bcrypt}$2y$10$//Od0OmEqRwFepW3wynrYOwslyvaS.snzBbpWwskF1Zrg5fNI.eTe', '2021-08-08', 'staff_a.jpg', 1, 'CODEDY', 'Staff A', '0868 6633 15', TRUE),
+# (3, 'Admin_ReadOnly', 'admin_readOnly.codedy@gmail.com', '{bcrypt}$2y$10$//Od0OmEqRwFepW3wynrYOwslyvaS.snzBbpWwskF1Zrg5fNI.eTe', '2021-08-08', 'admin_readOnly.jpg', 1, 'CODEDY', 'Admin ReadOnly', '0868 6633 15', TRUE),
+# (2, 'Admin', 'admin.codedy@gmail.com', '{bcrypt}$2y$10$//Od0OmEqRwFepW3wynrYOwslyvaS.snzBbpWwskF1Zrg5fNI.eTe', '2021-08-08', 'admin.jpg', 1, 'CODEDY', 'Admin', '0868 6633 15', TRUE),
+# (1, 'Host', 'host.codedy@gmail.com', '{bcrypt}$2y$10$//Od0OmEqRwFepW3wynrYOwslyvaS.snzBbpWwskF1Zrg5fNI.eTe', '2021-08-08', 'host.jpg', 1, 'CODEDY', 'Host', '032 87 99 000', TRUE);
+#region Insert Users
+INSERT INTO users (id, username, email, password, email_verified_at, image, gender, first_name, last_name, phone, active)
+VALUE (1, 'Host', 'host.codedy@gmail.com', '$2y$10$oW..IGNT/CH2muKpN/8LAuNJ1ahnwLoyCBWRQyBj4p6ITOJFb.gs2', '2021-08-08', 'host.jpg', 1, 'CODEDY', 'Host', '032 87 99 000', TRUE);
 
 INSERT INTO users (id, username, email, password, email_verified_at, image, gender, first_name, last_name, phone, active)
-VALUES
-(13, 'Hieu_iceTea', 'DinhHieu8896@gmail.com', '{bcrypt}$2y$10$//Od0OmEqRwFepW3wynrYOwslyvaS.snzBbpWwskF1Zrg5fNI.eTe', '1996-08-08', 'Hieu_iceTea.jpg', 1, 'Nguyễn Đình', 'Hiếu', '0868 6633 15', TRUE),
-(12, 'ThiDK', 'ThiDK@fpt.edu.vn ', '{bcrypt}$2y$10$//Od0OmEqRwFepW3wynrYOwslyvaS.snzBbpWwskF1Zrg5fNI.eTe', '2021-08-08', 'ThiDK.jpg', 2, 'Đặng Kim', 'Thi', '0868 6633 15', TRUE),
-(11, 'DinhHieu8896', 'HieuNDTH1908028@fpt.edu.vn', '{bcrypt}$2y$10$//Od0OmEqRwFepW3wynrYOwslyvaS.snzBbpWwskF1Zrg5fNI.eTe', '2021-08-08', 'DinhHieu8896.jpg', 1, 'Nguyễn Đình', 'Hiếu', '0868 6633 15', TRUE),
-(10, 'HungNPMTH1908050', 'HungNPMTH1908050@fpt.edu.vn', '{bcrypt}$2y$10$//Od0OmEqRwFepW3wynrYOwslyvaS.snzBbpWwskF1Zrg5fNI.eTe', '2021-08-08', 'HungNPMTH1908050.jpg', 1, 'Nông Phan Mạnh', 'Hùng', '0868 6633 15', TRUE),
-(9, 'HuyVQTH1909003', 'HuyVQTH1909003@fpt.edu.vn', '{bcrypt}$2y$10$//Od0OmEqRwFepW3wynrYOwslyvaS.snzBbpWwskF1Zrg5fNI.eTe', '2021-08-08', 'HuyVQTH1909003.jpg', 1, 'Vũ Quang', 'Huy', '0868 6633 15', TRUE),
-(8, 'AnhNTTH1908059', 'AnhNTTH1908059@fpt.edu.vn', '{bcrypt}$2y$10$//Od0OmEqRwFepW3wynrYOwslyvaS.snzBbpWwskF1Zrg5fNI.eTe', '2021-08-08', 'AnhNTTH1908059.jpg', 1, 'Nguyễn Trung', 'Anh', '0868 6633 15', TRUE),
-(7, 'Customer', 'codedy.demo@gmail.com', '{bcrypt}$2y$10$//Od0OmEqRwFepW3wynrYOwslyvaS.snzBbpWwskF1Zrg5fNI.eTe', '2021-08-08', 'customer.jpg', 1, 'CODEDY', 'Customer', '0868 6633 15', TRUE),
-(6, 'Staff_C', 'staff_c.codedy@gmail.com', '{bcrypt}$2y$10$//Od0OmEqRwFepW3wynrYOwslyvaS.snzBbpWwskF1Zrg5fNI.eTe', '2021-08-08', 'staff_c.jpg', 1, 'CODEDY', 'Staff C', '0868 6633 15', TRUE),
-(5, 'Staff_B', 'staff_b.codedy@gmail.com', '{bcrypt}$2y$10$//Od0OmEqRwFepW3wynrYOwslyvaS.snzBbpWwskF1Zrg5fNI.eTe', '2021-08-08', 'staff_b.jpg', 2, 'CODEDY', 'Staff B', '0868 6633 15', TRUE),
-(4, 'Staff_A', 'staff_a.codedy@gmail.com', '{bcrypt}$2y$10$//Od0OmEqRwFepW3wynrYOwslyvaS.snzBbpWwskF1Zrg5fNI.eTe', '2021-08-08', 'staff_a.jpg', 1, 'CODEDY', 'Staff A', '0868 6633 15', TRUE),
-(3, 'Admin_ReadOnly', 'admin_readOnly.codedy@gmail.com', '{bcrypt}$2y$10$//Od0OmEqRwFepW3wynrYOwslyvaS.snzBbpWwskF1Zrg5fNI.eTe', '2021-08-08', 'admin_readOnly.jpg', 1, 'CODEDY', 'Admin ReadOnly', '0868 6633 15', TRUE),
-(2, 'Admin', 'admin.codedy@gmail.com', '{bcrypt}$2y$10$//Od0OmEqRwFepW3wynrYOwslyvaS.snzBbpWwskF1Zrg5fNI.eTe', '2021-08-08', 'admin.jpg', 1, 'CODEDY', 'Admin', '0868 6633 15', TRUE),
-(1, 'Host', 'host.codedy@gmail.com', '{bcrypt}$2y$10$//Od0OmEqRwFepW3wynrYOwslyvaS.snzBbpWwskF1Zrg5fNI.eTe', '2021-08-08', 'host.jpg', 1, 'CODEDY', 'Host', '032 87 99 000', TRUE);
+VALUE (2, 'Admin', 'admin.codedy@gmail.com', '$2y$10$//Od0OmEqRwFepW3wynrYOwslyvaS.snzBbpWwskF1Zrg5fNI.eTe', '2021-08-08', 'admin.jpg', 1, 'CODEDY', 'Admin', '0868 6633 15', TRUE);
+
+INSERT INTO users (id, username, email, password, email_verified_at, image, gender, first_name, last_name, phone, active)
+VALUE (3, 'Admin_Demo', 'admin_demo.codedy@gmail.com', '$2y$10$//Od0OmEqRwFepW3wynrYOwslyvaS.snzBbpWwskF1Zrg5fNI.eTe', '2021-08-08', 'admin_demo.jpg', 1, 'CODEDY', 'Admin Demo', '0868 6633 15', FALSE);
+
+INSERT INTO users (id, username, email, password, email_verified_at, image, gender, first_name, last_name, phone, active)
+VALUE (4, 'Staff_A', 'staff_a.codedy@gmail.com', '$2y$10$//Od0OmEqRwFepW3wynrYOwslyvaS.snzBbpWwskF1Zrg5fNI.eTe', '2021-08-08', 'staff_a.jpg', 1, 'CODEDY', 'Staff A', '0868 6633 15', TRUE);
+
+INSERT INTO users (id, username, email, password, email_verified_at, image, gender, first_name, last_name, phone, active)
+VALUE (5, 'Staff_B', 'staff_b.codedy@gmail.com', '$2y$10$//Od0OmEqRwFepW3wynrYOwslyvaS.snzBbpWwskF1Zrg5fNI.eTe', '2021-08-08', 'staff_b.jpg', 2, 'CODEDY', 'Staff B', '0868 6633 15', TRUE);
+
+INSERT INTO users (id, username, email, password, email_verified_at, image, gender, first_name, last_name, phone, active)
+VALUE (6, 'Customer', 'codedy.demo@gmail.com', '$2y$10$//Od0OmEqRwFepW3wynrYOwslyvaS.snzBbpWwskF1Zrg5fNI.eTe', '2021-08-08', 'customer.jpg', 1, 'CODEDY', 'Customer', '0868 6633 15', TRUE);
+
+INSERT INTO users (id, username, email, password, email_verified_at, image, gender, first_name, last_name, phone, active)
+VALUE (7, 'AnhNTTH1908059', 'AnhNTTH1908059@fpt.edu.vn', '$2y$10$//Od0OmEqRwFepW3wynrYOwslyvaS.snzBbpWwskF1Zrg5fNI.eTe', '2021-08-08', 'AnhNTTH1908059.jpg', 1, 'Nguyễn Trung', 'Anh', '0868 6633 15', TRUE);
+
+INSERT INTO users (id, username, email, password, email_verified_at, image, gender, first_name, last_name, phone, active)
+VALUE (8, 'HuyVQTH1909003', 'HuyVQTH1909003@fpt.edu.vn', '$2y$10$//Od0OmEqRwFepW3wynrYOwslyvaS.snzBbpWwskF1Zrg5fNI.eTe', '2021-08-08', 'HuyVQTH1909003.jpg', 1, 'Vũ Quang', 'Huy', '0868 6633 15', TRUE);
+
+INSERT INTO users (id, username, email, password, email_verified_at, image, gender, first_name, last_name, phone, active)
+VALUE (9, 'HungNPMTH1908050', 'HungNPMTH1908050@fpt.edu.vn', '$2y$10$//Od0OmEqRwFepW3wynrYOwslyvaS.snzBbpWwskF1Zrg5fNI.eTe', '2021-08-08', 'HungNPMTH1908050.jpg', 1, 'Nông Phan Mạnh', 'Hùng', '0868 6633 15', TRUE);
+
+INSERT INTO users (id, username, email, password, email_verified_at, image, gender, first_name, last_name, phone, active)
+VALUE (10, 'DinhHieu9999', 'HieuNDTH1908028@fpt.edu.vn', '$2y$10$//Od0OmEqRwFepW3wynrYOwslyvaS.snzBbpWwskF1Zrg5fNI.eTe', '2021-08-08', 'DinhHieu9999.jpg', 1, 'Nguyễn Đình', 'Hiếu', '0868 6633 15', TRUE);
+
+INSERT INTO users (id, username, email, password, email_verified_at, image, gender, first_name, last_name, phone, active)
+VALUE (11, 'ManhHung', 'ThiDK@fpt.edu.vn ', '$2y$10$//Od0OmEqRwFepW3wynrYOwslyvaS.snzBbpWwskF1Zrg5fNI.eTe', '2021-08-08', 'ManhHung.jpg', 2, 'Đặng Kim', 'Thi', '0868 6633 15', TRUE);
+
+INSERT INTO users (id, username, email, password, email_verified_at, image, gender, first_name, last_name, phone, active)
+VALUE (12, 'Staff_C', 'staff_c.codedy@gmail.com', '$2y$10$//Od0OmEqRwFepW3wynrYOwslyvaS.snzBbpWwskF1Zrg5fNI.eTe', '2021-08-08', 'staff_c.jpg', 1, 'CODEDY', 'Staff C', '0868 6633 15', TRUE);
+
+
+#endregion
+
+#region Insert Admin
+INSERT INTO admin (id, username, email, password, email_verified_at, image, gender, first_name, last_name, phone, active)
+VALUE (12, 'Staff_C', 'staff_c.codedy@gmail.com', '$2y$10$//Od0OmEqRwFepW3wynrYOwslyvaS.snzBbpWwskF1Zrg5fNI.eTe', '2021-08-08', 'staff_c.jpg', 1, 'CODEDY', 'Staff C', '0868 6633 15', TRUE);
+
+INSERT INTO admin (id, username, email, password, email_verified_at, image, gender, first_name, last_name, phone, active)
+VALUE (11, 'ManhHung', 'ThiDK@fpt.edu.vn ', '$2y$10$//Od0OmEqRwFepW3wynrYOwslyvaS.snzBbpWwskF1Zrg5fNI.eTe', '2021-08-08', 'ManhHung.jpg', 2, 'Đặng Kim', 'Thi', '0868 6633 15', TRUE);
+
+INSERT INTO admin (id, username, email, password, email_verified_at, image, gender, first_name, last_name, phone, active)
+VALUE (10, 'DinhHieu9999', 'HieuNDTH1908028@fpt.edu.vn', '$2y$10$//Od0OmEqRwFepW3wynrYOwslyvaS.snzBbpWwskF1Zrg5fNI.eTe', '2021-08-08', 'DinhHieu9999.jpg', 1, 'Nguyễn Đình', 'Hiếu', '0868 6633 15', TRUE);
+
+INSERT INTO admin (id, username, email, password, email_verified_at, image, gender, first_name, last_name, phone, active)
+VALUE (9, 'HungNPMTH1908050', 'HungNPMTH1908050@fpt.edu.vn', '$2y$10$//Od0OmEqRwFepW3wynrYOwslyvaS.snzBbpWwskF1Zrg5fNI.eTe', '2021-08-08', 'HungNPMTH1908050.jpg', 1, 'Nông Phan Mạnh', 'Hùng', '0868 6633 15', TRUE);
+
+INSERT INTO admin (id, username, email, password, email_verified_at, image, gender, first_name, last_name, phone, active)
+VALUE (8, 'HuyVQTH1909003', 'HuyVQTH1909003@fpt.edu.vn', '$2y$10$//Od0OmEqRwFepW3wynrYOwslyvaS.snzBbpWwskF1Zrg5fNI.eTe', '2021-08-08', 'HuyVQTH1909003.jpg', 1, 'Vũ Quang', 'Huy', '0868 6633 15', TRUE);
+
+INSERT INTO admin (id, username, email, password, email_verified_at, image, gender, first_name, last_name, phone, active)
+VALUE (7, 'AnhNTTH1908059', 'AnhNTTH1908059@fpt.edu.vn', '$2y$10$//Od0OmEqRwFepW3wynrYOwslyvaS.snzBbpWwskF1Zrg5fNI.eTe', '2021-08-08', 'AnhNTTH1908059.jpg', 1, 'Nguyễn Trung', 'Anh', '0868 6633 15', TRUE);
+
+INSERT INTO admin (id, username, email, password, email_verified_at, image, gender, first_name, last_name, phone, active)
+VALUE (6, 'Customer', 'codedy.demo@gmail.com', '$2y$10$//Od0OmEqRwFepW3wynrYOwslyvaS.snzBbpWwskF1Zrg5fNI.eTe', '2021-08-08', 'customer.jpg', 1, 'CODEDY', 'Customer', '0868 6633 15', TRUE);
+
+INSERT INTO admin (id, username, email, password, email_verified_at, image, gender, first_name, last_name, phone, active)
+VALUE (5, 'Staff_B', 'staff_b.codedy@gmail.com', '$2y$10$//Od0OmEqRwFepW3wynrYOwslyvaS.snzBbpWwskF1Zrg5fNI.eTe', '2021-08-08', 'staff_b.jpg', 2, 'CODEDY', 'Staff B', '0868 6633 15', TRUE);
+
+INSERT INTO admin (id, username, email, password, email_verified_at, image, gender, first_name, last_name, phone, active)
+VALUE (4, 'Staff_A', 'staff_a.codedy@gmail.com', '$2y$10$//Od0OmEqRwFepW3wynrYOwslyvaS.snzBbpWwskF1Zrg5fNI.eTe', '2021-08-08', 'staff_a.jpg', 1, 'CODEDY', 'Staff A', '0868 6633 15', TRUE);
+
+INSERT INTO admin (id, username, email, password, email_verified_at, image, gender, first_name, last_name, phone, active)
+VALUE (3, 'Admin_Demo', 'admin_demo.codedy@gmail.com', '$2y$10$//Od0OmEqRwFepW3wynrYOwslyvaS.snzBbpWwskF1Zrg5fNI.eTe', '2021-08-08', 'admin_demo.jpg', 1, 'CODEDY', 'Admin Demo', '0868 6633 15', FALSE);
+
+INSERT INTO admin (id, username, email, password, email_verified_at, image, gender, first_name, last_name, phone, active)
+VALUE (2, 'Admin', 'admin.codedy@gmail.com', '$2y$10$//Od0OmEqRwFepW3wynrYOwslyvaS.snzBbpWwskF1Zrg5fNI.eTe', '2021-08-08', 'admin.jpg', 1, 'CODEDY', 'Admin', '0868 6633 15', TRUE);
+
+INSERT INTO admin (id, username, email, password, email_verified_at, image, gender, first_name, last_name, phone, active)
+VALUE (1, 'Host', 'host.codedy@gmail.com', '$2y$10$oW..IGNT/CH2muKpN/8LAuNJ1ahnwLoyCBWRQyBj4p6ITOJFb.gs2', '2021-08-08', 'host.jpg', 1, 'CODEDY', 'Host', '032 87 99 000', TRUE);
+
+
+#endregion
+#region Insert partner
+INSERT INTO partner (id, username, email, password, email_verified_at, image, gender, first_name, last_name, phone,rate, active)
+VALUE (12, 'Staff_C', 'staff_c.codedy@gmail.com', '$2y$10$//Od0OmEqRwFepW3wynrYOwslyvaS.snzBbpWwskF1Zrg5fNI.eTe', '2021-08-08', 'staff_c.jpg', 1, 'CODEDY', 'Staff C', '0868 6633 15', 4, TRUE);
+
+INSERT INTO partner (id, username, email, password, email_verified_at, image, gender, first_name, last_name, phone,rate, active)
+VALUE (11, 'ManhHung', 'ThiDK@fpt.edu.vn ', '$2y$10$//Od0OmEqRwFepW3wynrYOwslyvaS.snzBbpWwskF1Zrg5fNI.eTe', '2021-08-08', 'ManhHung.jpg', 2, 'Đặng Kim', 'Thi', '0868 6633 15', 5, TRUE);
+
+INSERT INTO partner (id, username, email, password, email_verified_at, image, gender, first_name, last_name, phone,rate, active)
+VALUE (10, 'DinhHieu9999', 'HieuNDTH1908028@fpt.edu.vn', '$2y$10$//Od0OmEqRwFepW3wynrYOwslyvaS.snzBbpWwskF1Zrg5fNI.eTe', '2021-08-08', 'DinhHieu9999.jpg', 1, 'Nguyễn Đình', 'Hiếu', '0868 6633 15', 4, TRUE);
+
+INSERT INTO partner (id, username, email, password, email_verified_at, image, gender, first_name, last_name, phone,rate, active)
+VALUE (9, 'HungNPMTH1908050', 'HungNPMTH1908050@fpt.edu.vn', '$2y$10$//Od0OmEqRwFepW3wynrYOwslyvaS.snzBbpWwskF1Zrg5fNI.eTe', '2021-08-08', 'HungNPMTH1908050.jpg', 1, 'Nông Phan Mạnh', 'Hùng', '0868 6633 15', 4, TRUE);
+
+INSERT INTO partner (id, username, email, password, email_verified_at, image, gender, first_name, last_name, phone,rate, active)
+VALUE (8, 'HuyVQTH1909003', 'HuyVQTH1909003@fpt.edu.vn', '$2y$10$//Od0OmEqRwFepW3wynrYOwslyvaS.snzBbpWwskF1Zrg5fNI.eTe', '2021-08-08', 'HuyVQTH1909003.jpg', 1, 'Vũ Quang', 'Huy', '0868 6633 15', 4, TRUE);
+
+INSERT INTO partner (id, username, email, password, email_verified_at, image, gender, first_name, last_name, phone,rate, active)
+VALUE (7, 'AnhNTTH1908059', 'AnhNTTH1908059@fpt.edu.vn', '$2y$10$//Od0OmEqRwFepW3wynrYOwslyvaS.snzBbpWwskF1Zrg5fNI.eTe', '2021-08-08', 'AnhNTTH1908059.jpg', 1, 'Nguyễn Trung', 'Anh', '0868 6633 15', 5, TRUE);
+
+INSERT INTO partner (id, username, email, password, email_verified_at, image, gender, first_name, last_name, phone,rate, active)
+VALUE (6, 'Customer', 'codedy.demo@gmail.com', '$2y$10$//Od0OmEqRwFepW3wynrYOwslyvaS.snzBbpWwskF1Zrg5fNI.eTe', '2021-08-08', 'customer.jpg', 1, 'CODEDY', 'Customer', '0868 6633 15', 4, TRUE);
+
+INSERT INTO partner (id, username, email, password, email_verified_at, image, gender, first_name, last_name, phone,rate, active)
+VALUE (5, 'Staff_B', 'staff_b.codedy@gmail.com', '$2y$10$//Od0OmEqRwFepW3wynrYOwslyvaS.snzBbpWwskF1Zrg5fNI.eTe', '2021-08-08', 'staff_b.jpg', 2, 'CODEDY', 'Staff B', '0868 6633 15', 4, TRUE);
+
+INSERT INTO partner (id, username, email, password, email_verified_at, image, gender, first_name, last_name, phone,rate, active)
+VALUE (4, 'Staff_A', 'staff_a.codedy@gmail.com', '$2y$10$//Od0OmEqRwFepW3wynrYOwslyvaS.snzBbpWwskF1Zrg5fNI.eTe', '2021-08-08', 'staff_a.jpg', 1, 'CODEDY', 'Staff A', '0868 6633 15', 4, TRUE);
+
+INSERT INTO partner (id, username, email, password, email_verified_at, image, gender, first_name, last_name, phone,rate, active)
+VALUE (3, 'Admin_Demo', 'admin_demo.codedy@gmail.com', '$2y$10$//Od0OmEqRwFepW3wynrYOwslyvaS.snzBbpWwskF1Zrg5fNI.eTe', '2021-08-08', 'admin_demo.jpg', 1, 'CODEDY', 'Admin Demo', '0868 6633 15', 5, FALSE);
+
+INSERT INTO partner (id, username, email, password, email_verified_at, image, gender, first_name, last_name, phone,rate, active)
+VALUE (2, 'Admin', 'admin.codedy@gmail.com', '$2y$10$//Od0OmEqRwFepW3wynrYOwslyvaS.snzBbpWwskF1Zrg5fNI.eTe', '2021-08-08', 'admin.jpg', 1, 'CODEDY', 'Admin', '0868 6633 15', 4, TRUE);
+
+INSERT INTO partner (id, username, email, password, email_verified_at, image, gender, first_name, last_name, phone,rate, active)
+VALUE (1, 'Host', 'host.codedy@gmail.com', '$2y$10$oW..IGNT/CH2muKpN/8LAuNJ1ahnwLoyCBWRQyBj4p6ITOJFb.gs2', '2021-08-08', 'host.jpg', 1, 'CODEDY', 'Host', '032 87 99 000', 4, TRUE);
+
+
+#endregion
+#region Insert garage
+INSERT INTO garage (id,partner_id,district_id,province_id,name,rate,commune,longitude,latitude,  image , address, description, phone, active)
+VALUE (1,'1','1','1', 'Host', '4', '', '', '','host.jpg',  'CODEDY', 'Host', '032 87 99 000', TRUE);
+
+INSERT INTO garage (id,partner_id,district_id,province_id,name,rate,commune,longitude,latitude,  image , address, description, phone, active)
+VALUE (2,'2','2','2', 'Admin', '5', '', '', '','admin.jpg',  'CODEDY', 'Admin', '0868 6633 15', TRUE);
+
+INSERT INTO garage (id,partner_id,district_id,province_id,name,rate,commune,longitude,latitude,  image , address, description, phone, active)
+VALUE (3,'3','3','3', 'Admin_Demo', '4', '', '', '','admin_demo.jpg',  'CODEDY', 'Admin Demo', '0868 6633 15', FALSE);
+
+INSERT INTO garage (id,partner_id,district_id,province_id,name,rate,commune,longitude,latitude,  image , address, description, phone, active)
+VALUE (4,'4','4','4', 'Staff_A', '5', '', '', '','staff_a.jpg',  'CODEDY', 'Staff A', '0868 6633 15', TRUE);
+
+INSERT INTO garage (id,partner_id,district_id,province_id,name,rate,commune,longitude,latitude,  image , address, description, phone, active)
+VALUE (5,'5','5','5', 'Staff_B', '4', '', '', '','staff_b.jpg',  'CODEDY', 'Staff B', '0868 6633 15', TRUE);
+
+INSERT INTO garage (id,partner_id,district_id,province_id,name,rate,commune,longitude,latitude,  image , address, description, phone, active)
+VALUE (6,'6','6','6', 'Customer', '5', '', '', '','customer.jpg',  'CODEDY', 'Customer', '0868 6633 15', TRUE);
+
+INSERT INTO garage (id,partner_id,district_id,province_id,name,rate,commune,longitude,latitude,  image , address, description, phone, active)
+VALUE (7,'7','7','7', 'AnhNTTH1908059', '4', '', '', '','AnhNTTH1908059.jpg',  'Nguyễn Trung', 'Anh', '0868 6633 15', TRUE);
+
+INSERT INTO garage (id,partner_id,district_id,province_id,name,rate,commune,longitude,latitude,  image , address, description, phone, active)
+VALUE (8,'8','8','8', 'HuyVQTH1909003', '5', '', '', '','HuyVQTH1909003.jpg',  'Vũ Quang', 'Huy', '0868 6633 15', TRUE);
+
+INSERT INTO garage (id,partner_id,district_id,province_id,name,rate,commune,longitude,latitude,  image , address, description, phone, active)
+VALUE (9,'9','9','9', 'HungNPMTH1908050', '4', '', '', '','HungNPMTH1908050.jpg',  'Nông Phan Mạnh', 'Hùng', '0868 6633 15', TRUE);
+
+INSERT INTO garage (id,partner_id,district_id,province_id,name,rate,commune,longitude,latitude,  image , address, description, phone, active)
+VALUE (10,'10','10','10', 'DinhHieu9999', '5', '', '', '','DinhHieu9999.jpg',  'Nguyễn Đình', 'Hiếu', '0868 6633 15', TRUE);
+
+INSERT INTO garage (id,partner_id,district_id,province_id,name,rate,commune,longitude,latitude,  image , address, description, phone, active)
+VALUE (11,'11','11','11', 'ManhHung', '4', '', '', '','ManhHung.jpg',  'Đặng Kim', 'Thi', '0868 6633 15', TRUE);
+
+INSERT INTO garage (id,partner_id,district_id,province_id,name,rate,commune,longitude,latitude,  image , address, description, phone, active)
+VALUE (12,'12','12','12', 'Staff_C', '5', '', '', '','staff_c.jpg',  'CODEDY', 'Staff C', '0868 6633 15', TRUE);
+
+
+
+#endregion
+#region Insert notelist
+INSERT INTO note_list(id, description)
+VALUE (1, 'hết xăng');
+
+INSERT INTO note_list(id, description)
+VALUE (2, 'chết máy');
+
+INSERT INTO note_list(id, description)
+VALUE (3, 'thủng xăm');
+
+
+#endregion
+#region Insert issuesdetail
+INSERT INTO issues_detail(id, user_id, commune, longitude, latitude, phone,address, note_list_id, description, status)
+VALUE (1, 1, 'VietNam', '333', '333',  '123456789',  'HN',  '1','', '0');
+
+INSERT INTO issues_detail(id, user_id, commune, longitude, latitude, phone,address, note_list_id, description, status)
+VALUE (2, 2, 'VietNam', '5555', '5555',  '123456789',  'HN',  '2','', '0');
+
+INSERT INTO issues_detail(id, user_id, commune, longitude, latitude, phone,address, note_list_id, description, status)
+VALUE (3, 3, 'VietNam', '6665', '6665',  '123456789',  'HN',  '1','', '0');
+
+INSERT INTO issues_detail(id, user_id, commune, longitude, latitude, phone,address, note_list_id, description, status)
+VALUE (4, 4, 'VietNam', '775', '775',  '123456789',  'HN',  '3','', '0');
+
+INSERT INTO issues_detail(id, user_id, commune, longitude, latitude, phone,address, note_list_id, description, status)
+VALUE (5, 5, 'VietNam', '88', '333',  '123456789',  'HN',  '2','', '0');
+
+INSERT INTO issues_detail(id, user_id, commune, longitude, latitude, phone,address, note_list_id, description, status)
+VALUE (6, 6, 'VietNam', '333', '5555',  '123456789',  'HN',  '1','', '0');
+
+INSERT INTO issues_detail(id, user_id, commune, longitude, latitude, phone,address, note_list_id, description, status)
+VALUE (7, 7, 'VietNam', '5555', '6665',  '123456789',  'HN',  '3','', '0');
+
+INSERT INTO issues_detail(id, user_id, commune, longitude, latitude, phone,address, note_list_id, description, status)
+VALUE (8, 8, 'VietNam', '6665', '775',  '123456789',  'HN',  '2','', '0');
+
+INSERT INTO issues_detail(id, user_id, commune, longitude, latitude, phone,address, note_list_id, description, status)
+VALUE (9, 9, 'VietNam', '775', '333',  '123456789',  'HN',  '1','', '0');
+
+INSERT INTO issues_detail(id, user_id, commune, longitude, latitude, phone,address, note_list_id, description, status)
+VALUE (10, 10, 'VietNam', '88', '5555',  '123456789',  'HN',  '3','', '0');
+
+INSERT INTO issues_detail(id, user_id, commune, longitude, latitude, phone,address, note_list_id, description, status)
+VALUE (11, 11, 'VietNam', '775', '6665',  '123456789',  'HN',  '2','', '0');
+
+INSERT INTO issues_detail(id, user_id, commune, longitude, latitude, phone,address, note_list_id, description, status)
+VALUE (12, 12, 'VietNam', '88', '775',  '123456789',  'HN',  '1','', '0');
+
+
+
+#endregion
+#region Insert issues
+INSERT INTO issues(id, issues_detail_id, total_issue)
+VALUE (1, 100,100);
+
+INSERT INTO issues(id, issues_detail_id, total_issue)
+VALUE (2, 200,200);
+
+INSERT INTO issues(id, issues_detail_id, total_issue)
+VALUE (3, 300,300);
+
+INSERT INTO issues(id, issues_detail_id, total_issue)
+VALUE (4, 400,400);
+
+INSERT INTO issues(id, issues_detail_id, total_issue)
+VALUE (5, 500,500);
+
+INSERT INTO issues(id, issues_detail_id, total_issue)
+VALUE (6, 600,600);
+
+INSERT INTO issues(id, issues_detail_id, total_issue)
+VALUE (7, 700,700);
+
+INSERT INTO issues(id, issues_detail_id, total_issue)
+VALUE (8, 800,800);
+
+INSERT INTO issues(id, issues_detail_id, total_issue)
+VALUE (9, 900,900);
+
+INSERT INTO issues(id, issues_detail_id, total_issue)
+VALUE (10, 1000,1000);
+
+INSERT INTO issues(id, issues_detail_id, total_issue)
+VALUE (11, 1100,1100);
+
+INSERT INTO issues(id, issues_detail_id, total_issue)
+VALUE (12, 1200,1200);
+
+
+#endregion
+#region Insert ratingGarage
+INSERT INTO ratingGarage (id, user_id, garage_id, rate_point, comment)
+VALUE (1, 1, '1', '3', 'Very good.');
+
+INSERT INTO ratingGarage (id, user_id, garage_id, rate_point, comment)
+VALUE (2, 2, '2', '5', 'Good ');
+
+INSERT INTO ratingGarage (id, user_id, garage_id, rate_point, comment)
+VALUE (3, 3, '3', '5', 'Very good.');
+
+INSERT INTO ratingGarage (id, user_id, garage_id, rate_point, comment)
+VALUE (4, 4, '4', '5', 'Very good.');
+
+INSERT INTO ratingGarage (id, user_id, garage_id, rate_point, comment)
+VALUE (5, 5, '5', '5', 'Good ');
+
+INSERT INTO ratingGarage (id, user_id, garage_id, rate_point, comment)
+VALUE (6, 6, '6', '4', 'Very good.');
+
+INSERT INTO ratingGarage (id, user_id, garage_id, rate_point, comment)
+VALUE (7, 7, '7', '4', 'Very good.');
+
+INSERT INTO ratingGarage (id, user_id, garage_id, rate_point, comment)
+VALUE (8, 8, '8', '4', 'Very good.');
+
+INSERT INTO ratingGarage (id, user_id, garage_id, rate_point, comment)
+VALUE (9, 9, '9', '4', 'very good.');
+
+INSERT INTO ratingGarage (id, user_id, garage_id, rate_point, comment)
+VALUE (10, 10, '10', '4', 'Good ');
+
+INSERT INTO ratingGarage (id, user_id, garage_id, rate_point, comment)
+VALUE (11, 11, '11', '4', 'Good ');
+
+INSERT INTO ratingGarage (id, user_id, garage_id, rate_point, comment)
+VALUE (12, 12, '12', '5', 'Good ');
+
+
+#endregion
+#region Insert ratingPartner
+INSERT INTO ratingPartner (id, user_id, partner_id, rate_point, comment)
+VALUE (1, 1, '1', '3', 'Very good.');
+
+INSERT INTO ratingPartner (id, user_id, partner_id, rate_point, comment)
+VALUE (2, 2, '2', '5', 'Good ');
+
+INSERT INTO ratingPartner (id, user_id, partner_id, rate_point, comment)
+VALUE (3, 3, '3', '5', 'Very good.');
+
+INSERT INTO ratingPartner (id, user_id, partner_id, rate_point, comment)
+VALUE (4, 4, '4', '5', 'Very good.');
+
+INSERT INTO ratingPartner (id, user_id, partner_id, rate_point, comment)
+VALUE (5, 5, '5', '5', 'Good ');
+
+INSERT INTO ratingPartner (id, user_id, partner_id, rate_point, comment)
+VALUE (6, 6, '6', '4', 'Very good.');
+
+INSERT INTO ratingPartner (id, user_id, partner_id, rate_point, comment)
+VALUE (7, 7, '7', '4', 'Very good.');
+
+INSERT INTO ratingPartner (id, user_id, partner_id, rate_point, comment)
+VALUE (8, 8, '8', '4', 'Very good.');
+
+INSERT INTO ratingPartner (id, user_id, partner_id, rate_point, comment)
+VALUE (9, 9, '9', '4', 'very good.');
+
+INSERT INTO ratingPartner (id, user_id, partner_id, rate_point, comment)
+VALUE (10, 10, '10', '4', 'Good ');
+
+INSERT INTO ratingPartner (id, user_id, partner_id, rate_point, comment)
+VALUE (11, 11, '11', '4', 'Good ');
+
+INSERT INTO ratingPartner (id, user_id, partner_id, rate_point, comment)
+VALUE (12, 12, '12', '5', 'Good ');
+
+
+#endregion
 
 
 INSERT INTO authorities (username, authority)
