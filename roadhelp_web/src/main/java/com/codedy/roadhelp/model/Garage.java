@@ -1,43 +1,26 @@
 package com.codedy.roadhelp.model;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
-import javax.validation.constraints.Email;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
-import java.util.Date;
+import java.util.List;
+import java.util.regex.Pattern;
 
 @Entity
 @Table(name = "garage")
 public class Garage extends BaseModel implements Serializable {
 
     //region - Define Fields -
-    @NotNull
     @Size(min = 2, max = 64)
-    private String username;
+    private String name;
 
-    @NotNull
-    @Email
-    @Size(min = 2, max = 64)
-    private String email;
-
-    //@NotNull
-    //@Size(min = 2, max = 128)
-    private String password;
-
-    // - - - - -
-    private Date emailVerifiedAt;
-    private String verificationCode;
-    private String resetPasswordCode;
-    private String rememberToken;
-
-    // - - - - -
     @Size(max = 128)
     private String image;
 
-    @Size(min = 2, max = 64)
-    private String rate;
+    private Boolean gender;
+
+    private double rate;
 
     @Size(min = 2, max = 64)
     private String address;
@@ -64,72 +47,16 @@ public class Garage extends BaseModel implements Serializable {
 
 
     //region - Relationship -
-    /*@ManyToOne
-    @JoinColumn(name = "id") //updatable = false, insertable = false
+    @ManyToOne
+    @JoinColumn(name = "partner_id")
     private Partner partner;
 
-    @OneToMany(mappedBy = "ratings") //updatable = false, insertable = false
-    private List<RatingGarage> NoteLists;*/
+    @OneToMany(mappedBy = "garage")
+    private List<RatingGarage> ratingGarages;
     //endregion
 
 
     //region - Getter & Setter -
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public Date getEmailVerifiedAt() {
-        return emailVerifiedAt;
-    }
-
-    public void setEmailVerifiedAt(Date emailVerifiedAt) {
-        this.emailVerifiedAt = emailVerifiedAt;
-    }
-
-    public String getVerificationCode() {
-        return verificationCode;
-    }
-
-    public void setVerificationCode(String verificationCode) {
-        this.verificationCode = verificationCode;
-    }
-
-    public String getResetPasswordCode() {
-        return resetPasswordCode;
-    }
-
-    public void setResetPasswordCode(String resetPasswordCode) {
-        this.resetPasswordCode = resetPasswordCode;
-    }
-
-    public String getRememberToken() {
-        return rememberToken;
-    }
-
-    public void setRememberToken(String rememberToken) {
-        this.rememberToken = rememberToken;
-    }
-
     public String getImage() {
         return image;
     }
@@ -138,11 +65,19 @@ public class Garage extends BaseModel implements Serializable {
         this.image = image;
     }
 
-    public String getRate() {
+    public Boolean getGender() {
+        return gender;
+    }
+
+    public void setGender(Boolean gender) {
+        this.gender = gender;
+    }
+
+    public double getRate() {
         return rate;
     }
 
-    public void setRate(String rate) {
+    public void setRate(double rate) {
         this.rate = rate;
     }
 
@@ -202,7 +137,7 @@ public class Garage extends BaseModel implements Serializable {
         this.active = active;
     }
 
-    /*public Partner getPartner() {
+    public Partner getPartner() {
         return partner;
     }
 
@@ -210,13 +145,41 @@ public class Garage extends BaseModel implements Serializable {
         this.partner = partner;
     }
 
-    public List<RatingGarage> getNoteLists() {
-        return NoteLists;
+    public List<RatingGarage> getRatingGarages() {
+        return ratingGarages;
     }
 
-    public void setNoteLists(List<RatingGarage> noteLists) {
-        NoteLists = noteLists;
-    }*/
+    public void setRatingGarages(List<RatingGarage> ratingGarages) {
+        this.ratingGarages = ratingGarages;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    @Override
+    public String toString() {
+        return "Garage{" +
+                "name='" + name + '\'' +
+                ", image='" + image + '\'' +
+                ", gender=" + gender +
+                ", rate='" + rate + '\'' +
+                ", address='" + address + '\'' +
+                ", phone='" + phone + '\'' +
+                ", commune='" + commune + '\'' +
+                ", longitude='" + longitude + '\'' +
+                ", latitude='" + latitude + '\'' +
+                ", description='" + description + '\'' +
+                ", active=" + active +
+                ", partner=" + partner +
+                ", ratingGarages=" + ratingGarages +
+                '}';
+    }
+
     //endregion
 
 }

@@ -1,10 +1,7 @@
 package com.codedy.roadhelp.model;
 
 
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
@@ -15,6 +12,7 @@ public class RatingPartner extends BaseModel implements Serializable{
 
     //region - Define Fields -
     @NotNull
+    @Size(max = 11)
     private int ratePoint;
 
     @Size(max = 256)
@@ -23,13 +21,13 @@ public class RatingPartner extends BaseModel implements Serializable{
 
 
     //region - Relationship -
-    /*@ManyToOne
-    @JoinColumn(name = "id") //updatable = false, insertable = false
-    private Partner partners;
+    @ManyToOne
+    @JoinColumn(name = "partner_id") //updatable = false, insertable = false
+    private Partner partner;
 
     @ManyToOne
-    @JoinColumn(name = "id") //updatable = false, insertable = false
-    private User users;*/
+    @JoinColumn(name = "user_id") //updatable = false, insertable = false
+    private User users;
     //endregion
 
 
@@ -50,12 +48,12 @@ public class RatingPartner extends BaseModel implements Serializable{
         this.comment = comment;
     }
 
-    /*public Partner getPartners() {
-        return partners;
+    public Partner getPartner() {
+        return partner;
     }
 
-    public void setPartners(Partner partners) {
-        this.partners = partners;
+    public void setPartner(Partner partners) {
+        this.partner = partners;
     }
 
     public User getUsers() {
@@ -64,7 +62,18 @@ public class RatingPartner extends BaseModel implements Serializable{
 
     public void setUsers(User users) {
         this.users = users;
-    }*/
+    }
+
+    @Override
+    public String toString() {
+        return "RatingPartner{" +
+                "ratePoint=" + ratePoint +
+                ", comment='" + comment + '\'' +
+                ", partner=" + partner +
+                ", users=" + users +
+                '}';
+    }
+
     //endregion
 
 }

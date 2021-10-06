@@ -1,8 +1,6 @@
 package com.codedy.roadhelp.model;
 
-import javax.persistence.Entity;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -24,8 +22,7 @@ public class User extends BaseModel implements Serializable {
     @Size(min = 2, max = 64)
     private String email;
 
-    //@NotNull
-    //@Size(min = 2, max = 128)
+    @Size(max = 128)
     private String password;
 
     // - - - - -
@@ -56,10 +53,15 @@ public class User extends BaseModel implements Serializable {
 
 
     //region - Relationship -
-    /*@OneToMany(mappedBy = "user")
-    private List<IssuesDetail> issuesDetails;*/
-    //endregion
+    @OneToMany(mappedBy = "users")
+    private List<IssuesDetail> issuesDetails;
 
+    @OneToMany(mappedBy = "users")
+    private List<RatingGarage> ratingGarages;
+
+    @OneToMany(mappedBy = "users")
+    private List<RatingPartner> ratingPartners;
+    //endregion
 
     //region - Getter & Setter -
     public String getUsername() {
@@ -166,14 +168,29 @@ public class User extends BaseModel implements Serializable {
         this.active = active;
     }
 
-    /*public List<IssuesDetail> getIssuesDetails() {
+    public List<IssuesDetail> getIssuesDetails() {
         return issuesDetails;
     }
 
     public void setIssuesDetails(List<IssuesDetail> issuesDetails) {
         this.issuesDetails = issuesDetails;
-    }*/
-    //endregion
+    }
+
+    public List<RatingGarage> getRatingGarages() {
+        return ratingGarages;
+    }
+
+    public void setRatingGarages(List<RatingGarage> ratingGarages) {
+        this.ratingGarages = ratingGarages;
+    }
+
+    public List<RatingPartner> getRatingPartners() {
+        return ratingPartners;
+    }
+
+    public void setRatingPartners(List<RatingPartner> ratingPartners) {
+        this.ratingPartners = ratingPartners;
+    }
 
     @Override
     public String toString() {
@@ -191,7 +208,11 @@ public class User extends BaseModel implements Serializable {
                 ", lastName='" + lastName + '\'' +
                 ", phone='" + phone + '\'' +
                 ", active=" + active +
+                ", issuesDetails=" + issuesDetails +
+                ", ratingGarages=" + ratingGarages +
+                ", ratingPartners=" + ratingPartners +
                 '}';
     }
 
+    //endregion
 }

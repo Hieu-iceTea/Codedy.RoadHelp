@@ -1,7 +1,6 @@
 package com.codedy.roadhelp.model;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
@@ -20,13 +19,13 @@ public class RatingGarage extends BaseModel implements Serializable {
 
 
     //region - Relationship -
-    /*@ManyToOne
-    @JoinColumn(name = "id") //updatable = false, insertable = false
-    private Garage garages;
+    @ManyToOne
+    @JoinColumn(name = "garage_id") //updatable = false, insertable = false
+    private Garage garage;
 
     @ManyToOne
-    @JoinColumn(name = "id") //updatable = false, insertable = false
-    private User users;*/
+    @JoinColumn(name = "user_id") //updatable = false, insertable = false
+    private User users;
     //endregion
 
 
@@ -47,12 +46,12 @@ public class RatingGarage extends BaseModel implements Serializable {
         this.comment = comment;
     }
 
-    /*public Garage getGarages() {
-        return garages;
+    public Garage getGarages() {
+        return garage;
     }
 
     public void setGarages(Garage garages) {
-        this.garages = garages;
+        this.garage = garages;
     }
 
     public User getUsers() {
@@ -61,7 +60,26 @@ public class RatingGarage extends BaseModel implements Serializable {
 
     public void setUsers(User users) {
         this.users = users;
-    }*/
+    }
+
+    public Garage getGarage() {
+        return garage;
+    }
+
+    public void setGarage(Garage garage) {
+        this.garage = garage;
+    }
+
+    @Override
+    public String toString() {
+        return "RatingGarage{" +
+                "ratePoint=" + ratePoint +
+                ", comment='" + comment + '\'' +
+                ", garage=" + garage +
+                ", users=" + users +
+                '}';
+    }
+
     //endregion
 
 }

@@ -22,8 +22,8 @@ public class Admin extends BaseModel implements Serializable {
     @Size(min = 2, max = 64)
     private String email;
 
-    //@NotNull
-    //@Size(min = 2, max = 128)
+    @NotNull
+    @Size(min = 2, max = 128)
     private String password;
 
     // - - - - -
@@ -168,7 +168,6 @@ public class Admin extends BaseModel implements Serializable {
     public void setActive(Boolean active) {
         this.active = active;
     }
-    //endregion
 
     @Override
     public String toString() {
@@ -189,6 +188,8 @@ public class Admin extends BaseModel implements Serializable {
                 ", active=" + active +
                 '}';
     }
+
+    //endregion
 
 }
 

@@ -1,8 +1,6 @@
 package com.codedy.roadhelp.model;
 
-import javax.persistence.Entity;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.Size;
 import java.util.List;
 
@@ -11,14 +9,15 @@ import java.util.List;
 public class NoteList extends BaseModel {
 
     //region - Define Fields -
-    @Size(min = 2, max = 64)
     private String description;
     //endregion
 
 
     //region - Relationship -
-    /*@OneToMany(mappedBy = "note_list") //updatable = false, insertable = false
-    private List<NoteList> NoteLists;*/
+
+    @OneToOne(mappedBy = "noteList")
+    private IssuesDetail issuesDetail;
+
     //endregion
 
 
@@ -31,13 +30,22 @@ public class NoteList extends BaseModel {
         this.description = description;
     }
 
-    /*public List<NoteList> getNoteLists() {
-        return NoteLists;
+    public IssuesDetail getIssuesDetail() {
+        return issuesDetail;
     }
 
-    public void setNoteLists(List<NoteList> noteLists) {
-        NoteLists = noteLists;
-    }*/
+    public void setIssuesDetail(IssuesDetail issuesDetail) {
+        this.issuesDetail = issuesDetail;
+    }
+
+    @Override
+    public String toString() {
+        return "NoteList{" +
+                "description='" + description + '\'' +
+                ", issuesDetail=" + issuesDetail +
+                '}';
+    }
+
     //endregion
 
 }

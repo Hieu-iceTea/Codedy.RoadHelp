@@ -1,73 +1,56 @@
 package com.codedy.roadhelp.model;
 
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "issues_detail")
-public class IssuesDetail extends BaseModel {
+public class IssuesDetail extends BaseModel implements Serializable {
 
     //region - Define Fields -
-    @NotNull
-    @Size(min = 2, max = 64)
-    private String userId;
 
     @NotNull
     @Size(min = 2, max = 64)
     private String commune;
 
-    // - - - - -
-    private Date emailVerifiedAt;
-    private String verificationCode;
-    private String resetPasswordCode;
-    private String rememberToken;
-
-
-    // - - - - -
-    @Size(max = 64)
+    @Size(min = 2, max = 64)
     private String longitude;
 
     @Size(min = 2, max = 64)
     private String latitude;
 
-    @Size( max = 10)
+    @Size(max = 16)
     private String phone;
 
-    @Size(max = 200)
+    @Size(max = 128)
     private String address;
-
-    @Size(min = 2, max = 16)
-    private String note_list_id;
 
     @Size(min = 2, max = 500)
     private String description;
+
+    private Boolean status;
     //endregion
 
 
     //region - Relationship -
-    /*@ManyToOne
-    @JoinColumn(name = "id") //updatable = false, insertable = false
-    private User userIds;
-
     @ManyToOne
-    @JoinColumn(name = "id") //updatable = false, insertable = false
-    private NoteList noteListsIds;*/
+    @JoinColumn(name = "user_id") //updatable = false, insertable = false
+    private User users;
+
+    @OneToMany(mappedBy = "issuesDetail")
+    private List<Issues> issues;
+
+    @OneToOne
+    @JoinColumn(name = "note_list_id")
+    private NoteList noteList;
     //endregion
 
 
     //region - Getter & Setter -
-    public String getUserId() {
-        return userId;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
 
     public String getCommune() {
         return commune;
@@ -75,38 +58,6 @@ public class IssuesDetail extends BaseModel {
 
     public void setCommune(String commune) {
         this.commune = commune;
-    }
-
-    public Date getEmailVerifiedAt() {
-        return emailVerifiedAt;
-    }
-
-    public void setEmailVerifiedAt(Date emailVerifiedAt) {
-        this.emailVerifiedAt = emailVerifiedAt;
-    }
-
-    public String getVerificationCode() {
-        return verificationCode;
-    }
-
-    public void setVerificationCode(String verificationCode) {
-        this.verificationCode = verificationCode;
-    }
-
-    public String getResetPasswordCode() {
-        return resetPasswordCode;
-    }
-
-    public void setResetPasswordCode(String resetPasswordCode) {
-        this.resetPasswordCode = resetPasswordCode;
-    }
-
-    public String getRememberToken() {
-        return rememberToken;
-    }
-
-    public void setRememberToken(String rememberToken) {
-        this.rememberToken = rememberToken;
     }
 
     public String getLongitude() {
@@ -141,14 +92,6 @@ public class IssuesDetail extends BaseModel {
         this.address = address;
     }
 
-    public String getNote_list_id() {
-        return note_list_id;
-    }
-
-    public void setNote_list_id(String note_list_id) {
-        this.note_list_id = note_list_id;
-    }
-
     public String getDescription() {
         return description;
     }
@@ -157,21 +100,66 @@ public class IssuesDetail extends BaseModel {
         this.description = description;
     }
 
-    /*public User getUserIds() {
-        return userIds;
+    public User getUsers() {
+        return users;
     }
 
-    public void setUserIds(User userIds) {
-        this.userIds = userIds;
+    public void setUserIds(User users) {
+        this.users = users;
     }
 
-    public NoteList getNoteListsIds() {
-        return noteListsIds;
+    public List<Issues> getIssues() {
+        return issues;
     }
 
-    public void setNoteListsIds(NoteList noteListsIds) {
-        this.noteListsIds = noteListsIds;
-    }*/
+    public void setIssues(List<Issues> issues) {
+        this.issues = issues;
+    }
+
+    public NoteList getNoteLists() {
+        return noteList;
+    }
+
+    public void setNoteLists(NoteList noteLists) {
+        this.noteList = noteLists;
+    }
+
+    public Boolean getStatus() {
+        return status;
+    }
+
+    public void setStatus(Boolean status) {
+        this.status = status;
+    }
+
+    public void setUsers(User users) {
+        this.users = users;
+    }
+
+    public NoteList getNoteList() {
+        return noteList;
+    }
+
+    public void setNoteList(NoteList noteList) {
+        this.noteList = noteList;
+    }
+
+    @Override
+    public String toString() {
+        return "IssuesDetail{" +
+                "commune='" + commune + '\'' +
+                ", longitude='" + longitude + '\'' +
+                ", latitude='" + latitude + '\'' +
+                ", phone='" + phone + '\'' +
+                ", address='" + address + '\'' +
+                ", description='" + description + '\'' +
+                ", status=" + status +
+                ", users=" + users +
+                ", issues=" + issues +
+                ", noteList=" + noteList +
+                '}';
+    }
+
     //endregion
 
 }
