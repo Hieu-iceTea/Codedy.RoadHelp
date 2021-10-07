@@ -21,27 +21,25 @@ class CustomMap extends StatefulWidget {
 class _CustomMapState extends State<CustomMap> {
   LatLng? _pickedLocation;
   late Set<Marker> _markers;
+  bool isMapCreated = false;
 
   @override
   void initState() {
     _markers = widget.markers;
-    if (widget.initialCameraPosition == null) {
-      _getInitialCameraPosition();
-    }
+
     super.initState();
   }
 
-  Future<void> _getInitialCameraPosition() async {
+  Future<LatLng> _getInitialCameraPosition() async {
+    if (widget.initialCameraPosition != null) {
+      return widget.initialCameraPosition!;
+    }
+
     var currentLocation = await LocationHelper.getCurrentLocation();
-    setState(() {
-      if (currentLocation == null) {
-        widget.initialCameraPosition =
-            const LatLng(21.0291518, 105.8523056); //Hồ Gươm, Hà Nội
-        return;
-      }
-      widget.initialCameraPosition =
-          LatLng(currentLocation.latitude!, currentLocation.longitude!);
-    });
+    if (currentLocation == null) {
+      return const LatLng(21.0291518, 105.8523056); //Hồ Gươm, Hà Nội
+    }
+    return LatLng(currentLocation.latitude!, currentLocation.longitude!);
   }
 
   ArgumentCallback<LatLng>? _onTap(LatLng position) {
@@ -67,18 +65,20 @@ class _CustomMapState extends State<CustomMap> {
 
   @override
   Widget build(BuildContext context) {
-    return widget.initialCameraPosition == null
-        ? const Center(child: CircularProgressIndicator())
-        : GoogleMap(
+    return FutureBuilder<LatLng>(
+      future: _getInitialCameraPosition(),
+      builder: (BuildContext context, AsyncSnapshot<LatLng> snapshot) {
+        if (snapshot.hasData) {
+          return GoogleMap(
             initialCameraPosition: CameraPosition(
-              target: widget.initialCameraPosition!,
+              target: snapshot.data!,
               zoom: 16,
             ),
             onTap: _onTap,
             markers: _markers,
             myLocationEnabled: true,
             myLocationButtonEnabled: true,
-            padding: EdgeInsets.only(
+            padding: const EdgeInsets.only(
               top: 60,
               bottom: 100,
             ),
@@ -87,5 +87,10 @@ class _CustomMapState extends State<CustomMap> {
               setState(() {});
             },
           );
+        }
+
+        return const Center(child: CircularProgressIndicator());
+      },
+    );
   }
 }

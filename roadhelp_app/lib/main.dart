@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'config/routes.dart';
 import '/screens/splash/splash_screen.dart';
 import 'config/theme.dart';
+import 'screens/place/repair_place/member/repair_place/repair_place_screen.dart';
 
 void main() {
   runApp(MyApp());
@@ -18,7 +19,7 @@ class MyApp extends StatelessWidget {
       theme: theme(),
       // home: SplashScreen(),
       // We use routeName so that we dont need to remember the name
-      initialRoute: SplashScreen.routeName,
+      initialRoute: RepairPlaceScreen.routeName,
       routes: routes,
     );
   }
