@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:roadhelp/constants.dart';
-import 'package:roadhelp/screens/sign_in/sign_in_screen.dart';
-import 'package:roadhelp/size_config.dart';
 
-import '../../../components/default_button.dart';
+import '/components/default_button.dart';
+import '../../../config/constants.dart';
+import '/screens/auth/sign_in/sign_in_screen.dart';
+import '../../../config/size_config.dart';
 
 // This is the best practice
 import '../components/splash_content.dart';

@@ -497,40 +497,40 @@ VALUE (12, 12, 'VietNam', '88', '775',  '123456789',  'HN',  '1','', '0');
 #endregion
 #region Insert issues
 INSERT INTO issues(id, issues_detail_id, total_issue)
-VALUE (1, 100,100);
+VALUE (1, 1,100);
 
 INSERT INTO issues(id, issues_detail_id, total_issue)
-VALUE (2, 200,200);
+VALUE (2, 2,200);
 
 INSERT INTO issues(id, issues_detail_id, total_issue)
-VALUE (3, 300,300);
+VALUE (3, 3,300);
 
 INSERT INTO issues(id, issues_detail_id, total_issue)
-VALUE (4, 400,400);
+VALUE (4, 4,400);
 
 INSERT INTO issues(id, issues_detail_id, total_issue)
-VALUE (5, 500,500);
+VALUE (5, 5,500);
 
 INSERT INTO issues(id, issues_detail_id, total_issue)
-VALUE (6, 600,600);
+VALUE (6, 6,600);
 
 INSERT INTO issues(id, issues_detail_id, total_issue)
-VALUE (7, 700,700);
+VALUE (7, 7,700);
 
 INSERT INTO issues(id, issues_detail_id, total_issue)
-VALUE (8, 800,800);
+VALUE (8, 8,800);
 
 INSERT INTO issues(id, issues_detail_id, total_issue)
-VALUE (9, 900,900);
+VALUE (9, 9,900);
 
 INSERT INTO issues(id, issues_detail_id, total_issue)
-VALUE (10, 1000,1000);
+VALUE (10, 10,1000);
 
 INSERT INTO issues(id, issues_detail_id, total_issue)
-VALUE (11, 1100,1100);
+VALUE (11, 11,1100);
 
 INSERT INTO issues(id, issues_detail_id, total_issue)
-VALUE (12, 1200,1200);
+VALUE (12, 12,1200);
 
 
 #endregion
