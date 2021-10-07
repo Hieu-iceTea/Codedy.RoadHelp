@@ -82,6 +82,10 @@ class _CustomMapState extends State<CustomMap> {
               top: 60,
               bottom: 100,
             ),
+            onMapCreated: (GoogleMapController controller) {
+              //required to apply padding correctly on Android
+              setState(() {});
+            },
           );
   }
 }

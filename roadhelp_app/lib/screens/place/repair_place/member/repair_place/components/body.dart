@@ -19,9 +19,9 @@ class Body extends StatelessWidget {
             const Marker(
                 markerId: MarkerId('Marker_1'),
                 position: LatLng(21.0307539, 105.8523364)),
-          },*/
+          },
           initialCameraPosition: LatLng(21.0291518, 105.8523056),
-          //onTap: (_) => {},
+          onTap: (_) => {},*/
         ),
         Positioned(
           top: 10,
