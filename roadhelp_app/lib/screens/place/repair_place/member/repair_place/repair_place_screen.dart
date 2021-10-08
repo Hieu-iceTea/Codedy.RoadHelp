@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:roadhelp/components/rounded_icon_btn.dart';
 import 'package:roadhelp/config/size_config.dart';
+import 'package:roadhelp/models/garage.dart';
+import 'package:roadhelp/screens/place/repair_place/member/repair_place_details/repair_place_details_screen.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 import 'components/body.dart';
@@ -109,14 +111,24 @@ class RepairPlaceScreen extends StatelessWidget {
             child: ListView.builder(
               physics: NeverScrollableScrollPhysics(),
               shrinkWrap: true,
-              itemCount: 10,
+              itemCount: demoGarages.length,
               itemBuilder: (ctx, index) => Card(
                 child: ListTile(
-                  onTap: () {},
-                  leading: Image.network("https://picsum.photos/100?random=$index"),
-                  title: Text('Garage Name ($index)'),
-                  subtitle: Text(
-                      'Số điện thoại\nĐịa chỉ | Khoảng cách'),
+                  onTap: () => Navigator.pushNamed(
+                    ctx,
+                    RepairPlaceDetailsScreen.routeName,
+                    arguments:
+                        RepairPlaceDetailsArguments(garage: demoGarages[index]),
+                  ),
+                  leading: Hero(
+                    tag: demoGarages[index].id.toString(),
+                    child: Image.network(demoGarages[index].imageUrls![0]),
+                  ),
+                  title: Text(demoGarages[index].name!),
+                  subtitle: Text(demoGarages[index].phone! +
+                      '\n' +
+                      demoGarages[index].address! +
+                      '| 2 Km'),
                   trailing: RoundedIconBtn(
                     icon: Icons.directions,
                     showShadow: true,

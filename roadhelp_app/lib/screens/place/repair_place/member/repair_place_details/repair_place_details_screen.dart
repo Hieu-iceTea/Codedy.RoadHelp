@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:roadhelp/config/size_config.dart';
 import 'package:roadhelp/models/garage.dart';
 
-import '/models/Product.dart';
 import 'components/body.dart';
 import 'components/custom_app_bar.dart';
 
@@ -16,9 +15,10 @@ class RepairPlaceDetailsScreen extends StatelessWidget {
     // You have to call it on your starting screen:
     SizeConfig().init(context);
 
-    //final ProductDetailsArguments agrs = ModalRoute.of(context)!.settings.arguments as ProductDetailsArguments;
-    final GarageDetailsArguments agrs =
-        GarageDetailsArguments(garage: demoGarages[0]);
+    final RepairPlaceDetailsArguments agrs = ModalRoute.of(context)!
+        .settings
+        .arguments as RepairPlaceDetailsArguments;
+
     return Scaffold(
       backgroundColor: Color(0xFFF5F6F9),
       appBar: PreferredSize(
@@ -30,8 +30,8 @@ class RepairPlaceDetailsScreen extends StatelessWidget {
   }
 }
 
-class GarageDetailsArguments {
+class RepairPlaceDetailsArguments {
   final Garage garage;
 
-  GarageDetailsArguments({required this.garage});
+  RepairPlaceDetailsArguments({required this.garage});
 }
