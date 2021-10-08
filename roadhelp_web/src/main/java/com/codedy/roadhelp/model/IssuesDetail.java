@@ -44,7 +44,7 @@ public class IssuesDetail extends BaseModel implements Serializable {
     @OneToMany(mappedBy = "issuesDetail")
     private List<Issues> issues;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "note_list_id")
     private NoteList noteList;
     //endregion

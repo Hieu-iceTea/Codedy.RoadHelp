@@ -18,7 +18,7 @@ public class Issues extends BaseModel implements Serializable {
     //region - Relationship -
 
     @ManyToOne
-    @JoinColumn(name = "issues_id")
+    @JoinColumn(name = "issues_detail_id")
     private IssuesDetail issuesDetail;
 
     //endregion
