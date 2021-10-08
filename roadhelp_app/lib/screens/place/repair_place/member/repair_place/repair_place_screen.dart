@@ -113,7 +113,7 @@ class RepairPlaceScreen extends StatelessWidget {
               itemBuilder: (ctx, index) => Card(
                 child: ListTile(
                   onTap: () {},
-                  leading: FlutterLogo(size: 72.0),
+                  leading: Image.network("https://picsum.photos/100?random=$index"),
                   title: Text('Garage Name ($index)'),
                   subtitle: Text(
                       'Số điện thoại\nĐịa chỉ | Khoảng cách'),
