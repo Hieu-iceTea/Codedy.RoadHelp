@@ -7,7 +7,7 @@ import javax.validation.constraints.Size;
 import java.io.Serializable;
 
 @Entity
-@Table(name = "ratingPartner")
+@Table(name = "ratingpartner")
 public class RatingPartner extends BaseModel implements Serializable{
 
     //region - Define Fields -

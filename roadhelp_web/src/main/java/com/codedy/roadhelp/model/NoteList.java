@@ -15,8 +15,16 @@ public class NoteList extends BaseModel {
 
     //region - Relationship -
 
-    @OneToOne(mappedBy = "noteList")
-    private IssuesDetail issuesDetail;
+    public List<IssuesDetail> getIssuesDetails() {
+        return issuesDetails;
+    }
+
+    public void setIssuesDetails(List<IssuesDetail> issuesDetails) {
+        this.issuesDetails = issuesDetails;
+    }
+
+    @OneToMany(mappedBy = "noteList")
+    private List<IssuesDetail> issuesDetails;
 
     //endregion
 
@@ -30,19 +38,12 @@ public class NoteList extends BaseModel {
         this.description = description;
     }
 
-    public IssuesDetail getIssuesDetail() {
-        return issuesDetail;
-    }
-
-    public void setIssuesDetail(IssuesDetail issuesDetail) {
-        this.issuesDetail = issuesDetail;
-    }
 
     @Override
     public String toString() {
         return "NoteList{" +
                 "description='" + description + '\'' +
-                ", issuesDetail=" + issuesDetail +
+                ", issuesDetail=" + issuesDetails +
                 '}';
     }
 
