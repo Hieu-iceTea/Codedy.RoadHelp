@@ -1,5 +1,4 @@
 import 'package:flutter/widgets.dart';
-import 'package:roadhelp/screens/my_account/edit_my_account_success/edit_my_account_success_screen.dart';
 
 import '/screens/auth/complete_profile/complete_profile_screen.dart';
 import '/screens/auth/forgot_password/forgot_password_screen.dart';
@@ -22,6 +21,7 @@ import '/screens/my_account/become_to_partner/become_to_partner_screen.dart';
 import '/screens/my_account/change_password/change_password_screen.dart';
 import '/screens/my_account/my_account/my_account_screen.dart';
 import '/screens/my_account/edit_my_account/edit_my_account_screen.dart';
+import '/screens/my_account/edit_account_success/edit_my_account_success_screen.dart';
 import '/screens/place/gas_place/gas_place_screen.dart';
 import '/screens/place/repair_place/member/repair_place/repair_place_screen.dart';
 import '/screens/place/repair_place/member/repair_place_details/repair_place_details_screen.dart';
