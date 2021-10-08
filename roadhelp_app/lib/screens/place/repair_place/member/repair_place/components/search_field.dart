@@ -1,5 +1,8 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:roadhelp/config/size_config.dart';
+
+import 'location_filter_form.dart';
 
 class SearchField extends StatefulWidget {
   const SearchField({
@@ -42,7 +45,7 @@ class _SearchFieldState extends State<SearchField> {
             icon: Icon(Icons.search),
           ),
           suffixIcon: IconButton(
-            onPressed: () => showPopupMenu(context),
+            onPressed: () => _showMyDialog(),
             icon: Icon(Icons.filter_list, color: Colors.black),
           ),
         ),
@@ -50,7 +53,27 @@ class _SearchFieldState extends State<SearchField> {
     );
   }
 
-  void showPopupMenu(context) {
-
+  Future<void> _showMyDialog() async {
+    return showDialog<void>(
+      context: context,
+      //barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text(
+            'Location Filter',
+            textAlign: TextAlign.center,
+          ),
+          titleTextStyle: const TextStyle(
+            fontSize: 16.0,
+            color: Colors.black,
+            fontWeight: FontWeight.w800,
+          ),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(8.0),
+          ),
+          content: LocationFilterForm(),
+        );
+      },
+    );
   }
 }
