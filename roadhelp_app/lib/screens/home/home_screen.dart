@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:roadhelp/config/size_config.dart';
 
 import '/components/coustom_bottom_nav_bar.dart';
 import '../../config/enums.dart';
@@ -9,6 +10,8 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // You have to call it on your starting screen:
+    SizeConfig().init(context);
     return Scaffold(
       body: Body(),
       bottomNavigationBar: CustomBottomNavBar(selectedMenu: MenuState.home),
