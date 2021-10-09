@@ -1,11 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:roadhelp/models/garage.dart';
-import 'package:roadhelp/screens/place/repair_place/member/repair_place_details/repair_place_details_screen.dart';
-import 'package:roadhelp/screens/place/repair_place/partner/repair_place_manage_details/repair_place_manage_details_screen.dart';
-
-import '/config/constants.dart';
-import '/models/Cart.dart';
-import '/config/size_config.dart';
+import 'package:roadhelp/screens/place/repair_place/repair_place_details/repair_place_details_screen.dart';
 
 class RepairPlaceItem extends StatelessWidget {
   const RepairPlaceItem({

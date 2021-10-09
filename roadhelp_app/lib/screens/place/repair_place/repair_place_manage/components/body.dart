@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:roadhelp/models/garage.dart';
-import 'package:roadhelp/screens/place/repair_place/partner/repair_place_manage/components/repair_place_item.dart';
+import 'package:roadhelp/screens/place/repair_place/repair_place_manage/components/repair_place_item.dart';
 
 import '/config/size_config.dart';
 

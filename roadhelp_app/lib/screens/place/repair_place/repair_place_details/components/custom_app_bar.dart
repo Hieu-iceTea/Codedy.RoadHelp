@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:roadhelp/config/constants.dart';
 import 'package:roadhelp/config/size_config.dart';
-import 'package:roadhelp/screens/place/repair_place/partner/repair_place_manage_add_edit/repair_place_manage_add_edit_screen.dart';
+import 'package:roadhelp/screens/place/repair_place/repair_place_manage_add_edit/repair_place_manage_add_edit_screen.dart';
 
 class CustomAppBar extends StatelessWidget {
   final double rating;

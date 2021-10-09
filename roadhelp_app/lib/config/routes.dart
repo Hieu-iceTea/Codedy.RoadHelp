@@ -24,11 +24,10 @@ import '/screens/my_account/edit_account_success/edit_my_account_success_screen.
 import '/screens/my_account/edit_my_account/edit_my_account_screen.dart';
 import '/screens/my_account/my_account/my_account_screen.dart';
 import '/screens/place/gas_place/gas_place_screen.dart';
-import '/screens/place/repair_place/member/repair_place/repair_place_screen.dart';
-import '/screens/place/repair_place/member/repair_place_details/repair_place_details_screen.dart';
-import '/screens/place/repair_place/partner/repair_place_manage/repair_place_manage_screen.dart';
-import '/screens/place/repair_place/partner/repair_place_manage_add_edit/repair_place_manage_add_edit_screen.dart';
-import '/screens/place/repair_place/partner/repair_place_manage_details/repair_place_manage_details_screen.dart';
+import '/screens/place/repair_place/repair_place_details/repair_place_details_screen.dart';
+import '/screens/place/repair_place/repair_place_manage/repair_place_manage_screen.dart';
+import '/screens/place/repair_place/repair_place_manage_add_edit/repair_place_manage_add_edit_screen.dart';
+import '/screens/place/repair_place/repair_place/repair_place_screen.dart';
 import '/screens/splash/splash_screen.dart';
 
 // We use name route
@@ -65,5 +64,4 @@ final Map<String, WidgetBuilder> routes = {
   RepairPlaceDetailsScreen.routeName: (context) => const RepairPlaceDetailsScreen(),
   RepairPlaceManageScreen.routeName: (context) => const RepairPlaceManageScreen(),
   RepairPlaceManageAddEditScreen.routeName: (context) => const RepairPlaceManageAddEditScreen(),
-  RepairPlaceManageDetailsScreen.routeName: (context) => const RepairPlaceManageDetailsScreen(),
 };

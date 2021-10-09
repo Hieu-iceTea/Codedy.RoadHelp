@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:roadhelp/screens/my_account/become_to_partner/become_to_partner_screen.dart';
 import 'package:roadhelp/screens/my_account/my_account/my_account_screen.dart';
-import 'package:roadhelp/screens/place/repair_place/partner/repair_place_manage/repair_place_manage_screen.dart';
+import 'package:roadhelp/screens/place/repair_place/repair_place_manage/repair_place_manage_screen.dart';
 
 import 'menu_item.dart';
 import 'profile_pic.dart';
