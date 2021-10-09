@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 import 'package:roadhelp/config/constants.dart';
-import 'package:roadhelp/screens/place/repair_place/repair_place/components/custom_map.dart';
+import 'package:roadhelp/screens/map_picker/map_picker_screen.dart';
 
 import '/helper/location_helper.dart';
 
 class LocationInput extends StatefulWidget {
-  final Function onSelectPlace;
+  Function(LatLng latLngSelected) onSelectPlace;
 
   LocationInput(this.onSelectPlace);
 
@@ -17,11 +17,12 @@ class LocationInput extends StatefulWidget {
 
 class _LocationInputState extends State<LocationInput> {
   String? _previewImageUrl;
+  LatLng? _latLngSelected;
 
-  void _showPreview(double lat, double lng) {
+  void _showPreview(LatLng latLng) {
     final staticMapImageUrl = LocationHelper.generateLocationPreviewImage(
-      latitude: lat,
-      longitude: lng,
+      latitude: latLng.latitude,
+      longitude: latLng.longitude,
     );
     setState(() {
       _previewImageUrl = staticMapImageUrl;
@@ -31,27 +32,31 @@ class _LocationInputState extends State<LocationInput> {
   Future<void> _getCurrentUserLocation() async {
     try {
       final locData = await Location().getLocation();
-      _showPreview(locData.latitude!, locData.longitude!);
-      widget.onSelectPlace(locData.latitude, locData.longitude);
+      _latLngSelected = LatLng(locData.latitude!, locData.longitude!);
+      _showPreview(_latLngSelected!);
+      widget.onSelectPlace(_latLngSelected!);
     } catch (error) {
       return;
     }
   }
 
   Future<void> _selectOnMap() async {
-    final selectedLocation = await Navigator.of(context).push<LatLng>(
+    Navigator.push(
+      context,
       MaterialPageRoute(
         fullscreenDialog: true,
-        builder: (ctx) => CustomMap(
-          onTap: (_) => {},
+        builder: (context) => MapPickerScreen(
+          initialCameraPosition: _latLngSelected,
+          onPlacePicked: (latLngSelected, addressSelected) {
+            _showPreview(latLngSelected);
+            _latLngSelected = latLngSelected;
+            widget.onSelectPlace(latLngSelected);
+
+            Navigator.of(context).pop();
+          },
         ),
       ),
     );
-    if (selectedLocation == null) {
-      return;
-    }
-    _showPreview(selectedLocation.latitude, selectedLocation.longitude);
-    widget.onSelectPlace(selectedLocation.latitude, selectedLocation.longitude);
   }
 
   @override

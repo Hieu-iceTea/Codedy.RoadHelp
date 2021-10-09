@@ -165,7 +165,7 @@ class _RepairPlaceFormState extends State<RepairPlaceForm> {
   }
 
   Widget buildLocationInput() {
-    return LocationInput(() => {});
+    return LocationInput((latLngSelected) => {});
   }
 
   Future<void> _showMyDialog() async {

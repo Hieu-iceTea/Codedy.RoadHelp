@@ -3,7 +3,8 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:location/location.dart';
 
-const GOOGLE_API_KEY = 'AIzaSyAun5GuPDwfyT6UgROnif548xHq1p4sHqQ'; //API key Codedy-RoadHelp
+const GOOGLE_API_KEY =
+    'AIzaSyD3uBTVgT7lzcUkdEBHLxv7A6ktViH3Oh0'; //API key Codedy-RoadHelp: AIzaSyAun5GuPDwfyT6UgROnif548xHq1p4sHqQ
 
 class LocationHelper {
   static String generateLocationPreviewImage({

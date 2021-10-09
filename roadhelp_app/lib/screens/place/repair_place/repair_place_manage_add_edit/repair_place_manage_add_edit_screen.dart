@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:roadhelp/config/size_config.dart';
 
 import 'components/body.dart';
 
@@ -9,6 +10,9 @@ class RepairPlaceManageAddEditScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // You have to call it on your starting screen:
+    SizeConfig().init(context);
+
     return Scaffold(
       appBar: AppBar(
         title: Text(
