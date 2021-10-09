@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:roadhelp/models/garage.dart';
+import 'package:roadhelp/screens/place/repair_place/member/repair_place_details/repair_place_details_screen.dart';
 import 'package:roadhelp/screens/place/repair_place/partner/repair_place_manage_details/repair_place_manage_details_screen.dart';
 
 import '/config/constants.dart';
@@ -19,8 +20,8 @@ class RepairPlaceItem extends StatelessWidget {
     return ListTile(
       onTap: () => Navigator.pushNamed(
         context,
-        RepairPlaceManageDetailsScreen.routeName,
-        //arguments: RepairPlaceManageDetailsArguments(garage: demoGarages[index]),
+        RepairPlaceDetailsScreen.routeName,
+        arguments: RepairPlaceDetailsArguments(garage: garage, isManage: true),
       ),
       leading: Hero(
         tag: garage.id.toString(),
