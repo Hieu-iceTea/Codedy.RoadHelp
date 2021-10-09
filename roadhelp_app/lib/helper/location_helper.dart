@@ -3,15 +3,16 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:location/location.dart';
 
+//TODO: Hiện tại đang dùng key của: hieuit-demo-learn-flutter-chat -> [Codedy-RoadHelp-tmp]
 const GOOGLE_API_KEY =
-    'AIzaSyD3uBTVgT7lzcUkdEBHLxv7A6ktViH3Oh0'; //API key Codedy-RoadHelp: AIzaSyAun5GuPDwfyT6UgROnif548xHq1p4sHqQ
+    'AIzaSyA6Ks6oY3LRvI9Y0MlxEaTOdGQuaUjPbfk'; //API key Codedy-RoadHelp: AIzaSyAun5GuPDwfyT6UgROnif548xHq1p4sHqQ
 
 class LocationHelper {
   static String generateLocationPreviewImage({
     required double latitude,
     required double longitude,
   }) {
-    return 'https://maps.googleapis.com/maps/api/staticmap?center=&$latitude,$longitude&zoom=16&size=600x300&maptype=roadmap&markers=color:red%7Clabel:A%7C$latitude,$longitude&key=$GOOGLE_API_KEY';
+    return 'https://maps.googleapis.com/maps/api/staticmap?&zoom=16&size=600x300&markers=color:red|$latitude,$longitude&key=$GOOGLE_API_KEY';
   }
 
   static Future<String> getPlaceAddress(double lat, double lng) async {
