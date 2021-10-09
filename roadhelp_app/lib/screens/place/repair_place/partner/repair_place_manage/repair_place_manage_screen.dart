@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'components/body.dart';
 
 class RepairPlaceManageScreen extends StatelessWidget {
-  static String routeName = "/route_name";
+  static String routeName = "/repair_place_manage";
 
   const RepairPlaceManageScreen({Key? key}) : super(key: key);
 
