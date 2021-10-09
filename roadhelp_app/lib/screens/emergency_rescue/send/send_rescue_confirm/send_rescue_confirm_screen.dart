@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:roadhelp/components/coustom_bottom_nav_bar.dart';
+import 'package:roadhelp/config/enums.dart';
 
 import 'components/body.dart';
 
 class SendRescueConfirmScreen extends StatelessWidget {
-  static String routeName = "/route_name";
+  static String routeName = "/send_emergency_rescue/confirmation";
 
   const SendRescueConfirmScreen({Key? key}) : super(key: key);
 
@@ -14,6 +16,7 @@ class SendRescueConfirmScreen extends StatelessWidget {
         title: Text("Title - Change me now"),
       ),
       body: Body(),
+      bottomNavigationBar: CustomBottomNavBar(selectedMenu: MenuState.home),
     );
   }
 }

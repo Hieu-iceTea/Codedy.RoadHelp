@@ -5,6 +5,7 @@ import 'package:roadhelp/components/form_error.dart';
 import 'package:roadhelp/config/constants.dart';
 import 'package:roadhelp/config/size_config.dart';
 import 'package:roadhelp/helper/keyboard.dart';
+import 'package:roadhelp/screens/emergency_rescue/send/send_rescue_confirm/send_rescue_confirm_screen.dart';
 
 import 'location_form.dart';
 
@@ -70,7 +71,7 @@ class _FormReceiveRescueState extends State<FormReceiveRescue> {
                 _formKey.currentState!.save();
                 // if all are valid then go to success screen
                 KeyboardUtil.hideKeyboard(context);
-                // Navigator.pushNamed(context, LoginSuccessScreen.routeName);
+                Navigator.pushNamed(context, SendRescueConfirmScreen.routeName);
               }
             },
           ),
