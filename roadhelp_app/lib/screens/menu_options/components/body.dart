@@ -3,7 +3,7 @@ import 'package:roadhelp/screens/my_account/become_to_partner/become_to_partner_
 import 'package:roadhelp/screens/my_account/my_account/my_account_screen.dart';
 import 'package:roadhelp/screens/place/repair_place/partner/repair_place_manage/repair_place_manage_screen.dart';
 
-import 'profile_menu.dart';
+import 'menu_item.dart';
 import 'profile_pic.dart';
 
 class Body extends StatelessWidget {
@@ -15,40 +15,40 @@ class Body extends StatelessWidget {
         children: [
           ProfilePic(),
           SizedBox(height: 20),
-          ProfileMenu(
+          MenuItem(
             text: "Tài Khoản Của Tôi",
             icon: "assets/icons/User Icon.svg",
             press: () =>
                 Navigator.pushNamed(context, MyAccountScreen.routeName),
           ),
-          ProfileMenu(
+          MenuItem(
             text: "Trở Thành Đối Tác",
             icon: "assets/icons/Flash Icon.svg",
             press: () =>
                 Navigator.pushNamed(context, BecomeToPartnerScreen.routeName),
           ),
-          ProfileMenu(
+          MenuItem(
             text: "Quản Lý Tiệm Sửa Xe",
             icon: "assets/icons/Shop Icon.svg",
             press: () =>
                 Navigator.pushNamed(context, RepairPlaceManageScreen.routeName),
           ),
-          ProfileMenu(
+          MenuItem(
             text: "Thông Báo",
             icon: "assets/icons/Bell.svg",
             press: () {},
           ),
-          ProfileMenu(
+          MenuItem(
             text: "Cài Đặt",
             icon: "assets/icons/Settings.svg",
             press: () {},
           ),
-          ProfileMenu(
+          MenuItem(
             text: "Trung Tâm Trợ Giúp",
             icon: "assets/icons/Question mark.svg",
             press: () {},
           ),
-          ProfileMenu(
+          MenuItem(
             text: "Đăng Xuất",
             icon: "assets/icons/Log out.svg",
             press: () {},

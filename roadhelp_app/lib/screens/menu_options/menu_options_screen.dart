@@ -4,8 +4,8 @@ import '/components/coustom_bottom_nav_bar.dart';
 import '../../config/enums.dart';
 import 'components/body.dart';
 
-class ProfileScreen extends StatelessWidget {
-  static String routeName = "/profile";
+class MenuOptionsScreen extends StatelessWidget {
+  static String routeName = "/menu_options";
 
   @override
   Widget build(BuildContext context) {
