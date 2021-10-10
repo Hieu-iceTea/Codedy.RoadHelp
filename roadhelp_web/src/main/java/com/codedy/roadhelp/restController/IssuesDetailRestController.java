@@ -30,11 +30,29 @@ public class IssuesDetailRestController {
         }
         return issuesDetail;
     }
+    // Xem thông tin người giúp đỡ mình
+    @GetMapping(path = {"/{id}", "/{id}/"})
+    public IssuesDetail getIssuesDetails(@PathVariable int id) {
+        IssuesDetail issuesDetail = issuesDetailService.findById(id);
+        if (issuesDetail == null) {
+            throw new RestNotFoundException("Issues detail id not found - " + id);
+        }
+        return issuesDetail;
+    }
 
     // Create Issues Detail
     @PostMapping(path = {"", "/"})
     public IssuesDetail store(@RequestBody IssuesDetail issuesDetail) {
         issuesDetail.setId(0);
+        IssuesDetail newIssuesDetail = issuesDetailService.save(issuesDetail);
+        return issuesDetailService.findById(newIssuesDetail.getId());
+    }
+
+    //User Create Issues Detail
+    @PostMapping(path = {"/rescue/send", "/rescue/send/"})
+    public IssuesDetail sendRescue(@RequestBody IssuesDetail issuesDetail) {
+        issuesDetail.setId(0);
+        issuesDetail.setStatus(false);
         IssuesDetail newIssuesDetail = issuesDetailService.save(issuesDetail);
         return issuesDetailService.findById(newIssuesDetail.getId());
     }
@@ -48,6 +66,19 @@ public class IssuesDetailRestController {
         }
 
         issuesDetail.setId(0);
+        issuesDetailService.save(issuesDetail);
+        return issuesDetailService.findById(issuesDetail.getId());
+    }
+    // Xác nhận thông tin người giúp đỡ mình
+    @PutMapping(path = {"/{id}", "/{id}/"})
+    public IssuesDetail confirmationResues(@RequestBody IssuesDetail issuesDetail, @PathVariable int id) {
+
+        if (issuesDetailService.findById(id) == null) {
+            throw new RestNotFoundException("Issues detail id not found - " + id);
+        }
+
+        issuesDetail.setId(0);
+        issuesDetail.setStatus(true);
         issuesDetailService.save(issuesDetail);
         return issuesDetailService.findById(issuesDetail.getId());
     }

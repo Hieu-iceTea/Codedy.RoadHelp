@@ -17,7 +17,7 @@ class Categories extends StatelessWidget {
       {
         "icon": "assets/icons/Bill Icon.svg",
         "text": "Receive Rescue",
-        "routeName": ReceiveRescueScreen.routeName,
+        "routeName": ReceiveRescueDetailsScreen.routeName,
       },
       {
         "icon": "assets/icons/Game Icon.svg",
