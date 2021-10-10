@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:roadhelp/screens/place/repair_place/member/repair_place/components/custom_map.dart';
 
+import '../../../../../components/custom_map.dart';
 import 'header_bar.dart';
 
 class Body extends StatelessWidget {
@@ -12,7 +11,7 @@ class Body extends StatelessWidget {
     return SafeArea(
       child: Stack(children: [
         CustomMap(
-          /*markers: {
+            /*markers: {
             const Marker(
                 markerId: MarkerId('Marker_0'),
                 position: LatLng(21.0291518, 105.8523056)),
@@ -22,7 +21,7 @@ class Body extends StatelessWidget {
           },
           initialCameraPosition: LatLng(21.0291518, 105.8523056),
           onTap: (_) => {},*/
-        ),
+            ),
         Positioned(
           top: 10,
           child: HeaderBar(),

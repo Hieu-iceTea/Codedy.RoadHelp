@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'components/body.dart';
 
 class BecomeToPartnerScreen extends StatelessWidget {
-  static String routeName = "/route_name";
+  static String routeName = "/become_to_partner";
 
   const BecomeToPartnerScreen({Key? key}) : super(key: key);
 

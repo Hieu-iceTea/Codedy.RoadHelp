@@ -19,7 +19,8 @@ class _FormEditMyAccountState extends State<FormEditMyAccount> {
   String? lastName;
   String? email;
   String? phoneNumber;
-  String dropdownValue = 'Male';
+  String? gender;
+  List<String>? genderListItems = ['Male', 'Female'];
   bool? remember = false;
   final List<String?> errors = [];
 
@@ -52,30 +53,9 @@ class _FormEditMyAccountState extends State<FormEditMyAccount> {
           buildPhoneNumberFormField(),
           SizedBox(height: getProportionateScreenHeight(30)),
           buildEmailFormField(),
+          SizedBox(height: getProportionateScreenHeight(30)),
+          buildGenderDropdownFormField(),
           SizedBox(height: getProportionateScreenHeight(20)),
-          DropdownButton<String>(
-            value: dropdownValue,
-            icon: const Icon(Icons.arrow_downward),
-            iconSize: 24,
-            elevation: 16,
-            style: const TextStyle(color: kPrimaryColor, fontSize: 20),
-            underline: Container(
-              height: 2,
-              color: kPrimaryColor,
-            ),
-            onChanged: (String? newValue) {
-              setState(() {
-                dropdownValue = newValue!;
-              });
-            },
-            items: <String>['Male', 'Female']
-                .map<DropdownMenuItem<String>>((String value) {
-              return DropdownMenuItem<String>(
-                value: value,
-                child: Text(value),
-              );
-            }).toList(),
-          ),
           FormError(errors: errors),
           SizedBox(height: getProportionateScreenHeight(20)),
           DefaultButton(
@@ -214,6 +194,40 @@ class _FormEditMyAccountState extends State<FormEditMyAccount> {
         hintText: "Enter your email",
         floatingLabelBehavior: FloatingLabelBehavior.always,
       ),
+    );
+  }
+
+  DropdownButtonFormField buildGenderDropdownFormField() {
+    return DropdownButtonFormField(
+      isExpanded: true,
+      onSaved: (newValue) => gender = newValue,
+      value: gender,
+      icon: const Icon(Icons.arrow_drop_down),
+      //style: const TextStyle(color: kPrimaryColor),
+      onChanged: (newValue) {
+        setState(() {
+          //dropdownCityValue = newValue!;
+        });
+      },
+      validator: (value) {
+        if (value == null) {
+          return "Please Select your gender";
+        }
+        return null;
+      },
+      decoration: const InputDecoration(
+        labelText: "Province",
+        hintText: "-- Select Province --",
+        floatingLabelBehavior: FloatingLabelBehavior.always,
+        contentPadding:
+        EdgeInsets.only(top: 20, bottom: 20, left: 42, right: 22),
+      ),
+      items: genderListItems?.map<DropdownMenuItem<String>>((String value) {
+        return DropdownMenuItem<String>(
+          value: value,
+          child: Text(value),
+        );
+      }).toList(),
     );
   }
 }

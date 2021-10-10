@@ -23,7 +23,7 @@ class RepairPlaceDetailsScreen extends StatelessWidget {
       backgroundColor: Color(0xFFF5F6F9),
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(AppBar().preferredSize.height),
-        child: CustomAppBar(rating: agrs.garage.ratingAvg!),
+        child: CustomAppBar(rating: agrs.garage.ratingAvg!, isManage: agrs.isManage),
       ),
       body: Body(garage: agrs.garage),
     );
@@ -32,6 +32,7 @@ class RepairPlaceDetailsScreen extends StatelessWidget {
 
 class RepairPlaceDetailsArguments {
   final Garage garage;
+  final bool isManage;
 
-  RepairPlaceDetailsArguments({required this.garage});
+  RepairPlaceDetailsArguments({required this.garage, this.isManage = false});
 }
