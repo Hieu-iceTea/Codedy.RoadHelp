@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'custom_map.dart';
+import '../../../../../components/custom_map.dart';
 import 'header_bar.dart';
 
 class Body extends StatelessWidget {

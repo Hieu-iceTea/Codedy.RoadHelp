@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:roadhelp/components/custom_map.dart';
 import 'package:roadhelp/components/default_button.dart';
 import 'package:roadhelp/config/constants.dart';
 import 'package:roadhelp/config/size_config.dart';
 import 'package:roadhelp/helper/location_helper.dart';
-import 'package:roadhelp/screens/place/repair_place/repair_place/components/custom_map.dart';
 
 class Body extends StatefulWidget {
   LatLng? initialCameraPosition;
@@ -49,12 +49,12 @@ class _BodyState extends State<Body> {
             onTap: (latLng) => _onTap(latLng),
           ),
           Positioned(
-            bottom: 10,
-            child: _panelBottom(opacity: 0.9),
-          ),
-          Positioned(
             top: 0,
             child: _panelTop(opacity: 0.9),
+          ),
+          Positioned(
+            bottom: 10,
+            child: _panelBottom(opacity: 0.9),
           ),
         ],
       ),
