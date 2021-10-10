@@ -3,9 +3,8 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:location/location.dart';
 
-//TODO: Hiện tại đang dùng key của: hieuit-demo-learn-flutter-chat -> [Codedy-RoadHelp-tmp]
 const GOOGLE_API_KEY =
-    'AIzaSyA6Ks6oY3LRvI9Y0MlxEaTOdGQuaUjPbfk'; //API key Codedy-RoadHelp: AIzaSyAun5GuPDwfyT6UgROnif548xHq1p4sHqQ
+    'AIzaSyCPGSoVHrfLmvJO6TF760Sc1IlbwNUkj5M'; // demo.hieu.icetea@gmail.com / Codedy_RoadHelp_Project
 
 class LocationHelper {
   static String generateLocationPreviewImage({
@@ -16,7 +15,6 @@ class LocationHelper {
   }
 
   static Future<String> getPlaceAddress(double lat, double lng) async {
-    //final url = 'https://maps.googleapis.com/maps/api/geocode/json?latlng=$lat,$lng&key=$GOOGLE_API_KEY';
     final url = Uri.parse(
         'https://maps.googleapis.com/maps/api/geocode/json?latlng=$lat,$lng&key=$GOOGLE_API_KEY');
     final response = await http.get(url);
