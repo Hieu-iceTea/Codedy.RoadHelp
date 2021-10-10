@@ -167,6 +167,7 @@ class _FormReceiveRescueState extends State<FormReceiveRescue> {
   TextFormField buildDescriptionFormField() {
     return TextFormField(
       onSaved: (newValue) => description = newValue,
+      maxLines: null,
       onChanged: (value) {
         return null;
       },

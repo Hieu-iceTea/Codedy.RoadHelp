@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:roadhelp/screens/emergency_rescue/send/send_rescue/send_rescue_screen.dart';
 import 'package:roadhelp/screens/place/repair_place/repair_place/repair_place_screen.dart';
-import 'package:roadhelp/screens/emergency_rescue/receive/receive_rescue/receive_rescue_screen.dart';
 
 import '../../../config/size_config.dart';
 
@@ -16,8 +16,8 @@ class Categories extends StatelessWidget {
       },
       {
         "icon": "assets/icons/Bill Icon.svg",
-        "text": "Receive Rescue",
-        "routeName": ReceiveRescueDetailsScreen.routeName,
+        "text": "Cứu hộ khẩn cấp",
+        "routeName": SendRescueScreen.routeName,
       },
       {
         "icon": "assets/icons/Game Icon.svg",
