@@ -9,11 +9,10 @@
 
     <application
         android:icon="@drawable/ic_roadhelp"
-        android:label="Road Help">
-        <!--Nguồn icon: https://www.google.com/imgres?imgurl=https%3A%2F%2Fapprecs.org%2Fgp%2Fimages%2Fapp-icons%2F300%2Fc2%2Fcom.india.wildtrails.highwaycompanion.jpg&imgrefurl=https%3A%2F%2Fapprecs.com%2Fandroid%2Fcom.india.wildtrails.highwaycompanion%2Fhighway-help-india-road-travel&tbnid=H7Sj-MqhpgzR4M&vet=12ahUKEwivhKafi5XzAhWyNaYKHfJNA40QMygiegUIARD0AQ..i&docid=vRzE8RvnbnINeM&w=300&h=300&itg=1&q=road%20help%20icon&ved=2ahUKEwivhKafi5XzAhWyNaYKHfJNA40QMygiegUIARD0AQ-->
+        android:label="Road Help"> <!--Nguồn icon: https://www.google.com/imgres?imgurl=https%3A%2F%2Fapprecs.org%2Fgp%2Fimages%2Fapp-icons%2F300%2Fc2%2Fcom.india.wildtrails.highwaycompanion.jpg&imgrefurl=https%3A%2F%2Fapprecs.com%2Fandroid%2Fcom.india.wildtrails.highwaycompanion%2Fhighway-help-india-road-travel&tbnid=H7Sj-MqhpgzR4M&vet=12ahUKEwivhKafi5XzAhWyNaYKHfJNA40QMygiegUIARD0AQ..i&docid=vRzE8RvnbnINeM&w=300&h=300&itg=1&q=road%20help%20icon&ved=2ahUKEwivhKafi5XzAhWyNaYKHfJNA40QMygiegUIARD0AQ-->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyAun5GuPDwfyT6UgROnif548xHq1p4sHqQ" />
+            android:value="AIzaSyCPGSoVHrfLmvJO6TF760Sc1IlbwNUkj5M" /> <!--demo.hieu.icetea@gmail.com / Codedy_RoadHelp_Project-->
         <activity
             android:name=".MainActivity"
             android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"

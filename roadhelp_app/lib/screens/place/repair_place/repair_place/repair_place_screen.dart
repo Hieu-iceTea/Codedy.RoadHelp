@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:roadhelp/components/rounded_icon_btn.dart';
 import 'package:roadhelp/config/size_config.dart';
 import 'package:roadhelp/models/garage.dart';
-import 'package:roadhelp/screens/place/repair_place/member/repair_place_details/repair_place_details_screen.dart';
+import 'package:roadhelp/screens/place/repair_place/repair_place_details/repair_place_details_screen.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 import 'components/body.dart';
