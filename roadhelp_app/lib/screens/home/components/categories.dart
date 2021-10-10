@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+<<<<<<<<< Temporary merge branch 1
+import 'package:roadhelp/screens/place/repair_place/repair_place/repair_place_screen.dart';
 import 'package:roadhelp/screens/emergency_rescue/receive/receive_rescue/receive_rescue_screen.dart';
+=========
+import 'package:roadhelp/screens/emergency_rescue/receive/receive_rescue_details/receive_rescue_details_screen.dart';
+>>>>>>>>> Temporary merge branch 2
 
-import '/screens/place/repair_place/member/repair_place/repair_place_screen.dart';
 import '../../../config/size_config.dart';
 
 class Categories extends StatelessWidget {
@@ -17,7 +21,7 @@ class Categories extends StatelessWidget {
       {
         "icon": "assets/icons/Bill Icon.svg",
         "text": "Receive Rescue",
-        "routeName": ReceiveRescueScreen.routeName,
+        "routeName": ReceiveRescueDetailsScreen.routeName,
       },
       {
         "icon": "assets/icons/Game Icon.svg",

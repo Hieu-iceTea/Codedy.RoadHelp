@@ -39,6 +39,14 @@ public class RatingPartnerRestController {
         return ratingPartnerService.findById(newRatingPartner.getId());
     }
 
+    // User Create Rating Partner
+    @PostMapping(path = {"/rescue/send/post-reviews", "/rescue/send/post-reviews/"})
+    public RatingPartner postReview(@RequestBody RatingPartner ratingPartner) {
+        ratingPartner.setId(0);
+        RatingPartner newRatingPartner = ratingPartnerService.save(ratingPartner);
+        return ratingPartnerService.findById(newRatingPartner.getId());
+    }
+
     // Update Rating Partner
     @PutMapping(path = {"/{id}", "/{id}/"})
     public RatingPartner update(@RequestBody RatingPartner ratingPartner, @PathVariable int id) {
