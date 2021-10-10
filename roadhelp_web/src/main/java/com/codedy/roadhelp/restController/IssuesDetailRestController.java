@@ -62,4 +62,47 @@ public class IssuesDetailRestController {
         issuesDetailService.deleteById(id);
         return "Deleted issues detail id - " + id;
     }
+
+    //Receive Emergency rescue
+    @GetMapping(path = {"/rescue/receive", "/rescue/receive/"})
+    public List<IssuesDetail> receive() {
+        return issuesDetailService.findAll();
+    }
+
+    //Details xem
+    @GetMapping(path = {"/rescue/receive/details", "/rescue/receive/details/"})
+    public IssuesDetail getIssuesDetailsReceive(@PathVariable int id) {
+        IssuesDetail issuesDetail = issuesDetailService.findById(id)
+                ;
+        if (issuesDetail == null) {
+            throw new RestNotFoundException("Issues detail id not found - " + id);
+        }
+        return issuesDetail;
+    }
+
+    //Details xác nhận
+    @PostMapping (path = {"/rescue/receive/details", "/rescue/receive/details/"})
+    public IssuesDetail confirmationReceiveResues(@RequestBody IssuesDetail issuesDetail, @PathVariable int id) {
+
+        if (issuesDetailService.findById(id)
+                == null) {
+            throw new RestNotFoundException("Issues detail id not found - " + id);
+        }
+
+        issuesDetail.setId(0);
+        issuesDetail.setStatus(true);
+        issuesDetailService.save(issuesDetail);
+        return issuesDetailService.findById(issuesDetail.getId());
+    }
+
+    //Xem đánh giá sau khi hỗ trợ xong
+    @GetMapping(path = {"/rescue/receive/show-reviews", "/rescue/receive/show-reviews/"})
+    public IssuesDetail showReviews(@PathVariable int id) {
+        IssuesDetail issuesDetail = issuesDetailService.findById(id)
+                ;
+        if (issuesDetail == null) {
+            throw new RestNotFoundException("Issues detail id not found - " + id);
+        }
+        return issuesDetail;
+    }
 }
