@@ -17,18 +17,17 @@ import '/screens/emergency_rescue/send/send_rescue_reviews/send_rescue_reviews_s
 import '/screens/emergency_rescue/send/send_rescue_tracking/send_rescue_tracking_screen.dart';
 import '/screens/home/home_screen.dart';
 import '/screens/login_success/login_success_screen.dart';
+import '/screens/menu_options/menu_options_screen.dart';
 import '/screens/my_account/become_to_partner/become_to_partner_screen.dart';
 import '/screens/my_account/change_password/change_password_screen.dart';
-import '/screens/my_account/my_account/my_account_screen.dart';
-import '/screens/my_account/edit_my_account/edit_my_account_screen.dart';
 import '/screens/my_account/edit_account_success/edit_my_account_success_screen.dart';
+import '/screens/my_account/edit_my_account/edit_my_account_screen.dart';
+import '/screens/my_account/my_account/my_account_screen.dart';
 import '/screens/place/gas_place/gas_place_screen.dart';
-import '/screens/place/repair_place/member/repair_place/repair_place_screen.dart';
-import '/screens/place/repair_place/member/repair_place_details/repair_place_details_screen.dart';
-import '/screens/place/repair_place/partner/repair_place_manage/repair_place_manage_screen.dart';
-import '/screens/place/repair_place/partner/repair_place_manage_add_edit/repair_place_manage_add_edit_screen.dart';
-import '/screens/place/repair_place/partner/repair_place_manage_details/repair_place_manage_details_screen.dart';
-import '/screens/profile/profile_screen.dart';
+import '/screens/place/repair_place/repair_place_details/repair_place_details_screen.dart';
+import '/screens/place/repair_place/repair_place_manage/repair_place_manage_screen.dart';
+import '/screens/place/repair_place/repair_place_manage_add_edit/repair_place_manage_add_edit_screen.dart';
+import '/screens/place/repair_place/repair_place/repair_place_screen.dart';
 import '/screens/splash/splash_screen.dart';
 
 // We use name route
@@ -45,7 +44,7 @@ final Map<String, WidgetBuilder> routes = {
   HomeScreen.routeName: (context) => HomeScreen(),
   DetailsScreen.routeName: (context) => DetailsScreen(),
   CartScreen.routeName: (context) => CartScreen(),
-  ProfileScreen.routeName: (context) => ProfileScreen(),
+  MenuOptionsScreen.routeName: (context) => MenuOptionsScreen(),
   //NEW:
   //TODO: Chưa sửa 'routeName' của các màn hình:
   SignInPartnerScreen.routeName: (context) => const SignInPartnerScreen(),
@@ -65,5 +64,4 @@ final Map<String, WidgetBuilder> routes = {
   RepairPlaceDetailsScreen.routeName: (context) => const RepairPlaceDetailsScreen(),
   RepairPlaceManageScreen.routeName: (context) => const RepairPlaceManageScreen(),
   RepairPlaceManageAddEditScreen.routeName: (context) => const RepairPlaceManageAddEditScreen(),
-  RepairPlaceManageDetailsScreen.routeName: (context) => const RepairPlaceManageDetailsScreen(),
 };

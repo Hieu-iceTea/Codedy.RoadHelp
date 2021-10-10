@@ -3,8 +3,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../config/constants.dart';
 
-class ProfileMenu extends StatelessWidget {
-  const ProfileMenu({
+class MenuItem extends StatelessWidget {
+  const MenuItem({
     Key? key,
     required this.text,
     required this.icon,
