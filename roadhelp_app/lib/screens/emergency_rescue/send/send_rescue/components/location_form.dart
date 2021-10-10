@@ -12,14 +12,6 @@ class _LocationFormState extends State<LocationForm> {
 
   final _formKey = GlobalKey<FormState>();
 
-  String? provinceSelected; // Tỉnh/Thành Phố
-  String? districtSelected; // Quận/Huyện
-  String? wardSelected; // Xã/Phường
-
-  List<String>? provinceListItems = ['Province 1', 'Province 2', 'Province 3'];
-  List<String>? districtListItems = ['District 1', 'District 2', 'District 3'];
-  List<String>? wardListItems = ['Ward 1', 'Ward 2', 'Ward 3'];
-
   @override
   Widget build(BuildContext context) {
     return Container(
