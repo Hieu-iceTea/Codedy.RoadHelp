@@ -30,18 +30,28 @@ final RegExp emailValidatorRegExp =
 final RegExp phoneNumberValidatorRegExp =
     RegExp(r"^(?:[+0]9)?[0-9]{10}$");
 
+final RegExp phoneValidatorRegExp =
+    RegExp(r"(84|0[3|5|7|8|9])+([0-9]{8})\b");
 
-const String kEmailNullError = "Please Enter your email";
-const String kInvalidEmailError = "Please Enter Valid Email";
-const String kPassNullError = "Please Enter your password";
-const String kShortPassError = "Password is too short";
-const String kMatchPassError = "Passwords don't match";
-const String kNamelNullError = "Please Enter your name";
-const String kPhoneNumberNullError = "Please Enter your phone number";
-const String kAddressNullError = "Please Enter your address";
-const String kUserNameNullError = "Please Enter your username";
-const String kFirstNameNullError = "Please Enter your first name";
-const String kLastNameNullError = "Please Enter your last name";
+
+const String kEmailNullError = "Vui lòng nhập email của bạn!";
+const String kInvalidEmailError = "Vui lòng nhập email hợp lệ!";
+const String kPassNullError = "Vui lòng nhập mật khẩu của bạn!";
+const String kShortPassError = "Mật khẩu phải có ít nhất 8 kí tự!";
+const String kMatchPassError = "Mật khẩu không khớp !";
+const String kNamelNullError = "Xin hãy nhập tên của bạn!";
+const String kPhoneNumberNullError = "Vui lòng nhập số điện thoại của bạn!";
+const String kInvalidPhoneNumberError = "Số điện thoại không hợp lệ vui lòng kiểm tra lại!";
+const String kAddressNullError = "Vui lòng nhập địa chỉ của bạn!";
+const String kUserNameNullError = "Vui lòng nhập tên đăng nhập của bạn!";
+const String kFirstNameNullError = "Vui lòng nhập tên của bạn!";
+const String kLastNameNullError = "Vui lòng nhập họ của bạn!";
+const String kPassOldNullError = "Vui lòng nhập mật khẩu cũ của bạn!";
+const String kPassNewNullError = "Vui lòng nhập mật khẩu mới của bạn!";
+const String kEnterPassNewNullError = "Vui lòng nhập lại mật khẩu mới của bạn!";
+const String kPassNewEqualOldError = "Mật khẩu mới phải khác với mật khẩu cũ!";
+const String kPassNewError = "Mật khẩu mới không khớp với nhau!";
+
 
 final otpInputDecoration = InputDecoration(
   contentPadding:

@@ -17,17 +17,8 @@ class _BodyState extends State<Body> {
   int currentPage = 0;
   List<Map<String, String>> splashData = [
     {
-      "text": "Welcome to Tokoto, Let’s shop!",
-      "image": "assets/images/splash_1.png"
-    },
-    {
-      "text":
-          "We help people conect with store \naround United State of America",
-      "image": "assets/images/splash_2.png"
-    },
-    {
-      "text": "We show the easy way to shop. \nJust stay at home with us",
-      "image": "assets/images/splash_3.png"
+      "text": "Chào mừng bạn đến với Road Help vui lòng chọn hình thức đăng nhập!",
+      "image": "assets/images/splash.jpg"
     },
   ];
 
@@ -65,15 +56,28 @@ class _BodyState extends State<Body> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: List.generate(
                         splashData.length,
-                        (index) => buildDot(index: index),
+                            (index) => buildDot(index: index),
                       ),
                     ),
-                    Spacer(flex: 3),
-                    DefaultButton(
-                      text: "Continue",
-                      press: () {
-                        Navigator.pushNamed(context, SignInScreen.routeName);
-                      },
+                    Spacer(flex: 3 ),
+
+                    Column(
+                      children: [
+
+                        DefaultButton(
+                          text: "Đăng Nhập Đối Tác",
+                          press: () {
+                            Navigator.pushNamed(context, SignInScreen.routeName);
+                          },
+                        ),
+                        Container(height: 10,),
+                        DefaultButton(
+                          text: "Đăng Nhập Thành Viên",
+                          press: () {
+                            Navigator.pushNamed(context, SignInScreen.routeName);
+                          },
+                        ),
+                      ],
                     ),
                     Spacer(),
                   ],

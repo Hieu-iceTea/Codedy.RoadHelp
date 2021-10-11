@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:roadhelp/screens/home/home_screen.dart';
-
+import 'package:roadhelp/screens/splash/splash_screen.dart';
 import 'config/routes.dart';
 import 'config/theme.dart';
 
@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
       theme: theme(),
       // home: SplashScreen(),
       // We use routeName so that we dont need to remember the name
-      initialRoute: HomeScreen.routeName,
+      initialRoute: SplashScreen.routeName,
       routes: routes,
     );
   }
