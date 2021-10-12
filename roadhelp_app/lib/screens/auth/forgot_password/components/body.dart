@@ -15,12 +15,12 @@ class Body extends StatelessWidget {
       child: SingleChildScrollView(
         child: Padding(
           padding:
-              EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
+          EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
           child: Column(
             children: [
               SizedBox(height: SizeConfig.screenHeight * 0.04),
               Text(
-                "Forgot Password",
+                "Quên Mật Khẩu",
                 style: TextStyle(
                   fontSize: getProportionateScreenWidth(28),
                   color: Colors.black,
@@ -28,7 +28,7 @@ class Body extends StatelessWidget {
                 ),
               ),
               Text(
-                "Please enter your email and we will send \nyou a link to return to your account",
+                "Vui lòng nhập số điện thoại của bạn để lấy lại mật khẩu!",
                 textAlign: TextAlign.center,
               ),
               SizedBox(height: SizeConfig.screenHeight * 0.1),
@@ -49,7 +49,7 @@ class ForgotPassForm extends StatefulWidget {
 class _ForgotPassFormState extends State<ForgotPassForm> {
   final _formKey = GlobalKey<FormState>();
   List<String> errors = [];
-  String? email;
+  String? phonenumber;
 
   @override
   Widget build(BuildContext context) {
@@ -58,48 +58,48 @@ class _ForgotPassFormState extends State<ForgotPassForm> {
       child: Column(
         children: [
           TextFormField(
-            keyboardType: TextInputType.emailAddress,
-            onSaved: (newValue) => email = newValue,
+            keyboardType: TextInputType.phone,
+            onSaved: (newValue) => phonenumber = newValue,
             onChanged: (value) {
-              if (value.isNotEmpty && errors.contains(kEmailNullError)) {
+              if (value.isNotEmpty && errors.contains(kPhoneNumberNullError)) {
                 setState(() {
-                  errors.remove(kEmailNullError);
+                  errors.remove(kPhoneNumberNullError);
                 });
-              } else if (emailValidatorRegExp.hasMatch(value) &&
-                  errors.contains(kInvalidEmailError)) {
+              } else if (phoneValidatorRegExp.hasMatch(value) &&
+                  errors.contains(kInvalidPhoneNumberError)) {
                 setState(() {
-                  errors.remove(kInvalidEmailError);
+                  errors.remove(kInvalidPhoneNumberError);
                 });
               }
               return null;
             },
             validator: (value) {
-              if (value!.isEmpty && !errors.contains(kEmailNullError)) {
+              if (value!.isEmpty && !errors.contains(kPhoneNumberNullError)) {
                 setState(() {
-                  errors.add(kEmailNullError);
+                  errors.add(kPhoneNumberNullError);
                 });
-              } else if (!emailValidatorRegExp.hasMatch(value) &&
-                  !errors.contains(kInvalidEmailError)) {
+              } else if (!phoneValidatorRegExp.hasMatch(value) &&
+                  !errors.contains(kInvalidPhoneNumberError)) {
                 setState(() {
-                  errors.add(kInvalidEmailError);
+                  errors.add(kInvalidPhoneNumberError);
                 });
               }
               return null;
             },
             decoration: InputDecoration(
-              labelText: "Email",
-              hintText: "Enter your email",
+              labelText: "Số điện thoại",
+              hintText: "Nhập số điện thoại...",
               // If  you are using latest version of flutter then lable text and hint text shown like this
               // if you r using flutter less then 1.20.* then maybe this is not working properly
               floatingLabelBehavior: FloatingLabelBehavior.always,
-              suffixIcon: CustomSurffixIcon(svgIcon: "assets/icons/Mail.svg"),
+              suffixIcon: CustomSurffixIcon(svgIcon: "assets/icons/phonenumber.svg"),
             ),
           ),
           SizedBox(height: getProportionateScreenHeight(30)),
           FormError(errors: errors),
           SizedBox(height: SizeConfig.screenHeight * 0.1),
           DefaultButton(
-            text: "Continue",
+            text: "Lấy Mật Khẩu",
             press: () {
               if (_formKey.currentState!.validate()) {
                 // Do what you want to do
@@ -113,3 +113,4 @@ class _ForgotPassFormState extends State<ForgotPassForm> {
     );
   }
 }
+

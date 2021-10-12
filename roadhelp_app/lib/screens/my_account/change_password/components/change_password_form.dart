@@ -1,21 +1,22 @@
 import 'package:flutter/material.dart';
-
-import '/components/custom_surfix_icon.dart';
-import '/components/default_button.dart';
-import '/components/form_error.dart';
-import '../../../../config/constants.dart';
-import '/screens/auth/complete_profile/complete_profile_screen.dart';
+import 'package:roadhelp/components/custom_surfix_icon.dart';
+import 'package:roadhelp/components/default_button.dart';
+import 'package:roadhelp/components/form_error.dart';
+import 'package:roadhelp/screens/auth/complete_profile/complete_profile_screen.dart';
 import '../../../../config/size_config.dart';
+import '../../../../config/constants.dart';
 
-class SignUpForm extends StatefulWidget {
+
+
+class ChangePasswordForm extends StatefulWidget {
   @override
   _SignUpFormState createState() => _SignUpFormState();
 }
 
-class _SignUpFormState extends State<SignUpForm> {
+class _SignUpFormState extends State<ChangePasswordForm> {
   final _formKey = GlobalKey<FormState>();
-  String? phone;
-  String? password;
+  String? passwordOld;
+  String? passwordNew;
   String? conform_password;
   bool remember = false;
   final List<String?> errors = [];
@@ -48,11 +49,11 @@ class _SignUpFormState extends State<SignUpForm> {
           FormError(errors: errors),
           SizedBox(height: getProportionateScreenHeight(40)),
           DefaultButton(
-            text: "Đăng Kí",
+            text: "Đổi mật khẩu",
             press: () {
               if (_formKey.currentState!.validate()) {
                 _formKey.currentState!.save();
-                // if all are valid then go to success screen
+                //if all are valid then go to success screen
                 Navigator.pushNamed(context, CompleteProfileScreen.routeName);
               }
             },
@@ -68,25 +69,27 @@ class _SignUpFormState extends State<SignUpForm> {
       onSaved: (newValue) => conform_password = newValue,
       onChanged: (value) {
         if (value.isNotEmpty) {
-          removeError(error: kPassNullError);
-        } else if (value.isNotEmpty && password == conform_password) {
-          removeError(error: kMatchPassError);
+          removeError(error: kEnterPassNewNullError);
+        } else if (value.isNotEmpty && passwordNew == conform_password) {
+          removeError(error: kPassNewError);
+
         }
         conform_password = value;
       },
       validator: (value) {
         if (value!.isEmpty) {
-          addError(error: kPassNullError);
+          addError(error: kEnterPassNewNullError);
           return "";
-        } else if ((password != value)) {
-          addError(error: kMatchPassError);
+        }
+        else if ((passwordNew != value)) {
+          addError(error: kPassNewError);
           return "";
         }
         return null;
       },
       decoration: InputDecoration(
-        labelText: "Mật khẩu",
-        hintText: "Nhập lại mật khẩu...",
+        labelText: "Mật khẩu mới",
+        hintText: "Nhập lại mật khẩu mới...",
         // If  you are using latest version of flutter then lable text and hint text shown like this
         // if you r using flutter less then 1.20.* then maybe this is not working properly
         floatingLabelBehavior: FloatingLabelBehavior.always,
@@ -98,65 +101,77 @@ class _SignUpFormState extends State<SignUpForm> {
   TextFormField buildPasswordFormField() {
     return TextFormField(
       obscureText: true,
-      onSaved: (newValue) => password = newValue,
+      onSaved: (newValue) => passwordNew = newValue,
       onChanged: (value) {
         if (value.isNotEmpty) {
-          removeError(error: kPassNullError);
+          removeError(error: kPassNewNullError);
         } else if (value.length >= 8) {
           removeError(error: kShortPassError);
+        } else if (value != passwordOld)
+        {
+          removeError(error: kPassNewEqualOldError);
         }
-        password = value;
+
+        passwordNew = value;
       },
       validator: (value) {
         if (value!.isEmpty) {
-          addError(error: kPassNullError);
+          addError(error: kPassNewNullError);
           return "";
         } else if (value.length < 8) {
           addError(error: kShortPassError);
+          return "";
+        }else if(value == passwordOld)
+        {
+          addError(error: kPassNewEqualOldError);
           return "";
         }
         return null;
       },
       decoration: InputDecoration(
-        labelText: "Mật khẩu",
-        hintText: "Nhập mật khẩu...",
+        labelText: "Mật khẩu mới",
+        hintText: "Nhập mật khẩu mới...",
         // If  you are using latest version of flutter then lable text and hint text shown like this
         // if you r using flutter less then 1.20.* then maybe this is not working properly
         floatingLabelBehavior: FloatingLabelBehavior.always,
-        suffixIcon: CustomSurffixIcon(svgIcon: "assets/icons/pass.svg"),
+        suffixIcon: CustomSurffixIcon(  svgIcon: "assets/icons/pass.svg"),
       ),
     );
   }
 
   TextFormField buildEmailFormField() {
     return TextFormField(
-      keyboardType: TextInputType.phone,
-      onSaved: (newValue) => phone = newValue,
+      obscureText: true,
+      keyboardType: TextInputType.visiblePassword,
+      onSaved: (newValue) => passwordOld = newValue,
       onChanged: (value) {
         if (value.isNotEmpty) {
-          removeError(error: kPhoneNumberNullError);
-        } else if (phoneValidatorRegExp.hasMatch(value)) {
-          removeError(error: kInvalidPhoneNumberError);
+          removeError(error: kPassOldNullError);
         }
-        return null;
+        else if (value.trim().length >= 8) {
+          removeError(error: kShortPassError);
+        }
+
+        passwordOld = value;
       },
       validator: (value) {
         if (value!.isEmpty) {
-          addError(error: kPhoneNumberNullError);
+          addError(error: kPassOldNullError);
           return "";
-        } else if (!phoneValidatorRegExp.hasMatch(value)) {
-          addError(error: kInvalidPhoneNumberError);
+        }
+        else if (value.trim().length < 8) {
+          addError(error: kShortPassError);
           return "";
         }
         return null;
       },
       decoration: InputDecoration(
-        labelText: "Số điện thoại",
-        hintText: "Nhập số điên thoại...",
+        labelText: "Mật khẩu cũ",
+        hintText: "Nhập mật khẩu cũ...",
         // If  you are using latest version of flutter then lable text and hint text shown like this
         // if you r using flutter less then 1.20.* then maybe this is not working properly
         floatingLabelBehavior: FloatingLabelBehavior.always,
-        suffixIcon: CustomSurffixIcon(svgIcon: "assets/icons/phonenumber.svg"),
+        suffixIcon: CustomSurffixIcon(svgIcon: "assets/icons/pass.svg"),
       ),
     );
   }

@@ -13,13 +13,13 @@ class Body extends StatelessWidget {
         width: double.infinity,
         child: Padding(
           padding:
-              EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
+          EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
           child: SingleChildScrollView(
             child: Column(
               children: [
                 SizedBox(height: SizeConfig.screenHeight * 0.04),
                 Text(
-                  "Welcome Back",
+                  "Road Help",
                   style: TextStyle(
                     color: Colors.black,
                     fontSize: getProportionateScreenWidth(28),
@@ -27,29 +27,29 @@ class Body extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  "Sign in with your email and password  \nor continue with social media",
+                  "Vui lòng Đăng nhập bằng điện thoại và mật khẩu của bạn \n để sử dụng ứng dụng!",
                   textAlign: TextAlign.center,
                 ),
                 SizedBox(height: SizeConfig.screenHeight * 0.08),
                 SignForm(),
                 SizedBox(height: SizeConfig.screenHeight * 0.08),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    SocalCard(
-                      icon: "assets/icons/google-icon.svg",
-                      press: () {},
-                    ),
-                    SocalCard(
-                      icon: "assets/icons/facebook-2.svg",
-                      press: () {},
-                    ),
-                    SocalCard(
-                      icon: "assets/icons/twitter.svg",
-                      press: () {},
-                    ),
-                  ],
-                ),
+                // Row(
+                //   mainAxisAlignment: MainAxisAlignment.center,
+                //   children: [
+                //     SocalCard(
+                //       icon: "assets/icons/google-icon.svg",
+                //       press: () {},
+                //     ),
+                //     SocalCard(
+                //       icon: "assets/icons/facebook-2.svg",
+                //       press: () {},
+                //     ),
+                //     SocalCard(
+                //       icon: "assets/icons/twitter.svg",
+                //       press: () {},
+                //     ),
+                //   ],
+                // ),
                 SizedBox(height: getProportionateScreenHeight(20)),
                 NoAccountText(),
               ],
