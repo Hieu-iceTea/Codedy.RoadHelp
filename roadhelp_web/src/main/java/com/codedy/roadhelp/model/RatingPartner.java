@@ -21,13 +21,25 @@ public class RatingPartner extends BaseModel implements Serializable{
 
 
     //region - Relationship -
-    @ManyToOne
+    @ManyToOne(cascade= {CascadeType.PERSIST, CascadeType.MERGE,
+            CascadeType.DETACH, CascadeType.REFRESH})
     @JoinColumn(name = "partner_id") //updatable = false, insertable = false
     private Partner partner;
 
     @ManyToOne
     @JoinColumn(name = "user_id") //updatable = false, insertable = false
     private User users;
+
+//    public IssuesDetail getIssues() {
+//        return issues;
+//    }
+//
+//    public void setIssues(IssuesDetail issues) {
+//        this.issues = issues;
+//    }
+//    @OneToOne
+//    @JoinColumn(name="issue_id")
+//    private IssuesDetail issues;
     //endregion
 
 

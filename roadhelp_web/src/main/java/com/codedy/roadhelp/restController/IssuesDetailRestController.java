@@ -1,8 +1,10 @@
 package com.codedy.roadhelp.restController;
 
 import com.codedy.roadhelp.model.IssuesDetail;
+import com.codedy.roadhelp.model.Partner;
 import com.codedy.roadhelp.restController.exception.RestNotFoundException;
 import com.codedy.roadhelp.service.issuesDetail.IssuesDetailService;
+import com.codedy.roadhelp.service.partner.PartnerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,6 +16,8 @@ public class IssuesDetailRestController {
 
     @Autowired
     private IssuesDetailService issuesDetailService;
+    @Autowired
+    private PartnerService partnerService;
 
     // List Issues Detail
     @GetMapping(path = {"", "/", "/index"})
@@ -58,7 +62,6 @@ public class IssuesDetailRestController {
         if (issuesDetailService.findById(id) == null) {
             throw new RestNotFoundException("Issues detail id not found - " + id);
         }
-
         issuesDetailService.deleteById(id);
         return "Deleted issues detail id - " + id;
     }
@@ -90,7 +93,7 @@ public class IssuesDetailRestController {
         }
 
         issuesDetail.setId(0);
-        issuesDetail.setStatus(true);
+        issuesDetail.setStatus(1);
         issuesDetailService.save(issuesDetail);
         return issuesDetailService.findById(issuesDetail.getId());
     }
@@ -98,11 +101,44 @@ public class IssuesDetailRestController {
     //Xem đánh giá sau khi hỗ trợ xong
     @GetMapping(path = {"/rescue/receive/show-reviews", "/rescue/receive/show-reviews/"})
     public IssuesDetail showReviews(@PathVariable int id) {
-        IssuesDetail issuesDetail = issuesDetailService.findById(id)
-                ;
+        IssuesDetail issuesDetail = issuesDetailService.findById(id);
         if (issuesDetail == null) {
             throw new RestNotFoundException("Issues detail id not found - " + id);
         }
         return issuesDetail;
     }
+
+    //Hùng
+    // Xem thông tin người giúp đỡ mình
+    @GetMapping(path = {"/rescue/send/confirmation/{id}", "/rescue/send/confirmation/{id}/"})
+    public Partner getIssuesDetails(@PathVariable int id) {
+        IssuesDetail issuesDetail = issuesDetailService.findById(id);
+
+        if (issuesDetail == null) {
+            throw new RestNotFoundException("Issues detail id not found - " + id);
+        }
+        return partnerService.findById(issuesDetail.getUsers().getId());
+    }
+    //User Create Issues Detail
+    @PostMapping(path = {"/rescue/send", "/rescue/send/"})
+    public IssuesDetail sendRescue(@RequestBody IssuesDetail issuesDetail) {
+        issuesDetail.setId(0);
+        issuesDetail.setStatus(1);
+        IssuesDetail newIssuesDetail = issuesDetailService.save(issuesDetail);
+        return issuesDetailService.findById(newIssuesDetail.getId());
+    }
+
+    // Xác nhận thông tin người giúp đỡ mình
+    @PutMapping(path = {"/rescue/send/confirmation/{id}", "/rescue/send/confirmation/{id}/"})
+    public IssuesDetail confirmationResues(@RequestBody IssuesDetail issuesDetail, @PathVariable int id, int isConfirm) {
+
+        if (issuesDetailService.findById(id) == null) {
+            throw new RestNotFoundException("Issues detail id not found - " + id);
+        }
+        issuesDetail.setId(0);
+        issuesDetail.setStatus(isConfirm);
+        issuesDetailService.save(issuesDetail);
+        return issuesDetailService.findById(issuesDetail.getId());
+    }
+
 }

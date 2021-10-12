@@ -8,7 +8,7 @@ import java.util.Date;
 import java.util.List;
 
 @Entity
-@Table(name = "issues_detail")
+@Table(name = "issue")
 public class IssuesDetail extends BaseModel implements Serializable {
 
     //region - Define Fields -
@@ -32,7 +32,18 @@ public class IssuesDetail extends BaseModel implements Serializable {
     @Size(min = 2, max = 500)
     private String description;
 
-    private Boolean status;
+    private  int category;
+
+    public int getCategory() {
+        return category;
+    }
+
+    public void setCategory(int category) {
+        this.category = category;
+    }
+
+
+    private int status;
     //endregion
 
 
@@ -41,13 +52,32 @@ public class IssuesDetail extends BaseModel implements Serializable {
     @JoinColumn(name = "user_id") //updatable = false, insertable = false
     private User users;
 
-    @OneToMany(mappedBy = "issuesDetail")
-    private List<Issues> issues;
-
     @ManyToOne
-    @JoinColumn(name = "note_list_id")
-    private NoteList noteList;
-    //endregion
+    @JoinColumn(name = "partner_id")
+    private Partner partner;
+
+
+    public Partner getPartner() {
+        return partner;
+    }
+
+    public void setPartner(Partner partner) {
+        this.partner = partner;
+    }
+
+//    public RatingPartner getRatingPartner() {
+//        return ratingPartner;
+//    }
+//
+//    public void setRatingPartner(RatingPartner ratingPartner) {
+//        this.ratingPartner = ratingPartner;
+//    }
+//
+//
+//
+//    @OneToOne(mappedBy="issue")
+//    private RatingPartner ratingPartner;
+//endregion
 
 
     //region - Getter & Setter -
@@ -108,27 +138,11 @@ public class IssuesDetail extends BaseModel implements Serializable {
         this.users = users;
     }
 
-    public List<Issues> getIssues() {
-        return issues;
-    }
-
-    public void setIssues(List<Issues> issues) {
-        this.issues = issues;
-    }
-
-    public NoteList getNoteLists() {
-        return noteList;
-    }
-
-    public void setNoteLists(NoteList noteLists) {
-        this.noteList = noteLists;
-    }
-
-    public Boolean getStatus() {
+    public int getStatus() {
         return status;
     }
 
-    public void setStatus(Boolean status) {
+    public void setStatus(int status) {
         this.status = status;
     }
 
@@ -136,13 +150,7 @@ public class IssuesDetail extends BaseModel implements Serializable {
         this.users = users;
     }
 
-    public NoteList getNoteList() {
-        return noteList;
-    }
 
-    public void setNoteList(NoteList noteList) {
-        this.noteList = noteList;
-    }
 
     @Override
     public String toString() {
@@ -155,8 +163,6 @@ public class IssuesDetail extends BaseModel implements Serializable {
                 ", description='" + description + '\'' +
                 ", status=" + status +
                 ", users=" + users +
-                ", issues=" + issues +
-                ", noteList=" + noteList +
                 '}';
     }
 
