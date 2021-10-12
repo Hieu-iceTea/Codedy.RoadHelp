@@ -21,5 +21,20 @@ class Issue extends BaseModel {
     this.category,
     this.description,
     this.status,
-  }) : super();
+    int? id,
+    DateTime? createdAt,
+    String? createdBy,
+    DateTime? updatedAt,
+    String? updatedBy,
+    int? version,
+    bool? deleted,
+  }) : super(
+          id: id,
+          createdAt: createdAt,
+          createdBy: createdBy,
+          updatedAt: updatedAt,
+          updatedBy: updatedBy,
+          version: version,
+          deleted: deleted,
+        );
 }
