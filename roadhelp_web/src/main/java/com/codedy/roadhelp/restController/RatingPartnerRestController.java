@@ -70,4 +70,13 @@ public class RatingPartnerRestController {
         ratingPartnerService.deleteById(id);
         return "Deleted rating partner id - " + id;
     }
+
+    //Hùng
+    // Tạo đánh giá người giúp đỡ mình
+    @PostMapping(path = {"/rescue/send/post-reviews", "/rescue/send/post-reviews/"})
+    public RatingPartner postReview(@RequestBody RatingPartner ratingPartner) {
+        ratingPartner.setId(0);
+        RatingPartner newRatingPartner = ratingPartnerService.save(ratingPartner);
+        return ratingPartnerService.findById(newRatingPartner.getId());
+    }
 }

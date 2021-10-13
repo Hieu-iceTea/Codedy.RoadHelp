@@ -5,7 +5,6 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.List;
-import java.util.regex.Pattern;
 
 @Entity
 @Table(name = "garage")
@@ -16,9 +15,9 @@ public class Garage extends BaseModel implements Serializable {
     private String name;
 
     @Size(max = 128)
-    private String image;
+    private String images;
 
-    private double rate;
+    private double rateAvg;
 
     @Size(min = 2, max = 64)
     private String address;
@@ -26,49 +25,56 @@ public class Garage extends BaseModel implements Serializable {
     @Size(min = 2, max = 16)
     private String phone;
 
-    @Size(min = 2, max = 128)
-    private String commune;
+    private double longitude;
 
-    @Size(max = 64)
-    private String longitude;
+    private double latitude;
 
-    @Size(max = 64)
-    private String latitude;
-
-    @Size(min = 2, max = 500)
+    @Size(max = 500)
     private String description;
 
     // - - - - -
     @NotNull
     private Boolean active;
-    //endregion
+    private Boolean isFeatured;
+
+
+//endregion
 
 
     //region - Relationship -
-    @ManyToOne
+    @ManyToOne(cascade= {CascadeType.PERSIST, CascadeType.MERGE,
+            CascadeType.DETACH, CascadeType.REFRESH})
     @JoinColumn(name = "partner_id")
     private Partner partner;
 
-    @OneToMany(mappedBy = "garage")
+    @OneToMany(fetch = FetchType.LAZY,mappedBy = "garage",cascade= {CascadeType.PERSIST, CascadeType.MERGE,
+            CascadeType.DETACH, CascadeType.REFRESH})
     private List<RatingGarage> ratingGarages;
     //endregion
 
 
     //region - Getter & Setter -
-    public String getImage() {
-        return image;
+    public Boolean getFeatured() {
+        return isFeatured;
     }
 
-    public void setImage(String image) {
-        this.image = image;
+    public void setFeatured(Boolean featured) {
+        isFeatured = featured;
+    }
+    public String getImages() {
+        return images;
     }
 
-    public double getRate() {
-        return rate;
+    public void setImages(String images) {
+        this.images = images;
     }
 
-    public void setRate(double rate) {
-        this.rate = rate;
+    public double getRateAvg() {
+        return rateAvg;
+    }
+
+    public void setRateAvg(double rateAvg) {
+        this.rateAvg = rateAvg;
     }
 
     public String getAddress() {
@@ -87,27 +93,20 @@ public class Garage extends BaseModel implements Serializable {
         this.phone = phone;
     }
 
-    public String getCommune() {
-        return commune;
-    }
 
-    public void setCommune(String commune) {
-        this.commune = commune;
-    }
-
-    public String getLongitude() {
+    public double getLongitude() {
         return longitude;
     }
 
-    public void setLongitude(String longitude) {
+    public void setLongitude(double longitude) {
         this.longitude = longitude;
     }
 
-    public String getLatitude() {
+    public double getLatitude() {
         return latitude;
     }
 
-    public void setLatitude(String latitude) {
+    public void setLatitude(double latitude) {
         this.latitude = latitude;
     }
 
@@ -155,11 +154,10 @@ public class Garage extends BaseModel implements Serializable {
     public String toString() {
         return "Garage{" +
                 "name='" + name + '\'' +
-                ", image='" + image + '\'' +
-                ", rate='" + rate + '\'' +
+                ", image='" + images + '\'' +
+                ", rate='" + rateAvg + '\'' +
                 ", address='" + address + '\'' +
                 ", phone='" + phone + '\'' +
-                ", commune='" + commune + '\'' +
                 ", longitude='" + longitude + '\'' +
                 ", latitude='" + latitude + '\'' +
                 ", description='" + description + '\'' +

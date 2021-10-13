@@ -50,7 +50,7 @@ public class Partner extends BaseModel implements Serializable {
     @Size(min = 2, max = 16)
     private String phone;
 
-    private double rate;
+    private double rateAvg;
 
     @NotNull
     private Boolean active;
@@ -58,11 +58,26 @@ public class Partner extends BaseModel implements Serializable {
 
 
     //region - Relationship -
-    @OneToMany(mappedBy = "partner")
+    @OneToMany(fetch = FetchType.LAZY,mappedBy = "partner", cascade= {CascadeType.PERSIST, CascadeType.MERGE,
+            CascadeType.DETACH, CascadeType.REFRESH})
     private List<Garage> garages;
 
-    @OneToMany(mappedBy = "partner")
+    @OneToMany(fetch = FetchType.LAZY,mappedBy = "partner", cascade= {CascadeType.PERSIST, CascadeType.MERGE,
+            CascadeType.DETACH, CascadeType.REFRESH})
     private List<RatingPartner> ratingPartners;
+
+    public List<IssuesDetail> getIssuesDetails() {
+        return issuesDetails;
+    }
+
+    public void setIssuesDetails(List<IssuesDetail> issuesDetails) {
+        this.issuesDetails = issuesDetails;
+    }
+
+    @OneToMany(mappedBy="partner")
+    private List<IssuesDetail> issuesDetails;
+
+
     //endregion
 
 
@@ -187,12 +202,12 @@ public class Partner extends BaseModel implements Serializable {
         this.gender = gender;
     }
 
-    public double getRate() {
-        return rate;
+    public double getRateAvg() {
+        return rateAvg;
     }
 
-    public void setRate(double rate) {
-        this.rate = rate;
+    public void setRateAvg(double rateAvg) {
+        this.rateAvg = rateAvg;
     }
 
     @Override
@@ -210,7 +225,7 @@ public class Partner extends BaseModel implements Serializable {
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", phone='" + phone + '\'' +
-                ", rate=" + rate +
+                ", rateAvg=" + rateAvg +
                 ", active=" + active +
                 ", garages=" + garages +
                 ", ratingPartners=" + ratingPartners +
