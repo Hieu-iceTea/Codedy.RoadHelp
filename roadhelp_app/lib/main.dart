@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:roadhelp/screens/home/home_screen.dart';
-import 'package:roadhelp/screens/splash/splash_screen.dart';
+
 import 'config/routes.dart';
 import 'config/theme.dart';
+import 'screens/splash/splash_screen.dart';
 
 void main() {
   runApp(MyApp());
