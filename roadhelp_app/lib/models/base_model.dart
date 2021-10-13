@@ -1,5 +1,8 @@
 class BaseModel {
-  int? id;
+  //
+  final int? id;
+
+  //
   DateTime? createdAt;
   String? createdBy;
   DateTime? updatedAt;

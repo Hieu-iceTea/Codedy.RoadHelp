@@ -1,52 +1,78 @@
 import 'dart:math';
 
-import 'package:roadhelp/models/garage_rating.dart';
+import 'package:roadhelp/models/rating_garage.dart';
 
-class Garage {
-  final int id;
+import 'base_model.dart';
 
-  final int? partner_id;
-  final int? district_id;
-  final int? province_id;
+class Garage extends BaseModel {
+  //#region - Foreign Keys (Khóa ngoại) -
 
-  final List<GarageRating>? garageRatings;
+  final int? partnerId;
+  final int? provinceId;
+  final int? districtId;
+  final int? wardId;
+
+  //#endregion
+
+  //#region - Main Fields (Các trường chính của bảng này) -
 
   final String? name;
   final List<String>? imageUrls;
   final String? phone;
   final double? ratingAvg;
   final String? address;
-  final String? commune;
-  final double? Longitude;
-  final double? Latitude;
+  final double? longitude;
+  final double? latitude;
   final String? description;
   final bool? active;
+  final bool? isFeatured;
 
-  final bool? isFavourite;
-  final bool? isPopular;
+  //#endregion
+
+  //#region - Relationship (Mối quan hệ & liên kết bảng khác) -
+
+  final List<RatingGarage>? garageRatings;
+
+  //#endregion
+
+  //#region - Constructor (Hàm tạo)-
 
   Garage({
-    required this.id,
-    this.partner_id,
-    this.district_id,
-    this.province_id,
+    this.partnerId,
+    this.provinceId,
+    this.districtId,
+    this.wardId,
     this.garageRatings,
     this.name,
     this.imageUrls,
     this.phone,
     this.ratingAvg,
     this.address,
-    this.commune,
-    this.Longitude,
-    this.Latitude,
+    this.longitude,
+    this.latitude,
     this.description,
     this.active,
-    this.isFavourite,
-    this.isPopular,
-  });
+    this.isFeatured,
+    int? id,
+    DateTime? createdAt,
+    String? createdBy,
+    DateTime? updatedAt,
+    String? updatedBy,
+    int? version,
+    bool? deleted,
+  }) : super(
+          id: id,
+          createdAt: createdAt,
+          createdBy: createdBy,
+          updatedAt: updatedAt,
+          updatedBy: updatedBy,
+          version: version,
+          deleted: deleted,
+        );
+//#endregion
 }
 
-// Our demo Garages
+//#region - Fake Data -
 
 final List<Garage> demoGarages = [
   getTmpGarage(),
@@ -80,23 +106,24 @@ Garage getTmpGarage() {
     description: description,
     ratingAvg: 4.8,
     garageRatings: [
-      GarageRating(
+      RatingGarage(
           id: Random().nextInt(1000),
           garageID: 1,
           userID: 1,
           ratePoint: 4.5,
           comment: "This is Comment for garage..."),
-      GarageRating(
+      RatingGarage(
           id: Random().nextInt(1000),
           garageID: 1,
           userID: 2,
           ratePoint: 4.5,
           comment: "This is Comment for garage..."),
     ],
-    isFavourite: true,
-    isPopular: true,
+    isFeatured: true,
   );
 }
 
 const String description =
     "Sản phẩm và dịch vụ của chúng tôi bao gồm bảo dưỡng, sửa chữa, đồng sơn xe ô tô, các dịch vụ chăm sóc xe, cung cấp phụ tùng chính hãng và thay thế, nhận ký gửi, mua bán xe. Chúng tôi luôn tự hào khi được sở hữu mô hình khép kín từ đội ngũ nhân viên tài năng đến hệ thống trang thiết bị tân tiến, hiện đại, với phương châm “trung thực – tận tâm – trách nhiệm – chia sẻ” đây là tài sản vô hình để tạo ra động lực thức đẩy sự phát triển, nâng cao năng lực cạnh tranh vươn tới vị trí hàng đầu tại thành phố Hồ chí Minh.";
+
+//#endregion

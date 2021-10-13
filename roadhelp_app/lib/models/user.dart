@@ -1,30 +1,26 @@
-import '/config/enums.dart';
 import 'base_model.dart';
 
-class Issue extends BaseModel {
-  //
-  int? userId;
-  int? partnerId;
-
-  //
-  String? address;
+class User extends BaseModel {
+  String? userName;
+  String? email;
+  String? password;
+  String? imageUrl;
+  bool? gender;
+  String? firstName;
+  String? lastName;
   String? phone;
-  double? longitude;
-  double? latitude;
-  IssueCategory? category;
-  String? description;
-  IssueStatus? status;
+  bool? active;
 
-  Issue({
-    this.userId,
-    this.partnerId,
-    this.address,
+  User({
+    this.userName,
+    this.email,
+    this.password,
+    this.imageUrl,
+    this.gender,
+    this.firstName,
+    this.lastName,
     this.phone,
-    this.longitude,
-    this.latitude,
-    this.category,
-    this.description,
-    this.status,
+    this.active,
     int? id,
     DateTime? createdAt,
     String? createdBy,
