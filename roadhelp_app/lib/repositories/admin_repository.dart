@@ -15,7 +15,9 @@ class AdminRepository {
       for (var element in responseBody) Admin.fromJson(element)
     ];*/
 
-    return responseBody.map<Admin>((element) => Admin.fromJson(element)).toList();
+    return responseBody
+        .map<Admin>((element) => Admin.fromJson(element))
+        .toList();
   }
 
   static Future<Admin> findById(int id) async {
