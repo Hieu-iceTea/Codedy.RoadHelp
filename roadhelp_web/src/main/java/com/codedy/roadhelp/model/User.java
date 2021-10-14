@@ -21,7 +21,6 @@ public class User extends BaseModel implements Serializable {
     @Size(min = 6, max = 64)
     private String username;
 
-    @NotNull
     @Email
     @Size(max = 128)
     private String email;

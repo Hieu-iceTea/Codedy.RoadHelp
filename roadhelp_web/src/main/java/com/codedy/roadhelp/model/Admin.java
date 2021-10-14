@@ -17,7 +17,6 @@ public class Admin extends BaseModel implements Serializable {
     @Size(min = 6, max = 64)
     private String username;
 
-    @NotNull
     @Email
     private String email;
 
