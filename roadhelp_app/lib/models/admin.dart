@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'base_model.dart';
 
 class Admin extends BaseModel {
@@ -39,4 +41,50 @@ class Admin extends BaseModel {
           version: version,
           deleted: deleted,
         );
+
+  //
+  factory Admin.fromJson(Map<String, dynamic> json) {
+    return Admin(
+      userName: json['username'],
+      email: json['email'],
+      password: json['password'],
+      imageUrl: json['image'],
+      gender: json['gender'],
+      firstName: json['firstName'],
+      lastName: json['lastName'],
+      phone: json['phone'],
+      active: json['active'],
+      address: json['address'],
+      id: json['id'],
+      //createdAt: json['createdAt'],
+      createdBy: json['createdBy'],
+      //updatedAt: json['updatedAt'],
+      updatedBy: json['updatedBy'],
+      version: json['version'],
+      deleted: json['deleted'],
+    );
+  }
+
+  //
+  String toJson() {
+    return json.encode({
+      'username': userName,
+      'email': email,
+      'password': password,
+      'image': imageUrl,
+      'gender': gender,
+      'firstName': firstName,
+      'lastName': lastName,
+      'phone': phone,
+      'active': active,
+      'address': address,
+      'id': id,
+      //'createdAt': createdAt,
+      'createdBy': createdBy,
+      //'updatedAt': updatedAt,
+      'updatedBy': updatedBy,
+      'version': version,
+      'deleted': deleted,
+    });
+  }
 }

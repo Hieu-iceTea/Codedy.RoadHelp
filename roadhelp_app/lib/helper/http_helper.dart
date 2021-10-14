@@ -1,0 +1,92 @@
+import 'dart:convert';
+import 'dart:io';
+
+import 'package:http/http.dart' as http;
+
+class HttpHelper {
+  static Future<dynamic> get({required String url}) async {
+    //https://flutter.dev/docs/cookbook/networking/fetch-data
+    try {
+      final response = await http.get(Uri.parse(url));
+
+      if (response.body.isEmpty) {
+        throw Exception('❌ Failed to fetch all data. Response body is Empty');
+      }
+
+      if (response.statusCode == 200) {
+        // If the server did return a 200 OK response, then parse the JSON.
+        return json.decode(response.body);
+      } else {
+        // If the server did not return a 200 OK response, then throw an exception.
+        throw Exception('❌ Failed to fetch all data. StatusCode: ' +
+            response.statusCode.toString());
+      }
+    } catch (error) {
+      rethrow;
+    }
+  }
+
+  static Future<dynamic> post({required String url, Object? body}) async {
+    try {
+      final response = await http.post(
+        Uri.parse(url),
+        headers: {'content-type': 'application/json'},
+        body: body,
+      );
+
+      if (response.body.isEmpty) {
+        throw Exception('❌ Failed to fetch all data. Response body is Empty');
+      }
+
+      if (response.statusCode == 200) {
+        return json.decode(response.body);
+      } else {
+        throw Exception('❌ Failed to fetch all data. StatusCode: ' +
+            response.statusCode.toString());
+      }
+    } catch (error) {
+      rethrow;
+    }
+  }
+
+  static Future<dynamic> put({required String url, Object? body}) async {
+    try {
+      final response = await http.put(
+        Uri.parse(url),
+        headers: {'content-type': 'application/json'},
+        body: body,
+      );
+
+      if (response.body.isEmpty) {
+        throw Exception('❌ Failed to fetch all data. Response body is Empty');
+      }
+
+      if (response.statusCode == 200) {
+        return json.decode(response.body);
+      } else {
+        throw Exception('❌ Failed to fetch all data. StatusCode: ' +
+            response.statusCode.toString());
+      }
+    } catch (error) {
+      rethrow;
+    }
+  }
+
+  static Future<dynamic> delete({required String url}) async {
+    try {
+      final response = await http.delete(Uri.parse(url));
+
+      if (response.body.isEmpty) {
+        throw Exception('❌ Failed ... . Response body is Empty');
+      }
+
+      if (response.statusCode >= 400) {
+        throw const HttpException('Could not delete product.');
+      }
+
+      return json.decode(response.body);
+    } catch (error) {
+      rethrow;
+    }
+  }
+}
