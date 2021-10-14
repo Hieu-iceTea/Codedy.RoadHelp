@@ -1,5 +1,9 @@
 package com.codedy.roadhelp.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.annotations.Cascade;
+
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
@@ -14,24 +18,16 @@ public class User extends BaseModel implements Serializable {
 
     //region - Define Fields -
     @NotNull
-    @Size(min = 2, max = 64)
+    @Size(min = 6, max = 64)
     private String username;
 
     @NotNull
     @Email
-    @Size(min = 2, max = 64)
+    @Size(max = 128)
     private String email;
 
-    @Size(max = 128)
+    @Size(min = 8)
     private String password;
-
-    // - - - - -
-    private Date emailVerifiedAt;
-    private String verificationCode;
-    private String resetPasswordCode;
-    private String rememberToken;
-
-    // - - - - -
     @Size(max = 128)
     private String image;
 
@@ -43,27 +39,38 @@ public class User extends BaseModel implements Serializable {
     @Size(min = 2, max = 64)
     private String lastName;
 
-    @Size(min = 2, max = 16)
+    @Size(min = 10)
     private String phone;
 
-    // - - - - -
     @NotNull
     private Boolean active;
     //endregion
 
-
     //region - Relationship -
     @OneToMany(mappedBy = "users")
+    @JsonBackReference("issuesDetails")
     private List<IssuesDetail> issuesDetails;
 
-    @OneToMany(mappedBy = "users")
+    @OneToMany(mappedBy = "users", cascade = {CascadeType.PERSIST, CascadeType.MERGE,
+            CascadeType.DETACH, CascadeType.REFRESH})
+    @JsonBackReference("ratingGarages")
     private List<RatingGarage> ratingGarages;
 
-    @OneToMany(mappedBy = "users")
+    @OneToMany(mappedBy = "users", cascade = {CascadeType.PERSIST, CascadeType.MERGE,
+            CascadeType.DETACH, CascadeType.REFRESH})
+    @JsonBackReference("ratingPartners")
     private List<RatingPartner> ratingPartners;
     //endregion
 
     //region - Getter & Setter -
+    public List<RatingPartner> getRatingPartners() {
+        return ratingPartners;
+    }
+
+    public void setRatingPartners(List<RatingPartner> ratingPartners) {
+        this.ratingPartners = ratingPartners;
+    }
+
     public String getUsername() {
         return username;
     }
@@ -86,38 +93,6 @@ public class User extends BaseModel implements Serializable {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public Date getEmailVerifiedAt() {
-        return emailVerifiedAt;
-    }
-
-    public void setEmailVerifiedAt(Date emailVerifiedAt) {
-        this.emailVerifiedAt = emailVerifiedAt;
-    }
-
-    public String getVerificationCode() {
-        return verificationCode;
-    }
-
-    public void setVerificationCode(String verificationCode) {
-        this.verificationCode = verificationCode;
-    }
-
-    public String getResetPasswordCode() {
-        return resetPasswordCode;
-    }
-
-    public void setResetPasswordCode(String resetPasswordCode) {
-        this.resetPasswordCode = resetPasswordCode;
-    }
-
-    public String getRememberToken() {
-        return rememberToken;
-    }
-
-    public void setRememberToken(String rememberToken) {
-        this.rememberToken = rememberToken;
     }
 
     public String getImage() {
@@ -184,13 +159,6 @@ public class User extends BaseModel implements Serializable {
         this.ratingGarages = ratingGarages;
     }
 
-    public List<RatingPartner> getRatingPartners() {
-        return ratingPartners;
-    }
-
-    public void setRatingPartners(List<RatingPartner> ratingPartners) {
-        this.ratingPartners = ratingPartners;
-    }
 
     @Override
     public String toString() {
@@ -198,10 +166,6 @@ public class User extends BaseModel implements Serializable {
                 "username='" + username + '\'' +
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
-                ", emailVerifiedAt=" + emailVerifiedAt +
-                ", verificationCode='" + verificationCode + '\'' +
-                ", resetPasswordCode='" + resetPasswordCode + '\'' +
-                ", rememberToken='" + rememberToken + '\'' +
                 ", image='" + image + '\'' +
                 ", gender=" + gender +
                 ", firstName='" + firstName + '\'' +
@@ -213,6 +177,5 @@ public class User extends BaseModel implements Serializable {
                 ", ratingPartners=" + ratingPartners +
                 '}';
     }
-
     //endregion
 }

@@ -1,5 +1,10 @@
 package com.codedy.roadhelp.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import org.hibernate.annotations.LazyToOne;
+import org.hibernate.annotations.LazyToOneOption;
+
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
@@ -13,29 +18,17 @@ import java.util.List;
 public class Partner extends BaseModel implements Serializable {
 
     //region - Define Fields -
-    //private int restaurantId; //Foreign key - Relationship
-
-    // - - - - -
     @NotNull
-    @Size(min = 2, max = 64)
+    @Size(min = 6, max = 64)
     private String username;
 
     @NotNull
     @Email
-    @Size(min = 2, max = 64)
     private String email;
 
-    @Size(max = 128)
+    @NotNull
+    @Size(min = 8)
     private String password;
-
-    // - - - - -
-    private Date emailVerifiedAt;
-    private String verificationCode;
-    private String resetPasswordCode;
-    private String rememberToken;
-
-
-    // - - - - -
     @Size(max = 128)
     private String image;
 
@@ -47,7 +40,7 @@ public class Partner extends BaseModel implements Serializable {
     @Size(min = 2, max = 64)
     private String lastName;
 
-    @Size(min = 2, max = 16)
+    @Size(min = 10)
     private String phone;
 
     private double rateAvg;
@@ -56,16 +49,23 @@ public class Partner extends BaseModel implements Serializable {
     private Boolean active;
     //endregion
 
-
     //region - Relationship -
-    @OneToMany(fetch = FetchType.LAZY,mappedBy = "partner", cascade= {CascadeType.PERSIST, CascadeType.MERGE,
+    @OneToMany(mappedBy = "partner", cascade = {CascadeType.PERSIST, CascadeType.MERGE,
             CascadeType.DETACH, CascadeType.REFRESH})
+    @JsonBackReference("garages")
     private List<Garage> garages;
 
-    @OneToMany(fetch = FetchType.LAZY,mappedBy = "partner", cascade= {CascadeType.PERSIST, CascadeType.MERGE,
+    @OneToMany(mappedBy = "partner", cascade = {CascadeType.PERSIST, CascadeType.MERGE,
             CascadeType.DETACH, CascadeType.REFRESH})
+    @JsonBackReference("ratingPartners")
     private List<RatingPartner> ratingPartners;
 
+    @OneToMany(mappedBy = "partner")
+    @JsonBackReference("issuesDetails")
+    private List<IssuesDetail> issuesDetails;
+    //endregion
+
+    //region - Getter & Setter -
     public List<IssuesDetail> getIssuesDetails() {
         return issuesDetails;
     }
@@ -74,14 +74,6 @@ public class Partner extends BaseModel implements Serializable {
         this.issuesDetails = issuesDetails;
     }
 
-    @OneToMany(mappedBy="partner")
-    private List<IssuesDetail> issuesDetails;
-
-
-    //endregion
-
-
-    //region - Getter & Setter -
     public String getUsername() {
         return username;
     }
@@ -104,38 +96,6 @@ public class Partner extends BaseModel implements Serializable {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public Date getEmailVerifiedAt() {
-        return emailVerifiedAt;
-    }
-
-    public void setEmailVerifiedAt(Date emailVerifiedAt) {
-        this.emailVerifiedAt = emailVerifiedAt;
-    }
-
-    public String getVerificationCode() {
-        return verificationCode;
-    }
-
-    public void setVerificationCode(String verificationCode) {
-        this.verificationCode = verificationCode;
-    }
-
-    public String getResetPasswordCode() {
-        return resetPasswordCode;
-    }
-
-    public void setResetPasswordCode(String resetPasswordCode) {
-        this.resetPasswordCode = resetPasswordCode;
-    }
-
-    public String getRememberToken() {
-        return rememberToken;
-    }
-
-    public void setRememberToken(String rememberToken) {
-        this.rememberToken = rememberToken;
     }
 
     public String getImage() {
@@ -216,10 +176,6 @@ public class Partner extends BaseModel implements Serializable {
                 "username='" + username + '\'' +
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
-                ", emailVerifiedAt=" + emailVerifiedAt +
-                ", verificationCode='" + verificationCode + '\'' +
-                ", resetPasswordCode='" + resetPasswordCode + '\'' +
-                ", rememberToken='" + rememberToken + '\'' +
                 ", image='" + image + '\'' +
                 ", gender=" + gender +
                 ", firstName='" + firstName + '\'' +

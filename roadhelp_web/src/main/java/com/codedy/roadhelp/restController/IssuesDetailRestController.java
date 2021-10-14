@@ -16,8 +16,8 @@ public class IssuesDetailRestController {
 
     @Autowired
     private IssuesDetailService issuesDetailService;
-    @Autowired
-    private PartnerService partnerService;
+//    @Autowired
+//    private PartnerService partnerService;
 
     // List Issues Detail
     @GetMapping(path = {"", "/", "/index"})
@@ -84,19 +84,19 @@ public class IssuesDetailRestController {
     }
 
     //Details xác nhận
-    @PostMapping (path = {"/rescue/receive/details", "/rescue/receive/details/"})
-    public IssuesDetail confirmationReceiveResues(@RequestBody IssuesDetail issuesDetail, @PathVariable int id) {
-
-        if (issuesDetailService.findById(id)
-                == null) {
-            throw new RestNotFoundException("Issues detail id not found - " + id);
-        }
-
-        issuesDetail.setId(0);
-        issuesDetail.setStatus(1);
-        issuesDetailService.save(issuesDetail);
-        return issuesDetailService.findById(issuesDetail.getId());
-    }
+//    @PostMapping (path = {"/rescue/receive/details", "/rescue/receive/details/"})
+//    public IssuesDetail confirmationReceiveResues(@RequestBody IssuesDetail issuesDetail, @PathVariable Is id) {
+//
+//        if (issuesDetailService.findById(id)
+//                == null) {
+//            throw new RestNotFoundException("Issues detail id not found - " + id);
+//        }
+//
+//        issuesDetail.setId(0);
+//        issuesDetail.setStatus(1);
+//        issuesDetailService.save(issuesDetail);
+//        return issuesDetailService.findById(issuesDetail.getId());
+//    }
 
     //Xem đánh giá sau khi hỗ trợ xong
     @GetMapping(path = {"/rescue/receive/show-reviews", "/rescue/receive/show-reviews/"})
@@ -110,20 +110,20 @@ public class IssuesDetailRestController {
 
     //Hùng
     // Xem thông tin người giúp đỡ mình
-    @GetMapping(path = {"/rescue/send/confirmation/{id}", "/rescue/send/confirmation/{id}/"})
-    public Partner getIssuesDetails(@PathVariable int id) {
-        IssuesDetail issuesDetail = issuesDetailService.findById(id);
-
-        if (issuesDetail == null) {
-            throw new RestNotFoundException("Issues detail id not found - " + id);
-        }
-        return partnerService.findById(issuesDetail.getUsers().getId());
-    }
+//    @GetMapping(path = {"/rescue/send/confirmation/{id}", "/rescue/send/confirmation/{id}/"})
+//    public Partner getIssuesDetails(@PathVariable int id) {
+//        IssuesDetail issuesDetail = issuesDetailService.findById(id);
+//
+//        if (issuesDetail == null) {
+//            throw new RestNotFoundException("Issues detail id not found - " + id);
+//        }
+//        return partnerService.findById(issuesDetail.getUsers().getId());
+//    }
     //User Create Issues Detail
     @PostMapping(path = {"/rescue/send", "/rescue/send/"})
     public IssuesDetail sendRescue(@RequestBody IssuesDetail issuesDetail) {
         issuesDetail.setId(0);
-        issuesDetail.setStatus(1);
+       // issuesDetail.setStatus(1);
         IssuesDetail newIssuesDetail = issuesDetailService.save(issuesDetail);
         return issuesDetailService.findById(newIssuesDetail.getId());
     }
@@ -136,7 +136,7 @@ public class IssuesDetailRestController {
             throw new RestNotFoundException("Issues detail id not found - " + id);
         }
         issuesDetail.setId(0);
-        issuesDetail.setStatus(isConfirm);
+       // issuesDetail.setStatus(isConfirm);
         issuesDetailService.save(issuesDetail);
         return issuesDetailService.findById(issuesDetail.getId());
     }
