@@ -81,10 +81,10 @@ class HttpHelper {
       }
 
       if (response.statusCode >= 400) {
-        throw const HttpException('Could not delete product.');
+        throw HttpException('❌ Could not delete item. StatusCode: ' + response.statusCode.toString());
       }
 
-      return json.decode(response.body);
+      return response.body;
     } catch (error) {
       rethrow;
     }

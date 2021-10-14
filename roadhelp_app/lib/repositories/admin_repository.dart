@@ -11,7 +11,11 @@ class AdminRepository {
       url: _url,
     );
 
-    return responseBody.map((element) => Admin.fromJson(element)).toList();
+    /*List<Admin> items = [
+      for (var element in responseBody) Admin.fromJson(element)
+    ];*/
+
+    return responseBody.map<Admin>((element) => Admin.fromJson(element)).toList();
   }
 
   static Future<Admin> findById(int id) async {
@@ -40,8 +44,8 @@ class AdminRepository {
     return Admin.fromJson(responseBody);
   }
 
-  static Future<void> deleteById(int id) async {
-    await HttpHelper.delete(
+  static Future<dynamic> deleteById(int id) async {
+    return await HttpHelper.delete(
       url: _url + id.toString(),
     );
   }
