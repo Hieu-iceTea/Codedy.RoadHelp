@@ -1,5 +1,12 @@
 package com.codedy.roadhelp.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import net.minidev.json.annotate.JsonIgnore;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.LazyToOne;
+import org.hibernate.annotations.LazyToOneOption;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -13,16 +20,14 @@ public class Garage extends BaseModel implements Serializable {
     //region - Define Fields -
     @Size(min = 2, max = 64)
     private String name;
-
     @Size(max = 128)
     private String images;
 
     private double rateAvg;
-
-    @Size(min = 2, max = 64)
+    @Size(max = 128)
     private String address;
 
-    @Size(min = 2, max = 16)
+    @Size(min = 10)
     private String phone;
 
     private double longitude;
@@ -32,26 +37,21 @@ public class Garage extends BaseModel implements Serializable {
     @Size(max = 500)
     private String description;
 
-    // - - - - -
     @NotNull
     private Boolean active;
     private Boolean isFeatured;
-
-
 //endregion
 
-
     //region - Relationship -
-    @ManyToOne(cascade= {CascadeType.PERSIST, CascadeType.MERGE,
-            CascadeType.DETACH, CascadeType.REFRESH})
+    @ManyToOne
     @JoinColumn(name = "partner_id")
     private Partner partner;
 
-    @OneToMany(fetch = FetchType.LAZY,mappedBy = "garage",cascade= {CascadeType.PERSIST, CascadeType.MERGE,
+    @OneToMany(mappedBy = "garage", cascade = {CascadeType.PERSIST, CascadeType.MERGE,
             CascadeType.DETACH, CascadeType.REFRESH})
+    @JsonBackReference("ratingGarages")
     private List<RatingGarage> ratingGarages;
     //endregion
-
 
     //region - Getter & Setter -
     public Boolean getFeatured() {
@@ -61,6 +61,7 @@ public class Garage extends BaseModel implements Serializable {
     public void setFeatured(Boolean featured) {
         isFeatured = featured;
     }
+
     public String getImages() {
         return images;
     }
@@ -166,7 +167,6 @@ public class Garage extends BaseModel implements Serializable {
                 ", ratingGarages=" + ratingGarages +
                 '}';
     }
-
     //endregion
 
 }

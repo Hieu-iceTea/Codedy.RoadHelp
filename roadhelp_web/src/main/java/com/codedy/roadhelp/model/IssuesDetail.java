@@ -1,51 +1,39 @@
 package com.codedy.roadhelp.model;
 
+import com.codedy.roadhelp.model.enums.IssueCategory;
+import com.codedy.roadhelp.model.enums.IssueStatus;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
-import java.util.Date;
-import java.util.List;
 
 @Entity
 @Table(name = "issue")
 public class IssuesDetail extends BaseModel implements Serializable {
 
     //region - Define Fields -
-
-    @NotNull
-    @Size(min = 2, max = 64)
+    @Size(max = 128)
     private String commune;
 
-    @Size(min = 2, max = 64)
-    private String longitude;
+    private double longitude;
 
-    @Size(min = 2, max = 64)
-    private String latitude;
+    private double latitude;
 
-    @Size(max = 16)
+    @Size(min = 10)
     private String phone;
-
     @Size(max = 128)
     private String address;
 
-    @Size(min = 2, max = 500)
+    @Size(max = 500)
     private String description;
 
-    private  int category;
+    private IssueStatus status;
 
-    public int getCategory() {
-        return category;
-    }
-
-    public void setCategory(int category) {
-        this.category = category;
-    }
-
-
-    private int status;
-    //endregion
-
+//endregion
 
     //region - Relationship -
     @ManyToOne
@@ -57,30 +45,20 @@ public class IssuesDetail extends BaseModel implements Serializable {
     private Partner partner;
 
 
-    public Partner getPartner() {
-        return partner;
-    }
-
-    public void setPartner(Partner partner) {
-        this.partner = partner;
-    }
-
-//    public RatingPartner getRatingPartner() {
-//        return ratingPartner;
-//    }
-//
-//    public void setRatingPartner(RatingPartner ratingPartner) {
-//        this.ratingPartner = ratingPartner;
-//    }
-//
-//
-//
+//todo
 //    @OneToOne(mappedBy="issue")
 //    private RatingPartner ratingPartner;
 //endregion
 
-
     //region - Getter & Setter -
+
+    public IssueStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(IssueStatus status) {
+        this.status = status;
+    }
 
     public String getCommune() {
         return commune;
@@ -90,19 +68,19 @@ public class IssuesDetail extends BaseModel implements Serializable {
         this.commune = commune;
     }
 
-    public String getLongitude() {
+    public double getLongitude() {
         return longitude;
     }
 
-    public void setLongitude(String longitude) {
+    public void setLongitude(double longitude) {
         this.longitude = longitude;
     }
 
-    public String getLatitude() {
+    public double getLatitude() {
         return latitude;
     }
 
-    public void setLatitude(String latitude) {
+    public void setLatitude(double latitude) {
         this.latitude = latitude;
     }
 
@@ -134,23 +112,17 @@ public class IssuesDetail extends BaseModel implements Serializable {
         return users;
     }
 
-    public void setUserIds(User users) {
-        this.users = users;
-    }
-
-    public int getStatus() {
-        return status;
-    }
-
-    public void setStatus(int status) {
-        this.status = status;
-    }
-
     public void setUsers(User users) {
         this.users = users;
     }
 
+    public Partner getPartner() {
+        return partner;
+    }
 
+    public void setPartner(Partner partner) {
+        this.partner = partner;
+    }
 
     @Override
     public String toString() {
@@ -165,7 +137,6 @@ public class IssuesDetail extends BaseModel implements Serializable {
                 ", users=" + users +
                 '}';
     }
-
     //endregion
 
 }

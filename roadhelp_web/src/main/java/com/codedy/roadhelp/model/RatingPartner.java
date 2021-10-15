@@ -1,6 +1,5 @@
 package com.codedy.roadhelp.model;
 
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -8,11 +7,10 @@ import java.io.Serializable;
 
 @Entity
 @Table(name = "ratingpartner")
-public class RatingPartner extends BaseModel implements Serializable{
+public class RatingPartner extends BaseModel implements Serializable {
 
     //region - Define Fields -
     @NotNull
-    @Size(max = 11)
     private int ratePoint;
 
     @Size(max = 256)
@@ -21,8 +19,7 @@ public class RatingPartner extends BaseModel implements Serializable{
 
 
     //region - Relationship -
-    @ManyToOne(cascade= {CascadeType.PERSIST, CascadeType.MERGE,
-            CascadeType.DETACH, CascadeType.REFRESH})
+    @ManyToOne
     @JoinColumn(name = "partner_id") //updatable = false, insertable = false
     private Partner partner;
 
@@ -30,18 +27,11 @@ public class RatingPartner extends BaseModel implements Serializable{
     @JoinColumn(name = "user_id") //updatable = false, insertable = false
     private User users;
 
-//    public IssuesDetail getIssues() {
-//        return issues;
-//    }
-//
-//    public void setIssues(IssuesDetail issues) {
-//        this.issues = issues;
-//    }
+//TODO
 //    @OneToOne
 //    @JoinColumn(name="issue_id")
 //    private IssuesDetail issues;
     //endregion
-
 
     //region - Getter & Setter -
     public int getRatePoint() {
@@ -85,7 +75,6 @@ public class RatingPartner extends BaseModel implements Serializable{
                 ", users=" + users +
                 '}';
     }
-
     //endregion
 
 }

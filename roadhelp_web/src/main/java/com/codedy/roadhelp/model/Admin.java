@@ -14,40 +14,28 @@ public class Admin extends BaseModel implements Serializable {
 
     //region - Define Fields -
     @NotNull
-    @Size(min = 2, max = 64)
+    @Size(min = 6, max = 64)
     private String username;
 
-    @NotNull
     @Email
-    @Size(min = 2, max = 64)
     private String email;
 
-    @NotNull
-    @Size(min = 2, max = 128)
+    @Size(min = 8)
     private String password;
-
-    // - - - - -
-    private Date emailVerifiedAt;
-    private String verificationCode;
-    private String resetPasswordCode;
-    private String rememberToken;
-
-    // - - - - -
     @Size(max = 128)
     private String image;
 
     private Boolean gender;
 
-    @Size(min = 2, max = 64)
+    @Size(max = 64)
     private String firstName;
 
-    @Size(min = 2, max = 64)
+    @Size(max = 64)
     private String lastName;
 
-    @Size(min = 2, max = 16)
+    @Size(min = 10)
     private String phone;
-
-    @Size(min = 2, max = 128)
+    @Size(max = 128)
     private String address;
 
     // - - - - -
@@ -79,38 +67,6 @@ public class Admin extends BaseModel implements Serializable {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public Date getEmailVerifiedAt() {
-        return emailVerifiedAt;
-    }
-
-    public void setEmailVerifiedAt(Date emailVerifiedAt) {
-        this.emailVerifiedAt = emailVerifiedAt;
-    }
-
-    public String getVerificationCode() {
-        return verificationCode;
-    }
-
-    public void setVerificationCode(String verificationCode) {
-        this.verificationCode = verificationCode;
-    }
-
-    public String getResetPasswordCode() {
-        return resetPasswordCode;
-    }
-
-    public void setResetPasswordCode(String resetPasswordCode) {
-        this.resetPasswordCode = resetPasswordCode;
-    }
-
-    public String getRememberToken() {
-        return rememberToken;
-    }
-
-    public void setRememberToken(String rememberToken) {
-        this.rememberToken = rememberToken;
     }
 
     public String getImage() {
@@ -175,10 +131,6 @@ public class Admin extends BaseModel implements Serializable {
                 "username='" + username + '\'' +
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
-                ", emailVerifiedAt=" + emailVerifiedAt +
-                ", verificationCode='" + verificationCode + '\'' +
-                ", resetPasswordCode='" + resetPasswordCode + '\'' +
-                ", rememberToken='" + rememberToken + '\'' +
                 ", image='" + image + '\'' +
                 ", gender=" + gender +
                 ", firstName='" + firstName + '\'' +
