@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:roadhelp/screens/my_account/become_to_partner/become_to_partner_screen.dart';
 
 import '../../../config/constants.dart';
 import '/screens/auth/sign_up/sign_up_screen.dart';
 import '../../../config/size_config.dart';
+
 
 class NoAccountText extends StatelessWidget {
   const NoAccountText({

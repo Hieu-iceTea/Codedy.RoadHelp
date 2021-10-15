@@ -29,6 +29,7 @@ import '/screens/place/repair_place/repair_place_manage/repair_place_manage_scre
 import '/screens/place/repair_place/repair_place_manage_add_edit/repair_place_manage_add_edit_screen.dart';
 import '/screens/place/repair_place/repair_place/repair_place_screen.dart';
 import '/screens/splash/splash_screen.dart';
+import '/screens/my_account/success_partner/success_partner_screen.dart';
 
 // We use name route
 // All our routes will be available here
@@ -56,6 +57,7 @@ final Map<String, WidgetBuilder> routes = {
   SendRescueReviewsScreen.routeName: (context) => const SendRescueReviewsScreen(),
   SendRescueTrackingScreen.routeName: (context) => const SendRescueTrackingScreen(),
   BecomeToPartnerScreen.routeName: (context) => const BecomeToPartnerScreen(),
+  PartnerSuccessScreen.routeName: (context)  => PartnerSuccessScreen(),
   ChangePasswordScreen.routeName: (context) =>  ChangePasswordScreen(),
   MyAccountScreen.routeName: (context) => const MyAccountScreen(),
   EditMyAccount.routeName: (context) => const EditMyAccount(),
