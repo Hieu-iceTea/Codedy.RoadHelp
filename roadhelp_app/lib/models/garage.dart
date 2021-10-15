@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:math';
 
 import 'package:roadhelp/models/rating_garage.dart';
@@ -69,7 +70,66 @@ class Garage extends BaseModel {
           version: version,
           deleted: deleted,
         );
+
 //#endregion
+
+  //
+  factory Garage.fromJson(Map<String, dynamic> json) {
+    return Garage(
+      partnerId: json['partnerId'],
+      provinceId: json['provinceId'],
+      districtId: json['districtId'],
+      wardId: json['wardId'],
+      garageRatings: json['garageRatings'],
+      name: json['name'],
+      imageUrls: json['imageUrls'],
+      phone: json['phone'],
+      ratingAvg: json['ratingAvg'],
+      address: json['address'],
+      longitude: json['longitude'],
+      latitude: json['latitude'],
+      description: json['description'],
+      active: json['active'],
+      isFeatured: json['isFeatured'],
+      //
+      id: json['id'],
+      //createdAt: json['createdAt'],
+      createdBy: json['createdBy'],
+      //updatedAt: json['updatedAt'],
+      updatedBy: json['updatedBy'],
+      version: json['version'],
+      deleted: json['deleted'],
+    );
+  }
+
+  //
+  String toJson() {
+    return json.encode({
+      'partnerId': partnerId,
+      'provinceId': provinceId,
+      'districtId': districtId,
+      'wardId': wardId,
+      'garageRatings': garageRatings,
+      'name': name,
+      'imageUrls': imageUrls,
+      'phone': phone,
+      'ratingAvg': ratingAvg,
+      'address': address,
+      'longitude': longitude,
+      'latitude': latitude,
+      'description': description,
+      'active': active,
+      'isFeatured': isFeatured,
+      //
+      'id': id,
+      //'createdAt': createdAt,
+      'createdBy': createdBy,
+      //'updatedAt': updatedAt,
+      'updatedBy': updatedBy,
+      'version': version,
+      'deleted': deleted,
+    });
+  }
 }
 
 //#region - Fake Data -

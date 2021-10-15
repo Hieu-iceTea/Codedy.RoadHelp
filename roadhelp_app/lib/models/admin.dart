@@ -55,6 +55,7 @@ class Admin extends BaseModel {
       phone: json['phone'],
       active: json['active'],
       address: json['address'],
+      //
       id: json['id'],
       //createdAt: json['createdAt'],
       createdBy: json['createdBy'],
@@ -78,6 +79,7 @@ class Admin extends BaseModel {
       'phone': phone,
       'active': active,
       'address': address,
+      //
       'id': id,
       //'createdAt': createdAt,
       'createdBy': createdBy,

@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import '/config/enums.dart';
 import 'base_model.dart';
 
@@ -41,4 +43,50 @@ class Issue extends BaseModel {
           version: version,
           deleted: deleted,
         );
+
+  //
+  factory Issue.fromJson(Map<String, dynamic> json) {
+    return Issue(
+      userId: json['userId'],
+      partnerId: json['partnerId'],
+      address: json['address'],
+      phone: json['phone'],
+      longitude: json['longitude'],
+      latitude: json['latitude'],
+      category: json['category'],
+      description: json['description'],
+      status: json['status'],
+      //
+      id: json['id'],
+      //createdAt: json['createdAt'],
+      createdBy: json['createdBy'],
+      //updatedAt: json['updatedAt'],
+      updatedBy: json['updatedBy'],
+      version: json['version'],
+      deleted: json['deleted'],
+    );
+  }
+
+  //
+  String toJson() {
+    return json.encode({
+      'userId': userId,
+      'partnerId': partnerId,
+      'address': address,
+      'phone': phone,
+      'longitude': longitude,
+      'latitude': latitude,
+      'category': category,
+      'description': description,
+      'status': status,
+      //
+      'id': id,
+      //'createdAt': createdAt,
+      'createdBy': createdBy,
+      //'updatedAt': updatedAt,
+      'updatedBy': updatedBy,
+      'version': version,
+      'deleted': deleted,
+    });
+  }
 }
