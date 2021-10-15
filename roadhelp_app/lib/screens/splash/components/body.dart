@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '/components/default_button.dart';
 import '../../../config/constants.dart';
 import '/screens/auth/sign_in/sign_in_screen.dart';
+import '/screens/auth/sign_in_partner/sign_in_partner_screen.dart';
 import '../../../config/size_config.dart';
 
 // This is the best practice
@@ -65,16 +66,16 @@ class _BodyState extends State<Body> {
                       children: [
 
                         DefaultButton(
-                          text: "Đăng Nhập Đối Tác",
+                          text: "Đăng Nhập Thành Viên",
                           press: () {
                             Navigator.pushNamed(context, SignInScreen.routeName);
                           },
                         ),
                         Container(height: 10,),
                         DefaultButton(
-                          text: "Đăng Nhập Thành Viên",
+                          text: "Đăng Nhập Đối Tác",
                           press: () {
-                            Navigator.pushNamed(context, SignInScreen.routeName);
+                            Navigator.pushNamed(context, SignInPartnerScreen.routeName);
                           },
                         ),
                       ],

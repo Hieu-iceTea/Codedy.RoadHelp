@@ -55,6 +55,7 @@ const String kPassNewNullError = "Vui lòng nhập mật khẩu mới của bạ
 const String kEnterPassNewNullError = "Vui lòng nhập lại mật khẩu mới của bạn!";
 const String kPassNewEqualOldError = "Mật khẩu mới phải khác với mật khẩu cũ!";
 const String kPassNewError = "Mật khẩu mới không khớp với nhau!";
+const String kInvalidUserNameError = "Tên đăng nhập phải có ít nhất 6 kí tự!";
 
 final otpInputDecoration = InputDecoration(
   contentPadding:
