@@ -1,10 +1,8 @@
 package com.codedy.roadhelp.restController;
 
 import com.codedy.roadhelp.model.IssuesDetail;
-import com.codedy.roadhelp.model.Partner;
 import com.codedy.roadhelp.restController.exception.RestNotFoundException;
 import com.codedy.roadhelp.service.issuesDetail.IssuesDetailService;
-import com.codedy.roadhelp.service.partner.PartnerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

@@ -20,17 +20,21 @@ public class RatingPartner extends BaseModel implements Serializable {
 
     //region - Relationship -
     @ManyToOne
-    @JoinColumn(name = "partner_id") //updatable = false, insertable = false
-    private Partner partner;
-
-    @ManyToOne
-    @JoinColumn(name = "user_id") //updatable = false, insertable = false
+    @JoinColumn(name = "user_member_id") //updatable = false, insertable = false
     private User users;
 
-//TODO
-//    @OneToOne
-//    @JoinColumn(name="issue_id")
-//    private IssuesDetail issues;
+
+    public IssuesDetail getIssues() {
+        return issues;
+    }
+
+    public void setIssues(IssuesDetail issues) {
+        this.issues = issues;
+    }
+
+    @OneToOne
+    @JoinColumn(name="issue_id")
+    private IssuesDetail issues;
     //endregion
 
     //region - Getter & Setter -
@@ -50,14 +54,6 @@ public class RatingPartner extends BaseModel implements Serializable {
         this.comment = comment;
     }
 
-    public Partner getPartner() {
-        return partner;
-    }
-
-    public void setPartner(Partner partners) {
-        this.partner = partners;
-    }
-
     public User getUsers() {
         return users;
     }
@@ -71,7 +67,6 @@ public class RatingPartner extends BaseModel implements Serializable {
         return "RatingPartner{" +
                 "ratePoint=" + ratePoint +
                 ", comment='" + comment + '\'' +
-                ", partner=" + partner +
                 ", users=" + users +
                 '}';
     }

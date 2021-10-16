@@ -1,8 +1,5 @@
 package com.codedy.roadhelp.model;
 
-import org.hibernate.annotations.LazyToOne;
-import org.hibernate.annotations.LazyToOneOption;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
