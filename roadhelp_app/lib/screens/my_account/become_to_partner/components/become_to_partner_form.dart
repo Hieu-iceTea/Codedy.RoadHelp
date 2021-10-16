@@ -16,13 +16,11 @@ class BeComeToPartnerForm extends StatefulWidget {
 class _BeComeToPartnerFormState extends State<BeComeToPartnerForm> {
   final _formKey = GlobalKey<FormState>();
   final List<String?> errors = [];
-  String? firstName;
-  String? lastName;
   String? phoneNumber;
-  String? address;
+  String? email;
   String? username;
-  String? password;
-  String? conform_password;
+
+
 
   void addError({String? error}) {
     if (!errors.contains(error))
@@ -44,17 +42,21 @@ class _BeComeToPartnerFormState extends State<BeComeToPartnerForm> {
       key: _formKey,
       child: Column(
         children: [
+
+          // buildPasswordFormField(),
+          // SizedBox(height: getProportionateScreenHeight(30)),
+          // buildConformPassFormField(),
+          // SizedBox(height: getProportionateScreenHeight(30)),
+         // buildFirstNameFormField(),
+          //SizedBox(height: getProportionateScreenHeight(30)),
+         //buildLastNameFormField(),
+         //SizedBox(height: getProportionateScreenHeight(30)),
+
           buildUserNameFormField(),
           SizedBox(height: getProportionateScreenHeight(30)),
-          buildPasswordFormField(),
-          SizedBox(height: getProportionateScreenHeight(30)),
-          buildConformPassFormField(),
-          SizedBox(height: getProportionateScreenHeight(30)),
-          buildFirstNameFormField(),
-          SizedBox(height: getProportionateScreenHeight(30)),
-          buildLastNameFormField(),
-          SizedBox(height: getProportionateScreenHeight(30)),
           buildPhoneNumberFormField(),
+          SizedBox(height: getProportionateScreenHeight(30)),
+          buildEmailFormField(),
           SizedBox(height: getProportionateScreenHeight(30)),
 
           FormError(errors: errors),
@@ -102,59 +104,59 @@ class _BeComeToPartnerFormState extends State<BeComeToPartnerForm> {
     );
   }
 
-  TextFormField buildLastNameFormField() {
-    return TextFormField(
-      onSaved: (newValue) => lastName = newValue,
-      onChanged: (value){
-        if (value.trim().isNotEmpty) {
-          removeError(error: kNamelNullError);
-        }
-        return null;
-      },
-      validator: (value) {
-        if (value!.isEmpty) {
-          addError(error: kNamelNullError);
-          return "";
-        }
-        return null;
-      },
-      decoration: InputDecoration(
-        labelText: "Họ",
-        hintText: "Vui lòng nhập họ của bạn...",
-        // If  you are using latest version of flutter then lable text and hint text shown like this
-        // if you r using flutter less then 1.20.* then maybe this is not working properly
-        floatingLabelBehavior: FloatingLabelBehavior.always,
-        suffixIcon: CustomSurffixIcon(svgIcon: "assets/icons/Name.svg"),
-      ),
-    );
-  }
+  // TextFormField buildLastNameFormField() {
+  //   return TextFormField(
+  //     onSaved: (newValue) => lastName = newValue,
+  //     onChanged: (value){
+  //       if (value.trim().isNotEmpty) {
+  //         removeError(error: kNamelNullError);
+  //       }
+  //       return null;
+  //     },
+  //     validator: (value) {
+  //       if (value!.isEmpty) {
+  //         addError(error: kNamelNullError);
+  //         return "";
+  //       }
+  //       return null;
+  //     },
+  //     decoration: InputDecoration(
+  //       labelText: "Họ",
+  //       hintText: "Vui lòng nhập họ của bạn...",
+  //       // If  you are using latest version of flutter then lable text and hint text shown like this
+  //       // if you r using flutter less then 1.20.* then maybe this is not working properly
+  //       floatingLabelBehavior: FloatingLabelBehavior.always,
+  //       suffixIcon: CustomSurffixIcon(svgIcon: "assets/icons/Name.svg"),
+  //     ),
+  //   );
+  // }
 
-  TextFormField buildFirstNameFormField() {
-    return TextFormField(
-      onSaved: (newValue) => firstName = newValue,
-      onChanged: (value) {
-        if (value.trim().isNotEmpty) {
-          removeError(error: kNamelNullError);
-        }
-        return null;
-      },
-      validator: (value) {
-        if (value!.isEmpty) {
-          addError(error: kNamelNullError);
-          return "";
-        }
-        return null;
-      },
-      decoration: InputDecoration(
-        labelText: "Tên của bạn",
-        hintText: "Vui lòng nhập tên của bạn!",
-        // If  you are using latest version of flutter then lable text and hint text shown like this
-        // if you r using flutter less then 1.20.* then maybe this is not working properly
-        floatingLabelBehavior: FloatingLabelBehavior.always,
-        suffixIcon: CustomSurffixIcon(svgIcon: "assets/icons/Name.svg"),
-      ),
-    );
-  }
+  // TextFormField buildFirstNameFormField() {
+  //   return TextFormField(
+  //     onSaved: (newValue) => firstName = newValue,
+  //     onChanged: (value) {
+  //       if (value.trim().isNotEmpty) {
+  //         removeError(error: kNamelNullError);
+  //       }
+  //       return null;
+  //     },
+  //     validator: (value) {
+  //       if (value!.isEmpty) {
+  //         addError(error: kNamelNullError);
+  //         return "";
+  //       }
+  //       return null;
+  //     },
+  //     decoration: InputDecoration(
+  //       labelText: "Tên của bạn",
+  //       hintText: "Vui lòng nhập tên của bạn!",
+  //       // If  you are using latest version of flutter then lable text and hint text shown like this
+  //       // if you r using flutter less then 1.20.* then maybe this is not working properly
+  //       floatingLabelBehavior: FloatingLabelBehavior.always,
+  //       suffixIcon: CustomSurffixIcon(svgIcon: "assets/icons/Name.svg"),
+  //     ),
+  //   );
+  // }
 
   TextFormField buildUserNameFormField() {
     return TextFormField(
@@ -189,68 +191,102 @@ class _BeComeToPartnerFormState extends State<BeComeToPartnerForm> {
     );
   }
 
-  TextFormField buildConformPassFormField() {
-    return TextFormField(
-      obscureText: true,
-      onSaved: (newValue) => conform_password = newValue,
-      onChanged: (value) {
-        if (value.isNotEmpty) {
-          removeError(error: kPassNullError);
-        } else if (value.isNotEmpty && password == conform_password) {
-          removeError(error: kMatchPassError);
-        }
-        conform_password = value;
-      },
-      validator: (value) {
-        if (value!.isEmpty) {
-          addError(error: kPassNullError);
-          return "";
-        } else if ((password != value)) {
-          addError(error: kMatchPassError);
-          return "";
-        }
-        return null;
-      },
-      decoration: InputDecoration(
-        labelText: "Mật khẩu",
-        hintText: "Vui lòng nhập lại mật khẩu...",
-        // If  you are using latest version of flutter then lable text and hint text shown like this
-        // if you r using flutter less then 1.20.* then maybe this is not working properly
-        floatingLabelBehavior: FloatingLabelBehavior.always,
-        suffixIcon: CustomSurffixIcon(svgIcon: "assets/icons/pass.svg"),
-      ),
-    );
-  }
+  // TextFormField buildConformPassFormField() {
+  //   return TextFormField(
+  //     obscureText: true,
+  //     onSaved: (newValue) => conform_password = newValue,
+  //     onChanged: (value) {
+  //       if (value.isNotEmpty) {
+  //         removeError(error: kPassNullError);
+  //       } else if (value.isNotEmpty && password == conform_password) {
+  //         removeError(error: kMatchPassError);
+  //       }
+  //       conform_password = value;
+  //     },
+  //     validator: (value) {
+  //       if (value!.isEmpty) {
+  //         addError(error: kPassNullError);
+  //         return "";
+  //       } else if ((password != value)) {
+  //         addError(error: kMatchPassError);
+  //         return "";
+  //       }
+  //       return null;
+  //     },
+  //     decoration: InputDecoration(
+  //       labelText: "Mật khẩu",
+  //       hintText: "Vui lòng nhập lại mật khẩu...",
+  //       // If  you are using latest version of flutter then lable text and hint text shown like this
+  //       // if you r using flutter less then 1.20.* then maybe this is not working properly
+  //       floatingLabelBehavior: FloatingLabelBehavior.always,
+  //       suffixIcon: CustomSurffixIcon(svgIcon: "assets/icons/pass.svg"),
+  //     ),
+  //   );
+  // }
 
-  TextFormField buildPasswordFormField() {
+  // TextFormField buildPasswordFormField() {
+  //   return TextFormField(
+  //     obscureText: true,
+  //     onSaved: (newValue) => password = newValue,
+  //     onChanged: (value) {
+  //       if (value.isNotEmpty) {
+  //         removeError(error: kPassNullError);
+  //       } else if (value.length >= 8) {
+  //         removeError(error: kShortPassError);
+  //       }
+  //       password = value;
+  //     },
+  //     validator: (value) {
+  //       if (value!.isEmpty) {
+  //         addError(error: kPassNullError);
+  //         return "";
+  //       } else if (value.length < 8) {
+  //         addError(error: kShortPassError);
+  //         return "";
+  //       }
+  //       return null;
+  //     },
+  //     decoration: InputDecoration(
+  //       labelText: "Mật khẩu!",
+  //       hintText: "Vui lòng nhập mật khẩu...",
+  //       // If  you are using latest version of flutter then lable text and hint text shown like this
+  //       // if you r using flutter less then 1.20.* then maybe this is not working properly
+  //       floatingLabelBehavior: FloatingLabelBehavior.always,
+  //       suffixIcon: CustomSurffixIcon(svgIcon: "assets/icons/pass.svg"),
+  //     ),
+  //   );
+  // }
+  //
+
+  TextFormField buildEmailFormField() {
     return TextFormField(
-      obscureText: true,
-      onSaved: (newValue) => password = newValue,
+      keyboardType: TextInputType.emailAddress,
+      onSaved: (newValue) => email = newValue,
       onChanged: (value) {
         if (value.isNotEmpty) {
-          removeError(error: kPassNullError);
-        } else if (value.length >= 8) {
-          removeError(error: kShortPassError);
+          removeError(error: kEmailNullError);
+        } else if (emailValidatorRegExp.hasMatch(value)) {
+          removeError(error: kInvalidEmailError);
         }
-        password = value;
+        return null;
       },
       validator: (value) {
         if (value!.isEmpty) {
-          addError(error: kPassNullError);
+          addError(error: kEmailNullError);
           return "";
-        } else if (value.length < 8) {
-          addError(error: kShortPassError);
+        } else if (!emailValidatorRegExp.hasMatch(value)) {
+          addError(error: kInvalidEmailError);
           return "";
         }
         return null;
       },
       decoration: InputDecoration(
-        labelText: "Mật khẩu!",
-        hintText: "Vui lòng nhập mật khẩu...",
+        labelText: "Email",
+        hintText: "Vui lòng nhập Email...",
         // If  you are using latest version of flutter then lable text and hint text shown like this
         // if you r using flutter less then 1.20.* then maybe this is not working properly
         floatingLabelBehavior: FloatingLabelBehavior.always,
-        suffixIcon: CustomSurffixIcon(svgIcon: "assets/icons/pass.svg"),
+        suffixIcon: CustomSurffixIcon(svgIcon: "assets/icons/email.svg"),
       ),
     );
   }

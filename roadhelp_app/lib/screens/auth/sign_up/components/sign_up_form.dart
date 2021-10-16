@@ -17,6 +17,8 @@ class _SignUpFormState extends State<SignUpForm> {
   String? phone;
   String? password;
   String? conform_password;
+  String? email;
+  String? username;
   bool remember = false;
   final List<String?> errors = [];
 
@@ -40,6 +42,10 @@ class _SignUpFormState extends State<SignUpForm> {
       key: _formKey,
       child: Column(
         children: [
+          buildUserNameFormField(),
+          SizedBox(height: getProportionateScreenHeight(30)),
+          buildPhoneFormField(),
+          SizedBox(height: getProportionateScreenHeight(30)),
           buildEmailFormField(),
           SizedBox(height: getProportionateScreenHeight(30)),
           buildPasswordFormField(),
@@ -95,6 +101,8 @@ class _SignUpFormState extends State<SignUpForm> {
     );
   }
 
+
+
   TextFormField buildPasswordFormField() {
     return TextFormField(
       obscureText: true,
@@ -128,7 +136,74 @@ class _SignUpFormState extends State<SignUpForm> {
     );
   }
 
+
   TextFormField buildEmailFormField() {
+    return TextFormField(
+      keyboardType: TextInputType.emailAddress,
+      onSaved: (newValue) => email = newValue,
+      onChanged: (value) {
+        if (value.isNotEmpty) {
+          removeError(error: kEmailNullError);
+        } else if (emailValidatorRegExp.hasMatch(value)) {
+          removeError(error: kInvalidEmailError);
+        }
+        return null;
+      },
+      validator: (value) {
+        if (value!.isEmpty) {
+          addError(error: kEmailNullError);
+          return "";
+        } else if (!emailValidatorRegExp.hasMatch(value)) {
+          addError(error: kInvalidEmailError);
+          return "";
+        }
+        return null;
+      },
+      decoration: InputDecoration(
+        labelText: "Email",
+        hintText: "Vui lòng nhập Email...",
+        // If  you are using latest version of flutter then lable text and hint text shown like this
+        // if you r using flutter less then 1.20.* then maybe this is not working properly
+        floatingLabelBehavior: FloatingLabelBehavior.always,
+        suffixIcon: CustomSurffixIcon(svgIcon: "assets/icons/email.svg"),
+      ),
+    );
+  }
+
+  TextFormField buildUserNameFormField() {
+    return TextFormField(
+      keyboardType: TextInputType.name,
+      onSaved: (newValue) => username = newValue,
+      onChanged: (value) {
+        if (value.trim().isNotEmpty) {
+          removeError(error: kUserNameNullError);
+        } else if (value.trim().length < 6) {
+          removeError(error: kInvalidUserNameError);
+        }
+        return null;
+      },
+      validator: (value) {
+        if (value!.isEmpty) {
+          addError(error: kUserNameNullError);
+          return "";
+        } else if (value.trim().length < 6) {
+          addError(error: kInvalidUserNameError);
+          return "";
+        }
+        return null;
+      },
+      decoration: InputDecoration(
+        labelText: "Tên đăng nhập!",
+        hintText: "Vui lòng nhập tên đăng nhập...",
+        // If  you are using latest version of flutter then lable text and hint text shown like this
+        // if you r using flutter less then 1.20.* then maybe this is not working properly
+        floatingLabelBehavior: FloatingLabelBehavior.always,
+        suffixIcon: CustomSurffixIcon(svgIcon: "assets/icons/user_icon.svg"),
+      ),
+    );
+  }
+
+  TextFormField buildPhoneFormField() {
     return TextFormField(
       keyboardType: TextInputType.phone,
       onSaved: (newValue) => phone = newValue,

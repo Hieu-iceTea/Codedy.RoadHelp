@@ -17,7 +17,7 @@ class SignForm extends StatefulWidget {
 
 class _SignFormState extends State<SignForm> {
   final _formKey = GlobalKey<FormState>();
-  String? phonenumber;
+  String? username;
   String? password;
   bool? remember = false;
   final List<String?> errors = [];
@@ -63,8 +63,8 @@ class _SignFormState extends State<SignForm> {
                 onTap: () => Navigator.pushNamed(
                     context, ForgotPasswordScreen.routeName),
                 child: Text(
-                  "Quên mật khẩu?",
-                  style: TextStyle(decoration: TextDecoration.underline, color: kPrimaryColor),
+                  "Lấy lại mật khẩu",
+                  style: TextStyle(decoration: TextDecoration.underline),
                 ),
               )
             ],
@@ -78,7 +78,7 @@ class _SignFormState extends State<SignForm> {
                 _formKey.currentState!.save();
                 // if all are valid then go to success screen
                 KeyboardUtil.hideKeyboard(context);
-                Navigator.pushNamed(context, HomeScreen.routeName);
+                Navigator.pushNamed(context, LoginSuccessScreen.routeName);
               }
             },
           ),
@@ -92,7 +92,7 @@ class _SignFormState extends State<SignForm> {
       obscureText: true,
       onSaved: (newValue) => password = newValue,
       onChanged: (value) {
-        if (value.isNotEmpty) {
+        if (value.trim().isNotEmpty) {
           removeError(error: kPassNullError);
         } else if (value.length >= 8) {
           removeError(error: kShortPassError);
@@ -110,8 +110,8 @@ class _SignFormState extends State<SignForm> {
         return null;
       },
       decoration: InputDecoration(
-        labelText: "Mật khẩu",
-        hintText: "Nhập mật khẩu...",
+        labelText: "Mật Khẩu",
+        hintText: "Vui lòng nhập mật khẩu...",
         // If  you are using latest version of flutter then lable text and hint text shown like this
         // if you r using flutter less then 1.20.* then maybe this is not working properly
         floatingLabelBehavior: FloatingLabelBehavior.always,
@@ -122,33 +122,33 @@ class _SignFormState extends State<SignForm> {
 
   TextFormField buildEmailFormField() {
     return TextFormField(
-      keyboardType: TextInputType.phone,
-      onSaved: (newValue) => phonenumber = newValue,
+      keyboardType: TextInputType.name,
+      onSaved: (newValue) => username = newValue,
       onChanged: (value) {
-        if (value.isNotEmpty) {
-          removeError(error: kPhoneNumberNullError);
-        } else if (phoneValidatorRegExp.hasMatch(value)) {
-          removeError(error: kInvalidPhoneNumberError);
+        if (value.trim().isNotEmpty) {
+          removeError(error: kUserNameNullError);
+        } else if (value.trim().length < 6) {
+          removeError(error: kInvalidUserNameError);
         }
         return null;
       },
       validator: (value) {
         if (value!.isEmpty) {
-          addError(error: kPhoneNumberNullError);
+          addError(error: kUserNameNullError);
           return "";
-        } else if (!phoneValidatorRegExp.hasMatch(value)) {
-          addError(error: kInvalidPhoneNumberError);
+        } else if (value.trim().length < 6) {
+          addError(error: kInvalidUserNameError);
           return "";
         }
         return null;
       },
       decoration: InputDecoration(
-        labelText: "Số điện thoại",
-        hintText: "Nhập số điện thoại...",
+        labelText: "Tên Đăng Nhập",
+        hintText: "Vui Lòng Nhập tên đăng nhập...",
         // If  you are using latest version of flutter then lable text and hint text shown like this
         // if you r using flutter less then 1.20.* then maybe this is not working properly
         floatingLabelBehavior: FloatingLabelBehavior.always,
-        suffixIcon: CustomSurffixIcon(svgIcon: "assets/icons/phonenumber.svg"),
+        suffixIcon: CustomSurffixIcon(svgIcon: "assets/icons/user_icon.svg"),
       ),
     );
   }

@@ -25,7 +25,7 @@ class Body extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  "Vui lòng Đăng nhập bằng điện thoại và mật khẩu của bạn \n để sử dụng ứng dụng!",
+                  "Vui lòng nhập Tên đăng nhập và mật khẩu để đăng nhập!",
                   textAlign: TextAlign.center,
                 ),
                 SizedBox(height: SizeConfig.screenHeight * 0.08),
