@@ -1,30 +1,4 @@
--- phpMyAdmin SQL Dump
--- version 4.7.7
--- https://www.phpmyadmin.net/
---
--- Host: localhost
--- Generation Time: Mar 17, 2018 at 03:20 AM
--- Server version: 10.2.13-MariaDB
--- PHP Version: 7.2.3
 
-SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
-START TRANSACTION;
-SET time_zone = "+00:00";
-
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
-
---
--- Database: `dulich_web`
---
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `district`
 --
 DROP TABLE IF EXISTS `district`;
@@ -41,10 +15,6 @@ CREATE TABLE `district` (
   `version`    INT          DEFAULT 1,
   `deleted`    BOOLEAN      DEFAULT FALSE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
---
--- Dumping data for table `district`
---
 
 INSERT INTO `district` (`id`, `_name`, `_prefix`, `_province_id`) VALUES
 (1, 'Bình Chánh', 'Huyện', 1),
@@ -757,19 +727,6 @@ INSERT INTO `district` (`id`, `_name`, `_prefix`, `_province_id`) VALUES
 (708, 'Trà Lĩnh', 'Huyện', 63),
 (709, 'Trùng Khánh', 'Huyện', 63);
 
--- --------------------------------------------------------
-
---
--- Table structure for table `project`
---
-
-
---
--- Dumping data for table `project`
---
--- --------------------------------------------------------
-
---
 -- Table structure for table `province`
 --
 DROP TABLE IF EXISTS `province`;
@@ -12171,80 +12128,3 @@ INSERT INTO `ward` (`id`, `_name`, `_prefix`, `_province_id`, `_district_id`) VA
 (11281, 'Thông Huề', 'Xã', 63, 709),
 (11282, 'Trùng Khánh', 'Thị trấn', 63, 709),
 (11283, 'Trung Phúc', 'Xã', 63, 709);
-
---
--- Indexes for dumped tables
---
-
---
--- Indexes for table `district`
---
-ALTER TABLE `district`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `_province_id` (`_province_id`);
-
---
--- Indexes for table `project`
---
-ALTER TABLE `project`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `_province_id` (`_province_id`,`_district_id`);
-
---
--- Indexes for table `province`
---
-ALTER TABLE `province`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `street`
---
-ALTER TABLE `street`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `_province_id` (`_province_id`,`_district_id`);
-
---
--- Indexes for table `ward`
---
-ALTER TABLE `ward`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `_province_id` (`_province_id`,`_district_id`);
-
---
--- AUTO_INCREMENT for dumped tables
---
-
---
--- AUTO_INCREMENT for table `district`
---
-ALTER TABLE `district`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=710;
-
---
--- AUTO_INCREMENT for table `project`
---
-ALTER TABLE `project`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3069;
-
---
--- AUTO_INCREMENT for table `province`
---
-ALTER TABLE `province`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=64;
-
---
--- AUTO_INCREMENT for table `street`
---
-ALTER TABLE `street`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31645;
-
---
--- AUTO_INCREMENT for table `ward`
---
-ALTER TABLE `ward`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11284;
-COMMIT;
-
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
