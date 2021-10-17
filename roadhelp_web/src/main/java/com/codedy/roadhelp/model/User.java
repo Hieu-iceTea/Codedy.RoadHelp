@@ -1,8 +1,11 @@
 package com.codedy.roadhelp.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.hibernate.annotations.Cascade;
+import org.hibernate.event.spi.SaveOrUpdateEvent;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -19,6 +22,7 @@ public class User extends BaseModel implements Serializable {
     //region - Define Fields -
     @NotNull
     @Size(min = 6, max = 64)
+    @Column(name = "username")
     private String username;
 
     @Email
@@ -46,22 +50,46 @@ public class User extends BaseModel implements Serializable {
     //endregion
 
     //region - Relationship -
-    @OneToMany(mappedBy = "users")
-    @JsonBackReference("issuesDetails")
-    private List<IssuesDetail> issuesDetails;
+    @OneToMany(mappedBy = "partners", cascade = CascadeType.ALL)
+    @JsonBackReference(value = "issuesPartnerDetails")
+    private List<IssuesDetail> issuesPartnerDetails;
+
+    @OneToMany(mappedBy = "members", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JsonBackReference(value = "issuesMemberDetails")
+    private List<IssuesDetail> issuesMemberDetails;
 
     @OneToMany(mappedBy = "users", cascade = {CascadeType.PERSIST, CascadeType.MERGE,
             CascadeType.DETACH, CascadeType.REFRESH})
-    @JsonBackReference("ratingGarages")
+    @JsonBackReference(value = "ratingGarages")
     private List<RatingGarage> ratingGarages;
 
     @OneToMany(mappedBy = "users", cascade = {CascadeType.PERSIST, CascadeType.MERGE,
             CascadeType.DETACH, CascadeType.REFRESH})
-    @JsonBackReference("ratingPartners")
+    @JsonBackReference(value = "ratingPartners")
     private List<RatingPartner> ratingPartners;
+
+    @OneToMany(mappedBy = "user")
+    @JsonBackReference(value = "authorities")
+    private List<Authority> authorities;
     //endregion
 
     //region - Getter & Setter -
+    public List<IssuesDetail> getIssuesPartnerDetails() {
+        return issuesPartnerDetails;
+    }
+
+    public void setIssuesPartnerDetails(List<IssuesDetail> issuesPartnerDetails) {
+        this.issuesPartnerDetails = issuesPartnerDetails;
+    }
+
+    public List<IssuesDetail> getIssuesMemberDetails() {
+        return issuesMemberDetails;
+    }
+
+    public void setIssuesMemberDetails(List<IssuesDetail> issuesMemberDetails) {
+        this.issuesMemberDetails = issuesMemberDetails;
+    }
+
     public List<RatingPartner> getRatingPartners() {
         return ratingPartners;
     }
@@ -142,13 +170,6 @@ public class User extends BaseModel implements Serializable {
         this.active = active;
     }
 
-    public List<IssuesDetail> getIssuesDetails() {
-        return issuesDetails;
-    }
-
-    public void setIssuesDetails(List<IssuesDetail> issuesDetails) {
-        this.issuesDetails = issuesDetails;
-    }
 
     public List<RatingGarage> getRatingGarages() {
         return ratingGarages;
@@ -156,6 +177,13 @@ public class User extends BaseModel implements Serializable {
 
     public void setRatingGarages(List<RatingGarage> ratingGarages) {
         this.ratingGarages = ratingGarages;
+    }
+    public List<Authority> getAuthorities() {
+        return authorities;
+    }
+
+    public void setAuthorities(List<Authority> authorities) {
+        this.authorities = authorities;
     }
 
 
@@ -171,7 +199,6 @@ public class User extends BaseModel implements Serializable {
                 ", lastName='" + lastName + '\'' +
                 ", phone='" + phone + '\'' +
                 ", active=" + active +
-                ", issuesDetails=" + issuesDetails +
                 ", ratingGarages=" + ratingGarages +
                 ", ratingPartners=" + ratingPartners +
                 '}';

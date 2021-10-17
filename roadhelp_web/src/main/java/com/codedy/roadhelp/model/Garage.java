@@ -1,11 +1,6 @@
 package com.codedy.roadhelp.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import net.minidev.json.annotate.JsonIgnore;
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.LazyToOne;
-import org.hibernate.annotations.LazyToOneOption;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -20,10 +15,9 @@ public class Garage extends BaseModel implements Serializable {
     //region - Define Fields -
     @Size(min = 2, max = 64)
     private String name;
-    @Size(max = 128)
-    private String images;
 
     private double rateAvg;
+
     @Size(max = 128)
     private String address;
 
@@ -42,32 +36,36 @@ public class Garage extends BaseModel implements Serializable {
     private Boolean isFeatured;
 //endregion
 
+
     //region - Relationship -
-    @ManyToOne
-    @JoinColumn(name = "partner_id")
-    private Partner partner;
+
 
     @OneToMany(mappedBy = "garage", cascade = {CascadeType.PERSIST, CascadeType.MERGE,
             CascadeType.DETACH, CascadeType.REFRESH})
-    @JsonBackReference("ratingGarages")
+    @JsonBackReference(value = "ratingGarages")
     private List<RatingGarage> ratingGarages;
+
+    @OneToMany(mappedBy = "garage", cascade = {CascadeType.PERSIST, CascadeType.MERGE,
+            CascadeType.DETACH, CascadeType.REFRESH})
+    @JsonBackReference(value = "garageImages")
+    private List<GarageImage> garageImages;
     //endregion
 
     //region - Getter & Setter -
+    public List<GarageImage> getGarageImages() {
+        return garageImages;
+    }
+
+    public void setGarageImages(List<GarageImage> garageImages) {
+        this.garageImages = garageImages;
+    }
+
     public Boolean getFeatured() {
         return isFeatured;
     }
 
     public void setFeatured(Boolean featured) {
         isFeatured = featured;
-    }
-
-    public String getImages() {
-        return images;
-    }
-
-    public void setImages(String images) {
-        this.images = images;
     }
 
     public double getRateAvg() {
@@ -127,14 +125,6 @@ public class Garage extends BaseModel implements Serializable {
         this.active = active;
     }
 
-    public Partner getPartner() {
-        return partner;
-    }
-
-    public void setPartner(Partner partner) {
-        this.partner = partner;
-    }
-
     public List<RatingGarage> getRatingGarages() {
         return ratingGarages;
     }
@@ -155,7 +145,6 @@ public class Garage extends BaseModel implements Serializable {
     public String toString() {
         return "Garage{" +
                 "name='" + name + '\'' +
-                ", image='" + images + '\'' +
                 ", rate='" + rateAvg + '\'' +
                 ", address='" + address + '\'' +
                 ", phone='" + phone + '\'' +
@@ -163,7 +152,6 @@ public class Garage extends BaseModel implements Serializable {
                 ", latitude='" + latitude + '\'' +
                 ", description='" + description + '\'' +
                 ", active=" + active +
-                ", partner=" + partner +
                 ", ratingGarages=" + ratingGarages +
                 '}';
     }
