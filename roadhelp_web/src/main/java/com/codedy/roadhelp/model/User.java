@@ -62,7 +62,7 @@ public class User extends BaseModel implements Serializable {
     @JsonBackReference(value = "ratingPartners")
     private List<RatingIssue> ratingIssues;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
     @JsonBackReference(value = "authorities")
     private List<Authority> authorities;
     //endregion
