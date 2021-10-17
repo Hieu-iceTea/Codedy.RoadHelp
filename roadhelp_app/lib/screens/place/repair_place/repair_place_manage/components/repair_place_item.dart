@@ -22,7 +22,7 @@ class RepairPlaceItem extends StatelessWidget {
         tag: garage.id.toString(),
         child: ClipRRect(
           borderRadius: const BorderRadius.all(Radius.circular(10)),
-          child: Image.network(garage.imageUrls![0]),
+          child: Image.network(garage.images![0].imageUrl!),
         ),
       ),
       title: Text(garage.name!),

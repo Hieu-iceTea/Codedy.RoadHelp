@@ -2,19 +2,17 @@ import 'dart:convert';
 
 import 'base_model.dart';
 
-class RatingPartner extends BaseModel {
+class RatingIssue extends BaseModel {
   //
-  String? partnerId;
-  String? userId;
+  String? userMemberId;
   String? issueId;
 
   //
   double? ratePoint;
   String? comment;
 
-  RatingPartner({
-    this.partnerId,
-    this.userId,
+  RatingIssue({
+    this.userMemberId,
     this.issueId,
     this.ratePoint,
     this.comment,
@@ -36,10 +34,9 @@ class RatingPartner extends BaseModel {
         );
 
   //
-  factory RatingPartner.fromJson(Map<String, dynamic> json) {
-    return RatingPartner(
-      partnerId: json['partnerId'],
-      userId: json['userId'],
+  factory RatingIssue.fromJson(Map<String, dynamic> json) {
+    return RatingIssue(
+      userMemberId: json['userId'],
       issueId: json['issueId'],
       ratePoint: json['ratePoint'],
       comment: json['comment'],
@@ -57,8 +54,7 @@ class RatingPartner extends BaseModel {
   //
   String toJson() {
     return json.encode({
-      'partnerId': partnerId,
-      'userId': userId,
+      'userId': userMemberId,
       'issueId': issueId,
       'ratePoint': ratePoint,
       'comment': comment,

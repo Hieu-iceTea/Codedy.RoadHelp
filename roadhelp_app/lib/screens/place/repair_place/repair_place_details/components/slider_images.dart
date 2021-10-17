@@ -28,7 +28,7 @@ class _SliderImagesState extends State<SliderImages> {
             aspectRatio: 1,
             child: Hero(
               tag: widget.garage.id.toString(),
-              child: Image.network(widget.garage.imageUrls![selectedImage]),
+              child: Image.network(widget.garage.images![selectedImage].imageUrl!),
             ),
           ),
         ),
@@ -38,7 +38,7 @@ class _SliderImagesState extends State<SliderImages> {
           height: 50,
           child: ListView(
             scrollDirection: Axis.horizontal,
-            children: List.generate(widget.garage.imageUrls!.length,
+            children: List.generate(widget.garage.images!.length,
                 (index) => buildSmallProductPreview(index)),
           ),
         ),
@@ -65,7 +65,7 @@ class _SliderImagesState extends State<SliderImages> {
           border: Border.all(
               color: kPrimaryColor.withOpacity(selectedImage == index ? 1 : 0)),
         ),
-        child: Image.network(widget.garage.imageUrls![index]),
+        child: Image.network(widget.garage.images![index].imageUrl!),
       ),
     );
   }

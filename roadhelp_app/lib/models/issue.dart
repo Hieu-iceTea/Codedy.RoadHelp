@@ -5,8 +5,8 @@ import 'base_model.dart';
 
 class Issue extends BaseModel {
   //
-  int? userId;
-  int? partnerId;
+  int? userMemberId;
+  int? userPartnerId;
 
   //
   String? address;
@@ -18,8 +18,8 @@ class Issue extends BaseModel {
   IssueStatus? status;
 
   Issue({
-    this.userId,
-    this.partnerId,
+    this.userMemberId,
+    this.userPartnerId,
     this.address,
     this.phone,
     this.longitude,
@@ -47,8 +47,8 @@ class Issue extends BaseModel {
   //
   factory Issue.fromJson(Map<String, dynamic> json) {
     return Issue(
-      userId: json['userId'],
-      partnerId: json['partnerId'],
+      userMemberId: json['userMemberId'],
+      userPartnerId: json['userPartnerId'],
       address: json['address'],
       phone: json['phone'],
       longitude: json['longitude'],
@@ -70,8 +70,8 @@ class Issue extends BaseModel {
   //
   String toJson() {
     return json.encode({
-      'userId': userId,
-      'partnerId': partnerId,
+      'userMemberId': userMemberId,
+      'userPartnerId': userPartnerId,
       'address': address,
       'phone': phone,
       'longitude': longitude,
