@@ -122,7 +122,7 @@ class RepairPlaceScreen extends StatelessWidget {
                   ),
                   leading: Hero(
                     tag: demoGarages[index].id.toString(),
-                    child: Image.network(demoGarages[index].imageUrls![0]),
+                    child: Image.network(demoGarages[index].images![0].imageUrl!),
                   ),
                   title: Text(demoGarages[index].name!),
                   subtitle: Text(demoGarages[index].phone! +

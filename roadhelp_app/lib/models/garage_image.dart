@@ -2,13 +2,20 @@ import 'dart:convert';
 
 import 'base_model.dart';
 
-class Province extends BaseModel {
-  String? name;
-  String? code;
+class GarageImage extends BaseModel {
+  //
+  String? garageId;
 
-  Province({
-    this.name,
-    this.code,
+  //
+  String? image;
+
+  //Xử lý sau khi get API (chuyển từ image -> imageUrl):
+  String? imageUrl;
+
+  GarageImage({
+    this.garageId,
+    this.image,
+    this.imageUrl,
     int? id,
     DateTime? createdAt,
     String? createdBy,
@@ -27,10 +34,10 @@ class Province extends BaseModel {
         );
 
   //
-  factory Province.fromJson(Map<String, dynamic> json) {
-    return Province(
-      name: json['name'],
-      code: json['code'],
+  factory GarageImage.fromJson(Map<String, dynamic> json) {
+    return GarageImage(
+      garageId: json['garageId'],
+      image: json['image'],
       //
       id: json['id'],
       //createdAt: json['createdAt'],
@@ -45,8 +52,8 @@ class Province extends BaseModel {
   //
   String toJson() {
     return json.encode({
-      'name': name,
-      'code': code,
+      'garageId': garageId,
+      'image': image,
       //
       'id': id,
       //'createdAt': createdAt,

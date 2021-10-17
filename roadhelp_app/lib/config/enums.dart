@@ -16,3 +16,10 @@ enum IssueStatus {
   canceledByPartner,
   succeeded,
 }
+
+//User
+enum UserGender {
+  male,
+  female,
+  other,
+}

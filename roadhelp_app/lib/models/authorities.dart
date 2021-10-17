@@ -1,14 +1,19 @@
 import 'dart:convert';
 
+import 'package:roadhelp/config/enums.dart';
+
 import 'base_model.dart';
 
-class Province extends BaseModel {
-  String? name;
-  String? code;
+class Authorities extends BaseModel {
+  //
+  String? username;
 
-  Province({
-    this.name,
-    this.code,
+  //
+  String? authority;
+
+  Authorities({
+    this.username,
+    this.authority,
     int? id,
     DateTime? createdAt,
     String? createdBy,
@@ -27,10 +32,10 @@ class Province extends BaseModel {
         );
 
   //
-  factory Province.fromJson(Map<String, dynamic> json) {
-    return Province(
-      name: json['name'],
-      code: json['code'],
+  factory Authorities.fromJson(Map<String, dynamic> json) {
+    return Authorities(
+      username: json['username'],
+      authority: json['authority'],
       //
       id: json['id'],
       //createdAt: json['createdAt'],
@@ -45,8 +50,8 @@ class Province extends BaseModel {
   //
   String toJson() {
     return json.encode({
-      'name': name,
-      'code': code,
+      'username': username,
+      'authority': authority,
       //
       'id': id,
       //'createdAt': createdAt,

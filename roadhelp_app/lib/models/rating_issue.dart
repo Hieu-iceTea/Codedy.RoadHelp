@@ -2,13 +2,20 @@ import 'dart:convert';
 
 import 'base_model.dart';
 
-class Province extends BaseModel {
-  String? name;
-  String? code;
+class RatingIssue extends BaseModel {
+  //
+  String? userMemberId;
+  String? issueId;
 
-  Province({
-    this.name,
-    this.code,
+  //
+  double? ratePoint;
+  String? comment;
+
+  RatingIssue({
+    this.userMemberId,
+    this.issueId,
+    this.ratePoint,
+    this.comment,
     int? id,
     DateTime? createdAt,
     String? createdBy,
@@ -27,10 +34,12 @@ class Province extends BaseModel {
         );
 
   //
-  factory Province.fromJson(Map<String, dynamic> json) {
-    return Province(
-      name: json['name'],
-      code: json['code'],
+  factory RatingIssue.fromJson(Map<String, dynamic> json) {
+    return RatingIssue(
+      userMemberId: json['userId'],
+      issueId: json['issueId'],
+      ratePoint: json['ratePoint'],
+      comment: json['comment'],
       //
       id: json['id'],
       //createdAt: json['createdAt'],
@@ -45,8 +54,10 @@ class Province extends BaseModel {
   //
   String toJson() {
     return json.encode({
-      'name': name,
-      'code': code,
+      'userId': userMemberId,
+      'issueId': issueId,
+      'ratePoint': ratePoint,
+      'comment': comment,
       //
       'id': id,
       //'createdAt': createdAt,

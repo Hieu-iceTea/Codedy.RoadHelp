@@ -1,23 +1,23 @@
+import 'dart:convert';
 import 'dart:math';
 
-import 'package:roadhelp/models/rating_garage.dart';
-
+import '/models/rating_garage.dart';
 import 'base_model.dart';
+import 'garage_image.dart';
 
 class Garage extends BaseModel {
   //#region - Foreign Keys (Khóa ngoại) -
 
-  final int? partnerId;
-  final int? provinceId;
-  final int? districtId;
-  final int? wardId;
+  final int? userPartnerId;
+  final int? provinceId; //Tỉnh/TP
+  final int? districtId; //Quận/Huyện
+  final int? wardId; //Phường/Xã
 
   //#endregion
 
   //#region - Main Fields (Các trường chính của bảng này) -
 
   final String? name;
-  final List<String>? imageUrls;
   final String? phone;
   final double? ratingAvg;
   final String? address;
@@ -31,6 +31,7 @@ class Garage extends BaseModel {
 
   //#region - Relationship (Mối quan hệ & liên kết bảng khác) -
 
+  final List<GarageImage>? images;
   final List<RatingGarage>? garageRatings;
 
   //#endregion
@@ -38,13 +39,12 @@ class Garage extends BaseModel {
   //#region - Constructor (Hàm tạo)-
 
   Garage({
-    this.partnerId,
+    this.userPartnerId,
     this.provinceId,
     this.districtId,
     this.wardId,
     this.garageRatings,
     this.name,
-    this.imageUrls,
     this.phone,
     this.ratingAvg,
     this.address,
@@ -53,6 +53,9 @@ class Garage extends BaseModel {
     this.description,
     this.active,
     this.isFeatured,
+    //liên kết bảng:
+    this.images,
+    //BaseModel:
     int? id,
     DateTime? createdAt,
     String? createdBy,
@@ -69,7 +72,64 @@ class Garage extends BaseModel {
           version: version,
           deleted: deleted,
         );
+
 //#endregion
+
+  //
+  factory Garage.fromJson(Map<String, dynamic> json) {
+    return Garage(
+      userPartnerId: json['partnerId'],
+      provinceId: json['provinceId'],
+      districtId: json['districtId'],
+      wardId: json['wardId'],
+      garageRatings: json['garageRatings'],
+      name: json['name'],
+      phone: json['phone'],
+      ratingAvg: json['ratingAvg'],
+      address: json['address'],
+      longitude: json['longitude'],
+      latitude: json['latitude'],
+      description: json['description'],
+      active: json['active'],
+      isFeatured: json['isFeatured'],
+      //
+      id: json['id'],
+      //createdAt: json['createdAt'],
+      createdBy: json['createdBy'],
+      //updatedAt: json['updatedAt'],
+      updatedBy: json['updatedBy'],
+      version: json['version'],
+      deleted: json['deleted'],
+    );
+  }
+
+  //
+  String toJson() {
+    return json.encode({
+      'partnerId': userPartnerId,
+      'provinceId': provinceId,
+      'districtId': districtId,
+      'wardId': wardId,
+      'garageRatings': garageRatings,
+      'name': name,
+      'phone': phone,
+      'ratingAvg': ratingAvg,
+      'address': address,
+      'longitude': longitude,
+      'latitude': latitude,
+      'description': description,
+      'active': active,
+      'isFeatured': isFeatured,
+      //
+      'id': id,
+      //'createdAt': createdAt,
+      'createdBy': createdBy,
+      //'updatedAt': updatedAt,
+      'updatedBy': updatedBy,
+      'version': version,
+      'deleted': deleted,
+    });
+  }
 }
 
 //#region - Fake Data -
@@ -90,15 +150,15 @@ final List<Garage> demoGarages = [
 Garage getTmpGarage() {
   return Garage(
     id: Random().nextInt(1000),
-    imageUrls: [
-      "https://picsum.photos/500/400?random=" + Random().nextInt(99).toString(),
-      "https://picsum.photos/500/400?random=" + Random().nextInt(99).toString(),
-      "https://picsum.photos/500/400?random=" + Random().nextInt(99).toString(),
-      "https://picsum.photos/500/400?random=" + Random().nextInt(99).toString(),
-      "https://picsum.photos/500/400?random=" + Random().nextInt(99).toString(),
-      "https://picsum.photos/500/400?random=" + Random().nextInt(99).toString(),
-      "https://picsum.photos/500/400?random=" + Random().nextInt(99).toString(),
-      "https://picsum.photos/500/400?random=" + Random().nextInt(99).toString(),
+    images: [
+      GarageImage(imageUrl: "https://picsum.photos/500/400?random=" + Random().nextInt(99).toString()),
+      GarageImage(imageUrl: "https://picsum.photos/500/400?random=" + Random().nextInt(99).toString()),
+      GarageImage(imageUrl: "https://picsum.photos/500/400?random=" + Random().nextInt(99).toString()),
+      GarageImage(imageUrl: "https://picsum.photos/500/400?random=" + Random().nextInt(99).toString()),
+      GarageImage(imageUrl: "https://picsum.photos/500/400?random=" + Random().nextInt(99).toString()),
+      GarageImage(imageUrl: "https://picsum.photos/500/400?random=" + Random().nextInt(99).toString()),
+      GarageImage(imageUrl: "https://picsum.photos/500/400?random=" + Random().nextInt(99).toString()),
+      GarageImage(imageUrl: "https://picsum.photos/500/400?random=" + Random().nextInt(99).toString()),
     ],
     name: "Garage Name™ " + Random().nextInt(99).toString(),
     phone: "012345678",
