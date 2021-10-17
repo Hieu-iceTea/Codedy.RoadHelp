@@ -1,18 +1,12 @@
 package com.codedy.roadhelp.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonFilter;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import org.hibernate.annotations.Cascade;
-import org.hibernate.event.spi.SaveOrUpdateEvent;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
-import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -34,7 +28,7 @@ public class User extends BaseModel implements Serializable {
     @Size(max = 128)
     private String image;
 
-    private Boolean gender;
+    private int gender;
 
     @Size(min = 2, max = 64)
     private String firstName;
@@ -52,11 +46,11 @@ public class User extends BaseModel implements Serializable {
     //region - Relationship -
     @OneToMany(mappedBy = "partners", cascade = CascadeType.ALL)
     @JsonBackReference(value = "issuesPartnerDetails")
-    private List<IssuesDetail> issuesPartnerDetails;
+    private List<Issues> issuesPartnerDetails;
 
     @OneToMany(mappedBy = "members", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JsonBackReference(value = "issuesMemberDetails")
-    private List<IssuesDetail> issuesMemberDetails;
+    private List<Issues> issuesMemberDetails;
 
     @OneToMany(mappedBy = "users", cascade = {CascadeType.PERSIST, CascadeType.MERGE,
             CascadeType.DETACH, CascadeType.REFRESH})
@@ -66,7 +60,7 @@ public class User extends BaseModel implements Serializable {
     @OneToMany(mappedBy = "users", cascade = {CascadeType.PERSIST, CascadeType.MERGE,
             CascadeType.DETACH, CascadeType.REFRESH})
     @JsonBackReference(value = "ratingPartners")
-    private List<RatingPartner> ratingPartners;
+    private List<RatingIssue> ratingIssues;
 
     @OneToMany(mappedBy = "user")
     @JsonBackReference(value = "authorities")
@@ -74,28 +68,28 @@ public class User extends BaseModel implements Serializable {
     //endregion
 
     //region - Getter & Setter -
-    public List<IssuesDetail> getIssuesPartnerDetails() {
+    public List<Issues> getIssuesPartnerDetails() {
         return issuesPartnerDetails;
     }
 
-    public void setIssuesPartnerDetails(List<IssuesDetail> issuesPartnerDetails) {
+    public void setIssuesPartnerDetails(List<Issues> issuesPartnerDetails) {
         this.issuesPartnerDetails = issuesPartnerDetails;
     }
 
-    public List<IssuesDetail> getIssuesMemberDetails() {
+    public List<Issues> getIssuesMemberDetails() {
         return issuesMemberDetails;
     }
 
-    public void setIssuesMemberDetails(List<IssuesDetail> issuesMemberDetails) {
+    public void setIssuesMemberDetails(List<Issues> issuesMemberDetails) {
         this.issuesMemberDetails = issuesMemberDetails;
     }
 
-    public List<RatingPartner> getRatingPartners() {
-        return ratingPartners;
+    public List<RatingIssue> getRatingPartners() {
+        return ratingIssues;
     }
 
-    public void setRatingPartners(List<RatingPartner> ratingPartners) {
-        this.ratingPartners = ratingPartners;
+    public void setRatingPartners(List<RatingIssue> ratingIssues) {
+        this.ratingIssues = ratingIssues;
     }
 
     public String getUsername() {
@@ -130,11 +124,11 @@ public class User extends BaseModel implements Serializable {
         this.image = image;
     }
 
-    public Boolean getGender() {
+    public int getGender() {
         return gender;
     }
 
-    public void setGender(Boolean gender) {
+    public void setGender(int gender) {
         this.gender = gender;
     }
 
@@ -200,7 +194,7 @@ public class User extends BaseModel implements Serializable {
                 ", phone='" + phone + '\'' +
                 ", active=" + active +
                 ", ratingGarages=" + ratingGarages +
-                ", ratingPartners=" + ratingPartners +
+                ", ratingPartners=" + ratingIssues +
                 '}';
     }
     //endregion

@@ -6,8 +6,8 @@ import javax.validation.constraints.Size;
 import java.io.Serializable;
 
 @Entity
-@Table(name = "ratingpartner")
-public class RatingPartner extends BaseModel implements Serializable {
+@Table(name = "ratingissue")
+public class RatingIssue extends BaseModel implements Serializable {
 
     //region - Define Fields -
     @NotNull
@@ -24,17 +24,17 @@ public class RatingPartner extends BaseModel implements Serializable {
     private User users;
 
 
-    public IssuesDetail getIssues() {
+    public Issues getIssues() {
         return issues;
     }
 
-    public void setIssues(IssuesDetail issues) {
+    public void setIssues(Issues issues) {
         this.issues = issues;
     }
 
     @OneToOne
     @JoinColumn(name="issue_id")
-    private IssuesDetail issues;
+    private Issues issues;
     //endregion
 
     //region - Getter & Setter -

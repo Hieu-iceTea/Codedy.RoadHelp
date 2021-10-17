@@ -30,7 +30,7 @@ CREATE TABLE IF NOT EXISTS `users`
     `password`            VARCHAR(64)               NOT NULL,
 
     `image`               VARCHAR(128),
-    `gender`              BOOLEAN,
+    `gender`              int, #1 nam, 2 nữ
     `first_name`          VARCHAR(64),
     `last_name`           VARCHAR(64),
     `phone`               VARCHAR(16),
@@ -99,8 +99,8 @@ CREATE TABLE IF NOT EXISTS `garageImage`
     PRIMARY KEY (`id`)
 ) ENGINE InnoDB;
 
-DROP TABLE IF EXISTS `ratingPartner`;
-CREATE TABLE IF NOT EXISTS `ratingPartner`
+DROP TABLE IF EXISTS `ratingIssue`;
+CREATE TABLE IF NOT EXISTS `ratingIssue`
 (
     `id`                  INT AUTO_INCREMENT,
     `user_member_id`                  INT NOT NULL,
@@ -227,9 +227,6 @@ VALUE (11, 'ManhHung', 'ThiDK@fpt.edu.vn ', '$2y$10$//Od0OmEqRwFepW3wynrYOwslyva
 
 INSERT INTO users (id, username, email, password, image, gender, first_name, last_name,address, phone, active)
 VALUE (12, 'Staff_C', 'staff_c.codedy@gmail.com', '$2y$10$//Od0OmEqRwFepW3wynrYOwslyvaS.snzBbpWwskF1Zrg5fNI.eTe','staff_c.jpg', 1, 'CODEDY', 'Staff C', '0868 6633 15','HN', TRUE);
-
-
-
 
 #endregion
 
@@ -387,44 +384,42 @@ VALUE (11, 11, 11, 4, 'Good ');
 INSERT INTO ratingGarage (id, user_id, garage_id, rate_point, comment) 
 VALUE (12, 12, 12, 5, 'Good ');
 
-
-
 #endregion
-#region Insert ratingPartner
-INSERT INTO ratingPartner (id, user_member_id, issue_id, rate_point, comment) 
+#region Insert ratingIssue
+INSERT INTO ratingIssue (id, user_member_id, issue_id, rate_point, comment)
 VALUE (1, 1, 1, 3, 'Very good.');
 
-INSERT INTO ratingPartner (id, user_member_id, issue_id, rate_point, comment) 
+INSERT INTO ratingIssue (id, user_member_id, issue_id, rate_point, comment)
 VALUE (2, 2, 2, 5, 'Good ');
 
-INSERT INTO ratingPartner (id, user_member_id, issue_id, rate_point, comment) 
+INSERT INTO ratingIssue (id, user_member_id, issue_id, rate_point, comment)
 VALUE (3, 3, 3, 5, 'Very good.');
 
-INSERT INTO ratingPartner (id, user_member_id, issue_id, rate_point, comment) 
+INSERT INTO ratingIssue (id, user_member_id, issue_id, rate_point, comment)
 VALUE (4, 4, 4, 5, 'Very good.');
 
-INSERT INTO ratingPartner (id, user_member_id, issue_id, rate_point, comment) 
+INSERT INTO ratingIssue (id, user_member_id, issue_id, rate_point, comment)
 VALUE (5, 5, 5, 5, 'Good ');
 
-INSERT INTO ratingPartner (id, user_member_id, issue_id, rate_point, comment) 
+INSERT INTO ratingIssue (id, user_member_id, issue_id, rate_point, comment)
 VALUE (6, 6, 6, 4, 'Very good.');
 
-INSERT INTO ratingPartner (id, user_member_id, issue_id, rate_point, comment) 
+INSERT INTO ratingIssue (id, user_member_id, issue_id, rate_point, comment)
 VALUE (7, 7, 7, 4, 'Very good.');
 
-INSERT INTO ratingPartner (id, user_member_id, issue_id, rate_point, comment) 
+INSERT INTO ratingIssue (id, user_member_id, issue_id, rate_point, comment)
 VALUE (8, 8, 8, 4, 'Very good.');
 
-INSERT INTO ratingPartner (id, user_member_id, issue_id, rate_point, comment) 
+INSERT INTO ratingIssue (id, user_member_id, issue_id, rate_point, comment)
 VALUE (9, 9, 9, 4, 'very good.');
 
-INSERT INTO ratingPartner (id, user_member_id, issue_id, rate_point, comment) 
+INSERT INTO ratingIssue (id, user_member_id, issue_id, rate_point, comment)
 VALUE (10, 10, 10, 4, 'Good ');
 
-INSERT INTO ratingPartner (id, user_member_id, issue_id, rate_point, comment) 
+INSERT INTO ratingIssue (id, user_member_id, issue_id, rate_point, comment)
 VALUE (11, 11, 11, 4, 'Good ');
 
-INSERT INTO ratingPartner (id, user_member_id, issue_id, rate_point, comment) 
+INSERT INTO ratingIssue (id, user_member_id, issue_id, rate_point, comment)
 VALUE (12, 12, 12, 5, 'Good ');
 
 #endregion
