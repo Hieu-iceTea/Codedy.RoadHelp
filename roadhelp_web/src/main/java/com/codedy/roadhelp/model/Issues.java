@@ -2,18 +2,15 @@ package com.codedy.roadhelp.model;
 
 import com.codedy.roadhelp.model.enums.IssueCategory;
 import com.codedy.roadhelp.model.enums.IssueStatus;
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 
 @Entity
 @Table(name = "issue")
-public class IssuesDetail extends BaseModel implements Serializable {
+public class Issues extends BaseModel implements Serializable {
 
     //region - Define Fields -
 
@@ -69,17 +66,17 @@ public class IssuesDetail extends BaseModel implements Serializable {
     private User partners;
 
 
-    public RatingPartner getRatingPartner() {
-        return ratingPartner;
+    public RatingIssue getRatingPartner() {
+        return ratingIssue;
     }
 
-    public void setRatingPartner(RatingPartner ratingPartner) {
-        this.ratingPartner = ratingPartner;
+    public void setRatingPartner(RatingIssue ratingIssue) {
+        this.ratingIssue = ratingIssue;
     }
 
     @OneToOne(mappedBy="issues")
     @JsonIgnore
-    private RatingPartner ratingPartner;
+    private RatingIssue ratingIssue;
 //endregion
 
     //region - Getter & Setter -

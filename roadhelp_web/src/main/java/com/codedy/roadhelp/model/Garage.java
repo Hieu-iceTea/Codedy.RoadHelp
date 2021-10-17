@@ -49,9 +49,46 @@ public class Garage extends BaseModel implements Serializable {
             CascadeType.DETACH, CascadeType.REFRESH})
     @JsonBackReference(value = "garageImages")
     private List<GarageImage> garageImages;
+
+    @ManyToOne
+    @JoinColumn(name = "province_id") //updatable = false, insertable = false
+    private Province province;
+
+    @ManyToOne
+    @JoinColumn(name = "district_id") //updatable = false, insertable = false
+    private District district;
+
+    @ManyToOne
+    @JoinColumn(name = "ward_id") //updatable = false, insertable = false
+    private Ward ward;
     //endregion
 
     //region - Getter & Setter -
+
+    public Province getProvince() {
+        return province;
+    }
+
+    public void setProvince(Province province) {
+        this.province = province;
+    }
+
+    public District getDistrict() {
+        return district;
+    }
+
+    public void setDistrict(District district) {
+        this.district = district;
+    }
+
+    public Ward getWard() {
+        return ward;
+    }
+
+    public void setWard(Ward ward) {
+        this.ward = ward;
+    }
+
     public List<GarageImage> getGarageImages() {
         return garageImages;
     }
