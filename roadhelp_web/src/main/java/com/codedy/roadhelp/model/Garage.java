@@ -37,8 +37,11 @@ public class Garage extends BaseModel implements Serializable {
 //endregion
 
 
-    //region - Relationship -
 
+    //region - Relationship -
+    @ManyToOne
+    @JoinColumn(name = "partner_id") //updatable = false, insertable = false
+    private User partner;
 
     @OneToMany(mappedBy = "garage", cascade = {CascadeType.PERSIST, CascadeType.MERGE,
             CascadeType.DETACH, CascadeType.REFRESH})
@@ -64,6 +67,14 @@ public class Garage extends BaseModel implements Serializable {
     //endregion
 
     //region - Getter & Setter -
+
+    public User getPartner() {
+        return partner;
+    }
+
+    public void setPartner(User partner) {
+        this.partner = partner;
+    }
 
     public Province getProvince() {
         return province;

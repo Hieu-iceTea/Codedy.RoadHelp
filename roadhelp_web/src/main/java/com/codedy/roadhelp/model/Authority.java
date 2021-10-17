@@ -1,10 +1,18 @@
 package com.codedy.roadhelp.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
 @Table(name = "authorities")
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id")
 public class Authority extends BaseModel implements Serializable {
 //
 //    @Column(name = "username")
@@ -23,7 +31,7 @@ public class Authority extends BaseModel implements Serializable {
 
     //region - Relationship -
     @ManyToOne
-    @JoinColumn(name = "username",referencedColumnName = "username") //updatable = false, insertable = false
+    @JoinColumn(name = "username",referencedColumnName = "username")
     private User user;
     //endregion
 

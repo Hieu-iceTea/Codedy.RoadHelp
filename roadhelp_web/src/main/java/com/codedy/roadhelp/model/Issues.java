@@ -2,7 +2,7 @@ package com.codedy.roadhelp.model;
 
 import com.codedy.roadhelp.model.enums.IssueCategory;
 import com.codedy.roadhelp.model.enums.IssueStatus;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
@@ -10,6 +10,9 @@ import java.io.Serializable;
 
 @Entity
 @Table(name = "issue")
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id")
 public class Issues extends BaseModel implements Serializable {
 
     //region - Define Fields -
@@ -58,28 +61,27 @@ public class Issues extends BaseModel implements Serializable {
 
     //region - Relationship -
     @ManyToOne
-    @JoinColumn(name = "user_member_id") //updatable = false, insertable = false
+    @JoinColumn(name = "user_member_id")
     private User members;
 
     @ManyToOne
-    @JoinColumn(name = "user_partner_id") //updatable = false, insertable = false
+    @JoinColumn(name = "user_partner_id")
     private User partners;
 
 
-    public RatingIssue getRatingPartner() {
-        return ratingIssue;
-    }
-
-    public void setRatingPartner(RatingIssue ratingIssue) {
-        this.ratingIssue = ratingIssue;
-    }
-
     @OneToOne(mappedBy="issues")
-    @JsonIgnore
-    private RatingIssue ratingIssue;
+    private RatingIssues ratingIssues;
 //endregion
 
     //region - Getter & Setter -
+
+    public RatingIssues getRatingPartner() {
+        return ratingIssues;
+    }
+
+    public void setRatingPartner(RatingIssues ratingIssues) {
+        this.ratingIssues = ratingIssues;
+    }
 
     public IssueStatus getStatus() {
         return status;
