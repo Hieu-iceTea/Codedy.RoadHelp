@@ -1,6 +1,8 @@
 package com.codedy.roadhelp.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -8,6 +10,9 @@ import java.util.List;
 
 @Entity
 @Table(name = "ward")
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id")
 public class Ward extends BaseModel implements Serializable {
     //region - Define Fields -
     @Column(name = "_name")

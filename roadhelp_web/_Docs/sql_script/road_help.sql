@@ -99,8 +99,8 @@ CREATE TABLE IF NOT EXISTS `garageImage`
     PRIMARY KEY (`id`)
 ) ENGINE InnoDB;
 
-DROP TABLE IF EXISTS `ratingIssue`;
-CREATE TABLE IF NOT EXISTS `ratingIssue`
+DROP TABLE IF EXISTS `ratingIssues`;
+CREATE TABLE IF NOT EXISTS `ratingIssues`
 (
     `id`                  INT AUTO_INCREMENT,
     `user_member_id`                  INT NOT NULL,
@@ -385,41 +385,41 @@ INSERT INTO ratingGarage (id, user_id, garage_id, rate_point, comment)
 VALUE (12, 12, 12, 5, 'Good ');
 
 #endregion
-#region Insert ratingIssue
-INSERT INTO ratingIssue (id, user_member_id, issue_id, rate_point, comment)
+#region Insert ratingIssues
+INSERT INTO ratingIssues (id, user_member_id, issue_id, rate_point, comment)
 VALUE (1, 1, 1, 3, 'Very good.');
 
-INSERT INTO ratingIssue (id, user_member_id, issue_id, rate_point, comment)
+INSERT INTO ratingIssues (id, user_member_id, issue_id, rate_point, comment)
 VALUE (2, 2, 2, 5, 'Good ');
 
-INSERT INTO ratingIssue (id, user_member_id, issue_id, rate_point, comment)
+INSERT INTO ratingIssues (id, user_member_id, issue_id, rate_point, comment)
 VALUE (3, 3, 3, 5, 'Very good.');
 
-INSERT INTO ratingIssue (id, user_member_id, issue_id, rate_point, comment)
+INSERT INTO ratingIssues (id, user_member_id, issue_id, rate_point, comment)
 VALUE (4, 4, 4, 5, 'Very good.');
 
-INSERT INTO ratingIssue (id, user_member_id, issue_id, rate_point, comment)
+INSERT INTO ratingIssues (id, user_member_id, issue_id, rate_point, comment)
 VALUE (5, 5, 5, 5, 'Good ');
 
-INSERT INTO ratingIssue (id, user_member_id, issue_id, rate_point, comment)
+INSERT INTO ratingIssues (id, user_member_id, issue_id, rate_point, comment)
 VALUE (6, 6, 6, 4, 'Very good.');
 
-INSERT INTO ratingIssue (id, user_member_id, issue_id, rate_point, comment)
+INSERT INTO ratingIssues (id, user_member_id, issue_id, rate_point, comment)
 VALUE (7, 7, 7, 4, 'Very good.');
 
-INSERT INTO ratingIssue (id, user_member_id, issue_id, rate_point, comment)
+INSERT INTO ratingIssues (id, user_member_id, issue_id, rate_point, comment)
 VALUE (8, 8, 8, 4, 'Very good.');
 
-INSERT INTO ratingIssue (id, user_member_id, issue_id, rate_point, comment)
+INSERT INTO ratingIssues (id, user_member_id, issue_id, rate_point, comment)
 VALUE (9, 9, 9, 4, 'very good.');
 
-INSERT INTO ratingIssue (id, user_member_id, issue_id, rate_point, comment)
+INSERT INTO ratingIssues (id, user_member_id, issue_id, rate_point, comment)
 VALUE (10, 10, 10, 4, 'Good ');
 
-INSERT INTO ratingIssue (id, user_member_id, issue_id, rate_point, comment)
+INSERT INTO ratingIssues (id, user_member_id, issue_id, rate_point, comment)
 VALUE (11, 11, 11, 4, 'Good ');
 
-INSERT INTO ratingIssue (id, user_member_id, issue_id, rate_point, comment)
+INSERT INTO ratingIssues (id, user_member_id, issue_id, rate_point, comment)
 VALUE (12, 12, 12, 5, 'Good ');
 
 #endregion

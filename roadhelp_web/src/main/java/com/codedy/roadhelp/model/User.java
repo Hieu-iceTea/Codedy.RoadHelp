@@ -1,6 +1,6 @@
 package com.codedy.roadhelp.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -11,6 +11,9 @@ import java.util.List;
 
 @Entity
 @Table(name = "users")
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id")
 public class User extends BaseModel implements Serializable {
 
     //region - Define Fields -
@@ -44,23 +47,27 @@ public class User extends BaseModel implements Serializable {
     //endregion
 
     //region - Relationship -
-    @OneToMany(mappedBy = "partners", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "partner", cascade = {CascadeType.PERSIST, CascadeType.MERGE,
+            CascadeType.DETACH, CascadeType.REFRESH})
+    @JsonBackReference(value = "garages")
+    private List<Garage> garages;
+
+    @OneToMany(mappedBy = "partners")
     @JsonBackReference(value = "issuesPartnerDetails")
     private List<Issues> issuesPartnerDetails;
 
-    @OneToMany(mappedBy = "members", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "members")
     @JsonBackReference(value = "issuesMemberDetails")
     private List<Issues> issuesMemberDetails;
 
-    @OneToMany(mappedBy = "users", cascade = {CascadeType.PERSIST, CascadeType.MERGE,
-            CascadeType.DETACH, CascadeType.REFRESH})
+
+    @OneToMany(mappedBy = "users")
     @JsonBackReference(value = "ratingGarages")
     private List<RatingGarage> ratingGarages;
 
-    @OneToMany(mappedBy = "users", cascade = {CascadeType.PERSIST, CascadeType.MERGE,
-            CascadeType.DETACH, CascadeType.REFRESH})
-    @JsonBackReference(value = "ratingPartners")
-    private List<RatingIssue> ratingIssues;
+    @OneToMany(mappedBy = "users")
+    @JsonBackReference(value = "ratingIssues")
+    private List<RatingIssues> ratingIssues;
 
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
     @JsonBackReference(value = "authorities")
@@ -68,6 +75,23 @@ public class User extends BaseModel implements Serializable {
     //endregion
 
     //region - Getter & Setter -
+
+    public List<Garage> getGarages() {
+        return garages;
+    }
+
+    public void setGarages(List<Garage> garages) {
+        this.garages = garages;
+    }
+
+    public List<RatingIssues> getRatingIssues() {
+        return ratingIssues;
+    }
+
+    public void setRatingIssues(List<RatingIssues> ratingIssues) {
+        this.ratingIssues = ratingIssues;
+    }
+
     public List<Issues> getIssuesPartnerDetails() {
         return issuesPartnerDetails;
     }
@@ -84,11 +108,11 @@ public class User extends BaseModel implements Serializable {
         this.issuesMemberDetails = issuesMemberDetails;
     }
 
-    public List<RatingIssue> getRatingPartners() {
+    public List<RatingIssues> getRatingPartners() {
         return ratingIssues;
     }
 
-    public void setRatingPartners(List<RatingIssue> ratingIssues) {
+    public void setRatingPartners(List<RatingIssues> ratingIssues) {
         this.ratingIssues = ratingIssues;
     }
 

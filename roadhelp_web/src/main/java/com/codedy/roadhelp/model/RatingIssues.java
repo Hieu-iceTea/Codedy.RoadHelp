@@ -1,13 +1,20 @@
 package com.codedy.roadhelp.model;
 
+import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 
 @Entity
-@Table(name = "ratingissue")
-public class RatingIssue extends BaseModel implements Serializable {
+@Table(name = "ratingissues")
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id")
+public class RatingIssues extends BaseModel implements Serializable {
 
     //region - Define Fields -
     @NotNull
@@ -20,17 +27,8 @@ public class RatingIssue extends BaseModel implements Serializable {
 
     //region - Relationship -
     @ManyToOne
-    @JoinColumn(name = "user_member_id") //updatable = false, insertable = false
+    @JoinColumn(name = "user_member_id")
     private User users;
-
-
-    public Issues getIssues() {
-        return issues;
-    }
-
-    public void setIssues(Issues issues) {
-        this.issues = issues;
-    }
 
     @OneToOne
     @JoinColumn(name="issue_id")
@@ -38,6 +36,13 @@ public class RatingIssue extends BaseModel implements Serializable {
     //endregion
 
     //region - Getter & Setter -
+    public Issues getIssues() {
+        return issues;
+    }
+
+    public void setIssues(Issues issues) {
+        this.issues = issues;
+    }
     public int getRatePoint() {
         return ratePoint;
     }
