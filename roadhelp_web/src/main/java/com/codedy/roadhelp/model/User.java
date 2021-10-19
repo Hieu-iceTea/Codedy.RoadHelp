@@ -1,5 +1,6 @@
 package com.codedy.roadhelp.model;
 
+import com.codedy.roadhelp.model.enums.UserGender;
 import com.fasterxml.jackson.annotation.*;
 
 import javax.persistence.*;
@@ -27,8 +28,8 @@ public class User extends BaseModel implements Serializable {
     private String password;
     @Size(max = 128)
     private String image;
-
-    private int gender;
+    @Column(name = "gender")
+    private UserGender gender;
 
     @Size(min = 2, max = 64)
     private String firstName;
@@ -48,19 +49,18 @@ public class User extends BaseModel implements Serializable {
             CascadeType.DETACH, CascadeType.REFRESH})
     private List<Garage> garages;
 
-    @OneToMany(mappedBy = "partners")
+    @OneToMany(mappedBy = "userPartners")
     @JsonBackReference(value = "issuesPartnerDetails")
-    private List<Issues> issuesPartnerDetails;
+    private List<Issue> issuePartnerDetails;
 
-    @OneToMany(mappedBy = "members")
-    @JsonBackReference(value = "issuesMemberDetails")
-    private List<Issues> issuesMemberDetails;
+    @OneToMany(mappedBy = "userMembers")
+    @JsonBackReference(value = "issueMemberDetails")
+    private List<Issue> issueMemberDetails;
 
-
-    @OneToMany(mappedBy = "users")
+    @OneToMany(mappedBy = "userMember")
     private List<RatingGarage> ratingGarages;
 
-    @OneToMany(mappedBy = "users")
+    @OneToMany(mappedBy = "userMember")
     @JsonBackReference(value = "ratingIssues")
     private List<RatingIssues> ratingIssues;
 
@@ -86,20 +86,20 @@ public class User extends BaseModel implements Serializable {
         this.ratingIssues = ratingIssues;
     }
 
-    public List<Issues> getIssuesPartnerDetails() {
-        return issuesPartnerDetails;
+    public List<Issue> getIssuesPartnerDetails() {
+        return issuePartnerDetails;
     }
 
-    public void setIssuesPartnerDetails(List<Issues> issuesPartnerDetails) {
-        this.issuesPartnerDetails = issuesPartnerDetails;
+    public void setIssuesPartnerDetails(List<Issue> issuePartnerDetails) {
+        this.issuePartnerDetails = issuePartnerDetails;
     }
 
-    public List<Issues> getIssuesMemberDetails() {
-        return issuesMemberDetails;
+    public List<Issue> getIssuesMemberDetails() {
+        return issueMemberDetails;
     }
 
-    public void setIssuesMemberDetails(List<Issues> issuesMemberDetails) {
-        this.issuesMemberDetails = issuesMemberDetails;
+    public void setIssuesMemberDetails(List<Issue> issueMemberDetails) {
+        this.issueMemberDetails = issueMemberDetails;
     }
 
     public List<RatingIssues> getRatingPartners() {
@@ -142,11 +142,11 @@ public class User extends BaseModel implements Serializable {
         this.image = image;
     }
 
-    public int getGender() {
+    public UserGender getGender() {
         return gender;
     }
 
-    public void setGender(int gender) {
+    public void setGender(UserGender gender) {
         this.gender = gender;
     }
 
@@ -198,22 +198,5 @@ public class User extends BaseModel implements Serializable {
         this.authorities = authorities;
     }
 
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "username='" + username + '\'' +
-                ", email='" + email + '\'' +
-                ", password='" + password + '\'' +
-                ", image='" + image + '\'' +
-                ", gender=" + gender +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", phone='" + phone + '\'' +
-                ", active=" + active +
-                ", ratingGarages=" + ratingGarages +
-                ", ratingPartners=" + ratingIssues +
-                '}';
-    }
     //endregion
 }

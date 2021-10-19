@@ -18,8 +18,6 @@ public class Province extends BaseModel implements Serializable {
     @Column(name = "_code")
     private String code;
 
-
-
     //region - Relationship -
     @OneToMany(mappedBy = "province", cascade = {CascadeType.PERSIST, CascadeType.MERGE,
             CascadeType.DETACH, CascadeType.REFRESH})
@@ -30,7 +28,6 @@ public class Province extends BaseModel implements Serializable {
             CascadeType.DETACH, CascadeType.REFRESH})
     @JsonBackReference(value = "wards")
     private List<Ward> wards;
-
 
     @OneToMany(mappedBy = "province", cascade = {CascadeType.PERSIST, CascadeType.MERGE,
             CascadeType.DETACH, CascadeType.REFRESH})

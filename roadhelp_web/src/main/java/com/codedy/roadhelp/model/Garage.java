@@ -43,7 +43,6 @@ public class Garage extends BaseModel implements Serializable {
 
     @OneToMany(mappedBy = "garage", cascade = {CascadeType.PERSIST, CascadeType.MERGE,
             CascadeType.DETACH, CascadeType.REFRESH})
-    @JsonBackReference(value = "ratingGarages")
     private List<RatingGarage> ratingGarages;
 
     @OneToMany(mappedBy = "garage", cascade = {CascadeType.PERSIST, CascadeType.MERGE,
@@ -137,7 +136,6 @@ public class Garage extends BaseModel implements Serializable {
         this.phone = phone;
     }
 
-
     public double getLongitude() {
         return longitude;
     }
@@ -186,20 +184,6 @@ public class Garage extends BaseModel implements Serializable {
         this.name = name;
     }
 
-    @Override
-    public String toString() {
-        return "Garage{" +
-                "name='" + name + '\'' +
-                ", rate='" + rateAvg + '\'' +
-                ", address='" + address + '\'' +
-                ", phone='" + phone + '\'' +
-                ", longitude='" + longitude + '\'' +
-                ", latitude='" + latitude + '\'' +
-                ", description='" + description + '\'' +
-                ", active=" + active +
-                ", ratingGarages=" + ratingGarages +
-                '}';
-    }
     //endregion
 
 }
