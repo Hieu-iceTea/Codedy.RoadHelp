@@ -43,7 +43,6 @@ public class Garage extends BaseModel implements Serializable {
 
     @OneToMany(mappedBy = "garage", cascade = {CascadeType.PERSIST, CascadeType.MERGE,
             CascadeType.DETACH, CascadeType.REFRESH})
-    @JsonBackReference(value = "ratingGarages")
     private List<RatingGarage> ratingGarages;
 
     @OneToMany(mappedBy = "garage", cascade = {CascadeType.PERSIST, CascadeType.MERGE,
