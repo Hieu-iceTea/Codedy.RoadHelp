@@ -1,7 +1,7 @@
 package com.codedy.roadhelp.model;
 
 import com.codedy.roadhelp.model.enums.UserGender;
-import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -12,9 +12,6 @@ import java.util.List;
 
 @Entity
 @Table(name = "users")
-@JsonIdentityInfo(
-        generator = ObjectIdGenerators.PropertyGenerator.class,
-        property = "id")
 public class User extends BaseModel implements Serializable {
 
     //region - Define Fields -

@@ -2,7 +2,6 @@ package com.codedy.roadhelp.model;
 
 import com.codedy.roadhelp.model.enums.IssueCategory;
 import com.codedy.roadhelp.model.enums.IssueStatus;
-import com.fasterxml.jackson.annotation.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
@@ -10,9 +9,6 @@ import java.io.Serializable;
 
 @Entity
 @Table(name = "issue")
-@JsonIdentityInfo(
-        generator = ObjectIdGenerators.PropertyGenerator.class,
-        property = "id")
 public class Issues extends BaseModel implements Serializable {
 
     //region - Define Fields -
