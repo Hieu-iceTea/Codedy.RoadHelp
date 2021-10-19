@@ -49,6 +49,13 @@ class District extends BaseModel {
   }
 
   //
+  static List<District> fromJsonToList(dynamic json) {
+    return json
+        .map<District>((element) => District.fromJson(element))
+        .toList();
+  }
+
+  //
   String toJson() {
     return json.encode({
       'provinceId': provinceId,

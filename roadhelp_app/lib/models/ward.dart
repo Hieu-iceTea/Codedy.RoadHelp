@@ -52,6 +52,13 @@ class Ward extends BaseModel {
   }
 
   //
+  static List<Ward> fromJsonToList(dynamic json) {
+    return json
+        .map<Ward>((element) => Ward.fromJson(element))
+        .toList();
+  }
+
+  //
   String toJson() {
     return json.encode({
       'provinceId': provinceId,

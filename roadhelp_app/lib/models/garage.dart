@@ -1,8 +1,13 @@
 import 'dart:convert';
 import 'dart:math';
 
+import 'package:roadhelp/models/province.dart';
+import 'package:roadhelp/models/user.dart';
+import 'package:roadhelp/models/ward.dart';
+
 import '/models/rating_garage.dart';
 import 'base_model.dart';
+import 'district.dart';
 import 'garage_image.dart';
 
 class Garage extends BaseModel {
@@ -31,8 +36,12 @@ class Garage extends BaseModel {
 
   //#region - Relationship (Mối quan hệ & liên kết bảng khác) -
 
-  final List<GarageImage>? images;
-  final List<RatingGarage>? garageRatings;
+  final List<User>? userPartners;
+  final List<GarageImage>? garageImages;
+  final List<RatingGarage>? ratingGarages;
+  final List<Province>? provinces;
+  final List<District>? districts;
+  final List<Ward>? wards;
 
   //#endregion
 
@@ -43,7 +52,7 @@ class Garage extends BaseModel {
     this.provinceId,
     this.districtId,
     this.wardId,
-    this.garageRatings,
+    //
     this.name,
     this.phone,
     this.ratingAvg,
@@ -53,8 +62,13 @@ class Garage extends BaseModel {
     this.description,
     this.active,
     this.isFeatured,
-    //liên kết bảng:
-    this.images,
+    //Relationship:
+    this.userPartners,
+    this.garageImages,
+    this.ratingGarages,
+    this.provinces,
+    this.districts,
+    this.wards,
     //BaseModel:
     int? id,
     DateTime? createdAt,
@@ -82,7 +96,14 @@ class Garage extends BaseModel {
       provinceId: json['provinceId'],
       districtId: json['districtId'],
       wardId: json['wardId'],
-      garageRatings: json['garageRatings'],
+      //Relationship:
+      userPartners: User.fromJsonToList(json['userPartners']),
+      garageImages: GarageImage.fromJsonToList(json['garageImages']),
+      ratingGarages: RatingGarage.fromJsonToList(json['ratingGarages']),
+      provinces: Province.fromJsonToList(json['provinces']),
+      districts: District.fromJsonToList(json['districts']),
+      wards: Ward.fromJsonToList(json['wards']),
+      //
       name: json['name'],
       phone: json['phone'],
       ratingAvg: json['ratingAvg'],
@@ -104,13 +125,20 @@ class Garage extends BaseModel {
   }
 
   //
+  static List<Garage> fromJsonToList(dynamic json) {
+    return json
+        .map<Garage>((element) => Garage.fromJson(element))
+        .toList();
+  }
+
+  //
   String toJson() {
     return json.encode({
       'partnerId': userPartnerId,
       'provinceId': provinceId,
       'districtId': districtId,
       'wardId': wardId,
-      'garageRatings': garageRatings,
+      'garageRatings': ratingGarages,
       'name': name,
       'phone': phone,
       'ratingAvg': ratingAvg,
@@ -150,7 +178,7 @@ final List<Garage> demoGarages = [
 Garage getTmpGarage() {
   return Garage(
     id: Random().nextInt(1000),
-    images: [
+    garageImages: [
       GarageImage(imageUrl: "https://picsum.photos/500/400?random=" + Random().nextInt(99).toString()),
       GarageImage(imageUrl: "https://picsum.photos/500/400?random=" + Random().nextInt(99).toString()),
       GarageImage(imageUrl: "https://picsum.photos/500/400?random=" + Random().nextInt(99).toString()),
@@ -165,7 +193,7 @@ Garage getTmpGarage() {
     address: "Thanh Xuan, Ha Noi",
     description: description,
     ratingAvg: 4.8,
-    garageRatings: [
+    ratingGarages: [
       RatingGarage(
           id: Random().nextInt(1000),
           garageID: 1,

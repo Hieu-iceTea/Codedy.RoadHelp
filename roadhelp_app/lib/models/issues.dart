@@ -1,5 +1,8 @@
 import 'dart:convert';
 
+import 'package:roadhelp/models/rating_issues.dart';
+import 'package:roadhelp/models/user.dart';
+
 import '/config/enums.dart';
 import 'base_model.dart';
 
@@ -17,6 +20,11 @@ class Issues extends BaseModel {
   String? description;
   IssueStatus? status;
 
+  //Relationship
+  User? userMember;
+  User? userPartner;
+  RatingIssues? ratingIssue;
+
   Issues({
     this.userMemberId,
     this.userPartnerId,
@@ -27,6 +35,11 @@ class Issues extends BaseModel {
     this.category,
     this.description,
     this.status,
+    //Relationship
+    this.userMember,
+    this.userPartner,
+    this.ratingIssue,
+    //
     int? id,
     DateTime? createdAt,
     String? createdBy,
@@ -56,6 +69,10 @@ class Issues extends BaseModel {
       category: json['category'],
       description: json['description'],
       status: json['status'],
+      //Relationship
+      userMember: User.fromJson(json['userMember']),
+      userPartner: User.fromJson(json['userPartner']),
+      ratingIssue: RatingIssues.fromJson(json['ratingIssue']),
       //
       id: json['id'],
       //createdAt: json['createdAt'],
@@ -65,6 +82,11 @@ class Issues extends BaseModel {
       version: json['version'],
       deleted: json['deleted'],
     );
+  }
+
+  //
+  static List<Issues> fromJsonToList(dynamic json) {
+    return json.map<Issues>((element) => Issues.fromJson(element)).toList();
   }
 
   //

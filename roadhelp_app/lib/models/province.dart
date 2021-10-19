@@ -43,6 +43,13 @@ class Province extends BaseModel {
   }
 
   //
+  static List<Province> fromJsonToList(dynamic json) {
+    return json
+        .map<Province>((element) => Province.fromJson(element))
+        .toList();
+  }
+
+  //
   String toJson() {
     return json.encode({
       'name': name,
