@@ -11,9 +11,6 @@ import java.util.List;
 
 @Entity
 @Table(name = "users")
-@JsonIdentityInfo(
-        generator = ObjectIdGenerators.PropertyGenerator.class,
-        property = "id")
 public class User extends BaseModel implements Serializable {
 
     //region - Define Fields -
@@ -49,7 +46,6 @@ public class User extends BaseModel implements Serializable {
     //region - Relationship -
     @OneToMany(mappedBy = "partner", cascade = {CascadeType.PERSIST, CascadeType.MERGE,
             CascadeType.DETACH, CascadeType.REFRESH})
-    @JsonBackReference(value = "garages")
     private List<Garage> garages;
 
     @OneToMany(mappedBy = "partners")
@@ -62,7 +58,6 @@ public class User extends BaseModel implements Serializable {
 
 
     @OneToMany(mappedBy = "users")
-    @JsonBackReference(value = "ratingGarages")
     private List<RatingGarage> ratingGarages;
 
     @OneToMany(mappedBy = "users")
@@ -70,7 +65,6 @@ public class User extends BaseModel implements Serializable {
     private List<RatingIssues> ratingIssues;
 
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
-    @JsonBackReference(value = "authorities")
     private List<Authority> authorities;
     //endregion
 

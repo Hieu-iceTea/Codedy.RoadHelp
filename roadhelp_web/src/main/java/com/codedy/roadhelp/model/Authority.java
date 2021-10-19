@@ -1,25 +1,21 @@
 package com.codedy.roadhelp.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import org.hibernate.loader.custom.CustomLoader;
 
 import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
 @Table(name = "authorities")
-@JsonIdentityInfo(
-        generator = ObjectIdGenerators.PropertyGenerator.class,
-        property = "id")
+
 public class Authority extends BaseModel implements Serializable {
 //
 //    @Column(name = "username")
 //    private String username;
 
     private String authority;
-
 
     public User getUser() {
         return user;
@@ -42,7 +38,6 @@ public class Authority extends BaseModel implements Serializable {
     public void setAuthority(String authority) {
         this.authority = authority;
     }
-
 
 
     @Override

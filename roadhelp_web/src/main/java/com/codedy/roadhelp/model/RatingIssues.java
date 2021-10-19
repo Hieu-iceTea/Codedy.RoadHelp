@@ -11,9 +11,6 @@ import java.io.Serializable;
 
 @Entity
 @Table(name = "ratingissues")
-@JsonIdentityInfo(
-        generator = ObjectIdGenerators.PropertyGenerator.class,
-        property = "id")
 public class RatingIssues extends BaseModel implements Serializable {
 
     //region - Define Fields -

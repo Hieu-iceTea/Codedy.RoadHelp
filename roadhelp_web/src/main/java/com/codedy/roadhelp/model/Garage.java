@@ -36,8 +36,6 @@ public class Garage extends BaseModel implements Serializable {
     private Boolean isFeatured;
 //endregion
 
-
-
     //region - Relationship -
     @ManyToOne
     @JoinColumn(name = "partner_id") //updatable = false, insertable = false
@@ -50,7 +48,6 @@ public class Garage extends BaseModel implements Serializable {
 
     @OneToMany(mappedBy = "garage", cascade = {CascadeType.PERSIST, CascadeType.MERGE,
             CascadeType.DETACH, CascadeType.REFRESH})
-    @JsonBackReference(value = "garageImages")
     private List<GarageImage> garageImages;
 
     @ManyToOne
