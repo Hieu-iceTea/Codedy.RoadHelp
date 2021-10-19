@@ -39,12 +39,4 @@ public class Authority extends BaseModel implements Serializable {
         this.authority = authority;
     }
 
-
-    @Override
-    public String toString() {
-        return "Authority{" +
-                ", authority='" + authority + '\'' +
-                ", user=" + user +
-                '}';
-    }
 }

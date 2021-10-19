@@ -36,11 +36,4 @@ public class GarageImage extends BaseModel implements Serializable {
         this.garage = garage;
     }
 
-    @Override
-    public String toString() {
-        return "garageImage{" +
-                "image='" + image + '\'' +
-                ", garage=" + garage +
-                '}';
-    }
 }

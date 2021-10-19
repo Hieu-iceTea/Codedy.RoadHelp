@@ -1,9 +1,5 @@
 package com.codedy.roadhelp.model;
 
-import com.fasterxml.jackson.annotation.*;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -25,20 +21,20 @@ public class RatingIssues extends BaseModel implements Serializable {
     //region - Relationship -
     @ManyToOne
     @JoinColumn(name = "user_member_id")
-    private User users;
+    private User userMember;
 
     @OneToOne
     @JoinColumn(name="issue_id")
-    private Issues issues;
+    private Issue issue;
     //endregion
 
     //region - Getter & Setter -
-    public Issues getIssues() {
-        return issues;
+    public Issue getIssues() {
+        return issue;
     }
 
-    public void setIssues(Issues issues) {
-        this.issues = issues;
+    public void setIssues(Issue issue) {
+        this.issue = issue;
     }
     public int getRatePoint() {
         return ratePoint;
@@ -57,21 +53,13 @@ public class RatingIssues extends BaseModel implements Serializable {
     }
 
     public User getUsers() {
-        return users;
+        return userMember;
     }
 
     public void setUsers(User users) {
-        this.users = users;
+        this.userMember = users;
     }
 
-    @Override
-    public String toString() {
-        return "RatingPartner{" +
-                "ratePoint=" + ratePoint +
-                ", comment='" + comment + '\'' +
-                ", users=" + users +
-                '}';
-    }
     //endregion
 
 }

@@ -10,7 +10,7 @@ import java.io.Serializable;
 
 @Entity
 @Table(name = "issue")
-public class Issues extends BaseModel implements Serializable {
+public class Issue extends BaseModel implements Serializable {
 
     //region - Define Fields -
 
@@ -20,6 +20,7 @@ public class Issues extends BaseModel implements Serializable {
 
     @Size(min = 10)
     private String phone;
+
     @Size(max = 128)
     private String address;
 
@@ -28,6 +29,24 @@ public class Issues extends BaseModel implements Serializable {
 
     private IssueStatus status;
 
+    private IssueCategory category;
+
+//endregion
+
+    //region - Relationship -
+    @ManyToOne
+    @JoinColumn(name = "user_member_id")
+    private User userMembers;
+
+    @ManyToOne
+    @JoinColumn(name = "user_partner_id")
+    private User userPartners;
+
+    @OneToOne(mappedBy="issue")
+    private RatingIssues ratingIssues;
+//endregion
+
+    //region - Getter & Setter -
     public IssueCategory getCategory() {
         return category;
     }
@@ -36,41 +55,29 @@ public class Issues extends BaseModel implements Serializable {
         this.category = category;
     }
 
-    public User getMembers() {
-        return members;
+    public User getUserMembers() {
+        return userMembers;
     }
 
-    public void setMembers(User members) {
-        this.members = members;
+    public void setUserMembers(User userMembers) {
+        this.userMembers = userMembers;
     }
 
-    public User getPartners() {
-        return partners;
+    public User getUserPartners() {
+        return userPartners;
     }
 
-    public void setPartners(User partners) {
-        this.partners = partners;
+    public void setUserPartners(User userPartners) {
+        this.userPartners = userPartners;
     }
 
-    private IssueCategory category;
+    public RatingIssues getRatingIssues() {
+        return ratingIssues;
+    }
 
-//endregion
-
-    //region - Relationship -
-    @ManyToOne
-    @JoinColumn(name = "user_member_id")
-    private User members;
-
-    @ManyToOne
-    @JoinColumn(name = "user_partner_id")
-    private User partners;
-
-
-    @OneToOne(mappedBy="issues")
-    private RatingIssues ratingIssues;
-//endregion
-
-    //region - Getter & Setter -
+    public void setRatingIssues(RatingIssues ratingIssues) {
+        this.ratingIssues = ratingIssues;
+    }
 
     public RatingIssues getRatingPartner() {
         return ratingIssues;
@@ -127,22 +134,6 @@ public class Issues extends BaseModel implements Serializable {
     public void setDescription(String description) {
         this.description = description;
     }
-
-    @Override
-    public String toString() {
-        return "IssuesDetail{" +
-                "longitude=" + longitude +
-                ", latitude=" + latitude +
-                ", phone='" + phone + '\'' +
-                ", address='" + address + '\'' +
-                ", description='" + description + '\'' +
-                ", status=" + status +
-                ", category=" + category +
-                ", members=" + members +
-                ", partners=" + partners +
-                '}';
-    }
-
 
 //endregion
 

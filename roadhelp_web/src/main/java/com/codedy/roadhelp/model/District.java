@@ -76,13 +76,5 @@ public class District extends BaseModel implements Serializable {
     }
 
 
-
-    @Override
-    public String toString() {
-        return "District{" +
-                "name='" + name + '\'' +
-                ", prefix='" + prefix + '\'' +
-                '}';
-    }
     //endregion
 }

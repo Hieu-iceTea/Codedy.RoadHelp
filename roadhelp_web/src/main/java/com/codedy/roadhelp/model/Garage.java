@@ -137,7 +137,6 @@ public class Garage extends BaseModel implements Serializable {
         this.phone = phone;
     }
 
-
     public double getLongitude() {
         return longitude;
     }
@@ -186,20 +185,6 @@ public class Garage extends BaseModel implements Serializable {
         this.name = name;
     }
 
-    @Override
-    public String toString() {
-        return "Garage{" +
-                "name='" + name + '\'' +
-                ", rate='" + rateAvg + '\'' +
-                ", address='" + address + '\'' +
-                ", phone='" + phone + '\'' +
-                ", longitude='" + longitude + '\'' +
-                ", latitude='" + latitude + '\'' +
-                ", description='" + description + '\'' +
-                ", active=" + active +
-                ", ratingGarages=" + ratingGarages +
-                '}';
-    }
     //endregion
 
 }
