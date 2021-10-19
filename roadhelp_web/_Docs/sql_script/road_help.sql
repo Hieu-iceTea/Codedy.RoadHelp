@@ -123,7 +123,7 @@ CREATE TABLE IF NOT EXISTS `ratingGarage`
 (
     `id`                  INT AUTO_INCREMENT,
     `garage_id`                  INT NOT NULL,
-    `user_id`                  INT NOT NULL,
+    `user_member_id`                  INT NOT NULL,
 
     `rate_point`                  INT NOT NULL,
     `comment`            VARCHAR(256)         NULL,
@@ -272,34 +272,34 @@ VALUE (12,12,12,12, 12,'Staff_C', 5.0,3453, 3453, 'CODEDY', 'Staff C', '0868 663
 #endregion
 
 #region Insert garage image
-INSERT INTO garageimage (id, garage_id,image) 
+INSERT INTO garageimage (id, garage_id,image)
 VALUE (1, 1, 'tiem1.jpg');
 
-INSERT INTO garageimage (id, garage_id,image) 
+INSERT INTO garageimage (id, garage_id,image)
 VALUE (2, 2, 'tiem2.jpg');
 
-INSERT INTO garageimage (id, garage_id,image) 
+INSERT INTO garageimage (id, garage_id,image)
 VALUE (3, 3, 'tiem3.jpg');
 
-INSERT INTO garageimage (id, garage_id,image) 
+INSERT INTO garageimage (id, garage_id,image)
 VALUE (4, 4, 'tiem4.jpg');
 
-INSERT INTO garageimage (id, garage_id,image) 
+INSERT INTO garageimage (id, garage_id,image)
 VALUE (5, 5, 'tiem5.jpg');
 
-INSERT INTO garageimage (id, garage_id,image) 
+INSERT INTO garageimage (id, garage_id,image)
 VALUE (6, 6, 'tiem6.jpg');
 
-INSERT INTO garageimage (id, garage_id,image) 
+INSERT INTO garageimage (id, garage_id,image)
 VALUE (7, 7, 'tiem7.jpg');
 
-INSERT INTO garageimage (id, garage_id,image) 
+INSERT INTO garageimage (id, garage_id,image)
 VALUE (8, 8, 'tiem8.jpg');
 
-INSERT INTO garageimage (id, garage_id,image) 
+INSERT INTO garageimage (id, garage_id,image)
 VALUE (9, 9, 'tiem9.jpg');
 
-INSERT INTO garageimage (id, garage_id,image) 
+INSERT INTO garageimage (id, garage_id,image)
 VALUE (10, 10, 'tiem10.jpg');
 
 
@@ -307,40 +307,40 @@ VALUE (10, 10, 'tiem10.jpg');
 #endregion
 
 # #region Insert issue
-INSERT INTO issue(id, user_member_id,user_partner_id, longitude, latitude,category, phone,address,description, status) 
+INSERT INTO issue(id, user_member_id,user_partner_id, longitude, latitude,category, phone,address,description, status)
 VALUE (1, 1, 1, '333', '333','1',  '123456789',  'HN','', '1');
 
-INSERT INTO issue(id, user_member_id,user_partner_id, longitude, latitude,category, phone,address,description, status) 
+INSERT INTO issue(id, user_member_id,user_partner_id, longitude, latitude,category, phone,address,description, status)
 VALUE (2, 2, 2, '5555', '5555','1',  '123456789',  'HN','', '1');
 
-INSERT INTO issue(id, user_member_id,user_partner_id, longitude, latitude,category, phone,address,description, status) 
+INSERT INTO issue(id, user_member_id,user_partner_id, longitude, latitude,category, phone,address,description, status)
 VALUE (3, 3, 3, '6665', '6665','2',  '123456789',  'HN','', '1');
 
-INSERT INTO issue(id, user_member_id,user_partner_id, longitude, latitude,category, phone,address,description, status) 
+INSERT INTO issue(id, user_member_id,user_partner_id, longitude, latitude,category, phone,address,description, status)
 VALUE (4, 4, 4, '775', '775','1',  '123456789',  'HN','', '1');
 
-INSERT INTO issue(id, user_member_id,user_partner_id, longitude, latitude,category, phone,address,description, status) 
+INSERT INTO issue(id, user_member_id,user_partner_id, longitude, latitude,category, phone,address,description, status)
 VALUE (5, 5, 5, '88', '333','1',  '123456789',  'HN','', '1');
 
-INSERT INTO issue(id, user_member_id,user_partner_id, longitude, latitude,category, phone,address,description, status) 
+INSERT INTO issue(id, user_member_id,user_partner_id, longitude, latitude,category, phone,address,description, status)
 VALUE (6, 6, 6, '333', '5555','2',  '123456789',  'HN','', '1');
 
-INSERT INTO issue(id, user_member_id,user_partner_id, longitude, latitude,category, phone,address,description, status) 
+INSERT INTO issue(id, user_member_id,user_partner_id, longitude, latitude,category, phone,address,description, status)
 VALUE (7, 7, 7, '5555', '6665','1',  '123456789',  'HN','', '1');
 
-INSERT INTO issue(id, user_member_id,user_partner_id, longitude, latitude,category, phone,address,description, status) 
+INSERT INTO issue(id, user_member_id,user_partner_id, longitude, latitude,category, phone,address,description, status)
 VALUE (8, 8, 8, '6665', '775','1',  '123456789',  'HN','', '1');
 
-INSERT INTO issue(id, user_member_id,user_partner_id, longitude, latitude,category, phone,address,description, status) 
+INSERT INTO issue(id, user_member_id,user_partner_id, longitude, latitude,category, phone,address,description, status)
 VALUE (9, 9, 9, '775', '333','2',  '123456789',  'HN','', '1');
 
-INSERT INTO issue(id, user_member_id,user_partner_id, longitude, latitude,category, phone,address,description, status) 
+INSERT INTO issue(id, user_member_id,user_partner_id, longitude, latitude,category, phone,address,description, status)
 VALUE (10, 10, 10, '88', '5555','1',  '123456789',  'HN','', '1');
 
-INSERT INTO issue(id, user_member_id,user_partner_id, longitude, latitude,category, phone,address,description, status) 
+INSERT INTO issue(id, user_member_id,user_partner_id, longitude, latitude,category, phone,address,description, status)
 VALUE (11, 11, 11, '775', '6665','1',  '123456789',  'HN','', '1');
 
-INSERT INTO issue(id, user_member_id,user_partner_id, longitude, latitude,category, phone,address,description, status) 
+INSERT INTO issue(id, user_member_id,user_partner_id, longitude, latitude,category, phone,address,description, status)
 VALUE (12, 12, 12, '88', '775','2',  '123456789',  'HN','', '1');
 
 
@@ -348,40 +348,40 @@ VALUE (12, 12, 12, '88', '775','2',  '123456789',  'HN','', '1');
 
 
 #region Insert ratingGarage
-INSERT INTO ratingGarage (id, user_id, garage_id, rate_point, comment) 
+INSERT INTO ratingGarage (id, user_member_id, garage_id, rate_point, comment)
 VALUE (1, 1, 1, 3, 'Very good.');
 
-INSERT INTO ratingGarage (id, user_id, garage_id, rate_point, comment) 
+INSERT INTO ratingGarage (id, user_member_id, garage_id, rate_point, comment)
 VALUE (2, 2, 2, 5, 'Good ');
 
-INSERT INTO ratingGarage (id, user_id, garage_id, rate_point, comment) 
+INSERT INTO ratingGarage (id, user_member_id, garage_id, rate_point, comment)
 VALUE (3, 3, 3, 5, 'Very good.');
 
-INSERT INTO ratingGarage (id, user_id, garage_id, rate_point, comment) 
+INSERT INTO ratingGarage (id, user_member_id, garage_id, rate_point, comment)
 VALUE (4, 4, 4, 5, 'Very good.');
 
-INSERT INTO ratingGarage (id, user_id, garage_id, rate_point, comment) 
+INSERT INTO ratingGarage (id, user_member_id, garage_id, rate_point, comment)
 VALUE (5, 5, 5, 5, 'Good ');
 
-INSERT INTO ratingGarage (id, user_id, garage_id, rate_point, comment) 
+INSERT INTO ratingGarage (id, user_member_id, garage_id, rate_point, comment)
 VALUE (6, 6, 6, 4, 'Very good.');
 
-INSERT INTO ratingGarage (id, user_id, garage_id, rate_point, comment) 
+INSERT INTO ratingGarage (id, user_member_id, garage_id, rate_point, comment)
 VALUE (7, 7, 7, 4, 'Very good.');
 
-INSERT INTO ratingGarage (id, user_id, garage_id, rate_point, comment) 
+INSERT INTO ratingGarage (id, user_member_id, garage_id, rate_point, comment)
 VALUE (8, 8, 8, 4, 'Very good.');
 
-INSERT INTO ratingGarage (id, user_id, garage_id, rate_point, comment) 
+INSERT INTO ratingGarage (id, user_member_id, garage_id, rate_point, comment)
 VALUE (9, 9, 9, 4, 'very good.');
 
-INSERT INTO ratingGarage (id, user_id, garage_id, rate_point, comment) 
+INSERT INTO ratingGarage (id, user_member_id, garage_id, rate_point, comment)
 VALUE (10, 10, 10, 4, 'Good ');
 
-INSERT INTO ratingGarage (id, user_id, garage_id, rate_point, comment) 
+INSERT INTO ratingGarage (id, user_member_id, garage_id, rate_point, comment)
 VALUE (11, 11, 11, 4, 'Good ');
 
-INSERT INTO ratingGarage (id, user_id, garage_id, rate_point, comment) 
+INSERT INTO ratingGarage (id, user_member_id, garage_id, rate_point, comment)
 VALUE (12, 12, 12, 5, 'Good ');
 
 #endregion

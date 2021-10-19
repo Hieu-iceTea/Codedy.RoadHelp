@@ -14,11 +14,14 @@ import java.util.List;
         generator = ObjectIdGenerators.PropertyGenerator.class,
         property = "id")
 public class District extends BaseModel implements Serializable {
+
+    //region - Define Fields -
     @Column(name = "_name")
     private String name;
 
     @Column(name = "_prefix")
     private String prefix;
+    //endregion
 
 
     //region - Relationship -
@@ -36,7 +39,24 @@ public class District extends BaseModel implements Serializable {
     @JsonBackReference(value = "garages")
     private List<Garage> garages;
     //endregion
+
+
     //region - Getter & Setter -
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getPrefix() {
+        return prefix;
+    }
+
+    public void setPrefix(String prefix) {
+        this.prefix = prefix;
+    }
 
     public Province getProvince() {
         return province;
@@ -61,23 +81,7 @@ public class District extends BaseModel implements Serializable {
     public void setGarages(List<Garage> garages) {
         this.garages = garages;
     }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getPrefix() {
-        return prefix;
-    }
-
-    public void setPrefix(String prefix) {
-        this.prefix = prefix;
-    }
-
+    //endregion
 
 
     @Override
@@ -85,7 +89,10 @@ public class District extends BaseModel implements Serializable {
         return "District{" +
                 "name='" + name + '\'' +
                 ", prefix='" + prefix + '\'' +
+                ", province=" + province +
+                ", wards=" + wards +
+                ", garages=" + garages +
                 '}';
     }
-    //endregion
+
 }

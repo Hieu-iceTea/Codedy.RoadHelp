@@ -1,5 +1,6 @@
 package com.codedy.roadhelp.model;
 
+import com.codedy.roadhelp.model.enums.UserGender;
 import com.fasterxml.jackson.annotation.*;
 
 import javax.persistence.*;
@@ -26,12 +27,11 @@ public class User extends BaseModel implements Serializable {
     @Size(max = 128)
     private String email;
 
+    @Size(min = 10)
+    private String phone;
+
     @Size(min = 8)
     private String password;
-    @Size(max = 128)
-    private String image;
-
-    private int gender;
 
     @Size(min = 2, max = 64)
     private String firstName;
@@ -39,83 +39,45 @@ public class User extends BaseModel implements Serializable {
     @Size(min = 2, max = 64)
     private String lastName;
 
-    @Size(min = 10)
-    private String phone;
+    @Size(max = 128)
+    private String image;
+
+    private UserGender gender;
 
     @NotNull
     private Boolean active;
     //endregion
 
+
     //region - Relationship -
-    @OneToMany(mappedBy = "partner", cascade = {CascadeType.PERSIST, CascadeType.MERGE,
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
+    @JsonBackReference(value = "authorities")
+    private List<Authority> authorities;
+
+    @OneToMany(mappedBy = "userPartner")
+    @JsonBackReference(value = "issuesPartnerDetails")
+    private List<Issues> issuesPartnerDetails;
+
+    @OneToMany(mappedBy = "userMember")
+    @JsonBackReference(value = "issuesMemberDetails")
+    private List<Issues> issuesMemberDetails;
+
+    @OneToMany(mappedBy = "userPartner", cascade = {CascadeType.PERSIST, CascadeType.MERGE,
             CascadeType.DETACH, CascadeType.REFRESH})
     @JsonBackReference(value = "garages")
     private List<Garage> garages;
 
-    @OneToMany(mappedBy = "partners")
-    @JsonBackReference(value = "issuesPartnerDetails")
-    private List<Issues> issuesPartnerDetails;
-
-    @OneToMany(mappedBy = "members")
-    @JsonBackReference(value = "issuesMemberDetails")
-    private List<Issues> issuesMemberDetails;
-
-
-    @OneToMany(mappedBy = "users")
+    @OneToMany(mappedBy = "userMember")
     @JsonBackReference(value = "ratingGarages")
     private List<RatingGarage> ratingGarages;
 
-    @OneToMany(mappedBy = "users")
+    @OneToMany(mappedBy = "userMember")
     @JsonBackReference(value = "ratingIssues")
     private List<RatingIssues> ratingIssues;
-
-    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
-    @JsonBackReference(value = "authorities")
-    private List<Authority> authorities;
     //endregion
 
+
     //region - Getter & Setter -
-
-    public List<Garage> getGarages() {
-        return garages;
-    }
-
-    public void setGarages(List<Garage> garages) {
-        this.garages = garages;
-    }
-
-    public List<RatingIssues> getRatingIssues() {
-        return ratingIssues;
-    }
-
-    public void setRatingIssues(List<RatingIssues> ratingIssues) {
-        this.ratingIssues = ratingIssues;
-    }
-
-    public List<Issues> getIssuesPartnerDetails() {
-        return issuesPartnerDetails;
-    }
-
-    public void setIssuesPartnerDetails(List<Issues> issuesPartnerDetails) {
-        this.issuesPartnerDetails = issuesPartnerDetails;
-    }
-
-    public List<Issues> getIssuesMemberDetails() {
-        return issuesMemberDetails;
-    }
-
-    public void setIssuesMemberDetails(List<Issues> issuesMemberDetails) {
-        this.issuesMemberDetails = issuesMemberDetails;
-    }
-
-    public List<RatingIssues> getRatingPartners() {
-        return ratingIssues;
-    }
-
-    public void setRatingPartners(List<RatingIssues> ratingIssues) {
-        this.ratingIssues = ratingIssues;
-    }
-
     public String getUsername() {
         return username;
     }
@@ -132,28 +94,20 @@ public class User extends BaseModel implements Serializable {
         this.email = email;
     }
 
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
     public String getPassword() {
         return password;
     }
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public String getImage() {
-        return image;
-    }
-
-    public void setImage(String image) {
-        this.image = image;
-    }
-
-    public int getGender() {
-        return gender;
-    }
-
-    public void setGender(int gender) {
-        this.gender = gender;
     }
 
     public String getFirstName() {
@@ -172,12 +126,20 @@ public class User extends BaseModel implements Serializable {
         this.lastName = lastName;
     }
 
-    public String getPhone() {
-        return phone;
+    public String getImage() {
+        return image;
     }
 
-    public void setPhone(String phone) {
-        this.phone = phone;
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    public UserGender getGender() {
+        return gender;
+    }
+
+    public void setGender(UserGender gender) {
+        this.gender = gender;
     }
 
     public Boolean getActive() {
@@ -188,14 +150,6 @@ public class User extends BaseModel implements Serializable {
         this.active = active;
     }
 
-
-    public List<RatingGarage> getRatingGarages() {
-        return ratingGarages;
-    }
-
-    public void setRatingGarages(List<RatingGarage> ratingGarages) {
-        this.ratingGarages = ratingGarages;
-    }
     public List<Authority> getAuthorities() {
         return authorities;
     }
@@ -204,22 +158,67 @@ public class User extends BaseModel implements Serializable {
         this.authorities = authorities;
     }
 
+    public List<Issues> getIssuesPartnerDetails() {
+        return issuesPartnerDetails;
+    }
+
+    public void setIssuesPartnerDetails(List<Issues> issuesPartnerDetails) {
+        this.issuesPartnerDetails = issuesPartnerDetails;
+    }
+
+    public List<Issues> getIssuesMemberDetails() {
+        return issuesMemberDetails;
+    }
+
+    public void setIssuesMemberDetails(List<Issues> issuesMemberDetails) {
+        this.issuesMemberDetails = issuesMemberDetails;
+    }
+
+    public List<Garage> getGarages() {
+        return garages;
+    }
+
+    public void setGarages(List<Garage> garages) {
+        this.garages = garages;
+    }
+
+    public List<RatingGarage> getRatingGarages() {
+        return ratingGarages;
+    }
+
+    public void setRatingGarages(List<RatingGarage> ratingGarages) {
+        this.ratingGarages = ratingGarages;
+    }
+
+    public List<RatingIssues> getRatingIssues() {
+        return ratingIssues;
+    }
+
+    public void setRatingIssues(List<RatingIssues> ratingIssues) {
+        this.ratingIssues = ratingIssues;
+    }
+    //endregion
+
 
     @Override
     public String toString() {
         return "User{" +
                 "username='" + username + '\'' +
                 ", email='" + email + '\'' +
+                ", phone='" + phone + '\'' +
                 ", password='" + password + '\'' +
-                ", image='" + image + '\'' +
-                ", gender=" + gender +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
-                ", phone='" + phone + '\'' +
+                ", image='" + image + '\'' +
+                ", gender=" + gender +
                 ", active=" + active +
+                ", authorities=" + authorities +
+                ", issuesPartnerDetails=" + issuesPartnerDetails +
+                ", issuesMemberDetails=" + issuesMemberDetails +
+                ", garages=" + garages +
                 ", ratingGarages=" + ratingGarages +
-                ", ratingPartners=" + ratingIssues +
+                ", ratingIssues=" + ratingIssues +
                 '}';
     }
-    //endregion
+
 }

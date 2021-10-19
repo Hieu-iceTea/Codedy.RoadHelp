@@ -14,27 +14,20 @@ import java.io.Serializable;
         generator = ObjectIdGenerators.PropertyGenerator.class,
         property = "id")
 public class Authority extends BaseModel implements Serializable {
-//
-//    @Column(name = "username")
-//    private String username;
 
+    //region - Define Fields -
     private String authority;
+    //endregion
 
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
 
     //region - Relationship -
     @ManyToOne
-    @JoinColumn(name = "username",referencedColumnName = "username")
+    @JoinColumn(name = "username", referencedColumnName = "username")
     private User user;
     //endregion
 
+
+    //region - Getter & Setter -
     public String getAuthority() {
         return authority;
     }
@@ -43,13 +36,22 @@ public class Authority extends BaseModel implements Serializable {
         this.authority = authority;
     }
 
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+    //endregion
 
 
     @Override
     public String toString() {
         return "Authority{" +
-                ", authority='" + authority + '\'' +
+                "authority='" + authority + '\'' +
                 ", user=" + user +
                 '}';
     }
+
 }

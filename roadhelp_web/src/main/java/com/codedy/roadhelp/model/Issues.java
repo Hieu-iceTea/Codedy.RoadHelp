@@ -16,79 +16,54 @@ import java.io.Serializable;
 public class Issues extends BaseModel implements Serializable {
 
     //region - Define Fields -
+    @Size(max = 128)
+    private String address;
+
+    @Size(min = 10)
+    private String phone;
 
     private double longitude;
 
     private double latitude;
 
-    @Size(min = 10)
-    private String phone;
-    @Size(max = 128)
-    private String address;
+    private IssueCategory category;
 
     @Size(max = 500)
     private String description;
 
     private IssueStatus status;
+    //endregion
 
-    public IssueCategory getCategory() {
-        return category;
-    }
-
-    public void setCategory(IssueCategory category) {
-        this.category = category;
-    }
-
-    public User getMembers() {
-        return members;
-    }
-
-    public void setMembers(User members) {
-        this.members = members;
-    }
-
-    public User getPartners() {
-        return partners;
-    }
-
-    public void setPartners(User partners) {
-        this.partners = partners;
-    }
-
-    private IssueCategory category;
-
-//endregion
 
     //region - Relationship -
     @ManyToOne
     @JoinColumn(name = "user_member_id")
-    private User members;
+    private User userMember;
 
     @ManyToOne
     @JoinColumn(name = "user_partner_id")
-    private User partners;
+    private User userPartner;
 
-
-    @OneToOne(mappedBy="issues")
+    @OneToOne(mappedBy = "issues")
     private RatingIssues ratingIssues;
-//endregion
+    //endregion
+
 
     //region - Getter & Setter -
-
-    public RatingIssues getRatingPartner() {
-        return ratingIssues;
+    public String getAddress() {
+        return address;
     }
 
-    public void setRatingPartner(RatingIssues ratingIssues) {
-        this.ratingIssues = ratingIssues;
+    public void setAddress(String address) {
+        this.address = address;
     }
 
-    public IssueStatus getStatus() {
-        return status;
+    public String getPhone() {
+        return phone;
     }
 
-    public void setStatus(IssueStatus status) {
-        this.status = status;
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
     public double getLongitude() {
@@ -107,20 +82,12 @@ public class Issues extends BaseModel implements Serializable {
         this.latitude = latitude;
     }
 
-    public String getPhone() {
-        return phone;
+    public IssueCategory getCategory() {
+        return category;
     }
 
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
+    public void setCategory(IssueCategory category) {
+        this.category = category;
     }
 
     public String getDescription() {
@@ -131,22 +98,54 @@ public class Issues extends BaseModel implements Serializable {
         this.description = description;
     }
 
-    @Override
-    public String toString() {
-        return "IssuesDetail{" +
-                "longitude=" + longitude +
-                ", latitude=" + latitude +
-                ", phone='" + phone + '\'' +
-                ", address='" + address + '\'' +
-                ", description='" + description + '\'' +
-                ", status=" + status +
-                ", category=" + category +
-                ", members=" + members +
-                ", partners=" + partners +
-                '}';
+    public IssueStatus getStatus() {
+        return status;
     }
 
+    public void setStatus(IssueStatus status) {
+        this.status = status;
+    }
 
-//endregion
+    public User getUserMember() {
+        return userMember;
+    }
+
+    public void setUserMember(User userMember) {
+        this.userMember = userMember;
+    }
+
+    public User getUserPartner() {
+        return userPartner;
+    }
+
+    public void setUserPartner(User userPartner) {
+        this.userPartner = userPartner;
+    }
+
+    public RatingIssues getRatingIssues() {
+        return ratingIssues;
+    }
+
+    public void setRatingIssues(RatingIssues ratingIssues) {
+        this.ratingIssues = ratingIssues;
+    }
+    //endregion
+
+
+    @Override
+    public String toString() {
+        return "Issues{" +
+                "address='" + address + '\'' +
+                ", phone='" + phone + '\'' +
+                ", longitude=" + longitude +
+                ", latitude=" + latitude +
+                ", category=" + category +
+                ", description='" + description + '\'' +
+                ", status=" + status +
+                ", userMember=" + userMember +
+                ", userPartner=" + userPartner +
+                ", ratingIssues=" + ratingIssues +
+                '}';
+    }
 
 }

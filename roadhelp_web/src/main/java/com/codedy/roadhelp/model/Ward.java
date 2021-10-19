@@ -14,19 +14,15 @@ import java.util.List;
         generator = ObjectIdGenerators.PropertyGenerator.class,
         property = "id")
 public class Ward extends BaseModel implements Serializable {
+
     //region - Define Fields -
     @Column(name = "_name")
     private String name;
 
     @Column(name = "_prefix")
     private String prefix;
-
-//    @Column(name = "_province_id")
-//    private int province_id;
-//
-//    @Column(name = "_district_id")
-//    private int district_id;
     //endregion
+
 
     //region - Relationship -
     @ManyToOne
@@ -43,14 +39,22 @@ public class Ward extends BaseModel implements Serializable {
     private List<Garage> garages;
     //endregion
 
-    //region - Getter & Setter -
 
-    public List<Garage> getGarages() {
-        return garages;
+    //region - Getter & Setter -
+    public String getName() {
+        return name;
     }
 
-    public void setGarages(List<Garage> garages) {
-        this.garages = garages;
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getPrefix() {
+        return prefix;
+    }
+
+    public void setPrefix(String prefix) {
+        this.prefix = prefix;
     }
 
     public Province getProvince() {
@@ -69,36 +73,25 @@ public class Ward extends BaseModel implements Serializable {
         this.district = district;
     }
 
-    public String getName() {
-        return name;
+    public List<Garage> getGarages() {
+        return garages;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setGarages(List<Garage> garages) {
+        this.garages = garages;
     }
-
-    public String getPrefix() {
-        return prefix;
-    }
-
-    public void setPrefix(String prefix) {
-        this.prefix = prefix;
-    }
-
-//    public int getProvince_id() {
-//        return province_id;
-//    }
-//
-//    public void setProvince_id(int province_id) {
-//        this.province_id = province_id;
-//    }
-//
-//    public int getDistrict_id() {
-//        return district_id;
-//    }
-//
-//    public void setDistrict_id(int district_id) {
-//        this.district_id = district_id;
-//    }
     //endregion
+
+
+    @Override
+    public String toString() {
+        return "Ward{" +
+                "name='" + name + '\'' +
+                ", prefix='" + prefix + '\'' +
+                ", province=" + province +
+                ", district=" + district +
+                ", garages=" + garages +
+                '}';
+    }
+
 }
