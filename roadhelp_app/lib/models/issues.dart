@@ -3,7 +3,7 @@ import 'dart:convert';
 import '/config/enums.dart';
 import 'base_model.dart';
 
-class Issue extends BaseModel {
+class Issues extends BaseModel {
   //
   int? userMemberId;
   int? userPartnerId;
@@ -17,7 +17,7 @@ class Issue extends BaseModel {
   String? description;
   IssueStatus? status;
 
-  Issue({
+  Issues({
     this.userMemberId,
     this.userPartnerId,
     this.address,
@@ -45,8 +45,8 @@ class Issue extends BaseModel {
         );
 
   //
-  factory Issue.fromJson(Map<String, dynamic> json) {
-    return Issue(
+  factory Issues.fromJson(Map<String, dynamic> json) {
+    return Issues(
       userMemberId: json['userMemberId'],
       userPartnerId: json['userPartnerId'],
       address: json['address'],
