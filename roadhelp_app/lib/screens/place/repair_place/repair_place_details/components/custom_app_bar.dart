@@ -2,13 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:roadhelp/config/constants.dart';
 import 'package:roadhelp/config/size_config.dart';
+import 'package:roadhelp/models/garage.dart';
 import 'package:roadhelp/screens/place/repair_place/repair_place_manage_add_edit/repair_place_manage_add_edit_screen.dart';
 
 class CustomAppBar extends StatelessWidget {
   final double rating;
   final bool isManage;
+  final Garage garage;
 
-  CustomAppBar({required this.rating, this.isManage = false});
+  CustomAppBar(
+      {required this.rating, this.isManage = false, required this.garage});
 
   @override
   // AppBar().preferredSize.height provide us the height that appy on our app bar
@@ -67,7 +70,11 @@ class CustomAppBar extends StatelessWidget {
                 margin: EdgeInsets.only(left: getProportionateScreenWidth(15)),
                 child: IconButton(
                   onPressed: () => Navigator.pushNamed(
-                      context, RepairPlaceManageAddEditScreen.routeName),
+                    context,
+                    RepairPlaceManageAddEditScreen.routeName,
+                    arguments:
+                        RepairPlaceManageAddEditArguments(garage: garage),
+                  ),
                   icon: Icon(Icons.edit),
                   tooltip: "Chỉnh sửa tiệm sửa xe này",
                 ),

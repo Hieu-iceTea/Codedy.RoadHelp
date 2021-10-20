@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:roadhelp/models/garage.dart';
 import 'package:roadhelp/screens/place/repair_place/repair_place/components/location_filter_form.dart';
 
 import '/components/custom_surfix_icon.dart';
@@ -8,16 +9,31 @@ import '/screens/auth/otp/otp_screen.dart';
 import 'location_input.dart';
 
 class RepairPlaceForm extends StatefulWidget {
+  final Garage? garage;
+
+  const RepairPlaceForm({Key? key, this.garage}) : super(key: key);
+
   @override
   _RepairPlaceFormState createState() => _RepairPlaceFormState();
 }
 
 class _RepairPlaceFormState extends State<RepairPlaceForm> {
   final _formKey = GlobalKey<FormState>();
-  final List<String?> errors = [];
   String? name;
   String? phone;
   String? address;
+  String? description;
+
+  @override
+  void initState() {
+    //initial value
+    name = widget.garage?.name;
+    phone = widget.garage?.phone;
+    address = widget.garage?.address;
+    description = widget.garage?.description;
+
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -52,6 +68,7 @@ class _RepairPlaceFormState extends State<RepairPlaceForm> {
 
   TextFormField buildNameFormField() {
     return TextFormField(
+      initialValue: name,
       onSaved: (newValue) => name = newValue,
       validator: (value) {
         if (value!.isEmpty) {
@@ -72,6 +89,7 @@ class _RepairPlaceFormState extends State<RepairPlaceForm> {
 
   TextFormField buildPhoneFormField() {
     return TextFormField(
+      initialValue: phone,
       keyboardType: TextInputType.phone,
       onSaved: (newValue) => phone = newValue,
       validator: (value) {
@@ -93,6 +111,7 @@ class _RepairPlaceFormState extends State<RepairPlaceForm> {
 
   TextFormField buildAddressFormField() {
     return TextFormField(
+      initialValue: address,
       onSaved: (newValue) => address = newValue,
       validator: (value) {
         if (value!.isEmpty) {
@@ -142,10 +161,11 @@ class _RepairPlaceFormState extends State<RepairPlaceForm> {
 
   TextFormField buildDescriptionFormField() {
     return TextFormField(
+      initialValue: description,
       keyboardType: TextInputType.multiline,
       minLines: 2,
       maxLines: 5,
-      onSaved: (newValue) => address = newValue,
+      onSaved: (newValue) => description = newValue,
       validator: (value) {
         if (value!.isEmpty) {
           return "Please Enter description";

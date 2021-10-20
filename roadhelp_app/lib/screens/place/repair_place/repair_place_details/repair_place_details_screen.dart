@@ -23,7 +23,11 @@ class RepairPlaceDetailsScreen extends StatelessWidget {
       backgroundColor: Color(0xFFF5F6F9),
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(AppBar().preferredSize.height),
-        child: CustomAppBar(rating: agrs.garage.ratingAvg!, isManage: agrs.isManage),
+        child: CustomAppBar(
+          rating: agrs.garage.ratingAvg!,
+          isManage: agrs.isManage,
+          garage: agrs.garage,
+        ),
       ),
       body: Body(garage: agrs.garage),
     );

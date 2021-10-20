@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:roadhelp/config/size_config.dart';
+import 'package:roadhelp/models/garage.dart';
 
 import 'components/body.dart';
 
@@ -13,14 +14,26 @@ class RepairPlaceManageAddEditScreen extends StatelessWidget {
     // You have to call it on your starting screen:
     SizeConfig().init(context);
 
+    final RepairPlaceManageAddEditArguments? agrs = ModalRoute.of(context)!
+        .settings
+        .arguments as RepairPlaceManageAddEditArguments?;
+
+    final String modeStr = agrs == null ? "Thêm mới" : "Cập nhật";
+
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          "Thêm mới / Cập nhật tiệm sửa xe",
-          style: TextStyle(color: Colors.black),
+          modeStr + " tiệm sửa xe",
+          style: const TextStyle(color: Colors.black),
         ),
       ),
-      body: Body(),
+      body: Body(garage: agrs?.garage),
     );
   }
+}
+
+class RepairPlaceManageAddEditArguments {
+  final Garage garage;
+
+  RepairPlaceManageAddEditArguments({required this.garage});
 }
