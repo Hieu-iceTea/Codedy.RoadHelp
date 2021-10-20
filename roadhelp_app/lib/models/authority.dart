@@ -1,8 +1,6 @@
 import 'dart:convert';
 
-import 'package:roadhelp/config/enums.dart';
-import 'package:roadhelp/models/user.dart';
-
+import '/models/user.dart';
 import 'base_model.dart';
 
 class Authority extends BaseModel {
@@ -44,7 +42,8 @@ class Authority extends BaseModel {
       username: json['username'],
       authority: json['authority'],
       //Relationship
-      user: User.fromJson(json['user']), //json.decode(json['user'])
+      user: User.fromJson(json['user']),
+      //json.decode(json['user'])
       //
       id: json['id'],
       //createdAt: json['createdAt'],

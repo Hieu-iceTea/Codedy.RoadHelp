@@ -1,9 +1,8 @@
 import 'dart:convert';
 
-import 'package:roadhelp/models/rating_issues.dart';
-import 'package:roadhelp/models/user.dart';
-
 import '/config/enums.dart';
+import '/models/rating_issues.dart';
+import '/models/user.dart';
 import 'base_model.dart';
 
 class Issues extends BaseModel {

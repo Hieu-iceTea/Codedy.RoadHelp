@@ -1,7 +1,6 @@
 import 'dart:convert';
 
-import 'package:roadhelp/models/user.dart';
-
+import '/models/user.dart';
 import 'base_model.dart';
 import 'garage.dart';
 

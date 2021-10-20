@@ -1,14 +1,27 @@
 import 'dart:convert';
 
+import '/models/ward.dart';
 import 'base_model.dart';
+import 'district.dart';
+import 'garage.dart';
 
 class Province extends BaseModel {
   String? name;
   String? code;
 
+  //Relationship
+  List<Garage>? garages;
+  List<District>? districts;
+  List<Ward>? wards;
+
   Province({
     this.name,
     this.code,
+    //Relationship
+    this.garages,
+    this.districts,
+    this.wards,
+    //
     int? id,
     DateTime? createdAt,
     String? createdBy,
@@ -31,6 +44,10 @@ class Province extends BaseModel {
     return Province(
       name: json['name'],
       code: json['code'],
+      //Relationship
+      garages: Garage.fromJsonToList(json['garages']),
+      districts: District.fromJsonToList(json['districts']),
+      wards: Ward.fromJsonToList(json['wards']),
       //
       id: json['id'],
       //createdAt: json['createdAt'],
@@ -44,9 +61,7 @@ class Province extends BaseModel {
 
   //
   static List<Province> fromJsonToList(dynamic json) {
-    return json
-        .map<Province>((element) => Province.fromJson(element))
-        .toList();
+    return json.map<Province>((element) => Province.fromJson(element)).toList();
   }
 
   //

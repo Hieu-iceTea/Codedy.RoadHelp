@@ -1,11 +1,10 @@
 import 'dart:convert';
 
-import 'package:roadhelp/models/rating_issues.dart';
-
 import '/config/enums.dart';
 import '/models/garage.dart';
+import '/models/issues.dart';
 import '/models/rating_garage.dart';
-
+import '/models/rating_issues.dart';
 import 'authority.dart';
 import 'base_model.dart';
 
@@ -33,10 +32,12 @@ class User extends BaseModel {
   String? imageUrl;
 
   //Relationship
-  Authority? authorities;
-  Garage? garages;
-  RatingGarage? ratingGarages;
-  RatingIssues? ratingIssues;
+  List<Authority>? authorities;
+  List<Issues>? issueMembers;
+  List<Issues>? issuePartners;
+  List<RatingIssues>? ratingIssues;
+  List<RatingGarage>? ratingGarages;
+  List<Garage>? garages;
 
   User({
     this.username,
@@ -52,9 +53,11 @@ class User extends BaseModel {
     this.rateAvg,
     //Relationship
     this.authorities,
-    this.garages,
-    this.ratingGarages,
+    this.issueMembers,
+    this.issuePartners,
     this.ratingIssues,
+    this.ratingGarages,
+    this.garages,
     //
     this.imageUrl,
     int? id,
@@ -89,10 +92,12 @@ class User extends BaseModel {
       address: json['address'],
       rateAvg: json['rateAvg'],
       //Relationship
-      /*authorities: Authority.fromJson(json['authorities']),
-      garages: Garage.fromJson(json['garages']),
-      ratingGarages: RatingGarage.fromJson(json['ratingGarages']),
-      ratingIssues: RatingIssues.fromJson(json['ratingIssues']),*/
+      authorities: Authority.fromJsonToList(json['authorities']),
+      issueMembers: Issues.fromJsonToList(json['issueMembers']),
+      issuePartners: Issues.fromJsonToList(json['issuePartners']),
+      ratingIssues: RatingIssues.fromJsonToList(json['ratingIssues']),
+      ratingGarages: RatingGarage.fromJsonToList(json['ratingGarages']),
+      garages: Garage.fromJsonToList(json['garages']),
       //
       id: json['id'],
       //createdAt: json['createdAt'],
@@ -106,9 +111,7 @@ class User extends BaseModel {
 
   //
   static List<User> fromJsonToList(dynamic json) {
-    return json
-        .map<User>((element) => User.fromJson(element))
-        .toList();
+    return json.map<User>((element) => User.fromJson(element)).toList();
   }
 
   //

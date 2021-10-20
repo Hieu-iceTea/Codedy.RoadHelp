@@ -1,6 +1,9 @@
 import 'dart:convert';
 
+import '/models/province.dart';
 import 'base_model.dart';
+import 'district.dart';
+import 'garage.dart';
 
 class Ward extends BaseModel {
   //
@@ -11,11 +14,21 @@ class Ward extends BaseModel {
   String? name;
   String? prefix;
 
+  //Relationship
+  List<Garage>? garages;
+  Province? province;
+  District? district;
+
   Ward({
     this.provinceId,
     this.districtId,
     this.name,
     this.prefix,
+    //Relationship
+    this.garages,
+    this.province,
+    this.district,
+    //
     int? id,
     DateTime? createdAt,
     String? createdBy,
@@ -40,6 +53,10 @@ class Ward extends BaseModel {
       districtId: json['districtId'],
       name: json['name'],
       prefix: json['prefix'],
+      //Relationship
+      garages: Garage.fromJsonToList(json['garages']),
+      province: Province.fromJson(json['province']),
+      district: District.fromJson(json['district']),
       //
       id: json['id'],
       //createdAt: json['createdAt'],
@@ -53,9 +70,7 @@ class Ward extends BaseModel {
 
   //
   static List<Ward> fromJsonToList(dynamic json) {
-    return json
-        .map<Ward>((element) => Ward.fromJson(element))
-        .toList();
+    return json.map<Ward>((element) => Ward.fromJson(element)).toList();
   }
 
   //
