@@ -9,9 +9,9 @@ import '/screens/auth/otp/otp_screen.dart';
 import 'location_input.dart';
 
 class RepairPlaceForm extends StatefulWidget {
-  final Garage? garage;
+  Garage? garage;
 
-  const RepairPlaceForm({Key? key, this.garage}) : super(key: key);
+  RepairPlaceForm({Key? key, this.garage}) : super(key: key);
 
   @override
   _RepairPlaceFormState createState() => _RepairPlaceFormState();
@@ -19,18 +19,21 @@ class RepairPlaceForm extends StatefulWidget {
 
 class _RepairPlaceFormState extends State<RepairPlaceForm> {
   final _formKey = GlobalKey<FormState>();
-  String? name;
+
+  /*String? name;
   String? phone;
   String? address;
-  String? description;
+  String? description;*/
 
   @override
   void initState() {
     //initial value
-    name = widget.garage?.name;
+    /*name = widget.garage?.name;
     phone = widget.garage?.phone;
     address = widget.garage?.address;
-    description = widget.garage?.description;
+    description = widget.garage?.description;*/
+
+    widget.garage ??= Garage(); //Khởi tạo nếu null
 
     super.initState();
   }
@@ -68,8 +71,8 @@ class _RepairPlaceFormState extends State<RepairPlaceForm> {
 
   TextFormField buildNameFormField() {
     return TextFormField(
-      initialValue: name,
-      onSaved: (newValue) => name = newValue,
+      initialValue: widget.garage?.name,
+      onSaved: (newValue) => widget.garage!.name = newValue,
       validator: (value) {
         if (value!.isEmpty) {
           return "Please Enter your name";
@@ -89,9 +92,9 @@ class _RepairPlaceFormState extends State<RepairPlaceForm> {
 
   TextFormField buildPhoneFormField() {
     return TextFormField(
-      initialValue: phone,
+      initialValue: widget.garage?.phone,
       keyboardType: TextInputType.phone,
-      onSaved: (newValue) => phone = newValue,
+      onSaved: (newValue) => widget.garage!.phone = newValue,
       validator: (value) {
         if (value!.isEmpty) {
           return "Please Enter your phone";
@@ -111,8 +114,8 @@ class _RepairPlaceFormState extends State<RepairPlaceForm> {
 
   TextFormField buildAddressFormField() {
     return TextFormField(
-      initialValue: address,
-      onSaved: (newValue) => address = newValue,
+      initialValue: widget.garage?.address,
+      onSaved: (newValue) => widget.garage!.address = newValue,
       validator: (value) {
         if (value!.isEmpty) {
           return "Please Enter your address";
@@ -133,7 +136,7 @@ class _RepairPlaceFormState extends State<RepairPlaceForm> {
 
   TextFormField buildLocationSelectDialog() {
     return TextFormField(
-      onSaved: (newValue) => name = newValue,
+      //onSaved: (newValue) => widget.garage!.name = newValue,
       onTap: () => _showMyDialog(),
       readOnly: true,
       validator: (value) {
@@ -161,11 +164,11 @@ class _RepairPlaceFormState extends State<RepairPlaceForm> {
 
   TextFormField buildDescriptionFormField() {
     return TextFormField(
-      initialValue: description,
+      initialValue: widget.garage?.description,
       keyboardType: TextInputType.multiline,
       minLines: 2,
       maxLines: 5,
-      onSaved: (newValue) => description = newValue,
+      onSaved: (newValue) => widget.garage!.description = newValue,
       validator: (value) {
         if (value!.isEmpty) {
           return "Please Enter description";

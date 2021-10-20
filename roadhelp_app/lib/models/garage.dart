@@ -11,29 +11,29 @@ import 'garage_image.dart';
 
 class Garage extends BaseModel {
   //Foreign Keys
-  final int? userPartnerId;
-  final int? provinceId; //Tỉnh/TP
-  final int? districtId; //Quận/Huyện
-  final int? wardId; //Phường/Xã
+  int? userPartnerId;
+  int? provinceId; //Tỉnh/TP
+  int? districtId; //Quận/Huyện
+  int? wardId; //Phường/Xã
 
   //Main Fields
-  final String? name;
-  final String? phone;
-  final double? ratingAvg;
-  final String? address;
-  final double? longitude;
-  final double? latitude;
-  final String? description;
-  final bool? active;
-  final bool? isFeatured;
+  String? name;
+  String? phone;
+  double? ratingAvg;
+  String? address;
+  double? longitude;
+  double? latitude;
+  String? description;
+  bool? active;
+  bool? isFeatured;
 
   //Relationship
-  final User? userPartner;
-  final List<GarageImage>? garageImages;
-  final List<RatingGarage>? ratingGarages;
-  final Province? province;
-  final District? district;
-  final Ward? ward;
+  User? userPartner;
+  List<GarageImage>? garageImages;
+  List<RatingGarage>? ratingGarages;
+  Province? province;
+  District? district;
+  Ward? ward;
 
   Garage({
     this.userPartnerId,
