@@ -23,6 +23,7 @@ class RepairPlaceItem extends StatelessWidget {
         child: ClipRRect(
           borderRadius: const BorderRadius.all(Radius.circular(10)),
           //child: Image.network(garage.garageImages![0].imageUrl!),
+          child: Image.network("https://hieu-icetea.github.io/cv/images/user/DinhHieu-1.jpg"),
         ),
       ),
       title: Text(garage.name!),

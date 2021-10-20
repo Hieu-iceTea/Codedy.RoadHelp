@@ -46,7 +46,7 @@ class GarageImage extends BaseModel {
       garageId: json['garageId'],
       image: json['image'],
       //Relationship
-      garage: Garage.fromJson(json['garage']),
+      garage: json['garage'] is int ? null : Garage.fromJson(json['garage']),
       //
       id: json['id'],
       //createdAt: json['createdAt'],

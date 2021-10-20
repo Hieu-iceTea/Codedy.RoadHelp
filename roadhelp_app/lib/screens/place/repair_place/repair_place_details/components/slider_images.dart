@@ -28,7 +28,8 @@ class _SliderImagesState extends State<SliderImages> {
             aspectRatio: 1,
             child: Hero(
               tag: widget.garage.id.toString(),
-              child: Image.network(widget.garage.garageImages![selectedImage].imageUrl!),
+              //child: Image.network(widget.garage.garageImages![selectedImage].imageUrl!),
+              child: Image.network("https://hieu-icetea.github.io/cv/images/user/DinhHieu-1.jpg"),
             ),
           ),
         ),
@@ -65,7 +66,8 @@ class _SliderImagesState extends State<SliderImages> {
           border: Border.all(
               color: kPrimaryColor.withOpacity(selectedImage == index ? 1 : 0)),
         ),
-        child: Image.network(widget.garage.garageImages![index].imageUrl!),
+        //child: Image.network(widget.garage.garageImages![index].imageUrl!),
+        child: Image.network("https://hieu-icetea.github.io/cv/images/user/DinhHieu-1.jpg"),
       ),
     );
   }
