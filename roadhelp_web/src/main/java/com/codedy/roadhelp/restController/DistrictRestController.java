@@ -6,6 +6,7 @@ import com.codedy.roadhelp.service.district.DistrictService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -17,17 +18,33 @@ public class DistrictRestController {
 
     // List District
     @GetMapping(path = {"", "/", "/index"})
-    public List<District> index() {
-        return districtService.findAll();
+    public List<District> index(@RequestParam int provinceId) {
+        List<District> districts = districtService.findAll();
+        List<District> districtsByProvinceId = new ArrayList<>();
+        for (District d: districts
+        ) {
+            if (d.getProvince().getId() == provinceId){
+                districtsByProvinceId.add(d);
+            }
+
+        }
+        if(provinceId >= 0){
+            return districtsByProvinceId;
+        }
+        else {
+            return districtService.findAll();
+
+        }
     }
 
     // Detail District
     @GetMapping(path = {"/{id}", "/{id}/"})
-    public District show(@PathVariable int id) {
+    public District show(@PathVariable int id, @RequestParam int provinceId) {
         District district = districtService.findById(id);
         if (district == null) {
             throw new RestNotFoundException("District id not found - " + id);
         }
+
         return district;
     }
 
