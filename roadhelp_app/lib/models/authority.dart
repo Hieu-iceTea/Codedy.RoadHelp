@@ -1,19 +1,24 @@
 import 'dart:convert';
 
-import 'package:roadhelp/config/enums.dart';
-
+import '/models/user.dart';
 import 'base_model.dart';
 
-class Authorities extends BaseModel {
+class Authority extends BaseModel {
   //
   String? username;
 
   //
   String? authority;
 
-  Authorities({
+  //Relationship
+  User? user;
+
+  Authority({
     this.username,
     this.authority,
+    //Relationship
+    this.user,
+    //
     int? id,
     DateTime? createdAt,
     String? createdBy,
@@ -32,10 +37,13 @@ class Authorities extends BaseModel {
         );
 
   //
-  factory Authorities.fromJson(Map<String, dynamic> json) {
-    return Authorities(
+  factory Authority.fromJson(Map<String, dynamic> json) {
+    return Authority(
       username: json['username'],
       authority: json['authority'],
+      //Relationship
+      user: User.fromJson(json['user']),
+      //json.decode(json['user'])
       //
       id: json['id'],
       //createdAt: json['createdAt'],
@@ -45,6 +53,13 @@ class Authorities extends BaseModel {
       version: json['version'],
       deleted: json['deleted'],
     );
+  }
+
+  //
+  static List<Authority> fromJsonToList(dynamic json) {
+    return json
+        .map<Authority>((element) => Authority.fromJson(element))
+        .toList();
   }
 
   //

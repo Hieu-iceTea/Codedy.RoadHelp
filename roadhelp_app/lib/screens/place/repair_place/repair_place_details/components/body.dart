@@ -35,11 +35,11 @@ class Body extends StatelessWidget {
                         Padding(
                           padding: EdgeInsets.symmetric(
                               horizontal: getProportionateScreenWidth(20)),
-                          child: (garage.garageRatings != null &&
-                                  garage.garageRatings!.isNotEmpty)
+                          child: (garage.ratingGarages != null &&
+                                  garage.ratingGarages!.isNotEmpty)
                               ? Text(
                                   "Reviews (" +
-                                      garage.garageRatings!.length.toString() +
+                                      garage.ratingGarages!.length.toString() +
                                       ")",
                                   style: Theme.of(context).textTheme.headline6,
                                 )
@@ -48,8 +48,8 @@ class Body extends StatelessWidget {
                                   style: Theme.of(context).textTheme.headline6,
                                 ),
                         ),
-                        (garage.garageRatings != null &&
-                                garage.garageRatings!.isNotEmpty)
+                        (garage.ratingGarages != null &&
+                                garage.ratingGarages!.isNotEmpty)
                             ? ListView.separated(
                                 separatorBuilder:
                                     (BuildContext context, int index) =>

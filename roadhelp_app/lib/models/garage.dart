@@ -1,22 +1,22 @@
 import 'dart:convert';
 import 'dart:math';
 
+import '/models/province.dart';
 import '/models/rating_garage.dart';
+import '/models/user.dart';
+import '/models/ward.dart';
 import 'base_model.dart';
+import 'district.dart';
 import 'garage_image.dart';
 
 class Garage extends BaseModel {
-  //#region - Foreign Keys (Khóa ngoại) -
-
+  //Foreign Keys
   final int? userPartnerId;
   final int? provinceId; //Tỉnh/TP
   final int? districtId; //Quận/Huyện
   final int? wardId; //Phường/Xã
 
-  //#endregion
-
-  //#region - Main Fields (Các trường chính của bảng này) -
-
+  //Main Fields
   final String? name;
   final String? phone;
   final double? ratingAvg;
@@ -27,23 +27,20 @@ class Garage extends BaseModel {
   final bool? active;
   final bool? isFeatured;
 
-  //#endregion
-
-  //#region - Relationship (Mối quan hệ & liên kết bảng khác) -
-
-  final List<GarageImage>? images;
-  final List<RatingGarage>? garageRatings;
-
-  //#endregion
-
-  //#region - Constructor (Hàm tạo)-
+  //Relationship
+  final User? userPartner;
+  final List<GarageImage>? garageImages;
+  final List<RatingGarage>? ratingGarages;
+  final Province? province;
+  final District? district;
+  final Ward? ward;
 
   Garage({
     this.userPartnerId,
     this.provinceId,
     this.districtId,
     this.wardId,
-    this.garageRatings,
+    //
     this.name,
     this.phone,
     this.ratingAvg,
@@ -53,8 +50,13 @@ class Garage extends BaseModel {
     this.description,
     this.active,
     this.isFeatured,
-    //liên kết bảng:
-    this.images,
+    //Relationship:
+    this.userPartner,
+    this.garageImages,
+    this.ratingGarages,
+    this.province,
+    this.district,
+    this.ward,
     //BaseModel:
     int? id,
     DateTime? createdAt,
@@ -73,8 +75,6 @@ class Garage extends BaseModel {
           deleted: deleted,
         );
 
-//#endregion
-
   //
   factory Garage.fromJson(Map<String, dynamic> json) {
     return Garage(
@@ -82,7 +82,7 @@ class Garage extends BaseModel {
       provinceId: json['provinceId'],
       districtId: json['districtId'],
       wardId: json['wardId'],
-      garageRatings: json['garageRatings'],
+      //
       name: json['name'],
       phone: json['phone'],
       ratingAvg: json['ratingAvg'],
@@ -92,6 +92,13 @@ class Garage extends BaseModel {
       description: json['description'],
       active: json['active'],
       isFeatured: json['isFeatured'],
+      //Relationship:
+      userPartner: User.fromJson(json['userPartner']),
+      garageImages: GarageImage.fromJsonToList(json['garageImages']),
+      ratingGarages: RatingGarage.fromJsonToList(json['ratingGarages']),
+      province: Province.fromJson(json['province']),
+      district: District.fromJson(json['district']),
+      ward: Ward.fromJson(json['ward']),
       //
       id: json['id'],
       //createdAt: json['createdAt'],
@@ -104,13 +111,18 @@ class Garage extends BaseModel {
   }
 
   //
+  static List<Garage> fromJsonToList(dynamic json) {
+    return json.map<Garage>((element) => Garage.fromJson(element)).toList();
+  }
+
+  //
   String toJson() {
     return json.encode({
       'partnerId': userPartnerId,
       'provinceId': provinceId,
       'districtId': districtId,
       'wardId': wardId,
-      'garageRatings': garageRatings,
+      'garageRatings': ratingGarages,
       'name': name,
       'phone': phone,
       'ratingAvg': ratingAvg,
@@ -150,22 +162,38 @@ final List<Garage> demoGarages = [
 Garage getTmpGarage() {
   return Garage(
     id: Random().nextInt(1000),
-    images: [
-      GarageImage(imageUrl: "https://picsum.photos/500/400?random=" + Random().nextInt(99).toString()),
-      GarageImage(imageUrl: "https://picsum.photos/500/400?random=" + Random().nextInt(99).toString()),
-      GarageImage(imageUrl: "https://picsum.photos/500/400?random=" + Random().nextInt(99).toString()),
-      GarageImage(imageUrl: "https://picsum.photos/500/400?random=" + Random().nextInt(99).toString()),
-      GarageImage(imageUrl: "https://picsum.photos/500/400?random=" + Random().nextInt(99).toString()),
-      GarageImage(imageUrl: "https://picsum.photos/500/400?random=" + Random().nextInt(99).toString()),
-      GarageImage(imageUrl: "https://picsum.photos/500/400?random=" + Random().nextInt(99).toString()),
-      GarageImage(imageUrl: "https://picsum.photos/500/400?random=" + Random().nextInt(99).toString()),
+    garageImages: [
+      GarageImage(
+          imageUrl: "https://picsum.photos/500/400?random=" +
+              Random().nextInt(99).toString()),
+      GarageImage(
+          imageUrl: "https://picsum.photos/500/400?random=" +
+              Random().nextInt(99).toString()),
+      GarageImage(
+          imageUrl: "https://picsum.photos/500/400?random=" +
+              Random().nextInt(99).toString()),
+      GarageImage(
+          imageUrl: "https://picsum.photos/500/400?random=" +
+              Random().nextInt(99).toString()),
+      GarageImage(
+          imageUrl: "https://picsum.photos/500/400?random=" +
+              Random().nextInt(99).toString()),
+      GarageImage(
+          imageUrl: "https://picsum.photos/500/400?random=" +
+              Random().nextInt(99).toString()),
+      GarageImage(
+          imageUrl: "https://picsum.photos/500/400?random=" +
+              Random().nextInt(99).toString()),
+      GarageImage(
+          imageUrl: "https://picsum.photos/500/400?random=" +
+              Random().nextInt(99).toString()),
     ],
     name: "Garage Name™ " + Random().nextInt(99).toString(),
     phone: "012345678",
     address: "Thanh Xuan, Ha Noi",
     description: description,
     ratingAvg: 4.8,
-    garageRatings: [
+    ratingGarages: [
       RatingGarage(
           id: Random().nextInt(1000),
           garageID: 1,
