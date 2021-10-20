@@ -1,5 +1,6 @@
 package com.codedy.roadhelp.payload.response;
 
+import java.util.Date;
 import java.util.List;
 
 public class JwtResponse {
@@ -7,13 +8,14 @@ public class JwtResponse {
     private String type = "Bearer";
     private int id;
     private String username;
-    private String email;
+    private Date exp;
     private List<String> roles;
 
-    public JwtResponse(String accessToken, int id, String username, List<String> roles) {
+    public JwtResponse(String accessToken, int id, String username, Date exp, List<String> roles) {
         this.token = accessToken;
         this.id = id;
         this.username = username;
+        this.exp = exp;
         this.roles = roles;
     }
 
@@ -47,6 +49,14 @@ public class JwtResponse {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public Date getExp() {
+        return exp;
+    }
+
+    public void setExp(Date exp) {
+        this.exp = exp;
     }
 
     public List<String> getRoles() {

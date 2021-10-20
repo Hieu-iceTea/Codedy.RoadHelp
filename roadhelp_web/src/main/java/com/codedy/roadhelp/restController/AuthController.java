@@ -6,6 +6,7 @@ import com.codedy.roadhelp.repository.AuthorityRepository;
 import com.codedy.roadhelp.security.jwt.JwtUtils;
 import com.codedy.roadhelp.service.user.UserDetailsImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -15,6 +16,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -34,11 +36,18 @@ public class AuthController {
     @Autowired
     JwtUtils jwtUtils;
 
+    @Value("${bezkoder.app.jwtExpirationMs}")
+    private int jwtExpirationMs;
+
     @PostMapping("/login")
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
 
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
+
+        Date date = new Date();
+        long iat = date.getTime();
+        Date exp = new Date(iat + jwtExpirationMs);
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String jwt = jwtUtils.generateJwtToken(authentication);
@@ -51,6 +60,7 @@ public class AuthController {
         return ResponseEntity.ok(new JwtResponse(jwt,
                 userDetails.getId(),
                 userDetails.getUsername(),
+                exp,
                 roles));
     }
 
