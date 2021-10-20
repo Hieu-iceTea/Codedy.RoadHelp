@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import '/config/constants.dart';
 import 'base_model.dart';
 import 'garage.dart';
 
@@ -47,6 +48,8 @@ class GarageImage extends BaseModel {
       image: json['image'],
       //Relationship
       garage: json['garage'] is int ? null : Garage.fromJson(json['garage']),
+      //
+      imageUrl: baseApiUrl + "data-images/garage/" + json['image'],
       //
       id: json['id'],
       //createdAt: json['createdAt'],
