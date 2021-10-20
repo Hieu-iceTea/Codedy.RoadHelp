@@ -1,11 +1,14 @@
 package com.codedy.roadhelp.restController;
 
+import com.codedy.roadhelp.model.District;
 import com.codedy.roadhelp.model.Ward;
 import com.codedy.roadhelp.restController.exception.RestNotFoundException;
 import com.codedy.roadhelp.service.ward.WardService;
+import org.hibernate.annotations.Parameter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -17,14 +20,25 @@ public class WardRestController {
 
     // List Ward
     @GetMapping(path = {"", "/", "/index"})
-    public List<Ward> index() {
-        return wardService.findAll();
+    public List<Ward> index(@RequestParam int provinceId, @RequestParam int districtId) {
+        List<Ward> wards = wardService.findAll();
+        List<Ward> wardsByDistrictId = new ArrayList<>();
+        for (Ward d: wards
+        ) {
+            if (d.getDistrict().getId() == districtId && d.getProvince().getId() == provinceId){
+                wardsByDistrictId.add(d);
+            }
+        }
+        if(wardsByDistrictId != null){
+            return wardsByDistrictId;
+        }else return wardService.findAll();
     }
 
     // Detail Ward
     @GetMapping(path = {"/{id}", "/{id}/"})
     public Ward show(@PathVariable int id) {
         Ward ward = wardService.findById(id);
+
         if (ward == null) {
             throw new RestNotFoundException("Ward id not found - " + id);
         }
