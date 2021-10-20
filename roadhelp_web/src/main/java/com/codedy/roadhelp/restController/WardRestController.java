@@ -20,7 +20,7 @@ public class WardRestController {
 
     // List Ward
     @GetMapping(path = {"", "/", "/index"})
-    public List<Ward> index(@RequestParam int provinceId, @RequestParam int districtId) {
+    public List<Ward> index(@RequestParam(defaultValue = "0") int provinceId, @RequestParam(defaultValue = "0") int districtId) {
         List<Ward> wards = wardService.findAll();
         List<Ward> wardsByDistrictId = new ArrayList<>();
         for (Ward d: wards
@@ -29,7 +29,7 @@ public class WardRestController {
                 wardsByDistrictId.add(d);
             }
         }
-        if(wardsByDistrictId != null){
+        if(provinceId >= 1 && districtId >= 1){
             return wardsByDistrictId;
         }else return wardService.findAll();
     }
