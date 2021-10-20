@@ -48,6 +48,7 @@ public class AuthController {
         Date date = new Date();
         long iat = date.getTime();
         Date exp = new Date(iat + jwtExpirationMs);
+        int expiresIn = jwtExpirationMs / 1000;
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String jwt = jwtUtils.generateJwtToken(authentication);
@@ -61,6 +62,7 @@ public class AuthController {
                 userDetails.getId(),
                 userDetails.getUsername(),
                 exp,
+                expiresIn,
                 roles));
     }
 
