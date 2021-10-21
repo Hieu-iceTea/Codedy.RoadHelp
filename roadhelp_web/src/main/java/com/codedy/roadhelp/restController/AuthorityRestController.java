@@ -47,7 +47,7 @@ public class AuthorityRestController {
             throw new RestNotFoundException("Authority id not found - " + id);
         }
 
-        authority.setId(0);
+        authority.setId(id);
         authorityService.save(authority);
         return authorityService.findById(authority.getId());
     }

@@ -47,8 +47,7 @@ public class GarageRestController {
         if (garageService.findById(id) == null) {
             throw new RestNotFoundException("Garage id not found - " + id);
         }
-
-        garage.setId(0);
+        garage.setId(id);
         garageService.save(garage);
         return garageService.findById(garage.getId());
     }

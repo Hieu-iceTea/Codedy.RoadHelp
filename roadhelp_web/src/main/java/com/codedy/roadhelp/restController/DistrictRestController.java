@@ -28,7 +28,6 @@ public class DistrictRestController {
             }
 
         }
-
         if(provinceId > 0){
             return districtsByProvinceId;
         }
@@ -65,7 +64,7 @@ public class DistrictRestController {
             throw new RestNotFoundException("District id not found - " + id);
         }
 
-        district.setId(0);
+        district.setId(id);
         districtService.save(district);
         return districtService.findById(district.getId());
     }

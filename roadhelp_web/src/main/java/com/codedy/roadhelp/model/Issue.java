@@ -10,6 +10,10 @@ import java.io.Serializable;
 
 @Entity
 @Table(name = "issue")
+@JsonIdentityInfo(
+        scope = Issue.class,
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id")
 public class Issue extends BaseModel implements Serializable {
 
     //region - Define Fields -

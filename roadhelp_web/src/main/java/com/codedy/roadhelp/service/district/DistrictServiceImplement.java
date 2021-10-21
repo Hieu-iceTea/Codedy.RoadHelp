@@ -10,6 +10,8 @@ import com.codedy.roadhelp.service.garage.GarageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 
 @Service
 public class DistrictServiceImplement extends BaseServiceImplement<District, Integer> implements DistrictService {
@@ -21,6 +23,7 @@ public class DistrictServiceImplement extends BaseServiceImplement<District, Int
     public DistrictServiceImplement(DistrictRepository repository) {
         super(repository);
     }
+
     //endregion
 
 }

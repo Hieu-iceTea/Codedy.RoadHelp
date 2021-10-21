@@ -1,5 +1,8 @@
 package com.codedy.roadhelp.model;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -7,6 +10,10 @@ import java.io.Serializable;
 
 @Entity
 @Table(name = "ratinggarage")
+@JsonIdentityInfo(
+        scope = RatingGarage.class,
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id")
 public class RatingGarage extends BaseModel implements Serializable {
 
     //region - Define Fields -
