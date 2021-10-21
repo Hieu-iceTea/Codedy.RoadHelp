@@ -1,6 +1,8 @@
 import 'dart:convert';
 
+import '/models/user.dart';
 import 'base_model.dart';
+import 'garage.dart';
 
 class RatingGarage extends BaseModel {
   //
@@ -11,11 +13,19 @@ class RatingGarage extends BaseModel {
   double? ratePoint;
   String? comment;
 
+  //Relationship
+  Garage? garage;
+  User? userMember;
+
   RatingGarage({
     this.garageID,
     this.userID,
     this.ratePoint,
     this.comment,
+    //Relationship
+    this.garage,
+    this.userMember,
+    //
     int? id,
     DateTime? createdAt,
     String? createdBy,
@@ -40,6 +50,9 @@ class RatingGarage extends BaseModel {
       userID: json['userID'],
       ratePoint: json['ratePoint'],
       comment: json['comment'],
+      //Relationship
+      garage: Garage.fromJson(json['garage']),
+      userMember: User.fromJson(json['userMember']),
       //
       id: json['id'],
       //createdAt: json['createdAt'],
@@ -49,6 +62,13 @@ class RatingGarage extends BaseModel {
       version: json['version'],
       deleted: json['deleted'],
     );
+  }
+
+  //
+  static List<RatingGarage> fromJsonToList(dynamic json) {
+    return json
+        .map<RatingGarage>((element) => RatingGarage.fromJson(element))
+        .toList();
   }
 
   //

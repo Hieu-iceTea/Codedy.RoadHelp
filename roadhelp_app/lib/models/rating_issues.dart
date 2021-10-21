@@ -1,6 +1,8 @@
 import 'dart:convert';
 
+import '/models/user.dart';
 import 'base_model.dart';
+import 'issues.dart';
 
 class RatingIssues extends BaseModel {
   //
@@ -11,11 +13,19 @@ class RatingIssues extends BaseModel {
   double? ratePoint;
   String? comment;
 
+  //Relationship
+  Issues? issue;
+  User? userMember;
+
   RatingIssues({
     this.userMemberId,
     this.issueId,
     this.ratePoint,
     this.comment,
+    //Relationship
+    this.issue,
+    this.userMember,
+    //
     int? id,
     DateTime? createdAt,
     String? createdBy,
@@ -40,6 +50,9 @@ class RatingIssues extends BaseModel {
       issueId: json['issueId'],
       ratePoint: json['ratePoint'],
       comment: json['comment'],
+      //Relationship
+      issue: Issues.fromJson(json['issue']),
+      userMember: User.fromJson(json['userMember']),
       //
       id: json['id'],
       //createdAt: json['createdAt'],
@@ -49,6 +62,13 @@ class RatingIssues extends BaseModel {
       version: json['version'],
       deleted: json['deleted'],
     );
+  }
+
+  //
+  static List<RatingIssues> fromJsonToList(dynamic json) {
+    return json
+        .map<RatingIssues>((element) => RatingIssues.fromJson(element))
+        .toList();
   }
 
   //

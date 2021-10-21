@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'base_model.dart';
+import 'garage.dart';
 
 class GarageImage extends BaseModel {
   //
@@ -9,6 +10,9 @@ class GarageImage extends BaseModel {
   //
   String? image;
 
+  //Relationship
+  Garage? garage;
+
   //Xử lý sau khi get API (chuyển từ image -> imageUrl):
   String? imageUrl;
 
@@ -16,6 +20,9 @@ class GarageImage extends BaseModel {
     this.garageId,
     this.image,
     this.imageUrl,
+    //Relationship
+    this.garage,
+    //
     int? id,
     DateTime? createdAt,
     String? createdBy,
@@ -38,6 +45,8 @@ class GarageImage extends BaseModel {
     return GarageImage(
       garageId: json['garageId'],
       image: json['image'],
+      //Relationship
+      garage: Garage.fromJson(json['garage']),
       //
       id: json['id'],
       //createdAt: json['createdAt'],
@@ -47,6 +56,13 @@ class GarageImage extends BaseModel {
       version: json['version'],
       deleted: json['deleted'],
     );
+  }
+
+  //
+  static List<GarageImage> fromJsonToList(dynamic json) {
+    return json
+        .map<GarageImage>((element) => GarageImage.fromJson(element))
+        .toList();
   }
 
   //
