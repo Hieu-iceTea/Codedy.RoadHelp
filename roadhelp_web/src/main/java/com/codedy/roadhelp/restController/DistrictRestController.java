@@ -18,7 +18,7 @@ public class DistrictRestController {
 
     // List District
     @GetMapping(path = {"", "/", "/index"})
-    public List<District> index(@RequestParam int provinceId) {
+    public List<District> index(@RequestParam(defaultValue = "0") int provinceId) {
         List<District> districts = districtService.findAll();
         List<District> districtsByProvinceId = new ArrayList<>();
         for (District d: districts
@@ -28,7 +28,8 @@ public class DistrictRestController {
             }
 
         }
-        if(provinceId >= 0){
+
+        if(provinceId > 0){
             return districtsByProvinceId;
         }
         else {
