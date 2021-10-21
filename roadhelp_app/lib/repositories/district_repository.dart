@@ -20,6 +20,16 @@ class DistrictRepository {
         .toList();
   }
 
+  static Future<List<District>> findAllByProvinceId(int provinceId) async {
+    var responseBody = await HttpHelper.get(
+      url: _url + "?provinceId=" + provinceId.toString(),
+    );
+
+    return responseBody
+        .map<District>((element) => District.fromJson(element))
+        .toList();
+  }
+
   static Future<District> findById(int id) async {
     var responseBody = await HttpHelper.get(
       url: _url + id.toString(),

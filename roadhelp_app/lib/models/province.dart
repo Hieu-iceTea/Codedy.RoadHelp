@@ -45,9 +45,9 @@ class Province extends BaseModel {
       name: json['name'],
       code: json['code'],
       //Relationship
-      garages: Garage.fromJsonToList(json['garages']),
+      /*garages: Garage.fromJsonToList(json['garages']),
       districts: District.fromJsonToList(json['districts']),
-      wards: Ward.fromJsonToList(json['wards']),
+      wards: Ward.fromJsonToList(json['wards']),*/
       //
       id: json['id'],
       //createdAt: json['createdAt'],

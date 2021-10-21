@@ -1,9 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:roadhelp/config/size_config.dart';
+import 'package:roadhelp/models/district.dart';
+import 'package:roadhelp/models/province.dart';
+import 'package:roadhelp/models/ward.dart';
+import 'package:roadhelp/repositories/district_repository.dart';
+import 'package:roadhelp/repositories/province_repository.dart';
+import 'package:roadhelp/repositories/ward_repository.dart';
 
 import '/components/default_button.dart';
 
 class LocationFilterForm extends StatefulWidget {
+  Function(Province provinceSelected, District districtSelected,
+      Ward wardSelected) onSubmit;
+
+  LocationFilterForm({
+    required this.onSubmit,
+    Key? key,
+  }) : super(key: key);
+
   @override
   _LocationFilterFormState createState() => _LocationFilterFormState();
 }
@@ -11,13 +25,69 @@ class LocationFilterForm extends StatefulWidget {
 class _LocationFilterFormState extends State<LocationFilterForm> {
   final _formKey = GlobalKey<FormState>();
 
-  String? provinceSelected; // Tỉnh/Thành Phố
-  String? districtSelected; // Quận/Huyện
-  String? wardSelected; // Xã/Phường
+  Province? provinceSelected; // Tỉnh/Thành Phố
+  District? districtSelected; // Quận/Huyện
+  Ward? wardSelected; // Xã/Phường
 
-  List<String>? provinceListItems = ['Province 1', 'Province 2', 'Province 3'];
-  List<String>? districtListItems = ['District 1', 'District 2', 'District 3'];
-  List<String>? wardListItems = ['Ward 1', 'Ward 2', 'Ward 3'];
+  List<Province>? provinceListItems;
+  List<District>? districtListItems;
+  List<Ward>? wardListItems;
+
+  bool isLoadProvince = false;
+  bool isLoadDistrict = false;
+  bool isLoadWard = false;
+
+  @override
+  void didChangeDependencies() {
+    _fetchAllDataProvince(context);
+    /*_fetchAllDataDistrict(context, provinceId: 1);
+    _fetchAllDataWard(context, provinceId: 1, districtId: 1);*/
+
+    super.didChangeDependencies();
+  }
+
+  Future<void> _fetchAllDataProvince(BuildContext context) async {
+    setState(() {
+      isLoadProvince = true;
+    });
+
+    List<Province> provinces = await ProvinceRepository.findAll();
+
+    setState(() {
+      provinceListItems = provinces;
+      isLoadProvince = false;
+    });
+  }
+
+  Future<void> _fetchAllDataDistrict(BuildContext context,
+      {required int provinceId}) async {
+    setState(() {
+      isLoadDistrict = true;
+    });
+
+    List<District> districts =
+        await DistrictRepository.findAllByProvinceId(provinceId);
+
+    setState(() {
+      districtListItems = districts;
+      isLoadDistrict = false;
+    });
+  }
+
+  Future<void> _fetchAllDataWard(BuildContext context,
+      {required int provinceId, required int districtId}) async {
+    setState(() {
+      isLoadWard = true;
+    });
+
+    List<Ward> wards = await WardRepository.findAllByProvinceIdAndDistrictId(
+        provinceId, districtId);
+
+    setState(() {
+      wardListItems = wards;
+      isLoadWard = false;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -31,19 +101,21 @@ class _LocationFilterFormState extends State<LocationFilterForm> {
           child: Column(
             children: [
               SizedBox(height: getProportionateScreenHeight(10)),
-              buildProvinceDropdownFormField(),
+              isLoadProvince
+                  ? const CircularProgressIndicator()
+                  : buildProvinceDropdownFormField(),
               SizedBox(height: getProportionateScreenHeight(30)),
-              buildDistrictDropdownFormField(),
+              isLoadDistrict
+                  ? const CircularProgressIndicator()
+                  : buildDistrictDropdownFormField(),
               SizedBox(height: getProportionateScreenHeight(30)),
-              buildWardDropdownFormField(),
+              isLoadWard
+                  ? const CircularProgressIndicator()
+                  : buildWardDropdownFormField(),
               SizedBox(height: getProportionateScreenHeight(50)),
               DefaultButton(
-                text: "Filter",
-                press: () {
-                  if (_formKey.currentState!.validate()) {
-                    _formKey.currentState!.save();
-                  }
-                },
+                text: "Okey",
+                press: () => _submitForm(),
               ),
             ],
           ),
@@ -61,8 +133,14 @@ class _LocationFilterFormState extends State<LocationFilterForm> {
       //style: const TextStyle(color: kPrimaryColor),
       onChanged: (newValue) {
         setState(() {
-          //dropdownCityValue = newValue!;
+          provinceSelected = newValue!;
+          //
+          districtSelected = null;
+          districtListItems = null;
+          wardSelected = null;
+          wardListItems = null;
         });
+        _fetchAllDataDistrict(context, provinceId: (newValue as Province).id!);
       },
       validator: (value) {
         if (value == null) {
@@ -77,10 +155,11 @@ class _LocationFilterFormState extends State<LocationFilterForm> {
         contentPadding:
             EdgeInsets.only(top: 20, bottom: 20, left: 42, right: 22),
       ),
-      items: provinceListItems?.map<DropdownMenuItem<String>>((String value) {
-        return DropdownMenuItem<String>(
+      items:
+          provinceListItems?.map<DropdownMenuItem<Province>>((Province value) {
+        return DropdownMenuItem<Province>(
           value: value,
-          child: Text(value),
+          child: Text(value.name!),
         );
       }).toList(),
     );
@@ -95,8 +174,15 @@ class _LocationFilterFormState extends State<LocationFilterForm> {
       //style: const TextStyle(color: kPrimaryColor),
       onChanged: (newValue) {
         setState(() {
-          //dropdownCityValue = newValue!;
+          districtSelected = newValue!;
+          //
+          wardSelected = null;
+          wardListItems = null;
         });
+
+        _fetchAllDataWard(context,
+            provinceId: provinceSelected!.id!,
+            districtId: (newValue as District).id!);
       },
       validator: (value) {
         if (value == null) {
@@ -111,10 +197,11 @@ class _LocationFilterFormState extends State<LocationFilterForm> {
         contentPadding:
             EdgeInsets.only(top: 20, bottom: 20, left: 42, right: 22),
       ),
-      items: districtListItems?.map<DropdownMenuItem<String>>((String value) {
-        return DropdownMenuItem<String>(
+      items:
+          districtListItems?.map<DropdownMenuItem<District>>((District value) {
+        return DropdownMenuItem<District>(
           value: value,
-          child: Text(value),
+          child: Text(value.name!),
         );
       }).toList(),
     );
@@ -129,7 +216,7 @@ class _LocationFilterFormState extends State<LocationFilterForm> {
       //style: const TextStyle(color: kPrimaryColor),
       onChanged: (newValue) {
         setState(() {
-          //dropdownCityValue = newValue!;
+          wardSelected = newValue!;
         });
       },
       validator: (value) {
@@ -145,12 +232,22 @@ class _LocationFilterFormState extends State<LocationFilterForm> {
         contentPadding:
             EdgeInsets.only(top: 20, bottom: 20, left: 42, right: 22),
       ),
-      items: wardListItems?.map<DropdownMenuItem<String>>((String value) {
-        return DropdownMenuItem<String>(
+      items: wardListItems?.map<DropdownMenuItem<Ward>>((Ward value) {
+        return DropdownMenuItem<Ward>(
           value: value,
-          child: Text(value),
+          child: Text(value.name!),
         );
       }).toList(),
     );
+  }
+
+  Future<void> _submitForm() async {
+    if (_formKey.currentState!.validate()) {
+      _formKey.currentState!.save();
+
+      widget.onSubmit(provinceSelected!, districtSelected!, wardSelected!);
+
+      Navigator.of(context).pop();
+    }
   }
 }

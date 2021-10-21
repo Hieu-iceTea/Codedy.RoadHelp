@@ -18,6 +18,23 @@ class WardRepository {
     return responseBody.map<Ward>((element) => Ward.fromJson(element)).toList();
   }
 
+  static Future<List<Ward>> findAllByProvinceIdAndDistrictId(
+      int provinceId, int districtId) async {
+    var responseBody = await HttpHelper.get(
+      url: _url +
+          "?provinceId=" +
+          provinceId.toString() +
+          "&districtId=" +
+          districtId.toString(),
+    );
+
+    /*List<Ward> items = [
+      for (var element in responseBody) Ward.fromJson(element)
+    ];*/
+
+    return responseBody.map<Ward>((element) => Ward.fromJson(element)).toList();
+  }
+
   static Future<Ward> findById(int id) async {
     var responseBody = await HttpHelper.get(
       url: _url + id.toString(),

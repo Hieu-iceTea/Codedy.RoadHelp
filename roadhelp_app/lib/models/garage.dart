@@ -122,7 +122,7 @@ class Garage extends BaseModel {
       'provinceId': provinceId,
       'districtId': districtId,
       'wardId': wardId,
-      'garageRatings': ratingGarages,
+      //'garageRatings': ratingGarages,
       'name': name,
       'phone': phone,
       'ratingAvg': ratingAvg,

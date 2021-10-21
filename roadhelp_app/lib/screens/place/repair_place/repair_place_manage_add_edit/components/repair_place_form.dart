@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:roadhelp/helper/util.dart';
 import 'package:roadhelp/models/garage.dart';
 import 'package:roadhelp/providers/garage_provider.dart';
 import 'package:roadhelp/screens/place/repair_place/repair_place/components/location_filter_form.dart';
@@ -20,6 +21,7 @@ class RepairPlaceForm extends StatefulWidget {
 
 class _RepairPlaceFormState extends State<RepairPlaceForm> {
   final _formKey = GlobalKey<FormState>();
+  final _provinceDistrictWardController = TextEditingController();
 
   /*String? name;
   String? phone;
@@ -34,7 +36,7 @@ class _RepairPlaceFormState extends State<RepairPlaceForm> {
     address = widget.garage?.address;
     description = widget.garage?.description;*/
 
-    widget.garage ??= Garage(); //Khởi tạo nếu null
+    //widget.garage ??= Garage(); //Khởi tạo nếu null
 
     super.initState();
   }
@@ -54,7 +56,7 @@ class _RepairPlaceFormState extends State<RepairPlaceForm> {
           SizedBox(height: getProportionateScreenHeight(30)),
           buildAddressFormField(),
           SizedBox(height: getProportionateScreenHeight(30)),
-          buildLocationSelectDialog(),
+          buildProvinceDistrictWardSelectDialog(),
           SizedBox(height: getProportionateScreenHeight(30)),
           buildLocationInput(),
           SizedBox(height: getProportionateScreenHeight(30)),
@@ -134,14 +136,15 @@ class _RepairPlaceFormState extends State<RepairPlaceForm> {
     );
   }
 
-  TextFormField buildLocationSelectDialog() {
+  TextFormField buildProvinceDistrictWardSelectDialog() {
     return TextFormField(
+      controller: _provinceDistrictWardController,
       //onSaved: (newValue) => widget.garage!.name = newValue,
       onTap: () => _showMyDialog(),
       readOnly: true,
       validator: (value) {
         if (value!.isEmpty) {
-          //return "Please Select your Location"; //TODO
+          return "Please Select your Location";
         }
         return null;
       },
@@ -156,7 +159,7 @@ class _RepairPlaceFormState extends State<RepairPlaceForm> {
             getProportionateScreenWidth(20),
             getProportionateScreenWidth(20),
           ),
-          child: Icon(Icons.arrow_drop_down),
+          child: const Icon(Icons.arrow_drop_down),
         ),
       ),
     );
@@ -209,7 +212,18 @@ class _RepairPlaceFormState extends State<RepairPlaceForm> {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(8.0),
           ),
-          content: LocationFilterForm(),
+          content: LocationFilterForm(
+            onSubmit: (provinceSelected, districtSelected, wardSelected) {
+              widget.garage!.province = provinceSelected;
+              widget.garage!.district = districtSelected;
+              widget.garage!.ward = wardSelected;
+              _provinceDistrictWardController.text = provinceSelected.name! +
+                  " / " +
+                  districtSelected.name! +
+                  " / " +
+                  wardSelected.name!;
+            },
+          ),
         );
       },
     );
@@ -230,24 +244,11 @@ class _RepairPlaceFormState extends State<RepairPlaceForm> {
         await Provider.of<GarageProvider>(context, listen: false)
             .update(widget.garage!);
       }
-    } catch (error) {
-      await showDialog(
-        context: context,
-        builder: (ctx) => AlertDialog(
-          title: Text('An error occurred!'),
-          content: Text('Something went wrong.'),
-          actions: <Widget>[
-            FlatButton(
-              child: Text('Okay'),
-              onPressed: () {
-                Navigator.of(ctx).pop();
-              },
-            )
-          ],
-        ),
-      );
-    }
 
-    Navigator.of(context).pop();
+      Navigator.of(context).pop();
+    } catch (error) {
+      await Util.showDialogNotification(
+          context: context, content: error.toString());
+    }
   }
 }
