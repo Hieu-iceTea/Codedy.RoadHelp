@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:roadhelp/helper/util.dart';
 import 'package:roadhelp/models/garage.dart';
@@ -137,8 +138,22 @@ class _RepairPlaceFormState extends State<RepairPlaceForm> {
   }
 
   TextFormField buildProvinceDistrictWardSelectDialog() {
+    String initialValue = "";
+    if (widget.garage?.province?.name != null &&
+        widget.garage?.district?.name != null &&
+        widget.garage?.ward?.name != null) {
+      initialValue = widget.garage!.province!.name! +
+          " / " +
+          widget.garage!.district!.name! +
+          " / " +
+          widget.garage!.ward!.name!;
+
+      _provinceDistrictWardController.text = initialValue;
+    }
+
     return TextFormField(
       controller: _provinceDistrictWardController,
+      //initialValue: initialValue, //Không thể cùng lúc dùng controller và initialValue
       //onSaved: (newValue) => widget.garage!.name = newValue,
       onTap: () => _showMyDialog(),
       readOnly: true,
@@ -191,7 +206,15 @@ class _RepairPlaceFormState extends State<RepairPlaceForm> {
   }
 
   Widget buildLocationInput() {
-    return LocationInput((latLngSelected) => {});
+    return LocationInput(
+      onSelectPlace: (latLngSelected) {
+        widget.garage!.latitude = latLngSelected.latitude;
+        widget.garage!.longitude = latLngSelected.longitude;
+      },
+      latLngInitial: widget.garage?.latitude != null
+          ? LatLng(widget.garage!.latitude!, widget.garage!.longitude!)
+          : null,
+    );
   }
 
   Future<void> _showMyDialog() async {

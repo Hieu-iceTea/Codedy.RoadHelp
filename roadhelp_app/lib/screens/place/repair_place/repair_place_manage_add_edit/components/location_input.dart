@@ -8,8 +8,9 @@ import '/helper/location_helper.dart';
 
 class LocationInput extends StatefulWidget {
   Function(LatLng latLngSelected) onSelectPlace;
+  LatLng? latLngInitial;
 
-  LocationInput(this.onSelectPlace);
+  LocationInput({required this.onSelectPlace, this.latLngInitial});
 
   @override
   _LocationInputState createState() => _LocationInputState();
@@ -27,6 +28,15 @@ class _LocationInputState extends State<LocationInput> {
     setState(() {
       _previewImageUrl = staticMapImageUrl;
     });
+  }
+
+  @override
+  void didChangeDependencies() {
+    if (widget.latLngInitial != null) {
+      _showPreview(widget.latLngInitial!);
+    }
+
+    super.didChangeDependencies();
   }
 
   Future<void> _getCurrentUserLocation() async {
