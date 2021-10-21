@@ -81,7 +81,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.GET, "/my-account-partner/**").hasAuthority("ROLE_PARTNER")
                 .antMatchers(HttpMethod.PUT, "/my-account-partner/**").hasAuthority("ROLE_PARTNER")
                 .antMatchers(HttpMethod.PATCH, "/my-account-partner/**").hasAuthority("ROLE_PARTNER")
-                .antMatchers(HttpMethod.PATCH, "/my-account-partner/**/change-password").hasAuthority("ROLE_PARTNER")
+                .antMatchers(HttpMethod.PUT, "/my-account/**/change-password").hasAnyAuthority("ROLE_PARTNER", "ROLE_MEMBER")
                 .antMatchers(HttpMethod.GET, "/my-account-partner/**/review-about-me").hasAuthority("ROLE_PARTNER")
                 .anyRequest().authenticated();
 
