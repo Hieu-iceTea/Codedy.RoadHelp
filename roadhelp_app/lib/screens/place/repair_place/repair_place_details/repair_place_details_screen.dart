@@ -24,7 +24,7 @@ class RepairPlaceDetailsScreen extends StatelessWidget {
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(AppBar().preferredSize.height),
         child: CustomAppBar(
-          rating: agrs.garage.ratingAvg!,
+          rating: agrs.garage.ratingAvg,
           isManage: agrs.isManage,
           garage: agrs.garage,
         ),

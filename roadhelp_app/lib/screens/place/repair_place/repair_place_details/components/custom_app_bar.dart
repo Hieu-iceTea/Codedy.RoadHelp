@@ -6,12 +6,11 @@ import 'package:roadhelp/models/garage.dart';
 import 'package:roadhelp/screens/place/repair_place/repair_place_manage_add_edit/repair_place_manage_add_edit_screen.dart';
 
 class CustomAppBar extends StatelessWidget {
-  final double rating;
+  final double? rating;
   final bool isManage;
   final Garage garage;
 
-  CustomAppBar(
-      {required this.rating, this.isManage = false, required this.garage});
+  CustomAppBar({this.rating, this.isManage = false, required this.garage});
 
   @override
   // AppBar().preferredSize.height provide us the height that appy on our app bar
@@ -45,26 +44,28 @@ class CustomAppBar extends StatelessWidget {
               ),
             ),
             Spacer(),
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 5),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(14),
-              ),
-              child: Row(
-                children: [
-                  Text(
-                    "$rating",
-                    style: const TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w600,
+            if (rating != null)
+              Container(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 14, vertical: 5),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(14),
+                ),
+                child: Row(
+                  children: [
+                    Text(
+                      "$rating",
+                      style: const TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w600,
+                      ),
                     ),
-                  ),
-                  const SizedBox(width: 5),
-                  SvgPicture.asset("assets/icons/Star Icon.svg"),
-                ],
+                    const SizedBox(width: 5),
+                    SvgPicture.asset("assets/icons/Star Icon.svg"),
+                  ],
+                ),
               ),
-            ),
             if (isManage)
               Container(
                 margin: EdgeInsets.only(left: getProportionateScreenWidth(15)),

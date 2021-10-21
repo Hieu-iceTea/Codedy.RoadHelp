@@ -27,15 +27,15 @@ class GarageProvider with ChangeNotifier {
   }
 
   Future<void> create(Garage item) async {
-    Garage itemResponse = await GarageRepository.create(item);
-    _items.add(itemResponse);
+    //Garage itemResponse = await GarageRepository.create(item);
+    _items.add(item);
     notifyListeners();
   }
 
   Future<void> update(Garage item) async {
-    Garage itemResponse = await GarageRepository.update(item);
+    //Garage itemResponse = await GarageRepository.update(item);
     final index = _items.indexWhere((element) => element.id == item.id);
-    _items[index] = itemResponse;
+    _items[index] = item;
     notifyListeners();
   }
 

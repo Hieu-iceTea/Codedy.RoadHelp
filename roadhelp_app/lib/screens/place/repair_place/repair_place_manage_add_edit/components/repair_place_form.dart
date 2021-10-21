@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:roadhelp/models/garage.dart';
+import 'package:roadhelp/providers/garage_provider.dart';
 import 'package:roadhelp/screens/place/repair_place/repair_place/components/location_filter_form.dart';
 
 import '/components/custom_surfix_icon.dart';
 import '/components/default_button.dart';
 import '/config/size_config.dart';
-import '/screens/auth/otp/otp_screen.dart';
 import 'location_input.dart';
 
 class RepairPlaceForm extends StatefulWidget {
@@ -40,6 +41,9 @@ class _RepairPlaceFormState extends State<RepairPlaceForm> {
 
   @override
   Widget build(BuildContext context) {
+    widget.garage ??= Garage(); //Khởi tạo nếu null
+    final String modeStr = widget.garage?.id == null ? "Thêm mới" : "Cập nhật";
+
     return Form(
       key: _formKey,
       child: Column(
@@ -57,12 +61,8 @@ class _RepairPlaceFormState extends State<RepairPlaceForm> {
           buildDescriptionFormField(),
           SizedBox(height: getProportionateScreenHeight(40)),
           DefaultButton(
-            text: "continue",
-            press: () {
-              if (_formKey.currentState!.validate()) {
-                Navigator.pushNamed(context, OtpScreen.routeName);
-              }
-            },
+            text: modeStr,
+            press: () => _saveForm(),
           ),
         ],
       ),
@@ -141,7 +141,7 @@ class _RepairPlaceFormState extends State<RepairPlaceForm> {
       readOnly: true,
       validator: (value) {
         if (value!.isEmpty) {
-          return "Please Select your Location";
+          //return "Please Select your Location"; //TODO
         }
         return null;
       },
@@ -213,5 +213,41 @@ class _RepairPlaceFormState extends State<RepairPlaceForm> {
         );
       },
     );
+  }
+
+  Future<void> _saveForm() async {
+    if (!_formKey.currentState!.validate()) {
+      return;
+    }
+
+    _formKey.currentState!.save();
+
+    try {
+      if (widget.garage!.id == null) {
+        await Provider.of<GarageProvider>(context, listen: false)
+            .create(widget.garage!);
+      } else {
+        await Provider.of<GarageProvider>(context, listen: false)
+            .update(widget.garage!);
+      }
+    } catch (error) {
+      await showDialog(
+        context: context,
+        builder: (ctx) => AlertDialog(
+          title: Text('An error occurred!'),
+          content: Text('Something went wrong.'),
+          actions: <Widget>[
+            FlatButton(
+              child: Text('Okay'),
+              onPressed: () {
+                Navigator.of(ctx).pop();
+              },
+            )
+          ],
+        ),
+      );
+    }
+
+    Navigator.of(context).pop();
   }
 }

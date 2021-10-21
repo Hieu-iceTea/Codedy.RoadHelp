@@ -25,11 +25,11 @@ class Garage extends BaseModel {
   double? latitude;
   String? description;
   bool? active;
-  bool? isFeatured;
+  bool isFeatured;
 
   //Relationship
   User? userPartner;
-  List<GarageImage>? garageImages;
+  List<GarageImage> garageImages;
   List<RatingGarage>? ratingGarages;
   Province? province;
   District? district;
@@ -49,10 +49,10 @@ class Garage extends BaseModel {
     this.latitude,
     this.description,
     this.active,
-    this.isFeatured,
+    this.isFeatured = false,
     //Relationship:
     this.userPartner,
-    this.garageImages,
+    this.garageImages = const [],
     this.ratingGarages,
     this.province,
     this.district,
