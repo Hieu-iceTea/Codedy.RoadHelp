@@ -47,7 +47,7 @@ public class IssueRestController {
             throw new RestNotFoundException("Issuues id not found - " + id);
         }
 
-        issue.setId(0);
+        issue.setId(id);
         issuesService.save(issue);
         return issuesService.findById(issue.getId());
     }

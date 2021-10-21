@@ -47,8 +47,7 @@ public class GarageRestController {
         if (garageService.findById(id) == null) {
             throw new RestNotFoundException("Garage id not found - " + id);
         }
-
-        garage.setId(0);
+        garage.setId(id);
         garageService.save(garage);
         return garageService.findById(garage.getId());
     }
@@ -64,9 +63,27 @@ public class GarageRestController {
         return "Deleted garage id - " + id;
     }
 
+
+    // Chi tiết tiệm sửa xe
+    @GetMapping(path = {"/repair-place-manage/{id}", "/repair-place-manage/{id}/"})
+    public Garage garageDetails(@PathVariable int id) {
+        Garage garage = garageService.findById(id);
+        if (garage == null) {
+            throw new RestNotFoundException("Garage id not found - " + id);
+        }
+        return garage;
+    }
+    // Thêm tiệm sửa xe
+    @PostMapping(path = {"/repair-place-manage", "/repair-place-manage/"})
+    public Garage storeGarage(@RequestBody Garage garage) {
+        garage.setId(0);
+        Garage newGarage = garageService.save(garage);
+        return garageService.findById(newGarage.getId());
+    }
+
     // Danh sách tiệm sửa xe đang quản lý
     @GetMapping(path = {"/repair-place-manage", "/repair-place-manage/"})
-    public List<Garage> index(@RequestParam(defaultValue = "0") int PartnerId) {
+    public List<Garage> listGarage(@RequestParam(defaultValue = "0") int PartnerId) {
         List<Garage> garages = garageService.findAll();
         List<Garage> garagesByProvinceId = new ArrayList<>();
         for (Garage d : garages
@@ -81,70 +98,33 @@ public class GarageRestController {
             return garagesByProvinceId;
         } else {
             return garageService.findAll();
-
         }
     }
 
-    // Thêm tiệm sửa xe
-    @PostMapping(path = {"/repair-place-manage", "/repair-place-manage/"})
-    public Garage repair_store(@RequestBody Garage garage) {
-        garage.setId(0);
-        Garage newGarage = garageService.save(garage);
-        return garageService.findById(newGarage.getId());
-    }
-
-    // Chi tiết tiệm sửa xe
-    @GetMapping(path = {"/repair-place-manage/{id}", "/repair-place-manage/{id}/"})
-    public Garage findOne(@PathVariable int id) {
-        return garageService.findById(id);
-    }
 
     // Chi tiết tiệm sửa xe - Chỉnh sửa
     @PutMapping(path = {"/repair-place-manage/{id}", "/repair-place-manage/{id}/"})
-    public Garage repair_update(@RequestBody Garage garage, @RequestParam(defaultValue = "0") int PartnerId) {
+    public Garage repair_update(@RequestBody Garage garage, @PathVariable int id) {
 
-        for (Garage d : garageService.findAll()
-        ) {
-            if (d.getPartner().getId() == PartnerId) {
-                garage = d;
-            }
-
-        }
-
-        garage.setId(PartnerId);
-        garageService.save(garage);
-
-        if (PartnerId > 0) {
-            return garage;
-        } else {
-            return garageService.findById(garage.getId());
-        }
-
-    }
-
-    // Chi tiết tiệm sửa xe - Xóa / Tạm dừng hoạt động
-    @PutMapping(path = {"/repair-place-manage/{id}/enable", "/repair-place-manage/{id}/enable/"})
-    public String repair_delete(@PathVariable int id, @RequestParam(defaultValue = "0") int PartnerId) {
         if (garageService.findById(id) == null) {
             throw new RestNotFoundException("Garage id not found - " + id);
         }
+        garage.setId(id);
+        garageService.save(garage);
 
-        Garage garage = new Garage();
-        for (Garage d : garageService.findAll()
-        ) {
-            if (d.getPartner().getId() == PartnerId) {
-                garage = d;
-            }
-        }
-
-        if (PartnerId > 0) {
-            garageService.deleteById(garage.getId());
-        } else {
-
-            garageService.deleteById(id);
-        }
-        return "Deleted garage id - " + id;
-
+        return garageService.findById(garage.getId());
     }
 
+    // Chi tiết tiệm sửa xe - Xóa / Tạm dừng hoạt động
+    @PutMapping(path = {"/repair-place-manage/{Id}/setActive", "/repair-place-manage/{Id}/setActive/"})
+    public String repair_delete(@PathVariable int Id,@RequestParam(value="setActive", required = false,
+            defaultValue = "true") boolean setActive) {
+
+        Garage garage = garageService.findById(Id);
+        garage.setActive(setActive);
+        garageService.save(garage);
+
+        return   " garage id - " + garage.getId() + " Set active - " + setActive;
+
+    }
 }

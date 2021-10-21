@@ -47,7 +47,7 @@ public class RatingIssueRestController {
             throw new RestNotFoundException("Rating partner id not found - " + id);
         }
 
-        ratingIssues.setId(0);
+        ratingIssues.setId(id);
         ratingIssueService.save(ratingIssues);
         return ratingIssueService.findById(ratingIssues.getId());
     }

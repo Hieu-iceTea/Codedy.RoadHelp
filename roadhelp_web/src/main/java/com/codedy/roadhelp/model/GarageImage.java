@@ -1,6 +1,8 @@
 package com.codedy.roadhelp.model;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -10,6 +12,10 @@ import javax.validation.constraints.Size;
 import java.io.Serializable;
 @Entity
 @Table(name = "garageimage")
+@JsonIdentityInfo(
+        scope = GarageImage.class,
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id")
 public class GarageImage extends BaseModel implements Serializable {
 
     @Size(max = 256)
