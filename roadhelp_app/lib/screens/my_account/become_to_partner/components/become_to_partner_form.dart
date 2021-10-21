@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:roadhelp/screens/home/home_screen.dart';
 import 'package:roadhelp/screens/my_account/success_partner/success_partner_screen.dart';
 
 import '/components/custom_surfix_icon.dart';
@@ -65,7 +66,10 @@ class _BeComeToPartnerFormState extends State<BeComeToPartnerForm> {
             text: "Đăng Kí",
             press: () {
               if (_formKey.currentState!.validate()) {
-               Navigator.pushNamed(context, PartnerSuccessScreen.routeName);
+               //Navigator.pushNamed(context, PartnerSuccessScreen.routeName);
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => PartnerSuccessScreen("Hoàn thành","Yêu cầu nâng cấp tài khoản của bạn đã được \n ghi nhận tại hệ thống. Bạn vui lòng đợi \n Admin kiểm duyệt nhé!!", HomeScreen.routeName),)
+                );
               }
             },
           ),
