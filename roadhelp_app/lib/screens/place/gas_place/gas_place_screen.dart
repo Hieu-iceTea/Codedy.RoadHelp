@@ -10,10 +10,26 @@ class GasPlaceScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Title - Change me now"),
-      ),
+      appBar: buildAppBar(context),
       body: Body(),
+    );
+  }
+
+  AppBar buildAppBar(BuildContext context) {
+    return AppBar(
+      title: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            "Cây xăng gần đây nhất",
+            style: TextStyle(color: Colors.black),
+          ),
+          Text(
+            "10 Cây xăng gần bạn",
+            style: Theme.of(context).textTheme.caption,
+          ),
+        ],
+      ),
     );
   }
 }

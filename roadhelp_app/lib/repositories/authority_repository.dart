@@ -1,4 +1,4 @@
-import 'package:roadhelp/models/authorities.dart';
+import 'package:roadhelp/models/authority.dart';
 
 import '/config/constants.dart';
 import '/helper/http_helper.dart';
@@ -6,7 +6,7 @@ import '/helper/http_helper.dart';
 class AuthorityRepository {
   static final String _url = baseApiUrl + "api/v1/authorities/";
 
-  static Future<List<Authorities>> findAll() async {
+  static Future<List<Authority>> findAll() async {
     var responseBody = await HttpHelper.get(
       url: _url,
     );
@@ -16,34 +16,34 @@ class AuthorityRepository {
     ];*/
 
     return responseBody
-        .map<Authorities>((element) => Authorities.fromJson(element))
+        .map<Authority>((element) => Authority.fromJson(element))
         .toList();
   }
 
-  static Future<Authorities> findById(int id) async {
+  static Future<Authority> findById(int id) async {
     var responseBody = await HttpHelper.get(
       url: _url + id.toString(),
     );
 
-    return Authorities.fromJson(responseBody);
+    return Authority.fromJson(responseBody);
   }
 
-  static Future<Authorities> create(Authorities item) async {
+  static Future<Authority> create(Authority item) async {
     var responseBody = await HttpHelper.post(
       url: _url,
       body: item.toJson(),
     );
 
-    return Authorities.fromJson(responseBody);
+    return Authority.fromJson(responseBody);
   }
 
-  static Future<Authorities> update(Authorities item) async {
+  static Future<Authority> update(Authority item) async {
     var responseBody = await HttpHelper.put(
       url: _url + item.id.toString(),
       body: item.toJson(),
     );
 
-    return Authorities.fromJson(responseBody);
+    return Authority.fromJson(responseBody);
   }
 
   static Future<dynamic> deleteById(int id) async {

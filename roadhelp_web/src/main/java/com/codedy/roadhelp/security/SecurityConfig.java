@@ -1,8 +1,10 @@
 package com.codedy.roadhelp.security;
 
-import com.codedy.roadhelp.filter.CustomAuthenticationFilter;
-import com.codedy.roadhelp.filter.CustomAuthorizationFilter;
+import com.codedy.roadhelp.security.jwt.AuthEntryPointJwt;
+import com.codedy.roadhelp.security.jwt.AuthTokenFilter;
+import com.codedy.roadhelp.service.user.UserServiceImplement;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -12,7 +14,6 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
@@ -22,65 +23,68 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @RequiredArgsConstructor
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private final UserDetailsService userDetailsService;
+    @Autowired
+    UserServiceImplement userDetailsService;
+
+    @Autowired
+    private AuthEntryPointJwt unauthorizedHandler;
 
     @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
-
-
-    @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
+    public AuthTokenFilter authenticationJwtTokenFilter() {
+        return new AuthTokenFilter();
     }
 
     @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        CustomAuthenticationFilter customAuthenticationFilter = new CustomAuthenticationFilter(authenticationManagerBean());
-        customAuthenticationFilter.setFilterProcessesUrl("/auth/login");
-        http.csrf().disable();
-        http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-        // phân quyền
-       http.authorizeRequests().antMatchers(HttpMethod.POST, "/auth/login/**").permitAll();
-        // phân quyền Emergency rescue
-        http.authorizeRequests().antMatchers(HttpMethod.POST, "/rescue/send").hasAuthority("ROLE_MEMBER");
-        http.authorizeRequests().antMatchers(HttpMethod.GET, "/rescue/send/confirmation").hasAuthority("ROLE_MEMBER");
-        http.authorizeRequests().antMatchers(HttpMethod.POST, "/rescue/send/confirmation").hasAuthority("ROLE_MEMBER");
-        http.authorizeRequests().antMatchers(HttpMethod.POST, "/rescue/send/post-reviews").hasAuthority("ROLE_MEMBER");
-        http.authorizeRequests().antMatchers(HttpMethod.GET, "/rescue/receive").hasAuthority("ROLE_PARTNER");
-        http.authorizeRequests().antMatchers(HttpMethod.GET, "/rescue/receive/details").hasAuthority("ROLE_PARTNER");
-        http.authorizeRequests().antMatchers(HttpMethod.POST, "/rescue/receive/details").hasAuthority("ROLE_PARTNER");
-        http.authorizeRequests().antMatchers(HttpMethod.GET, "/rescue/receive/show-reviews").hasAuthority("ROLE_PARTNER");
-        // phân quyền Repair place
-        http.authorizeRequests().antMatchers(HttpMethod.GET, "/repair-place").hasAuthority("ROLE_MEMBER");
-        http.authorizeRequests().antMatchers(HttpMethod.GET, "/repair-place/details").hasAuthority("ROLE_MEMBER");
-        http.authorizeRequests().antMatchers(HttpMethod.GET, "/repair-place-manage").hasAuthority("ROLE_PARTNER");
-        http.authorizeRequests().antMatchers(HttpMethod.POST, "/repair-place-manage").hasAuthority("ROLE_PARTNER");
-        http.authorizeRequests().antMatchers(HttpMethod.GET, "/repair-place-manage/**").hasAuthority("ROLE_PARTNER");
-        http.authorizeRequests().antMatchers(HttpMethod.PUT, "/repair-place-manage/**").hasAuthority("ROLE_PARTNER");
-        http.authorizeRequests().antMatchers(HttpMethod.PATCH, "/repair-place-manage/**").hasAuthority("ROLE_PARTNER");
-        http.authorizeRequests().antMatchers(HttpMethod.PUT, "/repair-place-manage/**/enable").hasAuthority("ROLE_PARTNER");
-        http.authorizeRequests().antMatchers(HttpMethod.PATCH, "/repair-place-manage/**/enable").hasAuthority("ROLE_PARTNER");
-        // phân quyền My account
-        http.authorizeRequests().antMatchers(HttpMethod.GET, "/my-account-member/**").hasAuthority("ROLE_MEMBER");
-        http.authorizeRequests().antMatchers(HttpMethod.PUT, "/my-account-member/**").hasAuthority("ROLE_MEMBER");
-        http.authorizeRequests().antMatchers(HttpMethod.PATCH, "/my-account-member/**").hasAuthority("ROLE_MEMBER");
-        http.authorizeRequests().antMatchers(HttpMethod.PATCH, "/my-account-member/**/change-password").hasAuthority("ROLE_MEMBER");
-        http.authorizeRequests().antMatchers(HttpMethod.GET, "/my-account-partner/**").hasAuthority("ROLE_PARTNER");
-        http.authorizeRequests().antMatchers(HttpMethod.PUT, "/my-account-partner/**").hasAuthority("ROLE_PARTNER");
-        http.authorizeRequests().antMatchers(HttpMethod.PATCH, "/my-account-partner/**").hasAuthority("ROLE_PARTNER");
-        http.authorizeRequests().antMatchers(HttpMethod.PATCH, "/my-account-partner/**/change-password").hasAuthority("ROLE_PARTNER");
-        http.authorizeRequests().antMatchers(HttpMethod.GET, "/my-account-partner/**/review-about-me").hasAuthority("ROLE_PARTNER");
-        http.authorizeRequests().anyRequest().authenticated();
-        // gọi tới filter
-        http.addFilter(customAuthenticationFilter);
-        http.addFilterBefore(new CustomAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);
+    public void configure(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
+        authenticationManagerBuilder.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
     }
 
     @Bean
     @Override
     public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();
+    }
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http.cors().and().csrf().disable()
+                .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
+                .authorizeRequests().antMatchers(HttpMethod.POST,"/auth/**").permitAll()
+                .antMatchers(HttpMethod.POST, "/auth/register").permitAll()
+                .antMatchers(HttpMethod.POST, "/rescue/send").hasAuthority("ROLE_MEMBER")
+                .antMatchers(HttpMethod.GET, "/rescue/send/confirmation").hasAuthority("ROLE_MEMBER")
+                .antMatchers(HttpMethod.POST, "/rescue/send/confirmation").hasAuthority("ROLE_MEMBER")
+                .antMatchers(HttpMethod.POST, "/rescue/send/post-reviews").hasAuthority("ROLE_MEMBER")
+                .antMatchers(HttpMethod.GET, "/rescue/receive").hasAuthority("ROLE_PARTNER")
+                .antMatchers(HttpMethod.GET, "/rescue/receive/details").hasAuthority("ROLE_PARTNER")
+                .antMatchers(HttpMethod.POST, "/rescue/receive/details").hasAuthority("ROLE_PARTNER")
+                .antMatchers(HttpMethod.GET, "/rescue/receive/show-reviews").hasAuthority("ROLE_PARTNER")
+                .antMatchers(HttpMethod.GET, "/repair-place").hasAuthority("ROLE_MEMBER")
+                .antMatchers(HttpMethod.GET, "/repair-place/details").hasAuthority("ROLE_MEMBER")
+                .antMatchers(HttpMethod.GET, "/repair-place-manage").hasAuthority("ROLE_PARTNER")
+                .antMatchers(HttpMethod.POST, "/repair-place-manage").hasAuthority("ROLE_PARTNER")
+                .antMatchers(HttpMethod.GET, "/repair-place-manage/**").hasAuthority("ROLE_PARTNER")
+                .antMatchers(HttpMethod.PUT, "/repair-place-manage/**").hasAuthority("ROLE_PARTNER")
+                .antMatchers(HttpMethod.PATCH, "/repair-place-manage/**").hasAuthority("ROLE_PARTNER")
+                .antMatchers(HttpMethod.PUT, "/repair-place-manage/**/enable").hasAuthority("ROLE_PARTNER")
+                .antMatchers(HttpMethod.PATCH, "/repair-place-manage/**/enable").hasAuthority("ROLE_PARTNER")
+                .antMatchers(HttpMethod.GET, "/my-account-member/**").hasAuthority("ROLE_MEMBER")
+                .antMatchers(HttpMethod.PUT, "/my-account-member/**").hasAuthority("ROLE_MEMBER")
+                .antMatchers(HttpMethod.PATCH, "/my-account-member/**").hasAuthority("ROLE_MEMBER")
+                .antMatchers(HttpMethod.PATCH, "/my-account-member/**/change-password").hasAuthority("ROLE_MEMBER")
+                .antMatchers(HttpMethod.GET, "/my-account-partner/**").hasAuthority("ROLE_PARTNER")
+                .antMatchers(HttpMethod.PUT, "/my-account-partner/**").hasAuthority("ROLE_PARTNER")
+                .antMatchers(HttpMethod.PATCH, "/my-account-partner/**").hasAuthority("ROLE_PARTNER")
+                .antMatchers(HttpMethod.PATCH, "/my-account-partner/**/change-password").hasAuthority("ROLE_PARTNER")
+                .antMatchers(HttpMethod.GET, "/my-account-partner/**/review-about-me").hasAuthority("ROLE_PARTNER")
+                .anyRequest().authenticated();
+
+        http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
     }
 }

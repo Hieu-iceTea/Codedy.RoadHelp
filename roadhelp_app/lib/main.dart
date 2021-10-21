@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import 'config/providers.dart';
 import 'config/routes.dart';
 import 'config/theme.dart';
 import 'screens/splash/splash_screen.dart';
@@ -12,14 +14,17 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Road Help',
-      theme: theme(),
-      // home: SplashScreen(),
-      // We use routeName so that we dont need to remember the name
-      initialRoute: SplashScreen.routeName,
-      routes: routes,
+    return MultiProvider(
+      providers: providers,
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: 'Road Help',
+        theme: theme(),
+        // home: SplashScreen(),
+        // We use routeName so that we dont need to remember the name
+        initialRoute: SplashScreen.routeName,
+        routes: routes,
+      ),
     );
   }
 }
