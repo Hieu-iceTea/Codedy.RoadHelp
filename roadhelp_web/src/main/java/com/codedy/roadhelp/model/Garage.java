@@ -37,7 +37,7 @@ public class Garage extends BaseModel implements Serializable {
     @Size(max = 500)
     private String description;
 
-    @NotNull
+    //@NotNull
     private Boolean active;
     private Boolean isFeatured;
 //endregion

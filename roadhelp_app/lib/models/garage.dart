@@ -91,10 +91,10 @@ class Garage extends BaseModel {
       latitude: json['latitude'],
       description: json['description'],
       active: json['active'],
-      isFeatured: json['featured'],
+      isFeatured: json['featured'] ?? false,
       //Relationship:
       //userPartner: User.fromJson(json['userPartner']),
-      garageImages: GarageImage.fromJsonToList(json['garageImages']),
+      garageImages: json['garageImages'] != null ? GarageImage.fromJsonToList(json['garageImages']) : [],
       //ratingGarages: RatingGarage.fromJsonToList(json['ratingGarages']),
       //province: Province.fromJson(json['province']),
       //district: District.fromJson(json['district']),
@@ -132,6 +132,11 @@ class Garage extends BaseModel {
       'description': description,
       'active': active,
       'isFeatured': isFeatured,
+      //
+      'partner': json.decode(userPartner!.toJson()),
+      'province': json.decode(province!.toJson()),
+      'district': json.decode(district!.toJson()),
+      'ward': json.decode(ward!.toJson()),
       //
       'id': id,
       //'createdAt': createdAt,

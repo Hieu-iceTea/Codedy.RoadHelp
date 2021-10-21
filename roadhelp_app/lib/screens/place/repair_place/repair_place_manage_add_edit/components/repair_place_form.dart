@@ -3,6 +3,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:roadhelp/helper/util.dart';
 import 'package:roadhelp/models/garage.dart';
+import 'package:roadhelp/models/user.dart';
 import 'package:roadhelp/providers/garage_provider.dart';
 import 'package:roadhelp/screens/place/repair_place/repair_place/components/location_filter_form.dart';
 
@@ -80,6 +81,9 @@ class _RepairPlaceFormState extends State<RepairPlaceForm> {
         if (value!.isEmpty) {
           return "Please Enter your name";
         }
+        if (value.length < 2 || value.length > 64) {
+          return "Size must be between 2 and 64";
+        }
         return null;
       },
       decoration: const InputDecoration(
@@ -101,6 +105,9 @@ class _RepairPlaceFormState extends State<RepairPlaceForm> {
       validator: (value) {
         if (value!.isEmpty) {
           return "Please Enter your phone";
+        }
+        if (value.length < 10) {
+          return "Size must be greater than 10";
         }
         return null;
       },
@@ -258,6 +265,8 @@ class _RepairPlaceFormState extends State<RepairPlaceForm> {
     }
 
     _formKey.currentState!.save();
+
+    widget.garage!.userPartner = User(id: 1); //TODO
 
     try {
       if (widget.garage!.id == null) {
