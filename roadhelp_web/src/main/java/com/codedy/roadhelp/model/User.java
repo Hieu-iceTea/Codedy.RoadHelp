@@ -40,7 +40,7 @@ public class User extends BaseModel implements Serializable {
     @Size(min = 10)
     private String phone;
 
-    @NotNull
+//    @NotNull
     private Boolean active;
     //endregion
 
@@ -64,7 +64,7 @@ public class User extends BaseModel implements Serializable {
     @JsonBackReference(value = "ratingIssues")
     private List<RatingIssues> ratingIssues;
 
-    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<Authority> authorities;
     //endregion
 
