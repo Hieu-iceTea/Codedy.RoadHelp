@@ -13,6 +13,7 @@ public class BaseServiceImplement<T extends BaseModel, ID extends Serializable> 
 
     private final BaseRepository<T, ID> repository;
 
+
     public BaseServiceImplement(BaseRepository<T, ID> repository) {
         this.repository = repository;
     }
@@ -33,7 +34,6 @@ public class BaseServiceImplement<T extends BaseModel, ID extends Serializable> 
     @Transactional
     public T findById(ID id) {
         Optional<T> itemOptional = repository.findById(id);
-
         T item;
 
         if (itemOptional.isPresent()) {

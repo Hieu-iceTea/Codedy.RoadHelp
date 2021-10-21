@@ -9,11 +9,12 @@ import java.io.Serializable;
 
 @Entity
 @Table(name = "authorities")
-
+@JsonIdentityInfo(
+        scope = Authority.class,
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id")
 public class Authority extends BaseModel implements Serializable {
 //
-//    @Column(name = "username")
-//    private String username;
 
     private String authority;
 

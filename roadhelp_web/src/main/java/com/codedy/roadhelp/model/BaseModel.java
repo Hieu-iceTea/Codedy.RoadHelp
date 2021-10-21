@@ -18,9 +18,6 @@ import java.util.Date;
  *
  */
 @MappedSuperclass
-@JsonIdentityInfo(
-        generator = ObjectIdGenerators.PropertyGenerator.class,
-        property = "id")
 public class BaseModel {
 
     //region - Define Fields -

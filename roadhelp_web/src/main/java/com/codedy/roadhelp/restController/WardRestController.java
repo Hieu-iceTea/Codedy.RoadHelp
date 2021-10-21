@@ -61,7 +61,7 @@ public class WardRestController {
             throw new RestNotFoundException("Ward id not found - " + id);
         }
 
-        ward.setId(0);
+        ward.setId(id);
         wardService.save(ward);
         return wardService.findById(ward.getId());
     }

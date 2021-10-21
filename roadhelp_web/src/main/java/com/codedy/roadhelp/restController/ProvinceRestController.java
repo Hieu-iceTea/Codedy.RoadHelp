@@ -1,7 +1,9 @@
 package com.codedy.roadhelp.restController;
 
+import com.codedy.roadhelp.model.District;
 import com.codedy.roadhelp.model.Province;
 import com.codedy.roadhelp.restController.exception.RestNotFoundException;
+import com.codedy.roadhelp.service.district.DistrictService;
 import com.codedy.roadhelp.service.province.ProvinceService;
 import com.codedy.roadhelp.service.province.ProvinceService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +17,7 @@ public class ProvinceRestController {
 
     @Autowired
     private ProvinceService provinceServiceService;
+    private DistrictService districtService;
 
     // List Province
     @GetMapping(path = {"", "/", "/index"})
@@ -48,7 +51,7 @@ public class ProvinceRestController {
             throw new RestNotFoundException("Province id not found - " + id);
         }
 
-        province.setId(0);
+        province.setId(id);
         provinceServiceService.save(province);
         return provinceServiceService.findById(province.getId());
     }

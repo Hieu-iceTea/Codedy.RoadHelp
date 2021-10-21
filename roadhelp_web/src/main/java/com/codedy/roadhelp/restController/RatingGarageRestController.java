@@ -47,7 +47,7 @@ public class RatingGarageRestController {
             throw new RestNotFoundException("Rating garage id not found - " + id);
         }
 
-        ratingGarage.setId(0);
+        ratingGarage.setId(id);
         ratingGarageService.save(ratingGarage);
         return ratingGarageService.findById(ratingGarage.getId());
     }
