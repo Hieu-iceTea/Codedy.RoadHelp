@@ -20,4 +20,31 @@ class Util {
       ),
     );
   }
+
+  static Widget showWidgetError({String? title, String? content}) {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          const Icon(
+            Icons.error_outline,
+            color: Colors.red,
+            size: 60,
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: 16, right: 16, left: 16),
+            child: Text(
+              title ?? 'An error occurred!',
+              style: const TextStyle(fontSize: 22),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: 16, right: 16, left: 16),
+            child: Text(content ?? 'Something went wrong.'),
+          )
+        ],
+      ),
+    );
+  }
 }
