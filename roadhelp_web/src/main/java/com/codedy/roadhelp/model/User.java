@@ -28,7 +28,7 @@ public class User extends BaseModel implements Serializable {
     @Size(max = 128)
     private String email;
 
-    @Size(min = 8)
+    @Size(min = 6)
     private String password;
     @Size(max = 128)
     private String image;

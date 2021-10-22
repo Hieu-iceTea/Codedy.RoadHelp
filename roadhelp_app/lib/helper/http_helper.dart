@@ -10,7 +10,8 @@ class HttpHelper {
       final response = await http.get(Uri.parse(url));
 
       if (response.body.isEmpty) {
-        throw Exception('❌ Failed to fetch all data. Response body is Empty');
+        throw const HttpException(
+            '❌ Failed to fetch all data. ResponseBody is Empty');
       }
 
       if (response.statusCode == 200) {
@@ -20,8 +21,10 @@ class HttpHelper {
         return json.decode(utf8.decode(response.bodyBytes)); //cách này gọn nhất
       } else {
         // If the server did not return a 200 OK response, then throw an exception.
-        throw Exception('❌ Failed to fetch all data. StatusCode: ' +
-            response.statusCode.toString());
+        throw HttpException('❌ Failed to fetch all data. \nStatusCode: ' +
+            response.statusCode.toString() +
+            "\nMessage: " +
+            (json.decode(response.body)['message'] ?? ""));
       }
     } catch (error) {
       rethrow;
@@ -37,14 +40,16 @@ class HttpHelper {
       );
 
       if (response.body.isEmpty) {
-        throw Exception('❌ Failed to fetch all data. Response body is Empty');
+        throw const HttpException('❌ Failed. ResponseBody is Empty');
       }
 
       if (response.statusCode == 200) {
         return json.decode(response.body);
       } else {
-        throw Exception('❌ Failed to fetch all data. StatusCode: ' +
-            response.statusCode.toString());
+        throw HttpException('❌ Error. \nStatusCode: ' +
+            response.statusCode.toString() +
+            "\nMessage: " +
+            (json.decode(response.body)['message'] ?? ""));
       }
     } catch (error) {
       rethrow;
@@ -60,14 +65,16 @@ class HttpHelper {
       );
 
       if (response.body.isEmpty) {
-        throw Exception('❌ Failed to fetch all data. Response body is Empty');
+        throw const HttpException('❌ Failed. ResponseBody is Empty');
       }
 
       if (response.statusCode == 200) {
         return json.decode(response.body);
       } else {
-        throw Exception('❌ Failed to fetch all data. StatusCode: ' +
-            response.statusCode.toString());
+        throw HttpException('❌ Error. \nStatusCode: ' +
+            response.statusCode.toString() +
+            "\nMessage: " +
+            (json.decode(response.body)['message'] ?? ""));
       }
     } catch (error) {
       rethrow;
@@ -79,12 +86,14 @@ class HttpHelper {
       final response = await http.delete(Uri.parse(url));
 
       if (response.body.isEmpty) {
-        throw Exception('❌ Failed ... . Response body is Empty');
+        throw const HttpException('❌ Failed. ResponseBody is Empty');
       }
 
       if (response.statusCode >= 400) {
-        throw HttpException('❌ Could not delete item. StatusCode: ' +
-            response.statusCode.toString());
+        throw HttpException('❌ Could not delete item. \nStatusCode: ' +
+            response.statusCode.toString() +
+            "\nMessage: " +
+            (json.decode(response.body)['message'] ?? ""));
       }
 
       return response.body;

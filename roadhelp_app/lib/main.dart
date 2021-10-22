@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:roadhelp/providers/auth_provider.dart';
+import 'package:roadhelp/screens/auth/sign_in/sign_in_screen.dart';
+import 'package:roadhelp/screens/home/home_screen.dart';
 
 import 'config/providers.dart';
 import 'config/routes.dart';
 import 'config/theme.dart';
-import 'screens/splash/splash_screen.dart';
 
 void main() {
   runApp(MyApp());
@@ -16,14 +18,28 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: providers,
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: 'Road Help',
-        theme: theme(),
-        // home: SplashScreen(),
-        // We use routeName so that we dont need to remember the name
-        initialRoute: SplashScreen.routeName,
-        routes: routes,
+      child: Consumer<AuthProvider>(
+        builder: (ctx, authProvider, child) => MaterialApp(
+          debugShowCheckedModeBanner: false,
+          title: 'Road Help',
+          theme: theme(),
+          home: authProvider.item.isAuth
+              ? HomeScreen()
+              : FutureBuilder(
+                  future: authProvider.tryAutoLogin(),
+                  builder: (ctx, snapshot) =>
+                      snapshot.connectionState == ConnectionState.waiting
+                          ? const Center(
+                              child: CircularProgressIndicator(),
+                            )
+                          : SignInScreen(),
+                ),
+          // We use routeName so that we dont need to remember the name
+          /*initialRoute: value.item != null
+              ? HomeScreen.routeName
+              : SignInScreen.routeName,*/
+          routes: routes,
+        ),
       ),
     );
   }
