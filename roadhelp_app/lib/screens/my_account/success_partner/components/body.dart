@@ -5,8 +5,16 @@ import '../../../../config/size_config.dart';
 
 
 class Body extends StatelessWidget {
+ // final String  texttitle;
+  //final String textcontent;
+
+
+  //Body({Key? key,  required this.texttitle, required this.textcontent}) : super(key: key);
+
+
   @override
   Widget build(BuildContext context) {
+
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -20,6 +28,7 @@ class Body extends StatelessWidget {
         SizedBox(height: SizeConfig.screenHeight * 0.08),
         Text(
           "Gửi Yêu Cầu Thành Công",
+         // (texttitle),
           style: TextStyle(
             fontSize: getProportionateScreenWidth(20),
             fontWeight: FontWeight.bold,
@@ -28,13 +37,14 @@ class Body extends StatelessWidget {
         ),
         Text(
           "Yêu cầu nâng cấp tài khoản của bạn đã được \n ghi nhận tại hệ thống. Bạn vui lòng đợi \n Admin kiểm duyệt nhé!!",
+          //(textcontent),
           textAlign: TextAlign.center,
         ),
         Spacer(),
         SizedBox(
           width: SizeConfig.screenWidth * 0.6,
           child: DefaultButton(
-            text: "Back to home",
+            text: "Hoàn Thành",
             press: () {
               Navigator.pushNamed(context, HomeScreen.routeName);
             },
