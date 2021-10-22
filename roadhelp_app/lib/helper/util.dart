@@ -21,27 +21,30 @@ class Util {
     );
   }
 
-  static Widget showWidgetError({String? title, String? content}) {
+  static Widget showWidgetNotification(
+      {String? title, String? content, bool isError = false}) {
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          const Icon(
-            Icons.error_outline,
-            color: Colors.red,
+          Icon(
+            isError == true ? Icons.error_outline : Icons.info_outline,
+            color: isError == true ? Colors.red : Colors.blue,
             size: 60,
           ),
           Padding(
             padding: const EdgeInsets.only(top: 16, right: 16, left: 16),
             child: Text(
-              title ?? 'An error occurred!',
+              title ??
+                  (isError == true ? 'An error occurred!' : "Notification!"),
               style: const TextStyle(fontSize: 22),
             ),
           ),
           Padding(
             padding: const EdgeInsets.only(top: 16, right: 16, left: 16),
-            child: Text(content ?? 'Something went wrong.'),
+            child: Text(
+                content ?? (isError == true ? 'Something went wrong.' : "...")),
           )
         ],
       ),

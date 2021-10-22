@@ -37,7 +37,10 @@ class _BodyState extends State<Body> {
               ),
             );
           } else if (snapshot.hasError) {
-            return Util.showWidgetError(content: snapshot.error.toString());
+            return Util.showWidgetNotification(
+              content: snapshot.error.toString(),
+              isError: true,
+            );
           } else {
             return const Center(
               child: CircularProgressIndicator(),
