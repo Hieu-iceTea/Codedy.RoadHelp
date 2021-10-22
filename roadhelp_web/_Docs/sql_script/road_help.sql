@@ -153,7 +153,7 @@ CREATE TABLE IF NOT EXISTS `issue`
     `category`             INT null,
     `description`             VARCHAR(500),
 
-    `status`             int      DEFAULT 1,#     1. vừa gửi chưa có ai nhận giúp | 2. chờ xác nhận | 3. đã được partner xác nhận tới giúp | 4. hủy bởi user | 5. thành công
+    `status`             int      DEFAULT 0,#     0. vừa gửi chưa có ai nhận giúp | 1. chờ xác nhận | 2. đã được partner xác nhận tới giúp | 3. hủy bởi user | 4. thành công
     `created_by`          NVARCHAR(32) DEFAULT 'Codedy',
     `created_at`          TIMESTAMP    DEFAULT CURRENT_TIMESTAMP,
     `updated_by`          NVARCHAR(32) DEFAULT 'Codedy',
@@ -307,42 +307,41 @@ VALUE (10, 10, 'tiem10.jpg');
 #endregion
 
 # #region Insert issue
-INSERT INTO issue(id, user_member_id,user_partner_id, longitude, latitude,category, phone,address,description, status) 
-VALUE (1, 1, 1, '333', '333','1',  '123456789',  'HN','', '1');
+INSERT INTO issue(id, user_member_id, longitude, latitude,category, phone,address,description, status)
+VALUE (1, 1, '333', '333','1',  '123456789',  'HN','', '0');
+
+INSERT INTO issue(id, user_member_id, longitude, latitude,category, phone,address,description, status)
+VALUE (2, 2, '5555', '5555','1',  '123456789',  'HN','', '0');
+
+INSERT INTO issue(id, user_member_id, longitude, latitude,category, phone,address,description, status)
+VALUE (3, 3, '6665', '6665','2',  '123456789',  'HN','', '0');
+
+INSERT INTO issue(id, user_member_id, longitude, latitude,category, phone,address,description, status)
+VALUE (4, 4,  '775', '775','1',  '123456789',  'HN','', '1');
 
 INSERT INTO issue(id, user_member_id,user_partner_id, longitude, latitude,category, phone,address,description, status) 
-VALUE (2, 2, 2, '5555', '5555','1',  '123456789',  'HN','', '1');
+VALUE (5, 5, 5, '88', '333','1',  '123456789',  'HN','', '4');
 
 INSERT INTO issue(id, user_member_id,user_partner_id, longitude, latitude,category, phone,address,description, status) 
-VALUE (3, 3, 3, '6665', '6665','2',  '123456789',  'HN','', '1');
+VALUE (6, 6, 6, '333', '5555','2',  '123456789',  'HN','', '4');
 
 INSERT INTO issue(id, user_member_id,user_partner_id, longitude, latitude,category, phone,address,description, status) 
-VALUE (4, 4, 4, '775', '775','1',  '123456789',  'HN','', '1');
+VALUE (7, 7, 7, '5555', '6665','1',  '123456789',  'HN','', '4');
 
 INSERT INTO issue(id, user_member_id,user_partner_id, longitude, latitude,category, phone,address,description, status) 
-VALUE (5, 5, 5, '88', '333','1',  '123456789',  'HN','', '1');
+VALUE (8, 8, 8, '6665', '775','1',  '123456789',  'HN','', '4');
 
 INSERT INTO issue(id, user_member_id,user_partner_id, longitude, latitude,category, phone,address,description, status) 
-VALUE (6, 6, 6, '333', '5555','2',  '123456789',  'HN','', '1');
+VALUE (9, 9, 9, '775', '333','2',  '123456789',  'HN','', '4');
 
 INSERT INTO issue(id, user_member_id,user_partner_id, longitude, latitude,category, phone,address,description, status) 
-VALUE (7, 7, 7, '5555', '6665','1',  '123456789',  'HN','', '1');
+VALUE (10, 10, 10, '88', '5555','1',  '123456789',  'HN','', '4');
 
 INSERT INTO issue(id, user_member_id,user_partner_id, longitude, latitude,category, phone,address,description, status) 
-VALUE (8, 8, 8, '6665', '775','1',  '123456789',  'HN','', '1');
+VALUE (11, 11, 11, '775', '6665','1',  '123456789',  'HN','', '4');
 
 INSERT INTO issue(id, user_member_id,user_partner_id, longitude, latitude,category, phone,address,description, status) 
-VALUE (9, 9, 9, '775', '333','2',  '123456789',  'HN','', '1');
-
-INSERT INTO issue(id, user_member_id,user_partner_id, longitude, latitude,category, phone,address,description, status) 
-VALUE (10, 10, 10, '88', '5555','1',  '123456789',  'HN','', '1');
-
-INSERT INTO issue(id, user_member_id,user_partner_id, longitude, latitude,category, phone,address,description, status) 
-VALUE (11, 11, 11, '775', '6665','1',  '123456789',  'HN','', '1');
-
-INSERT INTO issue(id, user_member_id,user_partner_id, longitude, latitude,category, phone,address,description, status) 
-VALUE (12, 12, 12, '88', '775','2',  '123456789',  'HN','', '1');
-
+VALUE (12, 12, 12, '88', '775','2',  '123456789',  'HN','', '4');
 
 #endregion
 
