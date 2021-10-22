@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
@@ -9,6 +10,8 @@ class AuthProvider with ChangeNotifier {
   /// NOTE: Phần này chỉ phục vụ xác thực, không phải là entity model có thật trong database
 
   Auth _item = Auth();
+  Timer? _authTimer;
+  final String _authDataKey = "Auth_Data";
 
   Auth get item {
     return _item;
@@ -17,13 +20,14 @@ class AuthProvider with ChangeNotifier {
   Future<Auth> login(Auth item) async {
     Auth itemResponse = await AuthRepository.login(item);
     _item = itemResponse;
+    _setAutoLogoutTimer();
     notifyListeners();
 
     //Lưu dữ liệu đăng nhập vào SharedPreferences
     if (item.rememberMe) {
       final authData = itemResponse.toJson();
       final sharedPreferences = await SharedPreferences.getInstance();
-      sharedPreferences.setString('authData', authData);
+      sharedPreferences.setString(_authDataKey, authData);
     }
 
     return itemResponse;
@@ -36,13 +40,27 @@ class AuthProvider with ChangeNotifier {
     return itemResponse;
   }
 
+  Future<Auth> logout() async {
+    _item = Auth();
+    if (_authTimer != null) {
+      _authTimer!.cancel();
+      _authTimer = null;
+    }
+    notifyListeners();
+    final sharedPreferences = await SharedPreferences.getInstance();
+    sharedPreferences.remove(_authDataKey);
+    //sharedPreferences.clear();
+
+    return _item;
+  }
+
   Future<bool> tryAutoLogin() async {
     final prefs = await SharedPreferences.getInstance();
-    if (!prefs.containsKey('authData')) {
+    if (!prefs.containsKey(_authDataKey)) {
       return false;
     }
 
-    final extractedAuthData = json.decode(prefs.getString('authData')!);
+    final extractedAuthData = json.decode(prefs.getString(_authDataKey)!);
     Auth auth = Auth.fromJson(extractedAuthData);
 
     if (auth.expiryDate!.isBefore(DateTime.now())) {
@@ -51,6 +69,16 @@ class AuthProvider with ChangeNotifier {
 
     _item = auth;
     notifyListeners();
+
+    _setAutoLogoutTimer();
     return true;
+  }
+
+  void _setAutoLogoutTimer() {
+    if (_authTimer != null) {
+      _authTimer!.cancel();
+    }
+    final timeToExpiry = _item.expiryDate!.difference(DateTime.now()).inSeconds;
+    _authTimer = Timer(Duration(seconds: timeToExpiry), logout);
   }
 }
