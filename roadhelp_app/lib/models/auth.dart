@@ -20,6 +20,30 @@ class Auth {
   String? tokenType;
   String? message;
 
+  //extend
+  DateTime? get expiryDate {
+    if (expiresIn != null) {
+      return DateTime.now().add(
+        Duration(
+          seconds: expiresIn!,
+        ),
+      );
+    }
+  }
+
+  bool get isAuth {
+    return validAccessToken != null;
+  }
+
+  String? get validAccessToken {
+    if (expiryDate != null &&
+        expiryDate!.isAfter(DateTime.now()) &&
+        accessToken != null) {
+      return accessToken;
+    }
+    return null;
+  }
+
   Auth({
     //request login
     this.username,

@@ -5,9 +5,9 @@ import 'package:roadhelp/repositories/auth_repository.dart';
 class AuthProvider with ChangeNotifier {
   /// NOTE: Phần này chỉ phục vụ xác thực, không phải là entity model có thật trong database
 
-  Auth? _item;
+  Auth _item = Auth();
 
-  Auth? get item {
+  Auth get item {
     return _item;
   }
 

@@ -23,7 +23,7 @@ class MyApp extends StatelessWidget {
           debugShowCheckedModeBanner: false,
           title: 'Road Help',
           theme: theme(),
-          home: value.item?.username != null ? HomeScreen() : SignInScreen(),
+          home: value.item.isAuth ? HomeScreen() : SignInScreen(),
           // We use routeName so that we dont need to remember the name
           /*initialRoute: value.item != null
               ? HomeScreen.routeName
