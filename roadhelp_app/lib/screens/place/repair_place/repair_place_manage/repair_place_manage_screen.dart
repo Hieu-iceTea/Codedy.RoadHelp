@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:roadhelp/models/garage.dart';
+import 'package:provider/provider.dart';
+import 'package:roadhelp/providers/garage_provider.dart';
 import 'package:roadhelp/screens/place/repair_place/repair_place_manage_add_edit/repair_place_manage_add_edit_screen.dart';
 
 import 'components/body.dart';
@@ -26,9 +27,11 @@ class RepairPlaceManageScreen extends StatelessWidget {
             "Tiệm sửa xe của bạn",
             style: TextStyle(color: Colors.black),
           ),
-          Text(
-            "${demoGarages.length} mục",
-            style: Theme.of(context).textTheme.caption,
+          Consumer<GarageProvider>(
+            builder: (context, value, child) => Text(
+              "${value.items.length} mục",
+              style: Theme.of(context).textTheme.caption,
+            ),
           ),
         ],
       ),
