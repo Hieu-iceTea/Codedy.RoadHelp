@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:roadhelp/helper/util.dart';
+import 'package:roadhelp/models/garage.dart';
 import 'package:roadhelp/providers/garage_provider.dart';
 import 'package:roadhelp/screens/place/repair_place/repair_place_manage/components/repair_place_item.dart';
 
@@ -12,13 +13,14 @@ class Body extends StatefulWidget {
 }
 
 class _BodyState extends State<Body> {
-  Future<void> _fetchAllData(BuildContext context) async {
-    await Provider.of<GarageProvider>(context, listen: false).fetchAllData();
+  Future<List<Garage>> _fetchAllData(BuildContext context) async {
+    return await Provider.of<GarageProvider>(context, listen: false)
+        .fetchAllData();
   }
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
+    return FutureBuilder<List<Garage>>(
         future: _fetchAllData(context),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
