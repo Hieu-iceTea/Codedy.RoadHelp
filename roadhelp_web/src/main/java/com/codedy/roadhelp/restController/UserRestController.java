@@ -7,6 +7,7 @@ import com.codedy.roadhelp.restController.exception.RestNotFoundException;
 import com.codedy.roadhelp.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,9 +19,6 @@ import java.util.List;
 @RestController
 @RequestMapping(path = "/api/v1/users")
 public class UserRestController {
-
-    @Autowired
-    PasswordEncoder encoder;
 
     //TODO: Sửa lỗi vòng lặp đệ quy khi xử lý JSON, lý do relationship giữa các bảng.
 
@@ -109,7 +107,7 @@ public class UserRestController {
     public ResponseEntity<?> changePassword(@Valid @RequestBody HashMap<String, String> requestBody, @PathVariable int id){
         User user = userService.findById(id);
         String password = requestBody.get("password");
-        user.setPassword(encoder.encode(password));
+        user.setPassword(BCrypt.hashpw(password, BCrypt.gensalt(12)));
 
         userService.save(user);
         return ResponseEntity.ok(new MessageResponse("Change password successfully!"));
