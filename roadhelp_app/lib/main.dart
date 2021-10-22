@@ -19,11 +19,21 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: providers,
       child: Consumer<AuthProvider>(
-        builder: (ctx, value, child) => MaterialApp(
+        builder: (ctx, authProvider, child) => MaterialApp(
           debugShowCheckedModeBanner: false,
           title: 'Road Help',
           theme: theme(),
-          home: value.item.isAuth ? HomeScreen() : SignInScreen(),
+          home: authProvider.item.isAuth
+              ? HomeScreen()
+              : FutureBuilder(
+                  future: authProvider.tryAutoLogin(),
+                  builder: (ctx, snapshot) =>
+                      snapshot.connectionState == ConnectionState.waiting
+                          ? const Center(
+                              child: CircularProgressIndicator(),
+                            )
+                          : SignInScreen(),
+                ),
           // We use routeName so that we dont need to remember the name
           /*initialRoute: value.item != null
               ? HomeScreen.routeName

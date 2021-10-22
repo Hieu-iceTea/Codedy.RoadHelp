@@ -6,6 +6,7 @@ class Auth {
   //request login
   String? username;
   String? password;
+  bool rememberMe;
 
   //request sign up
   String? email;
@@ -21,7 +22,9 @@ class Auth {
   String? message;
 
   //extend
-  DateTime? get expiryDate {
+  DateTime? expiryDate;
+
+  /*DateTime? get expiryDate {
     if (expiresIn != null) {
       return DateTime.now().add(
         Duration(
@@ -29,7 +32,7 @@ class Auth {
         ),
       );
     }
-  }
+  }*/
 
   bool get isAuth {
     return validAccessToken != null;
@@ -48,6 +51,7 @@ class Auth {
     //request login
     this.username,
     this.password,
+    this.rememberMe = false,
 
     //request sign up
     this.email,
@@ -61,6 +65,9 @@ class Auth {
     this.accessToken,
     this.tokenType,
     this.message,
+
+    //extend
+    this.expiryDate,
   });
 
   //
@@ -69,6 +76,7 @@ class Auth {
       //request login
       username: json['username'],
       password: json['password'],
+      rememberMe: json['rememberMe'] ?? false,
       //request sign up
       email: json['email'],
       phone: json['phone'],
@@ -80,6 +88,14 @@ class Auth {
       accessToken: json['accessToken'],
       tokenType: json['tokenType'],
       message: json['message'],
+      //extend
+      expiryDate: json['expiryDate'] != null
+          ? DateTime.parse(json['expiryDate'])
+          : DateTime.now().add(
+              Duration(
+                seconds: json['expiresIn'],
+              ),
+            ),
     );
   }
 
@@ -89,6 +105,7 @@ class Auth {
       //request login
       'username': username,
       'password': password,
+      'rememberMe': rememberMe,
       //request sign up
       'email': email,
       'phone': phone,
@@ -100,6 +117,8 @@ class Auth {
       'accessToken': accessToken,
       'tokenType': tokenType,
       'message': message,
+      //
+      'expiryDate': expiryDate?.toIso8601String(),
     });
   }
 }

@@ -22,7 +22,7 @@ class _SignFormState extends State<SignForm> {
   final _formKey = GlobalKey<FormState>();
   String? username;
   String? password;
-  bool? remember = false;
+  bool rememberMe = false;
   final List<String?> errors = [];
 
   void addError({String? error}) {
@@ -54,11 +54,11 @@ class _SignFormState extends State<SignForm> {
           Row(
             children: [
               Checkbox(
-                value: remember,
+                value: rememberMe,
                 activeColor: kPrimaryColor,
                 onChanged: (value) {
                   setState(() {
-                    remember = value;
+                    rememberMe = value ?? false;
                   });
                 },
               ),
@@ -160,7 +160,8 @@ class _SignFormState extends State<SignForm> {
     KeyboardUtil.hideKeyboard(context);
 
     try {
-      Auth auth = Auth(username: username, password: password);
+      Auth auth =
+          Auth(username: username, password: password, rememberMe: rememberMe);
 
       Auth authResponse =
           await Provider.of<AuthProvider>(context, listen: false).login(auth);
