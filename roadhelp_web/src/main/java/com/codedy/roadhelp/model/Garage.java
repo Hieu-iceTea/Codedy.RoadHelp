@@ -12,10 +12,10 @@ import java.util.List;
 
 @Entity
 @Table(name = "garage")
-@JsonIdentityInfo(
-        scope = Garage.class,
-        generator = ObjectIdGenerators.PropertyGenerator.class,
-        property = "id")
+//@JsonIdentityInfo(
+//        scope = Garage.class,
+//        generator = ObjectIdGenerators.PropertyGenerator.class,
+//        property = "id")
 public class Garage extends BaseModel implements Serializable {
 
     //region - Define Fields -
