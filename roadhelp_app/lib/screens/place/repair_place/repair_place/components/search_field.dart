@@ -71,7 +71,7 @@ class _SearchFieldState extends State<SearchField> {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(8.0),
           ),
-          content: LocationFilterForm(),
+          content: LocationFilterForm(onSubmit: (provinceSelected, districtSelected, wardSelected) => {}),
         );
       },
     );

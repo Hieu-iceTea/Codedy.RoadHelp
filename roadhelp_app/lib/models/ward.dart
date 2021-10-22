@@ -54,9 +54,9 @@ class Ward extends BaseModel {
       name: json['name'],
       prefix: json['prefix'],
       //Relationship
-      garages: Garage.fromJsonToList(json['garages']),
+      /*garages: Garage.fromJsonToList(json['garages']),
       province: Province.fromJson(json['province']),
-      district: District.fromJson(json['district']),
+      district: District.fromJson(json['district']),*/
       //
       id: json['id'],
       //createdAt: json['createdAt'],

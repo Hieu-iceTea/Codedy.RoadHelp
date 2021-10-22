@@ -1,26 +1,53 @@
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:provider/provider.dart';
+import 'package:roadhelp/helper/util.dart';
+import 'package:roadhelp/models/garage.dart';
+import 'package:roadhelp/models/user.dart';
+import 'package:roadhelp/providers/garage_provider.dart';
 import 'package:roadhelp/screens/place/repair_place/repair_place/components/location_filter_form.dart';
 
 import '/components/custom_surfix_icon.dart';
 import '/components/default_button.dart';
 import '/config/size_config.dart';
-import '/screens/auth/otp/otp_screen.dart';
 import 'location_input.dart';
 
 class RepairPlaceForm extends StatefulWidget {
+  Garage? garage;
+
+  RepairPlaceForm({Key? key, this.garage}) : super(key: key);
+
   @override
   _RepairPlaceFormState createState() => _RepairPlaceFormState();
 }
 
 class _RepairPlaceFormState extends State<RepairPlaceForm> {
   final _formKey = GlobalKey<FormState>();
-  final List<String?> errors = [];
-  String? name;
+  final _provinceDistrictWardController = TextEditingController();
+
+  /*String? name;
   String? phone;
   String? address;
+  String? description;*/
+
+  @override
+  void initState() {
+    //initial value
+    /*name = widget.garage?.name;
+    phone = widget.garage?.phone;
+    address = widget.garage?.address;
+    description = widget.garage?.description;*/
+
+    //widget.garage ??= Garage(); //Khởi tạo nếu null
+
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
+    widget.garage ??= Garage(); //Khởi tạo nếu null
+    final String modeStr = widget.garage?.id == null ? "Thêm mới" : "Cập nhật";
+
     return Form(
       key: _formKey,
       child: Column(
@@ -31,19 +58,15 @@ class _RepairPlaceFormState extends State<RepairPlaceForm> {
           SizedBox(height: getProportionateScreenHeight(30)),
           buildAddressFormField(),
           SizedBox(height: getProportionateScreenHeight(30)),
-          buildLocationSelectDialog(),
+          buildProvinceDistrictWardSelectDialog(),
           SizedBox(height: getProportionateScreenHeight(30)),
           buildLocationInput(),
           SizedBox(height: getProportionateScreenHeight(30)),
           buildDescriptionFormField(),
           SizedBox(height: getProportionateScreenHeight(40)),
           DefaultButton(
-            text: "continue",
-            press: () {
-              if (_formKey.currentState!.validate()) {
-                Navigator.pushNamed(context, OtpScreen.routeName);
-              }
-            },
+            text: modeStr,
+            press: () => _saveForm(),
           ),
         ],
       ),
@@ -52,10 +75,14 @@ class _RepairPlaceFormState extends State<RepairPlaceForm> {
 
   TextFormField buildNameFormField() {
     return TextFormField(
-      onSaved: (newValue) => name = newValue,
+      initialValue: widget.garage?.name,
+      onSaved: (newValue) => widget.garage!.name = newValue,
       validator: (value) {
         if (value!.isEmpty) {
           return "Please Enter your name";
+        }
+        if (value.length < 2 || value.length > 64) {
+          return "Size must be between 2 and 64";
         }
         return null;
       },
@@ -72,11 +99,15 @@ class _RepairPlaceFormState extends State<RepairPlaceForm> {
 
   TextFormField buildPhoneFormField() {
     return TextFormField(
+      initialValue: widget.garage?.phone,
       keyboardType: TextInputType.phone,
-      onSaved: (newValue) => phone = newValue,
+      onSaved: (newValue) => widget.garage!.phone = newValue,
       validator: (value) {
         if (value!.isEmpty) {
           return "Please Enter your phone";
+        }
+        if (value.length < 10) {
+          return "Size must be greater than 10";
         }
         return null;
       },
@@ -93,7 +124,8 @@ class _RepairPlaceFormState extends State<RepairPlaceForm> {
 
   TextFormField buildAddressFormField() {
     return TextFormField(
-      onSaved: (newValue) => address = newValue,
+      initialValue: widget.garage?.address,
+      onSaved: (newValue) => widget.garage!.address = newValue,
       validator: (value) {
         if (value!.isEmpty) {
           return "Please Enter your address";
@@ -112,9 +144,24 @@ class _RepairPlaceFormState extends State<RepairPlaceForm> {
     );
   }
 
-  TextFormField buildLocationSelectDialog() {
+  TextFormField buildProvinceDistrictWardSelectDialog() {
+    String initialValue = "";
+    if (widget.garage?.province?.name != null &&
+        widget.garage?.district?.name != null &&
+        widget.garage?.ward?.name != null) {
+      initialValue = widget.garage!.province!.name! +
+          " / " +
+          widget.garage!.district!.name! +
+          " / " +
+          widget.garage!.ward!.name!;
+
+      _provinceDistrictWardController.text = initialValue;
+    }
+
     return TextFormField(
-      onSaved: (newValue) => name = newValue,
+      controller: _provinceDistrictWardController,
+      //initialValue: initialValue, //Không thể cùng lúc dùng controller và initialValue
+      //onSaved: (newValue) => widget.garage!.name = newValue,
       onTap: () => _showMyDialog(),
       readOnly: true,
       validator: (value) {
@@ -134,7 +181,7 @@ class _RepairPlaceFormState extends State<RepairPlaceForm> {
             getProportionateScreenWidth(20),
             getProportionateScreenWidth(20),
           ),
-          child: Icon(Icons.arrow_drop_down),
+          child: const Icon(Icons.arrow_drop_down),
         ),
       ),
     );
@@ -142,10 +189,11 @@ class _RepairPlaceFormState extends State<RepairPlaceForm> {
 
   TextFormField buildDescriptionFormField() {
     return TextFormField(
+      initialValue: widget.garage?.description,
       keyboardType: TextInputType.multiline,
       minLines: 2,
       maxLines: 5,
-      onSaved: (newValue) => address = newValue,
+      onSaved: (newValue) => widget.garage!.description = newValue,
       validator: (value) {
         if (value!.isEmpty) {
           return "Please Enter description";
@@ -165,7 +213,15 @@ class _RepairPlaceFormState extends State<RepairPlaceForm> {
   }
 
   Widget buildLocationInput() {
-    return LocationInput((latLngSelected) => {});
+    return LocationInput(
+      onSelectPlace: (latLngSelected) {
+        widget.garage!.latitude = latLngSelected.latitude;
+        widget.garage!.longitude = latLngSelected.longitude;
+      },
+      latLngInitial: widget.garage?.latitude != null
+          ? LatLng(widget.garage!.latitude!, widget.garage!.longitude!)
+          : null,
+    );
   }
 
   Future<void> _showMyDialog() async {
@@ -186,9 +242,45 @@ class _RepairPlaceFormState extends State<RepairPlaceForm> {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(8.0),
           ),
-          content: LocationFilterForm(),
+          content: LocationFilterForm(
+            onSubmit: (provinceSelected, districtSelected, wardSelected) {
+              widget.garage!.province = provinceSelected;
+              widget.garage!.district = districtSelected;
+              widget.garage!.ward = wardSelected;
+              _provinceDistrictWardController.text = provinceSelected.name! +
+                  " / " +
+                  districtSelected.name! +
+                  " / " +
+                  wardSelected.name!;
+            },
+          ),
         );
       },
     );
+  }
+
+  Future<void> _saveForm() async {
+    if (!_formKey.currentState!.validate()) {
+      return;
+    }
+
+    _formKey.currentState!.save();
+
+    widget.garage!.userPartner = User(id: 1); //TODO
+
+    try {
+      if (widget.garage!.id == null) {
+        await Provider.of<GarageProvider>(context, listen: false)
+            .create(widget.garage!);
+      } else {
+        await Provider.of<GarageProvider>(context, listen: false)
+            .update(widget.garage!);
+      }
+
+      Navigator.of(context).pop();
+    } catch (error) {
+      await Util.showDialogNotification(
+          context: context, content: error.toString());
+    }
   }
 }

@@ -11,29 +11,29 @@ import 'garage_image.dart';
 
 class Garage extends BaseModel {
   //Foreign Keys
-  final int? userPartnerId;
-  final int? provinceId; //Tỉnh/TP
-  final int? districtId; //Quận/Huyện
-  final int? wardId; //Phường/Xã
+  int? userPartnerId;
+  int? provinceId; //Tỉnh/TP
+  int? districtId; //Quận/Huyện
+  int? wardId; //Phường/Xã
 
   //Main Fields
-  final String? name;
-  final String? phone;
-  final double? ratingAvg;
-  final String? address;
-  final double? longitude;
-  final double? latitude;
-  final String? description;
-  final bool? active;
-  final bool? isFeatured;
+  String? name;
+  String? phone;
+  double? rateAvg;
+  String? address;
+  double? longitude;
+  double? latitude;
+  String? description;
+  bool? active;
+  bool isFeatured;
 
   //Relationship
-  final User? userPartner;
-  final List<GarageImage>? garageImages;
-  final List<RatingGarage>? ratingGarages;
-  final Province? province;
-  final District? district;
-  final Ward? ward;
+  User? userPartner;
+  List<GarageImage> garageImages;
+  List<RatingGarage>? ratingGarages;
+  Province? province;
+  District? district;
+  Ward? ward;
 
   Garage({
     this.userPartnerId,
@@ -43,16 +43,16 @@ class Garage extends BaseModel {
     //
     this.name,
     this.phone,
-    this.ratingAvg,
+    this.rateAvg,
     this.address,
     this.longitude,
     this.latitude,
     this.description,
     this.active,
-    this.isFeatured,
+    this.isFeatured = false,
     //Relationship:
     this.userPartner,
-    this.garageImages,
+    this.garageImages = const [],
     this.ratingGarages,
     this.province,
     this.district,
@@ -85,17 +85,17 @@ class Garage extends BaseModel {
       //
       name: json['name'],
       phone: json['phone'],
-      ratingAvg: json['ratingAvg'],
+      rateAvg: json['rateAvg'],
       address: json['address'],
       longitude: json['longitude'],
       latitude: json['latitude'],
       description: json['description'],
       active: json['active'],
-      isFeatured: json['isFeatured'],
+      isFeatured: json['featured'] ?? false,
       //Relationship:
-      userPartner: User.fromJson(json['userPartner']),
-      garageImages: GarageImage.fromJsonToList(json['garageImages']),
-      ratingGarages: RatingGarage.fromJsonToList(json['ratingGarages']),
+      //userPartner: User.fromJson(json['userPartner']),
+      garageImages: json['garageImages'] != null ? GarageImage.fromJsonToList(json['garageImages']) : [],
+      //ratingGarages: RatingGarage.fromJsonToList(json['ratingGarages']),
       province: Province.fromJson(json['province']),
       district: District.fromJson(json['district']),
       ward: Ward.fromJson(json['ward']),
@@ -122,16 +122,21 @@ class Garage extends BaseModel {
       'provinceId': provinceId,
       'districtId': districtId,
       'wardId': wardId,
-      'garageRatings': ratingGarages,
+      //'garageRatings': ratingGarages,
       'name': name,
       'phone': phone,
-      'ratingAvg': ratingAvg,
+      'rateAvg': rateAvg,
       'address': address,
       'longitude': longitude,
       'latitude': latitude,
       'description': description,
       'active': active,
       'isFeatured': isFeatured,
+      //
+      'partner': json.decode(userPartner!.toJson()),
+      'province': json.decode(province!.toJson()),
+      'district': json.decode(district!.toJson()),
+      'ward': json.decode(ward!.toJson()),
       //
       'id': id,
       //'createdAt': createdAt,
@@ -192,7 +197,7 @@ Garage getTmpGarage() {
     phone: "012345678",
     address: "Thanh Xuan, Ha Noi",
     description: description,
-    ratingAvg: 4.8,
+    rateAvg: 4.8,
     ratingGarages: [
       RatingGarage(
           id: Random().nextInt(1000),

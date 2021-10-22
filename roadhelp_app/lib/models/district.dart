@@ -51,9 +51,9 @@ class District extends BaseModel {
       name: json['name'],
       prefix: json['prefix'],
       //Relationship
-      garages: Garage.fromJsonToList(json['garages']),
+      /*garages: Garage.fromJsonToList(json['garages']),
       province: Province.fromJson(json['province']),
-      wards: Ward.fromJsonToList(json['wards']),
+      wards: Ward.fromJsonToList(json['wards']),*/
       //
       id: json['id'],
       //createdAt: json['createdAt'],

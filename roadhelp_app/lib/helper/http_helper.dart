@@ -15,7 +15,9 @@ class HttpHelper {
 
       if (response.statusCode == 200) {
         // If the server did return a 200 OK response, then parse the JSON.
-        return json.decode(response.body);
+        //return json.decode(response.body); //dùng cách mặc định này bị lỗi font utf8
+        //return json.decode(const Utf8Decoder().convert(response.bodyBytes)); //cách này cũng tạm ok
+        return json.decode(utf8.decode(response.bodyBytes)); //cách này gọn nhất
       } else {
         // If the server did not return a 200 OK response, then throw an exception.
         throw Exception('❌ Failed to fetch all data. StatusCode: ' +
@@ -81,7 +83,8 @@ class HttpHelper {
       }
 
       if (response.statusCode >= 400) {
-        throw HttpException('❌ Could not delete item. StatusCode: ' + response.statusCode.toString());
+        throw HttpException('❌ Could not delete item. StatusCode: ' +
+            response.statusCode.toString());
       }
 
       return response.body;
