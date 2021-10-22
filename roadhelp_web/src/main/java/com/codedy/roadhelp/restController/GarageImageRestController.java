@@ -81,6 +81,7 @@ public class GarageImageRestController {
         if (garageImageService.findById(id) == null) {
             throw new RestNotFoundException("GarageImage id not found - " + id);
         }
+        storageService.delete(garageImageService.findById(id).getImage(), _path);
 
         garageImageService.deleteById(id);
         return "Deleted garageImage id - " + id;

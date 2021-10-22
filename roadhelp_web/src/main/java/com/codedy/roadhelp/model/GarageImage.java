@@ -12,10 +12,10 @@ import javax.validation.constraints.Size;
 import java.io.Serializable;
 @Entity
 @Table(name = "garageimage")
-@JsonIdentityInfo(
-        scope = GarageImage.class,
-        generator = ObjectIdGenerators.PropertyGenerator.class,
-        property = "id")
+//@JsonIdentityInfo(
+//        scope = GarageImage.class,
+//        generator = ObjectIdGenerators.PropertyGenerator.class,
+//        property = "id")
 public class GarageImage extends BaseModel implements Serializable {
 
     @Size(max = 256)
@@ -23,6 +23,10 @@ public class GarageImage extends BaseModel implements Serializable {
     //region - Relationship -
     @ManyToOne
     @JoinColumn(name = "garage_id") //updatable = false, insertable = false
+    @JsonIdentityInfo(
+        scope = Garage.class,
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id")
     private Garage garage;
     //endregion
 

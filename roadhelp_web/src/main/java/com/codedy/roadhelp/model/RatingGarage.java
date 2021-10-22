@@ -10,10 +10,7 @@ import java.io.Serializable;
 
 @Entity
 @Table(name = "ratinggarage")
-@JsonIdentityInfo(
-        scope = RatingGarage.class,
-        generator = ObjectIdGenerators.PropertyGenerator.class,
-        property = "id")
+
 public class RatingGarage extends BaseModel implements Serializable {
 
     //region - Define Fields -
@@ -27,6 +24,10 @@ public class RatingGarage extends BaseModel implements Serializable {
     //region - Relationship -
     @ManyToOne
     @JoinColumn(name = "garage_id") //updatable = false, insertable = false
+    @JsonIdentityInfo(
+            scope = Garage.class,
+            generator = ObjectIdGenerators.PropertyGenerator.class,
+            property = "id")
     private Garage garage;
 
     @ManyToOne
