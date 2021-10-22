@@ -4,7 +4,6 @@ import 'package:roadhelp/helper/util.dart';
 import 'package:roadhelp/models/auth.dart';
 import 'package:roadhelp/providers/auth_provider.dart';
 import 'package:roadhelp/screens/home/home_screen.dart';
-import 'package:roadhelp/screens/splash/splash_screen.dart';
 
 import '/components/custom_surfix_icon.dart';
 import '/components/default_button.dart';
@@ -163,7 +162,17 @@ class _SignFormState extends State<SignForm> {
     try {
       Auth auth = Auth(username: username, password: password);
 
-      await Provider.of<AuthProvider>(context, listen: false).login(auth);
+      Auth authResponse =
+          await Provider.of<AuthProvider>(context, listen: false).login(auth);
+
+      if (authResponse.isAuth) {
+        //Navigator.pushReplacementNamed(context, HomeScreen.routeName);
+
+        //Remove all routes:
+        //https://stackoverflow.com/questions/45889341/flutter-remove-all-routes
+        Navigator.pushNamedAndRemoveUntil(
+            context, HomeScreen.routeName, (Route<dynamic> route) => false);
+      }
 
       //Nếu màn hình bắt đầu không phải là SignIn mà là Splash thì cần chuyển về màn hình bắt đầu
       //Navigator.of(context).pop(); //pop() nếu màn trước là Splash

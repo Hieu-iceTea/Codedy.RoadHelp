@@ -11,15 +11,17 @@ class AuthProvider with ChangeNotifier {
     return _item;
   }
 
-  Future<void> login(Auth item) async {
+  Future<Auth> login(Auth item) async {
     Auth itemResponse = await AuthRepository.login(item);
     _item = itemResponse;
     notifyListeners();
+    return itemResponse;
   }
 
-  Future<void> signup(Auth item) async {
+  Future<Auth> signup(Auth item) async {
     Auth itemResponse = await AuthRepository.signup(item);
     _item = itemResponse;
     notifyListeners();
+    return itemResponse;
   }
 }
