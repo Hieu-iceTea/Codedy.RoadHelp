@@ -19,7 +19,7 @@ class Garage extends BaseModel {
   //Main Fields
   String? name;
   String? phone;
-  double? ratingAvg;
+  double? rateAvg;
   String? address;
   double? longitude;
   double? latitude;
@@ -43,7 +43,7 @@ class Garage extends BaseModel {
     //
     this.name,
     this.phone,
-    this.ratingAvg,
+    this.rateAvg,
     this.address,
     this.longitude,
     this.latitude,
@@ -85,7 +85,7 @@ class Garage extends BaseModel {
       //
       name: json['name'],
       phone: json['phone'],
-      ratingAvg: json['rateAvg'],
+      rateAvg: json['rateAvg'],
       address: json['address'],
       longitude: json['longitude'],
       latitude: json['latitude'],
@@ -125,7 +125,7 @@ class Garage extends BaseModel {
       //'garageRatings': ratingGarages,
       'name': name,
       'phone': phone,
-      'ratingAvg': ratingAvg,
+      'rateAvg': rateAvg,
       'address': address,
       'longitude': longitude,
       'latitude': latitude,
@@ -197,7 +197,7 @@ Garage getTmpGarage() {
     phone: "012345678",
     address: "Thanh Xuan, Ha Noi",
     description: description,
-    ratingAvg: 4.8,
+    rateAvg: 4.8,
     ratingGarages: [
       RatingGarage(
           id: Random().nextInt(1000),
