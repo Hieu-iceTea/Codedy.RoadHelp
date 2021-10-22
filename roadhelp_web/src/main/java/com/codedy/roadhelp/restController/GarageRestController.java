@@ -1,6 +1,7 @@
 package com.codedy.roadhelp.restController;
 
 import com.codedy.roadhelp.model.Garage;
+import com.codedy.roadhelp.repository.GarageRepository;
 import com.codedy.roadhelp.restController.exception.RestNotFoundException;
 import com.codedy.roadhelp.service.garage.GarageService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -125,5 +126,15 @@ public class GarageRestController {
 
         return   " garage id - " + garage.getId() + " Set active - " + setActive;
 
+    }
+
+    // Tìm kiếm tiệm sửa xe theo tên
+    @GetMapping(path = {"/repair-place", "/repair-place"})
+    public List<Garage> searchGarage(@RequestParam("name") String name) {
+        if (name == null){
+            return garageService.findAll();
+        } else {
+            return garageService.findByName(name);
+        }
     }
 }
