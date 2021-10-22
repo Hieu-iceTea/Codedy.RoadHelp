@@ -1,5 +1,6 @@
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
+import 'package:roadhelp/providers/auth_provider.dart';
 
 import '/providers/authority_provider.dart';
 import '/providers/district_provider.dart';
@@ -15,6 +16,9 @@ import '/providers/ward_provider.dart';
 // We use name route
 // All our routes will be available here
 final List<SingleChildWidget> providers = [
+  ChangeNotifierProvider(
+    create: (context) => AuthProvider(),
+  ),
   ChangeNotifierProvider(
     create: (context) => AuthorityProvider(),
   ),
