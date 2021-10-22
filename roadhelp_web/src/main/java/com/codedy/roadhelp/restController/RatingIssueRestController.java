@@ -2,7 +2,9 @@ package com.codedy.roadhelp.restController;
 
 import com.codedy.roadhelp.model.RatingIssues;
 import com.codedy.roadhelp.restController.exception.RestNotFoundException;
+import com.codedy.roadhelp.service.issues.IssuesService;
 import com.codedy.roadhelp.service.ratingIssue.RatingIssueService;
+import com.codedy.roadhelp.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,6 +16,10 @@ public class RatingIssueRestController {
 
     @Autowired
     private RatingIssueService ratingIssueService;
+    @Autowired
+    private UserService userService;
+    @Autowired
+    private IssuesService issuesService;
 
     // List Rating Partner
     @GetMapping(path = {"", "/", "/index"})
@@ -35,6 +41,17 @@ public class RatingIssueRestController {
     @PostMapping(path = {"", "/"})
     public RatingIssues store(@RequestBody RatingIssues ratingIssues) {
         ratingIssues.setId(0);
+        RatingIssues newRatingIssues = ratingIssueService.save(ratingIssues);
+        return ratingIssueService.findById(newRatingIssues.getId());
+    }
+    // Gửi đánh giá cứu hộ
+    @PostMapping(path = {"/rescue/send/post-reviews", "/rescue/send/post-reviews/"})
+    public RatingIssues createReviewRescue(@RequestBody RatingIssues ratingIssues, @RequestParam(defaultValue = "0") int userMemberId,
+                                           @RequestParam(defaultValue = "0") int issueId) {
+
+        ratingIssues.setId(0);
+        ratingIssues.setIssues(issuesService.findById(issueId));
+        ratingIssues.setUsers(userService.findById(userMemberId));
         RatingIssues newRatingIssues = ratingIssueService.save(ratingIssues);
         return ratingIssueService.findById(newRatingIssues.getId());
     }
@@ -63,12 +80,4 @@ public class RatingIssueRestController {
         return "Deleted rating partner id - " + id;
     }
 
-    //Hùng
-    // Tạo đánh giá người giúp đỡ mình
-    @PostMapping(path = {"/rescue/send/post-reviews", "/rescue/send/post-reviews/"})
-    public RatingIssues postReview(@RequestBody RatingIssues ratingIssues) {
-        ratingIssues.setId(0);
-        RatingIssues newRatingIssues = ratingIssueService.save(ratingIssues);
-        return ratingIssueService.findById(newRatingIssues.getId());
-    }
 }

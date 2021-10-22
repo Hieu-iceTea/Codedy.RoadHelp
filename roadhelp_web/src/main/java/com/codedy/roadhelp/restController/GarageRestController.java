@@ -63,7 +63,6 @@ public class GarageRestController {
         return "Deleted garage id - " + id;
     }
 
-
     // Chi tiết tiệm sửa xe
     @GetMapping(path = {"/repair-place-manage/{id}", "/repair-place-manage/{id}/"})
     public Garage garageDetails(@PathVariable int id) {
@@ -116,11 +115,11 @@ public class GarageRestController {
     }
 
     // Chi tiết tiệm sửa xe - Xóa / Tạm dừng hoạt động
-    @PutMapping(path = {"/repair-place-manage/{Id}/setActive", "/repair-place-manage/{Id}/setActive/"})
-    public String repair_delete(@PathVariable int Id,@RequestParam(value="setActive", required = false,
+    @PutMapping(path = {"/repair-place-manage/{id}/setActive", "/repair-place-manage/{Id}/setActive/"})
+    public String repair_delete(@PathVariable int id,@RequestParam(value="setActive", required = false,
             defaultValue = "true") boolean setActive) {
 
-        Garage garage = garageService.findById(Id);
+        Garage garage = garageService.findById(id);
         garage.setActive(setActive);
         garageService.save(garage);
 
