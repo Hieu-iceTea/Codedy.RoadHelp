@@ -43,7 +43,7 @@ class _SignFormState extends State<SignForm> {
       key: _formKey,
       child: Column(
         children: [
-          buildEmailFormField(),
+          buildUsernameFormField(),
           SizedBox(height: getProportionateScreenHeight(30)),
           buildPasswordFormField(),
           SizedBox(height: getProportionateScreenHeight(30)),
@@ -88,6 +88,39 @@ class _SignFormState extends State<SignForm> {
     );
   }
 
+  TextFormField buildUsernameFormField() {
+    return TextFormField(
+      keyboardType: TextInputType.name,
+      onSaved: (newValue) => username = newValue,
+      onChanged: (value) {
+        if (value.trim().isNotEmpty) {
+          removeError(error: kUserNameNullError);
+        } else if (value.trim().length < 6) {
+          removeError(error: kInvalidUserNameError);
+        }
+        return;
+      },
+      validator: (value) {
+        if (value!.isEmpty) {
+          addError(error: kUserNameNullError);
+          return "";
+        } else if (value.trim().length < 6) {
+          addError(error: kInvalidUserNameError);
+          return "";
+        }
+        return null;
+      },
+      decoration: const InputDecoration(
+        labelText: "Tài Khoản",
+        hintText: "Nhập tài khoản...",
+        // If  you are using latest version of flutter then lable text and hint text shown like this
+        // if you r using flutter less then 1.20.* then maybe this is not working properly
+        floatingLabelBehavior: FloatingLabelBehavior.always,
+        suffixIcon: CustomSurffixIcon(svgIcon: "assets/icons/user_icon.svg"),
+      ),
+    );
+  }
+
   TextFormField buildPasswordFormField() {
     return TextFormField(
       obscureText: true,
@@ -117,39 +150,6 @@ class _SignFormState extends State<SignForm> {
         // if you r using flutter less then 1.20.* then maybe this is not working properly
         floatingLabelBehavior: FloatingLabelBehavior.always,
         suffixIcon: CustomSurffixIcon(svgIcon: "assets/icons/pass.svg"),
-      ),
-    );
-  }
-
-  TextFormField buildEmailFormField() {
-    return TextFormField(
-      keyboardType: TextInputType.name,
-      onSaved: (newValue) => username = newValue,
-      onChanged: (value) {
-        if (value.trim().isNotEmpty) {
-          removeError(error: kUserNameNullError);
-        } else if (value.trim().length < 6) {
-          removeError(error: kInvalidUserNameError);
-        }
-        return;
-      },
-      validator: (value) {
-        if (value!.isEmpty) {
-          addError(error: kUserNameNullError);
-          return "";
-        } else if (value.trim().length < 6) {
-          addError(error: kInvalidUserNameError);
-          return "";
-        }
-        return null;
-      },
-      decoration: const InputDecoration(
-        labelText: "Tài Khoản",
-        hintText: "Nhập tài khoản...",
-        // If  you are using latest version of flutter then lable text and hint text shown like this
-        // if you r using flutter less then 1.20.* then maybe this is not working properly
-        floatingLabelBehavior: FloatingLabelBehavior.always,
-        suffixIcon: CustomSurffixIcon(svgIcon: "assets/icons/user_icon.svg"),
       ),
     );
   }
