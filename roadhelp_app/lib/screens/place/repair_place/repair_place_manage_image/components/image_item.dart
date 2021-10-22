@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:roadhelp/components/rounded_icon_btn.dart';
 
 class ImageItem extends StatelessWidget {
   final String imageUrl;
@@ -7,9 +8,22 @@ class ImageItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ClipRRect(
-      borderRadius: const BorderRadius.all(Radius.circular(10)),
-      child: Image.network(imageUrl),
+    return Stack(
+      clipBehavior: Clip.none,
+      children: [
+        ClipRRect(
+          borderRadius: const BorderRadius.all(Radius.circular(10)),
+          child: Image.network(imageUrl),
+        ),
+        Positioned(
+            top: -15,
+            right: -15,
+            child: RoundedIconBtn(
+              icon: Icons.cancel,
+              press: () {},
+              showShadow: true,
+            )),
+      ],
     );
   }
 }

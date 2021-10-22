@@ -6,7 +6,7 @@ import 'garage.dart';
 
 class GarageImage extends BaseModel {
   //
-  String? garageId;
+  int? garageId;
 
   //
   String? image;

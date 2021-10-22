@@ -1,5 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:roadhelp/models/garage.dart';
+import 'package:roadhelp/models/garage_image.dart';
+import 'package:roadhelp/repositories/garage_image_repository.dart';
 import 'package:roadhelp/repositories/garage_repository.dart';
 
 class GarageProvider with ChangeNotifier {
@@ -42,6 +44,21 @@ class GarageProvider with ChangeNotifier {
   Future<void> deleteById(int id) async {
     await GarageRepository.deleteById(id);
     _items.removeWhere((element) => element.id == id);
+    notifyListeners();
+  }
+
+  //image
+  Future<void> createGarageImage(GarageImage garageImage) async {
+    GarageImage garageImageResponse = await GarageImageRepository.create(garageImage);
+    final index = _items.indexWhere((element) => element.id == garageImage.garageId);
+    _items[index].garageImages.add(garageImageResponse);
+    notifyListeners();
+  }
+
+  Future<void> removeGarageImage(GarageImage garageImage) async {
+    await GarageImageRepository.deleteById(garageImage.id!);
+    final index = _items.indexWhere((element) => element.id == garageImage.garageId);
+    _items[index].garageImages.removeWhere((element) => element.id == garageImage.id);
     notifyListeners();
   }
 }
