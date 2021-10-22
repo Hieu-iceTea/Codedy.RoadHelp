@@ -53,11 +53,13 @@ public class User extends BaseModel implements Serializable {
             CascadeType.DETACH, CascadeType.REFRESH})
     private List<Garage> garages;
 
-    @OneToMany(mappedBy = "userPartners")
+    @OneToMany(mappedBy = "userPartners",cascade = {CascadeType.PERSIST, CascadeType.MERGE,
+            CascadeType.DETACH, CascadeType.REFRESH})
     @JsonBackReference(value = "issuesPartnerDetails")
     private List<Issue> issuePartnerDetails;
 
-    @OneToMany(mappedBy = "userMembers")
+    @OneToMany(mappedBy = "userMembers",cascade = {CascadeType.PERSIST, CascadeType.MERGE,
+            CascadeType.DETACH, CascadeType.REFRESH})
     @JsonBackReference(value = "issueMemberDetails")
     private List<Issue> issueMemberDetails;
 
