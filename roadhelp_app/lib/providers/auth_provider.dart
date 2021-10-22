@@ -41,12 +41,16 @@ class AuthProvider with ChangeNotifier {
   }
 
   Future<Auth> logout() async {
+    //xóa thông tin đăng nhập hiện tại trong Provider:
     _item = Auth();
     if (_authTimer != null) {
       _authTimer!.cancel();
       _authTimer = null;
     }
+
     notifyListeners();
+
+    //xóa SharedPreferences -> Auth_Data
     final sharedPreferences = await SharedPreferences.getInstance();
     sharedPreferences.remove(_authDataKey);
     //sharedPreferences.clear();
