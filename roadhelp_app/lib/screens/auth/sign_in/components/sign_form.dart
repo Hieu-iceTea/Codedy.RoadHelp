@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:roadhelp/screens/home/home_screen.dart';
 
 import '/components/custom_surfix_icon.dart';
 import '/components/default_button.dart';
 import '/components/form_error.dart';
-import '../../../../config/constants.dart';
+import '/config/constants.dart';
+import '/config/size_config.dart';
 import '/helper/keyboard.dart';
 import '/screens/auth/forgot_password/forgot_password_screen.dart';
 import '/screens/login_success/login_success_screen.dart';
-import '../../../../config/size_config.dart';
 
 class SignForm extends StatefulWidget {
   @override
@@ -23,17 +22,19 @@ class _SignFormState extends State<SignForm> {
   final List<String?> errors = [];
 
   void addError({String? error}) {
-    if (!errors.contains(error))
+    if (!errors.contains(error)) {
       setState(() {
         errors.add(error);
       });
+    }
   }
 
   void removeError({String? error}) {
-    if (errors.contains(error))
+    if (errors.contains(error)) {
       setState(() {
         errors.remove(error);
       });
+    }
   }
 
   @override
@@ -57,13 +58,13 @@ class _SignFormState extends State<SignForm> {
                   });
                 },
               ),
-              Text("Nhớ mật khẩu"),
-              Spacer(),
+              const Text("Nhớ mật khẩu"),
+              const Spacer(),
               GestureDetector(
                 onTap: () => Navigator.pushNamed(
                     context, ForgotPasswordScreen.routeName),
-                child: Text(
-                  "Lấy lại mật khẩu",
+                child: const Text(
+                  "Quên mật khẩu",
                   style: TextStyle(decoration: TextDecoration.underline),
                 ),
               )
@@ -109,9 +110,9 @@ class _SignFormState extends State<SignForm> {
         }
         return null;
       },
-      decoration: InputDecoration(
+      decoration: const InputDecoration(
         labelText: "Mật Khẩu",
-        hintText: "Vui lòng nhập mật khẩu...",
+        hintText: "Nhập mật khẩu...",
         // If  you are using latest version of flutter then lable text and hint text shown like this
         // if you r using flutter less then 1.20.* then maybe this is not working properly
         floatingLabelBehavior: FloatingLabelBehavior.always,
@@ -130,7 +131,7 @@ class _SignFormState extends State<SignForm> {
         } else if (value.trim().length < 6) {
           removeError(error: kInvalidUserNameError);
         }
-        return null;
+        return;
       },
       validator: (value) {
         if (value!.isEmpty) {
@@ -142,9 +143,9 @@ class _SignFormState extends State<SignForm> {
         }
         return null;
       },
-      decoration: InputDecoration(
-        labelText: "Tên Đăng Nhập",
-        hintText: "Vui Lòng Nhập tên đăng nhập...",
+      decoration: const InputDecoration(
+        labelText: "Tài Khoản",
+        hintText: "Nhập tài khoản...",
         // If  you are using latest version of flutter then lable text and hint text shown like this
         // if you r using flutter less then 1.20.* then maybe this is not working properly
         floatingLabelBehavior: FloatingLabelBehavior.always,
