@@ -37,6 +37,7 @@ class Body extends StatelessWidget {
                   textAlign: TextAlign.center,
                   style: Theme.of(context).textTheme.caption,
                 ),
+                SizedBox(height: SizeConfig.screenHeight * 0.03),
               ],
             ),
           ),

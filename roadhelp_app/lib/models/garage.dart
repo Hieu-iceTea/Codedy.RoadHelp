@@ -96,9 +96,9 @@ class Garage extends BaseModel {
       //userPartner: User.fromJson(json['userPartner']),
       garageImages: json['garageImages'] != null ? GarageImage.fromJsonToList(json['garageImages']) : [],
       //ratingGarages: RatingGarage.fromJsonToList(json['ratingGarages']),
-      //province: Province.fromJson(json['province']),
-      //district: District.fromJson(json['district']),
-      //ward: Ward.fromJson(json['ward']),
+      province: Province.fromJson(json['province']),
+      district: District.fromJson(json['district']),
+      ward: Ward.fromJson(json['ward']),
       //
       id: json['id'],
       //createdAt: json['createdAt'],
