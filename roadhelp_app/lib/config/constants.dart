@@ -40,7 +40,7 @@ final RegExp phoneValidatorRegExp = RegExp(r"(84|0[3|5|7|8|9])+([0-9]{8})\b");
 const String kEmailNullError = "Vui lòng nhập email của bạn!";
 const String kInvalidEmailError = "Vui lòng nhập email hợp lệ!";
 const String kPassNullError = "Vui lòng nhập mật khẩu của bạn!";
-const String kShortPassError = "Mật khẩu phải có ít nhất 8 kí tự!";
+const String kShortPassError = "Mật khẩu phải có ít nhất 6 kí tự!";
 const String kMatchPassError = "Mật khẩu không khớp !";
 const String kNamelNullError = "Xin hãy nhập tên của bạn!";
 const String kPhoneNumberNullError = "Vui lòng nhập số điện thoại của bạn!";
@@ -55,7 +55,7 @@ const String kPassNewNullError = "Vui lòng nhập mật khẩu mới của bạ
 const String kEnterPassNewNullError = "Vui lòng nhập lại mật khẩu mới của bạn!";
 const String kPassNewEqualOldError = "Mật khẩu mới phải khác với mật khẩu cũ!";
 const String kPassNewError = "Mật khẩu mới không khớp với nhau!";
-const String kInvalidUserNameError = "Tên đăng nhập phải có ít nhất 6 kí tự!";
+const String kInvalidUserNameError = "Tên đăng nhập phải có ít nhất 5 kí tự!";
 
 final otpInputDecoration = InputDecoration(
   contentPadding:
