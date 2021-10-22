@@ -1,9 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:roadhelp/helper/keyboard.dart';
+import 'package:roadhelp/helper/util.dart';
+import 'package:roadhelp/models/auth.dart';
+import 'package:roadhelp/providers/auth_provider.dart';
+import 'package:roadhelp/screens/auth/sign_in/sign_in_screen.dart';
+import 'package:roadhelp/screens/home/home_screen.dart';
+import 'package:roadhelp/screens/my_account/success_partner/success_partner_screen.dart';
 
 import '/components/custom_surfix_icon.dart';
 import '/components/default_button.dart';
 import '/components/form_error.dart';
-import '/screens/auth/complete_profile/complete_profile_screen.dart';
 import '../../../../config/constants.dart';
 import '../../../../config/size_config.dart';
 
@@ -57,13 +64,7 @@ class _SignUpFormState extends State<SignUpForm> {
           SizedBox(height: getProportionateScreenHeight(40)),
           DefaultButton(
             text: "Đăng Ký",
-            press: () {
-              if (_formKey.currentState!.validate()) {
-                _formKey.currentState!.save();
-                // if all are valid then go to success screen
-                Navigator.pushNamed(context, CompleteProfileScreen.routeName);
-              }
-            },
+            press: () => _submitForm(),
           ),
         ],
       ),
@@ -176,7 +177,7 @@ class _SignUpFormState extends State<SignUpForm> {
       onChanged: (value) {
         if (value.isNotEmpty) {
           removeError(error: kPassNullError);
-        } else if (value.length >= 8) {
+        } else if (value.length >= 6) {
           removeError(error: kShortPassError);
         }
         password = value;
@@ -185,7 +186,7 @@ class _SignUpFormState extends State<SignUpForm> {
         if (value!.isEmpty) {
           addError(error: kPassNullError);
           return "";
-        } else if (value.length < 8) {
+        } else if (value.length < 6) {
           addError(error: kShortPassError);
           return "";
         }
@@ -233,5 +234,31 @@ class _SignUpFormState extends State<SignUpForm> {
         suffixIcon: CustomSurffixIcon(svgIcon: "assets/icons/pass.svg"),
       ),
     );
+  }
+
+  Future<void> _submitForm() async {
+    if (!_formKey.currentState!.validate()) {
+      return;
+    }
+
+    _formKey.currentState!.save();
+    KeyboardUtil.hideKeyboard(context);
+
+    try {
+      Auth auth = Auth(username: username, phone: phone, email: email, password: password);
+
+      await Provider.of<AuthProvider>(context, listen: false).signup(auth);
+
+      //chuyển đến màn hình đăng nhập sau khi đăng ký
+      Navigator.of(context).push(MaterialPageRoute(
+        builder: (context) => PartnerSuccessScreen(
+            "Hoàn thành",
+            "Bạn có thể đăng nhập và trải nghiệp ứng dụng ngay!",
+            SignInScreen.routeName),
+      ));
+    } catch (error) {
+      await Util.showDialogNotification(
+          context: context, content: error.toString());
+    }
   }
 }

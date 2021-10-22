@@ -17,12 +17,12 @@ class AuthRepository {
     return Auth.fromJson(responseBody);
   }
 
-  /*static Future<Auth> signup(Auth item) async {
+  static Future<Auth> signup(Auth item) async {
     var responseBody = await HttpHelper.post(
       url: _url + "signup",
       body: item.toJson(),
     );
 
     return Auth.fromJson(responseBody);
-  }*/
+  }
 }
