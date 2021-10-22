@@ -1,9 +1,13 @@
 package com.codedy.roadhelp.restController;
 
+import com.codedy.roadhelp.model.District;
 import com.codedy.roadhelp.model.Garage;
+import com.codedy.roadhelp.model.Province;
+import com.codedy.roadhelp.model.Ward;
 import com.codedy.roadhelp.repository.GarageRepository;
 import com.codedy.roadhelp.restController.exception.RestNotFoundException;
 import com.codedy.roadhelp.service.garage.GarageService;
+import com.codedy.roadhelp.service.ward.WardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,6 +17,9 @@ import java.util.List;
 @RestController
 @RequestMapping(path = "/api/v1/garages")
 public class GarageRestController {
+
+    @Autowired
+    private WardService wardService;
 
     @Autowired
     private GarageService garageService;
@@ -73,6 +80,7 @@ public class GarageRestController {
         }
         return garage;
     }
+
     // Thêm tiệm sửa xe
     @PostMapping(path = {"/repair-place-manage", "/repair-place-manage/"})
     public Garage storeGarage(@RequestBody Garage garage) {
@@ -117,24 +125,40 @@ public class GarageRestController {
 
     // Chi tiết tiệm sửa xe - Xóa / Tạm dừng hoạt động
     @PutMapping(path = {"/repair-place-manage/{id}/setActive", "/repair-place-manage/{Id}/setActive/"})
-    public String repair_delete(@PathVariable int id,@RequestParam(value="setActive", required = false,
+    public String repair_delete(@PathVariable int id, @RequestParam(value = "setActive", required = false,
             defaultValue = "true") boolean setActive) {
 
         Garage garage = garageService.findById(id);
         garage.setActive(setActive);
         garageService.save(garage);
 
-        return   " garage id - " + garage.getId() + " Set active - " + setActive;
+        return " garage id - " + garage.getId() + " Set active - " + setActive;
 
     }
 
     // Tìm kiếm tiệm sửa xe theo tên
     @GetMapping(path = {"/repair-place", "/repair-place"})
-    public List<Garage> searchGarage(@RequestParam("name") String name) {
-        if (name == null){
+    public List<Garage> searchGarage(@RequestParam(required = false, defaultValue = "") String name,
+                                     @RequestParam(required = false, defaultValue = "0") int provinceId,
+                                     @RequestParam(required = false, defaultValue = "0") int districtId,
+                                     @RequestParam(required = false, defaultValue = "0") int wardId) {
+        if (name.isEmpty() && provinceId < 1 && districtId < 1 && wardId < 1) {
             return garageService.findAll();
+        } else if (!name.isEmpty() && provinceId < 1 && districtId < 1 && wardId < 1) {
+            return garageService.findAllByName(name);
         } else {
-            return garageService.findByName(name);
+            Province tmpProvince = new Province();
+            tmpProvince.setId(provinceId);
+
+            District tmpDistrict = new District();
+            tmpDistrict.setId(districtId);
+
+            Ward tmpWard = new Ward();
+            tmpWard.setId(wardId);
+            tmpWard.setProvince(tmpProvince);
+            tmpWard.setDistrict(tmpDistrict);
+
+            return garageService.findAllByProvinceAndDistrictAndWardIsOrName(tmpProvince, tmpDistrict, tmpWard, name);
         }
     }
 }
