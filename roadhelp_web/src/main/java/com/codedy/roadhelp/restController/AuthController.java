@@ -16,6 +16,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
@@ -35,9 +36,6 @@ public class AuthController {
 
     @Autowired
     UserService userService;
-
-    @Autowired
-    PasswordEncoder encoder;
 
     @Autowired
     JwtUtils jwtUtils;
@@ -79,7 +77,7 @@ public class AuthController {
         user.setUsername(userRequest.getUsername());
         user.setPhone(userRequest.getPhone());
         user.setEmail(userRequest.getEmail());
-        user.setPassword(encoder.encode(userRequest.getUsername()));
+        user.setPassword(BCrypt.hashpw(userRequest.getPassword(), BCrypt.gensalt(12)));
 
         // Create new authority
         Authority authority = new Authority();
@@ -95,4 +93,27 @@ public class AuthController {
 
         return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
     }
+
+
+
+//    @PutMapping(path = {"/become-to-partner/{id}/setPartner", "/become-to-partner/{id}/setPartner/"})
+//    public ResponseEntity<?> becomeToPartner(@PathVariable int id){
+//
+//        User user = userService.findById(id);
+//
+//        Authority authority = new Authority();
+//        authority.setUser(user);
+//        authority.setAuthority("ROLE_PARTNER");
+//
+//        List<Authority> authorities = new ArrayList<>();
+//        authorities.add(authority);
+//
+//        user.setAuthorities(authorities);
+//
+//        authorityService.save(authority);
+//
+////        userService.save(user);
+//
+//        return ResponseEntity.ok(new MessageResponse("Become to partner successfully!"));
+//    }
 }
