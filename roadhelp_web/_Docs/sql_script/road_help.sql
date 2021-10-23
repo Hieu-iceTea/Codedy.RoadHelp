@@ -23,71 +23,70 @@ ALTER DATABASE `road_help` CHARACTER SET utf8 COLLATE utf8_unicode_ci;
 DROP TABLE IF EXISTS `users`;
 CREATE TABLE IF NOT EXISTS `users`
 (
-    `id`                  INT AUTO_INCREMENT,
+    `id`         INT AUTO_INCREMENT,
 
-    `username`            VARCHAR(64) UNIQUE         NOT NULL,
-    `email`               VARCHAR(128) UNIQUE         NOT NULL,
-    `password`            VARCHAR(64)               NOT NULL,
+    `username`   VARCHAR(64) UNIQUE  NOT NULL,
+    `email`      VARCHAR(128) UNIQUE NOT NULL,
+    `password`   VARCHAR(64)         NOT NULL,
 
-    `image`               VARCHAR(128),
-    `gender`              int, #1 nam, 2 nữ
-    `first_name`          VARCHAR(64),
-    `last_name`           VARCHAR(64),
-    `phone`               VARCHAR(16),
-    `address`               VARCHAR(128),
-    `rate_avg`               double default null,
+    `image`      VARCHAR(128),
+    `gender`     int, #1 nam, 2 nữ
+    `first_name` VARCHAR(64),
+    `last_name`  VARCHAR(64),
+    `phone`      VARCHAR(16),
+    `address`    VARCHAR(128),
+    `rate_avg`   double       default null,
 
-    `active`             BOOLEAN      DEFAULT TRUE,
+    `active`     BOOLEAN      DEFAULT TRUE,
 
-    `created_by`          NVARCHAR(32) DEFAULT 'Codedy',
-    `created_at`          TIMESTAMP    DEFAULT CURRENT_TIMESTAMP,
-    `updated_by`          NVARCHAR(32) DEFAULT 'Codedy',
-    `updated_at`          TIMESTAMP    DEFAULT CURRENT_TIMESTAMP,
-    `version`             INT          DEFAULT 1,
-    `deleted`             BOOLEAN      DEFAULT FALSE,
+    `created_by` NVARCHAR(32) DEFAULT 'Codedy',
+    `created_at` TIMESTAMP    DEFAULT CURRENT_TIMESTAMP,
+    `updated_by` NVARCHAR(32) DEFAULT 'Codedy',
+    `updated_at` TIMESTAMP    DEFAULT CURRENT_TIMESTAMP,
+    `version`    INT          DEFAULT 1,
+    `deleted`    BOOLEAN      DEFAULT FALSE,
 
     PRIMARY KEY (`id`)
-    ) ENGINE InnoDB;
-
+) ENGINE InnoDB;
 
 DROP TABLE IF EXISTS `garage`;
 CREATE TABLE IF NOT EXISTS `garage`
 (
-    `id`                  INT AUTO_INCREMENT,
-    `partner_id`                  INT NOT NULL,
-    `province_id`                  INT NOT NULL,
-    `district_id`                  INT NOT NULL,
-    `ward_id`                  INT NOT NULL,
+    `id`          INT AUTO_INCREMENT,
+    `partner_id`  INT         NOT NULL,
+    `province_id` INT         NOT NULL,
+    `district_id` INT         NOT NULL,
+    `ward_id`     INT         NOT NULL,
 
-    `name`            VARCHAR(64)         NOT NULL,
-    `phone`               VARCHAR(16),
-    `rate_avg`            double        NULL,
-    `address`             VARCHAR(128),
+    `name`        VARCHAR(64) NOT NULL,
+    `phone`       VARCHAR(16),
+    `rate_avg`    double      NULL,
+    `address`     VARCHAR(128),
 
-    `longitude`           double,
-    `latitude`           double,
+    `longitude`   double,
+    `latitude`    double,
 
-    `description`             VARCHAR(500),
-    `active`             BOOLEAN      DEFAULT TRUE,
-    `is_featured`             BOOLEAN,
+    `description` VARCHAR(500),
+    `active`      BOOLEAN      DEFAULT TRUE,
+    `is_featured` BOOLEAN,
 
-    `created_by`          NVARCHAR(32) DEFAULT 'Codedy',
-    `created_at`          TIMESTAMP    DEFAULT CURRENT_TIMESTAMP,
-    `updated_by`          NVARCHAR(32) DEFAULT 'Codedy',
-    `updated_at`          TIMESTAMP    DEFAULT CURRENT_TIMESTAMP,
-    `version`             INT          DEFAULT 1,
-    `deleted`             BOOLEAN      DEFAULT FALSE,
+    `created_by`  NVARCHAR(32) DEFAULT 'Codedy',
+    `created_at`  TIMESTAMP    DEFAULT CURRENT_TIMESTAMP,
+    `updated_by`  NVARCHAR(32) DEFAULT 'Codedy',
+    `updated_at`  TIMESTAMP    DEFAULT CURRENT_TIMESTAMP,
+    `version`     INT          DEFAULT 1,
+    `deleted`     BOOLEAN      DEFAULT FALSE,
 
     PRIMARY KEY (`id`)
-    ) ENGINE InnoDB;
+) ENGINE InnoDB;
 
 DROP TABLE IF EXISTS `garageImage`;
 CREATE TABLE IF NOT EXISTS `garageImage`
 (
     `id`         INT AUTO_INCREMENT,
 
-    `garage_id`   INT NOT NULL,
-    `image`  VARCHAR(128) NOT NULL,
+    `garage_id`  INT          NOT NULL,
+    `image`      VARCHAR(128) NOT NULL,
 
     `created_by` NVARCHAR(32) DEFAULT 'Codedy',
     `created_at` TIMESTAMP    DEFAULT CURRENT_TIMESTAMP,
@@ -102,68 +101,67 @@ CREATE TABLE IF NOT EXISTS `garageImage`
 DROP TABLE IF EXISTS `ratingIssues`;
 CREATE TABLE IF NOT EXISTS `ratingIssues`
 (
-    `id`                  INT AUTO_INCREMENT,
-    `user_member_id`                  INT NOT NULL,
-     `issue_id`                  INT NOT NULL,
-    `rate_point`                  INT NOT NULL,
-    `comment`            VARCHAR(256)         NULL,
+    `id`             INT AUTO_INCREMENT,
+    `user_member_id` INT          NOT NULL,
+    `issue_id`       INT          NOT NULL,
+    `rate_point`     INT          NOT NULL,
+    `comment`        VARCHAR(256) NULL,
 
-    `created_by`          NVARCHAR(32) DEFAULT 'Codedy',
-    `created_at`          TIMESTAMP    DEFAULT CURRENT_TIMESTAMP,
-    `updated_by`          NVARCHAR(32) DEFAULT 'Codedy',
-    `updated_at`          TIMESTAMP    DEFAULT CURRENT_TIMESTAMP,
-    `version`             INT          DEFAULT 1,
-    `deleted`             BOOLEAN      DEFAULT FALSE,
+    `created_by`     NVARCHAR(32) DEFAULT 'Codedy',
+    `created_at`     TIMESTAMP    DEFAULT CURRENT_TIMESTAMP,
+    `updated_by`     NVARCHAR(32) DEFAULT 'Codedy',
+    `updated_at`     TIMESTAMP    DEFAULT CURRENT_TIMESTAMP,
+    `version`        INT          DEFAULT 1,
+    `deleted`        BOOLEAN      DEFAULT FALSE,
 
     PRIMARY KEY (`id`)
-    ) ENGINE InnoDB;
+) ENGINE InnoDB;
 
 DROP TABLE IF EXISTS `ratingGarage`;
 CREATE TABLE IF NOT EXISTS `ratingGarage`
 (
-    `id`                  INT AUTO_INCREMENT,
-    `garage_id`                  INT NOT NULL,
-    `user_id`                  INT NOT NULL,
+    `id`             INT AUTO_INCREMENT,
+    `garage_id`      INT          NOT NULL,
+    `user_member_id` INT          NOT NULL,
 
-    `rate_point`                  INT NOT NULL,
-    `comment`            VARCHAR(256)         NULL,
+    `rate_point`     INT          NOT NULL,
+    `comment`        VARCHAR(256) NULL,
 
-    `created_by`          NVARCHAR(32) DEFAULT 'Codedy',
-    `created_at`          TIMESTAMP    DEFAULT CURRENT_TIMESTAMP,
-    `updated_by`          NVARCHAR(32) DEFAULT 'Codedy',
-    `updated_at`          TIMESTAMP    DEFAULT CURRENT_TIMESTAMP,
-    `version`             INT          DEFAULT 1,
-    `deleted`             BOOLEAN      DEFAULT FALSE,
+    `created_by`     NVARCHAR(32) DEFAULT 'Codedy',
+    `created_at`     TIMESTAMP    DEFAULT CURRENT_TIMESTAMP,
+    `updated_by`     NVARCHAR(32) DEFAULT 'Codedy',
+    `updated_at`     TIMESTAMP    DEFAULT CURRENT_TIMESTAMP,
+    `version`        INT          DEFAULT 1,
+    `deleted`        BOOLEAN      DEFAULT FALSE,
 
     PRIMARY KEY (`id`)
-    ) ENGINE InnoDB;
+) ENGINE InnoDB;
 
 DROP TABLE IF EXISTS `issue`;
 CREATE TABLE IF NOT EXISTS `issue`
 (
-    `id`                  INT AUTO_INCREMENT,
-    `user_member_id`                  INT NOT NULL,
-    `user_partner_id`                  int NULL,
+    `id`              INT AUTO_INCREMENT,
+    `user_member_id`  INT NOT NULL,
+    `user_partner_id` int NULL,
 
-    `longitude`           double,
-    `latitude`           double,
+    `longitude`       double,
+    `latitude`        double,
 
-    `phone`               VARCHAR(16),
-    `address`             VARCHAR(128),
-    `category`             INT null,
-    `description`             VARCHAR(500),
+    `phone`           VARCHAR(16),
+    `address`         VARCHAR(128),
+    `category`        INT null,
+    `description`     VARCHAR(500),
 
-    `status`             int      DEFAULT 0,#     0. vừa gửi chưa có ai nhận giúp | 1. chờ xác nhận | 2. đã được partner xác nhận tới giúp | 3. hủy bởi user | 4. thành công
-    `created_by`          NVARCHAR(32) DEFAULT 'Codedy',
-    `created_at`          TIMESTAMP    DEFAULT CURRENT_TIMESTAMP,
-    `updated_by`          NVARCHAR(32) DEFAULT 'Codedy',
-    `updated_at`          TIMESTAMP    DEFAULT CURRENT_TIMESTAMP,
-    `version`             INT          DEFAULT 1,
-    `deleted`             BOOLEAN      DEFAULT FALSE,
+    `status`          int          DEFAULT 0,#     0. vừa gửi chưa có ai nhận giúp | 1. chờ xác nhận | 2. đã được partner xác nhận tới giúp | 3. hủy bởi user | 4. thành công
+    `created_by`      NVARCHAR(32) DEFAULT 'Codedy',
+    `created_at`      TIMESTAMP    DEFAULT CURRENT_TIMESTAMP,
+    `updated_by`      NVARCHAR(32) DEFAULT 'Codedy',
+    `updated_at`      TIMESTAMP    DEFAULT CURRENT_TIMESTAMP,
+    `version`         INT          DEFAULT 1,
+    `deleted`         BOOLEAN      DEFAULT FALSE,
 
     PRIMARY KEY (`id`)
-    ) ENGINE InnoDB;
-
+) ENGINE InnoDB;
 
 # Create Table authorities
 DROP TABLE IF EXISTS `authorities`;
@@ -183,7 +181,6 @@ CREATE TABLE IF NOT EXISTS `authorities`
 
     PRIMARY KEY (`id`)
 ) ENGINE InnoDB;
-
 
 
 # = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = #
@@ -230,6 +227,7 @@ VALUE (12, 'Staff_C', 'staff_c.codedy@gmail.com', '$2y$10$//Od0OmEqRwFepW3wynrYO
 
 #endregion
 
+
 #region Insert garage
 INSERT INTO garage (id,partner_id,district_id,province_id,ward_id,name,rate_avg,latitude, longitude, address, description, phone, active,is_featured)
 VALUE (1,1,1,1, 1,'Sửa xe, bơm vá Vũ Hòa', 4.0,21012252, 105840863, 'Đường Lê Duẩn', 'chuyên sửa xe', '032 87 99 000', TRUE,1);
@@ -269,6 +267,7 @@ VALUE (12,12,12,12, 12,'Garage Quang Huy 4', 5.0,21013804, 105839543, 'Đường
 
 
 #endregion
+
 
 #region Insert garage image
 INSERT INTO garageimage (id, garage_id,image)
@@ -324,7 +323,7 @@ VALUE (16, 12, 'tiem8.jpg');
 
 #endregion
 
-# #region Insert issue
+
 INSERT INTO issue(id, user_member_id, longitude, latitude,category, phone,address,description, status)
 VALUE (1, 1, '333', '333','1',  '123456789',  'HN','', '0');
 
@@ -361,47 +360,46 @@ VALUE (11, 11, 11, '775', '6665','1',  '123456789',  'HN','', '4');
 INSERT INTO issue(id, user_member_id,user_partner_id, longitude, latitude,category, phone,address,description, status)
 VALUE (12, 12, 12, '88', '775','2',  '123456789',  'HN','', '4');
 
-#endregion
-
 
 #region Insert ratingGarage
-INSERT INTO ratingGarage (id, user_id, garage_id, rate_point, comment)
+INSERT INTO ratingGarage (id, user_member_id, garage_id, rate_point, comment)
 VALUE (1, 1, 1, 3, 'Very good.');
 
-INSERT INTO ratingGarage (id, user_id, garage_id, rate_point, comment)
+INSERT INTO ratingGarage (id, user_member_id, garage_id, rate_point, comment)
 VALUE (2, 2, 2, 5, 'Good ');
 
-INSERT INTO ratingGarage (id, user_id, garage_id, rate_point, comment)
+INSERT INTO ratingGarage (id, user_member_id, garage_id, rate_point, comment)
 VALUE (3, 3, 3, 5, 'Very good.');
 
-INSERT INTO ratingGarage (id, user_id, garage_id, rate_point, comment)
+INSERT INTO ratingGarage (id, user_member_id, garage_id, rate_point, comment)
 VALUE (4, 4, 4, 5, 'Very good.');
 
-INSERT INTO ratingGarage (id, user_id, garage_id, rate_point, comment)
+INSERT INTO ratingGarage (id, user_member_id, garage_id, rate_point, comment)
 VALUE (5, 5, 5, 5, 'Good ');
 
-INSERT INTO ratingGarage (id, user_id, garage_id, rate_point, comment)
+INSERT INTO ratingGarage (id, user_member_id, garage_id, rate_point, comment)
 VALUE (6, 6, 6, 4, 'Very good.');
 
-INSERT INTO ratingGarage (id, user_id, garage_id, rate_point, comment)
+INSERT INTO ratingGarage (id, user_member_id, garage_id, rate_point, comment)
 VALUE (7, 7, 7, 4, 'Very good.');
 
-INSERT INTO ratingGarage (id, user_id, garage_id, rate_point, comment)
+INSERT INTO ratingGarage (id, user_member_id, garage_id, rate_point, comment)
 VALUE (8, 8, 8, 4, 'Very good.');
 
-INSERT INTO ratingGarage (id, user_id, garage_id, rate_point, comment)
+INSERT INTO ratingGarage (id, user_member_id, garage_id, rate_point, comment)
 VALUE (9, 9, 9, 4, 'very good.');
 
-INSERT INTO ratingGarage (id, user_id, garage_id, rate_point, comment)
+INSERT INTO ratingGarage (id, user_member_id, garage_id, rate_point, comment)
 VALUE (10, 10, 10, 4, 'Good ');
 
-INSERT INTO ratingGarage (id, user_id, garage_id, rate_point, comment)
+INSERT INTO ratingGarage (id, user_member_id, garage_id, rate_point, comment)
 VALUE (11, 11, 11, 4, 'Good ');
 
-INSERT INTO ratingGarage (id, user_id, garage_id, rate_point, comment)
+INSERT INTO ratingGarage (id, user_member_id, garage_id, rate_point, comment)
 VALUE (12, 12, 12, 5, 'Good ');
 
 #endregion
+
 #region Insert ratingIssues
 INSERT INTO ratingIssues (id, user_member_id, issue_id, rate_point, comment)
 VALUE (1, 1, 1, 3, 'Very good.');
@@ -441,6 +439,7 @@ VALUE (12, 12, 12, 5, 'Good ');
 
 #endregion
 
+
 INSERT INTO authorities (username, authority)
 VALUES
 ('Admin', 'ROLE_ADMIN'),
@@ -452,3 +451,4 @@ VALUES
 ('Vu', 'ROLE_MEMBER'),
 ('TrungAnh', 'ROLE_MEMBER'),
 ('Hoa', 'ROLE_PARTNER');
+
