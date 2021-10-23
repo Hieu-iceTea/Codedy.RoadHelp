@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 import com.codedy.roadhelp.repository.RatingGarageRepository;
 import com.codedy.roadhelp.service.base.BaseServiceImplement;
 
+import java.util.List;
+
 
 @Service
 public class RatingGarageServiceImplement extends BaseServiceImplement<RatingGarage, Integer> implements RatingGarageService {
@@ -17,6 +19,11 @@ public class RatingGarageServiceImplement extends BaseServiceImplement<RatingGar
 
     public RatingGarageServiceImplement(RatingGarageRepository repository) {
         super(repository);
+    }
+
+    @Override
+    public List<RatingGarage> findAllByGarageId(int id) {
+        return ratingGarageRepository.findAllByGarageId(id);
     }
     //endregion
 
