@@ -72,7 +72,7 @@ public class User extends BaseModel implements Serializable {
 
     @JsonIgnore
     @OneToMany(mappedBy = "userMember", fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
-    private List<RatingIssues> ratingIssues;
+    private List<RatingIssue> ratingIssues;
     //endregion
 
 
@@ -197,11 +197,11 @@ public class User extends BaseModel implements Serializable {
         this.ratingGarages = ratingGarages;
     }
 
-    public List<RatingIssues> getRatingIssues() {
+    public List<RatingIssue> getRatingIssues() {
         return ratingIssues;
     }
 
-    public void setRatingIssues(List<RatingIssues> ratingIssues) {
+    public void setRatingIssues(List<RatingIssue> ratingIssues) {
         this.ratingIssues = ratingIssues;
     }
     //endregion
@@ -263,7 +263,7 @@ public class User extends BaseModel implements Serializable {
 
     @JsonProperty("ratingIssues")
     public List<HashMap<String, Object>> getRatingIssuesHashMap() {
-        return ratingIssues != null ? ratingIssues.stream().map(RatingIssues::toHashMap).toList() : null;
+        return ratingIssues != null ? ratingIssues.stream().map(RatingIssue::toHashMap).toList() : null;
     }
 
     //endregion

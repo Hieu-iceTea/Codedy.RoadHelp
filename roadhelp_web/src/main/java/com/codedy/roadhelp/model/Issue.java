@@ -46,7 +46,7 @@ public class Issue extends BaseModel {
 
     @JsonIgnore
     @OneToOne(mappedBy = "issue", cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
-    private RatingIssues ratingIssue;
+    private RatingIssue ratingIssue;
     //endregion
 
 
@@ -123,11 +123,11 @@ public class Issue extends BaseModel {
         this.userPartner = userPartner;
     }
 
-    public RatingIssues getRatingIssue() {
+    public RatingIssue getRatingIssue() {
         return ratingIssue;
     }
 
-    public void setRatingIssue(RatingIssues ratingIssue) {
+    public void setRatingIssue(RatingIssue ratingIssue) {
         this.ratingIssue = ratingIssue;
     }
     //endregion

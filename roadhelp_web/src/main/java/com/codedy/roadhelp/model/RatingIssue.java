@@ -10,7 +10,7 @@ import java.util.HashMap;
 
 @Entity
 @Table(name = "ratingissues")
-public class RatingIssues extends BaseModel {
+public class RatingIssue extends BaseModel {
 
     //region - Define Fields -
     @NotNull

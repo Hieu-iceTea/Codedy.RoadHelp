@@ -1,7 +1,7 @@
-package com.codedy.roadhelp.restController;
+package com.codedy.roadhelp.rest;
 
-import com.codedy.roadhelp.model.RatingIssues;
-import com.codedy.roadhelp.restController.exception.RestNotFoundException;
+import com.codedy.roadhelp.model.RatingIssue;
+import com.codedy.roadhelp.rest.exception.RestNotFoundException;
 import com.codedy.roadhelp.service.issues.IssuesService;
 import com.codedy.roadhelp.service.ratingIssue.RatingIssueService;
 import com.codedy.roadhelp.service.user.UserService;
@@ -23,50 +23,50 @@ public class RatingIssueRestController {
 
     // List Rating Partner
     @GetMapping(path = {"", "/", "/index"})
-    public List<RatingIssues> index() {
+    public List<RatingIssue> index() {
         return ratingIssueService.findAll();
     }
 
     // Detail Rating Partner
     @GetMapping(path = {"/{id}", "/{id}/"})
-    public RatingIssues show(@PathVariable int id) {
-        RatingIssues ratingIssues = ratingIssueService.findById(id);
-        if (ratingIssues == null) {
+    public RatingIssue show(@PathVariable int id) {
+        RatingIssue ratingIssue = ratingIssueService.findById(id);
+        if (ratingIssue == null) {
             throw new RestNotFoundException("Rating partner id not found - " + id);
         }
-        return ratingIssues;
+        return ratingIssue;
     }
 
     // Create Rating Partner
     @PostMapping(path = {"", "/"})
-    public RatingIssues store(@RequestBody RatingIssues ratingIssues) {
-        ratingIssues.setId(0);
-        RatingIssues newRatingIssues = ratingIssueService.save(ratingIssues);
-        return ratingIssueService.findById(newRatingIssues.getId());
+    public RatingIssue store(@RequestBody RatingIssue ratingIssue) {
+        ratingIssue.setId(0);
+        RatingIssue newRatingIssue = ratingIssueService.save(ratingIssue);
+        return ratingIssueService.findById(newRatingIssue.getId());
     }
     // Gửi đánh giá cứu hộ
     @PostMapping(path = {"/rescue/send/post-reviews", "/rescue/send/post-reviews/"})
-    public RatingIssues createReviewRescue(@RequestBody RatingIssues ratingIssues, @RequestParam(defaultValue = "0") int userMemberId,
-                                           @RequestParam(defaultValue = "0") int issueId) {
+    public RatingIssue createReviewRescue(@RequestBody RatingIssue ratingIssue, @RequestParam(defaultValue = "0") int userMemberId,
+                                          @RequestParam(defaultValue = "0") int issueId) {
 
-        ratingIssues.setId(0);
-        ratingIssues.setIssue(issuesService.findById(issueId));
-        ratingIssues.setUserMember(userService.findById(userMemberId));
-        RatingIssues newRatingIssues = ratingIssueService.save(ratingIssues);
-        return ratingIssueService.findById(newRatingIssues.getId());
+        ratingIssue.setId(0);
+        ratingIssue.setIssue(issuesService.findById(issueId));
+        ratingIssue.setUserMember(userService.findById(userMemberId));
+        RatingIssue newRatingIssue = ratingIssueService.save(ratingIssue);
+        return ratingIssueService.findById(newRatingIssue.getId());
     }
 
     // Update Rating Partner
     @PutMapping(path = {"/{id}", "/{id}/"})
-    public RatingIssues update(@RequestBody RatingIssues ratingIssues, @PathVariable int id) {
+    public RatingIssue update(@RequestBody RatingIssue ratingIssue, @PathVariable int id) {
 
         if (ratingIssueService.findById(id) == null) {
             throw new RestNotFoundException("Rating partner id not found - " + id);
         }
 
-        ratingIssues.setId(id);
-        ratingIssueService.save(ratingIssues);
-        return ratingIssueService.findById(ratingIssues.getId());
+        ratingIssue.setId(id);
+        ratingIssueService.save(ratingIssue);
+        return ratingIssueService.findById(ratingIssue.getId());
     }
 
     // Delete Rating Partner
