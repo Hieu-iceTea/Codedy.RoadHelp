@@ -4,6 +4,7 @@ import 'package:roadhelp/config/constants.dart';
 import 'package:roadhelp/config/size_config.dart';
 import 'package:roadhelp/models/garage.dart';
 import 'package:roadhelp/screens/place/repair_place/repair_place_manage_add_edit/repair_place_manage_add_edit_screen.dart';
+import 'package:roadhelp/screens/place/repair_place/repair_place_manage_image/repair_place_manage_image_screen.dart';
 
 class CustomAppBar extends StatelessWidget {
   final double? rating;
@@ -72,11 +73,24 @@ class CustomAppBar extends StatelessWidget {
                 child: IconButton(
                   onPressed: () => Navigator.pushNamed(
                     context,
+                    RepairPlaceManageImageScreen.routeName,
+                    arguments: RepairPlaceManageImageArguments(garage: garage),
+                  ),
+                  icon: const Icon(Icons.add_a_photo),
+                  tooltip: "Quản lý ảnh",
+                ),
+              ),
+            if (isManage)
+              Container(
+                margin: EdgeInsets.only(left: getProportionateScreenWidth(15)),
+                child: IconButton(
+                  onPressed: () => Navigator.pushNamed(
+                    context,
                     RepairPlaceManageAddEditScreen.routeName,
                     arguments:
                         RepairPlaceManageAddEditArguments(garage: garage),
                   ),
-                  icon: Icon(Icons.edit),
+                  icon: const Icon(Icons.edit),
                   tooltip: "Chỉnh sửa tiệm sửa xe này",
                 ),
               ),
