@@ -91,29 +91,22 @@ public class AuthController {
 
         userService.save(user);
 
+
         return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
     }
 
+    @PutMapping(path = {"/become-to-partner/{id}/setPartner", "/become-to-partner/{id}/setPartner/"})
+    public ResponseEntity<?> becomeToPartner(@PathVariable int id){
 
+        User user = userService.findById(id);
+        Authority authority = user.getAuthorities().get(0);
+        authority.setUser(user);
+        authority.setAuthority("ROLE_PARTNER");
 
-//    @PutMapping(path = {"/become-to-partner/{id}/setPartner", "/become-to-partner/{id}/setPartner/"})
-//    public ResponseEntity<?> becomeToPartner(@PathVariable int id){
-//
-//        User user = userService.findById(id);
-//
-//        Authority authority = new Authority();
-//        authority.setUser(user);
-//        authority.setAuthority("ROLE_PARTNER");
-//
-//        List<Authority> authorities = new ArrayList<>();
-//        authorities.add(authority);
-//
-//        user.setAuthorities(authorities);
-//
-//        authorityService.save(authority);
-//
-////        userService.save(user);
-//
-//        return ResponseEntity.ok(new MessageResponse("Become to partner successfully!"));
-//    }
+        List<Authority> authorities = new ArrayList<>();
+        authorities.add(authority);
+        authority.setId(authority.getId());
+        authorityService.save(authority);
+        return ResponseEntity.ok(new MessageResponse("Become to partner successfully!"));
+    }
 }
