@@ -87,7 +87,7 @@ public class IssueRestController {
         if (issue == null) {
             throw new RestNotFoundException("Issues id not found - " + id);
         }
-        return issue.getUserPartners();
+        return issue.getUserPartner();
     }
     // xác nhận hoàn thành sau khi partner hỗ trợ xog
     @PutMapping(path = {"/rescue/success/{id}", "/rescue/success/{id}/"})
@@ -102,7 +102,7 @@ public class IssueRestController {
             issue.setId(id);
             issue.setStatus(IssueStatus.succeeded);
             issuesService.save(issue);
-            return "xác nhận " + issue.getUserPartners().getLastName() + " " + issue.getUserPartners().getFirstName() + " là người hỗ trợ!";
+            return "xác nhận " + issue.getUserPartner().getLastName() + " " + issue.getUserPartner().getFirstName() + " là người hỗ trợ!";
         }else return "sai status xác nhận! " +IssueStatus.waitMemberConfirm.toString();
 
     }
@@ -118,7 +118,7 @@ public class IssueRestController {
             issue.setId(id);
             issue.setStatus(IssueStatus.memberConfirmPartner);
             issuesService.save(issue);
-            return "xác nhận " + issue.getUserPartners().getLastName() + " " + issue.getUserPartners().getFirstName() + " là người hỗ trợ!";
+            return "xác nhận " + issue.getUserPartner().getLastName() + " " + issue.getUserPartner().getFirstName() + " là người hỗ trợ!";
         }else return "sai status xác nhận! " +IssueStatus.waitMemberConfirm.toString();
 
     }
@@ -152,10 +152,10 @@ public class IssueRestController {
                 throw new RestNotFoundException("Issues id not found - " + id);
             }
             issue.setId(id);
-            issue.setUserPartners(userPartner);
+            issue.setUserPartner(userPartner);
             issue.setStatus(IssueStatus.waitMemberConfirm);
             issuesService.save(issue);
-            return "xác nhận " + issue.getUserPartners().getLastName() + " " + issue.getUserPartners().getFirstName() + " hỗ trợ!";
+            return "xác nhận " + issue.getUserPartner().getLastName() + " " + issue.getUserPartner().getFirstName() + " hỗ trợ!";
         }else
             return "sai status xác nhận! " +IssueStatus.waitMemberConfirm.toString();
 

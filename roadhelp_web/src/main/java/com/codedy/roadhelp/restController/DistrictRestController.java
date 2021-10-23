@@ -39,7 +39,7 @@ public class DistrictRestController {
 
     // Detail District
     @GetMapping(path = {"/{id}", "/{id}/"})
-    public District show(@PathVariable int id, @RequestParam int provinceId) {
+    public District show(@PathVariable int id) {
         District district = districtService.findById(id);
         if (district == null) {
             throw new RestNotFoundException("District id not found - " + id);
