@@ -56,12 +56,12 @@ public class User extends BaseModel implements Serializable {
     @OneToMany(mappedBy = "userPartner", cascade = {CascadeType.PERSIST, CascadeType.MERGE,
             CascadeType.DETACH, CascadeType.REFRESH})
     //@JsonBackReference(value = "issuesPartnerDetails")
-    private List<Issue> issuePartnerDetails;
+    private List<Issue> partnerIssues;
 
     @OneToMany(mappedBy = "userMember", cascade = {CascadeType.PERSIST, CascadeType.MERGE,
             CascadeType.DETACH, CascadeType.REFRESH})
     //@JsonBackReference(value = "issueMemberDetails")
-    private List<Issue> issueMemberDetails;
+    private List<Issue> memberIssues;
 
     @OneToMany(mappedBy = "userMember")
     private List<RatingGarage> ratingGarages;
@@ -93,19 +93,19 @@ public class User extends BaseModel implements Serializable {
     }
 
     public List<Issue> getIssuesPartnerDetails() {
-        return issuePartnerDetails;
+        return partnerIssues;
     }
 
     public void setIssuesPartnerDetails(List<Issue> issuePartnerDetails) {
-        this.issuePartnerDetails = issuePartnerDetails;
+        this.partnerIssues = issuePartnerDetails;
     }
 
     public List<Issue> getIssuesMemberDetails() {
-        return issueMemberDetails;
+        return memberIssues;
     }
 
     public void setIssuesMemberDetails(List<Issue> issueMemberDetails) {
-        this.issueMemberDetails = issueMemberDetails;
+        this.memberIssues = issueMemberDetails;
     }
 
     public List<RatingIssue> getRatingPartners() {
@@ -262,12 +262,12 @@ public class User extends BaseModel implements Serializable {
 
     //@JsonProperty("memberIssues")
     private List<LinkedHashMap<String, Object>> getMemberIssuesHashMap() {
-        return issueMemberDetails != null ? issueMemberDetails.stream().map(Issue::toHashMap).toList() : null;
+        return memberIssues != null ? memberIssues.stream().map(Issue::toHashMap).toList() : null;
     }
 
     //@JsonProperty("partnerIssues")
     private List<LinkedHashMap<String, Object>> getPartnerIssuesHashMap() {
-        return issuePartnerDetails != null ? issuePartnerDetails.stream().map(Issue::toHashMap).toList() : null;
+        return partnerIssues != null ? partnerIssues.stream().map(Issue::toHashMap).toList() : null;
     }
 
     //@JsonProperty("ratingGarages")
