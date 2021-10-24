@@ -1,4 +1,4 @@
-package com.codedy.roadhelp.util.storage.exception;
+package com.codedy.roadhelp.untitlities.storage.exception;
 
 public class StorageFileNotFoundException extends StorageException {
 
