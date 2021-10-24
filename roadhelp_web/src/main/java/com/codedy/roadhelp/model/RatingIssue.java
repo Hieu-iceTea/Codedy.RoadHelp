@@ -8,10 +8,7 @@ import java.util.LinkedHashMap;
 
 @Entity
 @Table(name = "ratingissues")
-/*@JsonIdentityInfo(
-        scope = RatingIssue.class,
-        generator = ObjectIdGenerators.PropertyGenerator.class,
-        property = "id")*/
+//@JsonIdentityInfo(scope = Authority.class, generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class RatingIssue extends BaseModel implements Serializable {
 
     //region - Define Fields -
@@ -32,6 +29,7 @@ public class RatingIssue extends BaseModel implements Serializable {
     @JoinColumn(name = "issue_id")
     private Issue issue;
     //endregion
+
 
     //region - Getter & Setter -
     public Issue getIssues() {
@@ -92,6 +90,15 @@ public class RatingIssue extends BaseModel implements Serializable {
         return hashMap;
     }
 
+    /**
+     * Hàm này trả về định dạng hiển thị dữ liệu API cho entity này.<br/><br/>
+     * <p>
+     * Viết bởi: Hiếu iceTea<br/>
+     * Ngày: 24-10-2021<br/>
+     * Thời gian: 10:15<br/>
+     *
+     * @return
+     */
     public LinkedHashMap<String, Object> toApiResponse() {
         LinkedHashMap<String, Object> hashMap = this.toHashMap();
 

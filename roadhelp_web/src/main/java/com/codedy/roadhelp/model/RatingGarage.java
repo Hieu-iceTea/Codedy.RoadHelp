@@ -21,19 +21,18 @@ public class RatingGarage extends BaseModel implements Serializable {
     private String comment;
     //endregion
 
+
     //region - Relationship -
     @ManyToOne
     @JoinColumn(name = "garage_id") //updatable = false, insertable = false
-    /*@JsonIdentityInfo(
-            scope = Garage.class,
-            generator = ObjectIdGenerators.PropertyGenerator.class,
-            property = "id")*/
+    //@JsonIdentityInfo(scope = Authority.class, generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
     private Garage garage;
 
     @ManyToOne
     @JoinColumn(name = "user_id") //updatable = false, insertable = false
     private User userMember;
     //endregion
+
 
     //region - Getter & Setter -
     public int getRatePoint() {
@@ -67,7 +66,7 @@ public class RatingGarage extends BaseModel implements Serializable {
     public void setUserMember(User userMember) {
         this.userMember = userMember;
     }
-//endregion
+    //endregion
 
 
     //region - Relationship Helper -
@@ -93,6 +92,15 @@ public class RatingGarage extends BaseModel implements Serializable {
         return hashMap;
     }
 
+    /**
+     * Hàm này trả về định dạng hiển thị dữ liệu API cho entity này.<br/><br/>
+     * <p>
+     * Viết bởi: Hiếu iceTea<br/>
+     * Ngày: 24-10-2021<br/>
+     * Thời gian: 10:15<br/>
+     *
+     * @return
+     */
     public LinkedHashMap<String, Object> toApiResponse() {
         LinkedHashMap<String, Object> hashMap = this.toHashMap();
 

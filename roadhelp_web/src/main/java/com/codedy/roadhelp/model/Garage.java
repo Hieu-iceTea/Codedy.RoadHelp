@@ -8,10 +8,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "garage")
-//@JsonIdentityInfo(
-//        scope = Garage.class,
-//        generator = ObjectIdGenerators.PropertyGenerator.class,
-//        property = "id")
+//@JsonIdentityInfo(scope = Authority.class, generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Garage extends BaseModel implements Serializable {
 
     //region - Define Fields -
@@ -33,22 +30,21 @@ public class Garage extends BaseModel implements Serializable {
     @Size(max = 500)
     private String description;
 
-    //@NotNull
     private Boolean active;
+
     private Boolean isFeatured;
-//endregion
+    //endregion
+
 
     //region - Relationship -
     @ManyToOne
     @JoinColumn(name = "partner_id") //updatable = false, insertable = false
     private User partner;
 
-    @OneToMany(mappedBy = "garage", cascade = {CascadeType.PERSIST, CascadeType.MERGE,
-            CascadeType.DETACH, CascadeType.REFRESH})
+    @OneToMany(mappedBy = "garage", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
     private List<RatingGarage> ratingGarages;
 
-    @OneToMany(mappedBy = "garage", cascade = {CascadeType.PERSIST, CascadeType.MERGE,
-            CascadeType.DETACH, CascadeType.REFRESH})
+    @OneToMany(mappedBy = "garage", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
     private List<GarageImage> garageImages;
 
     @ManyToOne
@@ -63,6 +59,7 @@ public class Garage extends BaseModel implements Serializable {
     @JoinColumn(name = "ward_id") //updatable = false, insertable = false
     private Ward ward;
     //endregion
+
 
     //region - Getter & Setter -
 
@@ -221,6 +218,15 @@ public class Garage extends BaseModel implements Serializable {
         return hashMap;
     }
 
+    /**
+     * Hàm này trả về định dạng hiển thị dữ liệu API cho entity này.<br/><br/>
+     * <p>
+     * Viết bởi: Hiếu iceTea<br/>
+     * Ngày: 24-10-2021<br/>
+     * Thời gian: 10:15<br/>
+     *
+     * @return
+     */
     public LinkedHashMap<String, Object> toApiResponse() {
         LinkedHashMap<String, Object> hashMap = this.toHashMap();
 

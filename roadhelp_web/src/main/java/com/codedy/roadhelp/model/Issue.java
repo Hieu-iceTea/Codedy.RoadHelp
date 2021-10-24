@@ -13,7 +13,6 @@ import java.util.LinkedHashMap;
 public class Issue extends BaseModel implements Serializable {
 
     //region - Define Fields -
-
     private double longitude;
 
     private double latitude;
@@ -30,8 +29,8 @@ public class Issue extends BaseModel implements Serializable {
     private IssueStatus status;
 
     private IssueCategory category;
+    //endregion
 
-//endregion
 
     //region - Relationship -
     @ManyToOne
@@ -44,7 +43,8 @@ public class Issue extends BaseModel implements Serializable {
 
     @OneToOne(mappedBy = "issue")
     private RatingIssue ratingIssue;
-//endregion
+    //endregion
+
 
     //region - Getter & Setter -
     public IssueCategory getCategory() {
@@ -166,6 +166,15 @@ public class Issue extends BaseModel implements Serializable {
         return hashMap;
     }
 
+    /**
+     * Hàm này trả về định dạng hiển thị dữ liệu API cho entity này.<br/><br/>
+     * <p>
+     * Viết bởi: Hiếu iceTea<br/>
+     * Ngày: 24-10-2021<br/>
+     * Thời gian: 10:15<br/>
+     *
+     * @return
+     */
     public LinkedHashMap<String, Object> toApiResponse() {
         LinkedHashMap<String, Object> hashMap = this.toHashMap();
 

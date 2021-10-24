@@ -10,24 +10,24 @@ import java.util.LinkedHashMap;
 
 @Entity
 @Table(name = "garageimage")
-//@JsonIdentityInfo(
-//        scope = GarageImage.class,
-//        generator = ObjectIdGenerators.PropertyGenerator.class,
-//        property = "id")
+//@JsonIdentityInfo(scope = Authority.class, generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class GarageImage extends BaseModel implements Serializable {
 
+    //region - Define Fields -
     @Size(max = 256)
     private String image;
+    //endregion
+
+
     //region - Relationship -
     @ManyToOne
     @JoinColumn(name = "garage_id") //updatable = false, insertable = false
-    /*@JsonIdentityInfo(
-            scope = Garage.class,
-            generator = ObjectIdGenerators.PropertyGenerator.class,
-            property = "id")*/
+    //@JsonIdentityInfo(scope = Authority.class, generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
     private Garage garage;
     //endregion
 
+
+    //region - Getter & Setter -
     public String getImage() {
         return image;
     }
@@ -43,6 +43,7 @@ public class GarageImage extends BaseModel implements Serializable {
     public void setGarage(Garage garage) {
         this.garage = garage;
     }
+    //endregion
 
 
     //region - Relationship Helper -
@@ -66,6 +67,15 @@ public class GarageImage extends BaseModel implements Serializable {
         return hashMap;
     }
 
+    /**
+     * Hàm này trả về định dạng hiển thị dữ liệu API cho entity này.<br/><br/>
+     * <p>
+     * Viết bởi: Hiếu iceTea<br/>
+     * Ngày: 24-10-2021<br/>
+     * Thời gian: 10:15<br/>
+     *
+     * @return
+     */
     public LinkedHashMap<String, Object> toApiResponse() {
         LinkedHashMap<String, Object> hashMap = this.toHashMap();
 

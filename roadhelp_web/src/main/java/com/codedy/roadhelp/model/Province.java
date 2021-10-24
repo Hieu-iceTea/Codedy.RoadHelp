@@ -7,34 +7,33 @@ import java.util.List;
 
 @Entity
 @Table(name = "province")
-/*@JsonIdentityInfo(
-        scope = Province.class,
-        generator = ObjectIdGenerators.PropertyGenerator.class,
-        property = "id")*/
+//@JsonIdentityInfo(scope = Authority.class, generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Province extends BaseModel implements Serializable {
 
+    //region - Define Fields -
     @Column(name = "_name")
     private String name;
 
     @Column(name = "_code")
     private String code;
+    //endregion
+
 
     //region - Relationship -
-    @OneToMany(mappedBy = "province", cascade = {CascadeType.PERSIST, CascadeType.MERGE,
-            CascadeType.DETACH, CascadeType.REFRESH})
+    @OneToMany(mappedBy = "province", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
     //@JsonBackReference(value = "districts")
     private List<District> districts;
 
-    @OneToMany(mappedBy = "province", cascade = {CascadeType.PERSIST, CascadeType.MERGE,
-            CascadeType.DETACH, CascadeType.REFRESH})
+    @OneToMany(mappedBy = "province", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
     //@JsonBackReference(value = "wards")
     private List<Ward> wards;
 
-    @OneToMany(mappedBy = "province", cascade = {CascadeType.PERSIST, CascadeType.MERGE,
-            CascadeType.DETACH, CascadeType.REFRESH})
+    @OneToMany(mappedBy = "province", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
     //@JsonBackReference(value = "garages")
     private List<Garage> garages;
     //endregion
+
+
     //region - Getter & Setter -
 
     public String getName() {
@@ -99,6 +98,15 @@ public class Province extends BaseModel implements Serializable {
         return hashMap;
     }
 
+    /**
+     * Hàm này trả về định dạng hiển thị dữ liệu API cho entity này.<br/><br/>
+     * <p>
+     * Viết bởi: Hiếu iceTea<br/>
+     * Ngày: 24-10-2021<br/>
+     * Thời gian: 10:15<br/>
+     *
+     * @return
+     */
     public LinkedHashMap<String, Object> toApiResponse() {
         LinkedHashMap<String, Object> hashMap = this.toHashMap();
 

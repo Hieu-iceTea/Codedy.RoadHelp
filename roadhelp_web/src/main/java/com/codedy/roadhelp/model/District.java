@@ -7,16 +7,16 @@ import java.util.List;
 
 @Entity
 @Table(name = "district")
-/*@JsonIdentityInfo(
-        scope = District.class,
-        generator = ObjectIdGenerators.PropertyGenerator.class,
-        property = "id")*/
+//@JsonIdentityInfo(scope = Authority.class, generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class District extends BaseModel implements Serializable {
+
+    //region - Define Fields -
     @Column(name = "_name")
     private String name;
 
     @Column(name = "_prefix")
     private String prefix;
+    //endregion
 
 
     //region - Relationship -
@@ -24,18 +24,17 @@ public class District extends BaseModel implements Serializable {
     @JoinColumn(name = "_province_id") //updatable = false, insertable = false
     private Province province;
 
-    @OneToMany(mappedBy = "district", cascade = {CascadeType.PERSIST, CascadeType.MERGE,
-            CascadeType.DETACH, CascadeType.REFRESH})
+    @OneToMany(mappedBy = "district", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
     //@JsonBackReference(value = "wards")
     private List<Ward> wards;
 
-    @OneToMany(mappedBy = "district", cascade = {CascadeType.PERSIST, CascadeType.MERGE,
-            CascadeType.DETACH, CascadeType.REFRESH})
+    @OneToMany(mappedBy = "district", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
     //@JsonBackReference(value = "garages")
     private List<Garage> garages;
     //endregion
-    //region - Getter & Setter -
 
+
+    //region - Getter & Setter -
     public Province getProvince() {
         return province;
     }
@@ -75,8 +74,6 @@ public class District extends BaseModel implements Serializable {
     public void setPrefix(String prefix) {
         this.prefix = prefix;
     }
-
-
     //endregion
 
 
@@ -102,6 +99,15 @@ public class District extends BaseModel implements Serializable {
         return hashMap;
     }
 
+    /**
+     * Hàm này trả về định dạng hiển thị dữ liệu API cho entity này.<br/><br/>
+     * <p>
+     * Viết bởi: Hiếu iceTea<br/>
+     * Ngày: 24-10-2021<br/>
+     * Thời gian: 10:15<br/>
+     *
+     * @return
+     */
     public LinkedHashMap<String, Object> toApiResponse() {
         LinkedHashMap<String, Object> hashMap = this.toHashMap();
 
