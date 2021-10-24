@@ -10,4 +10,5 @@ import java.util.List;
 public interface DistrictService extends BaseService<District, Integer> {
 
     //
+    List<District> findAllByProvinceId(int province_id);
 }

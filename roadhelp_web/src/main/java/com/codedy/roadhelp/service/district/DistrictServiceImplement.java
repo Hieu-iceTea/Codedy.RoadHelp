@@ -24,6 +24,11 @@ public class DistrictServiceImplement extends BaseServiceImplement<District, Int
         super(repository);
     }
 
+    @Override
+    public List<District> findAllByProvinceId(int province_id) {
+        return districtRepository.findAllByProvinceId(province_id);
+    }
+
     //endregion
 
 }
