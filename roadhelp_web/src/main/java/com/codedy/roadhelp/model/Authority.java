@@ -9,18 +9,29 @@ import java.util.LinkedHashMap;
 
 @Entity
 @Table(name = "authorities")
-/*@JsonIdentityInfo(
-        scope = Authority.class,
-        generator = ObjectIdGenerators.PropertyGenerator.class,
-        property = "id")*/
+//@JsonIdentityInfo(scope = Authority.class, generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Authority extends BaseModel implements Serializable {
-//
 
+    //region - Define Fields -
     private String authority;
+    //endregion
+
+
     //region - Relationship -
     @ManyToOne
     @JoinColumn(name = "username", referencedColumnName = "username")
     private User user;
+    //endregion
+
+
+    //region - Getter & Setter -
+    public String getAuthority() {
+        return authority;
+    }
+
+    public void setAuthority(String authority) {
+        this.authority = authority;
+    }
 
     public User getUser() {
         return user;
@@ -31,13 +42,6 @@ public class Authority extends BaseModel implements Serializable {
     }
     //endregion
 
-    public String getAuthority() {
-        return authority;
-    }
-
-    public void setAuthority(String authority) {
-        this.authority = authority;
-    }
 
     //region - Relationship Helper -
 
@@ -59,6 +63,15 @@ public class Authority extends BaseModel implements Serializable {
         return hashMap;
     }
 
+    /**
+     * Hàm này trả về định dạng hiển thị dữ liệu API cho entity này.<br/><br/>
+     * <p>
+     * Viết bởi: Hiếu iceTea<br/>
+     * Ngày: 24-10-2021<br/>
+     * Thời gian: 10:15<br/>
+     *
+     * @return
+     */
     public LinkedHashMap<String, Object> toApiResponse() {
         LinkedHashMap<String, Object> hashMap = this.toHashMap();
 

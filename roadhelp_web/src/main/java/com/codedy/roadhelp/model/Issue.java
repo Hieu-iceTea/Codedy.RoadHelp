@@ -13,7 +13,6 @@ import java.util.LinkedHashMap;
 public class Issue extends BaseModel implements Serializable {
 
     //region - Define Fields -
-
     private double longitude;
 
     private double latitude;
@@ -27,11 +26,11 @@ public class Issue extends BaseModel implements Serializable {
     @Size(max = 500)
     private String description;
 
-    private IssueStatus status;
-
     private IssueCategory category;
 
-//endregion
+    private IssueStatus status;
+    //endregion
+
 
     //region - Relationship -
     @ManyToOne
@@ -44,57 +43,10 @@ public class Issue extends BaseModel implements Serializable {
 
     @OneToOne(mappedBy = "issue")
     private RatingIssue ratingIssue;
-//endregion
+    //endregion
+
 
     //region - Getter & Setter -
-    public IssueCategory getCategory() {
-        return category;
-    }
-
-    public void setCategory(IssueCategory category) {
-        this.category = category;
-    }
-
-    public User getUserMember() {
-        return userMember;
-    }
-
-    public void setUserMember(User userMember) {
-        this.userMember = userMember;
-    }
-
-    public User getUserPartner() {
-        return userPartner;
-    }
-
-    public void setUserPartner(User userPartner) {
-        this.userPartner = userPartner;
-    }
-
-    public RatingIssue getRatingIssues() {
-        return ratingIssue;
-    }
-
-    public void setRatingIssues(RatingIssue ratingIssue) {
-        this.ratingIssue = ratingIssue;
-    }
-
-    public RatingIssue getRatingPartner() {
-        return ratingIssue;
-    }
-
-    public void setRatingPartner(RatingIssue ratingIssue) {
-        this.ratingIssue = ratingIssue;
-    }
-
-    public IssueStatus getStatus() {
-        return status;
-    }
-
-    public void setStatus(IssueStatus status) {
-        this.status = status;
-    }
-
     public double getLongitude() {
         return longitude;
     }
@@ -135,7 +87,46 @@ public class Issue extends BaseModel implements Serializable {
         this.description = description;
     }
 
-//endregion
+    public IssueCategory getCategory() {
+        return category;
+    }
+
+    public void setCategory(IssueCategory category) {
+        this.category = category;
+    }
+
+    public IssueStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(IssueStatus status) {
+        this.status = status;
+    }
+
+    public User getUserMember() {
+        return userMember;
+    }
+
+    public void setUserMember(User userMember) {
+        this.userMember = userMember;
+    }
+
+    public User getUserPartner() {
+        return userPartner;
+    }
+
+    public void setUserPartner(User userPartner) {
+        this.userPartner = userPartner;
+    }
+
+    public RatingIssue getRatingIssue() {
+        return ratingIssue;
+    }
+
+    public void setRatingIssue(RatingIssue ratingIssue) {
+        this.ratingIssue = ratingIssue;
+    }
+    //endregion
 
 
     //region - Relationship Helper -
@@ -166,6 +157,15 @@ public class Issue extends BaseModel implements Serializable {
         return hashMap;
     }
 
+    /**
+     * Hàm này trả về định dạng hiển thị dữ liệu API cho entity này.<br/><br/>
+     * <p>
+     * Viết bởi: Hiếu iceTea<br/>
+     * Ngày: 24-10-2021<br/>
+     * Thời gian: 10:15<br/>
+     *
+     * @return
+     */
     public LinkedHashMap<String, Object> toApiResponse() {
         LinkedHashMap<String, Object> hashMap = this.toHashMap();
 

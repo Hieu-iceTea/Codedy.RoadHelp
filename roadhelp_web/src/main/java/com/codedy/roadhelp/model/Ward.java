@@ -7,21 +7,23 @@ import java.util.List;
 
 @Entity
 @Table(name = "ward")
-/*@JsonIdentityInfo(
-        scope = Ward.class,
-        generator = ObjectIdGenerators.PropertyGenerator.class,
-        property = "id")*/
+//@JsonIdentityInfo(scope = Authority.class, generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Ward extends BaseModel implements Serializable {
+
     //region - Define Fields -
     @Column(name = "_name")
     private String name;
 
     @Column(name = "_prefix")
     private String prefix;
-
     //endregion
 
+
     //region - Relationship -
+    @OneToMany(mappedBy = "ward", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
+    //@JsonBackReference(value = "garages")
+    private List<Garage> garages;
+
     @ManyToOne
     @JoinColumn(name = "_province_id") //updatable = false, insertable = false
     private Province province;
@@ -29,14 +31,25 @@ public class Ward extends BaseModel implements Serializable {
     @ManyToOne
     @JoinColumn(name = "_district_id") //updatable = false, insertable = false
     private District district;
-
-    @OneToMany(mappedBy = "ward", cascade = {CascadeType.PERSIST, CascadeType.MERGE,
-            CascadeType.DETACH, CascadeType.REFRESH})
-    //@JsonBackReference(value = "garages")
-    private List<Garage> garages;
     //endregion
 
+
     //region - Getter & Setter -
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getPrefix() {
+        return prefix;
+    }
+
+    public void setPrefix(String prefix) {
+        this.prefix = prefix;
+    }
 
     public List<Garage> getGarages() {
         return garages;
@@ -61,23 +74,6 @@ public class Ward extends BaseModel implements Serializable {
     public void setDistrict(District district) {
         this.district = district;
     }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getPrefix() {
-        return prefix;
-    }
-
-    public void setPrefix(String prefix) {
-        this.prefix = prefix;
-    }
-
     //endregion
 
 
@@ -104,6 +100,15 @@ public class Ward extends BaseModel implements Serializable {
         return hashMap;
     }
 
+    /**
+     * Hàm này trả về định dạng hiển thị dữ liệu API cho entity này.<br/><br/>
+     * <p>
+     * Viết bởi: Hiếu iceTea<br/>
+     * Ngày: 24-10-2021<br/>
+     * Thời gian: 10:15<br/>
+     *
+     * @return
+     */
     public LinkedHashMap<String, Object> toApiResponse() {
         LinkedHashMap<String, Object> hashMap = this.toHashMap();
 

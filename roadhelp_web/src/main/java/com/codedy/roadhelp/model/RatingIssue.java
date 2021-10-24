@@ -8,10 +8,7 @@ import java.util.LinkedHashMap;
 
 @Entity
 @Table(name = "ratingissues")
-/*@JsonIdentityInfo(
-        scope = RatingIssue.class,
-        generator = ObjectIdGenerators.PropertyGenerator.class,
-        property = "id")*/
+//@JsonIdentityInfo(scope = Authority.class, generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class RatingIssue extends BaseModel implements Serializable {
 
     //region - Define Fields -
@@ -24,24 +21,17 @@ public class RatingIssue extends BaseModel implements Serializable {
 
 
     //region - Relationship -
-    @ManyToOne
-    @JoinColumn(name = "user_member_id")
-    private User userMember;
-
     @OneToOne
     @JoinColumn(name = "issue_id")
     private Issue issue;
+
+    @ManyToOne
+    @JoinColumn(name = "user_member_id")
+    private User userMember;
     //endregion
 
+
     //region - Getter & Setter -
-    public Issue getIssues() {
-        return issue;
-    }
-
-    public void setIssues(Issue issue) {
-        this.issue = issue;
-    }
-
     public int getRatePoint() {
         return ratePoint;
     }
@@ -58,14 +48,21 @@ public class RatingIssue extends BaseModel implements Serializable {
         this.comment = comment;
     }
 
-    public User getUsers() {
+    public Issue getIssue() {
+        return issue;
+    }
+
+    public void setIssue(Issue issue) {
+        this.issue = issue;
+    }
+
+    public User getUserMember() {
         return userMember;
     }
 
-    public void setUsers(User users) {
-        this.userMember = users;
+    public void setUserMember(User userMember) {
+        this.userMember = userMember;
     }
-
     //endregion
 
 
@@ -92,6 +89,15 @@ public class RatingIssue extends BaseModel implements Serializable {
         return hashMap;
     }
 
+    /**
+     * Hàm này trả về định dạng hiển thị dữ liệu API cho entity này.<br/><br/>
+     * <p>
+     * Viết bởi: Hiếu iceTea<br/>
+     * Ngày: 24-10-2021<br/>
+     * Thời gian: 10:15<br/>
+     *
+     * @return
+     */
     public LinkedHashMap<String, Object> toApiResponse() {
         LinkedHashMap<String, Object> hashMap = this.toHashMap();
 
