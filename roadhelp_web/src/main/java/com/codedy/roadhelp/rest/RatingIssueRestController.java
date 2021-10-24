@@ -40,26 +40,26 @@ public class RatingIssueRestController {
 
     // Create Rating Partner
     @PostMapping(path = {"", "/"})
-    public RatingIssue store(@RequestBody RatingIssue ratingIssue) {
+    public LinkedHashMap<String, Object> store(@RequestBody RatingIssue ratingIssue) {
         ratingIssue.setId(0);
         RatingIssue newRatingIssue = ratingIssueService.save(ratingIssue);
-        return ratingIssueService.findById(newRatingIssue.getId());
+        return ratingIssueService.findById(newRatingIssue.getId()).toApiResponse();
     }
     // Gửi đánh giá cứu hộ
     @PostMapping(path = {"/rescue/send/post-reviews", "/rescue/send/post-reviews/"})
-    public RatingIssue createReviewRescue(@RequestBody RatingIssue ratingIssue, @RequestParam(defaultValue = "0") int userMemberId,
+    public LinkedHashMap<String, Object> createReviewRescue(@RequestBody RatingIssue ratingIssue, @RequestParam(defaultValue = "0") int userMemberId,
                                           @RequestParam(defaultValue = "0") int issueId) {
 
         ratingIssue.setId(0);
         ratingIssue.setIssue(issuesService.findById(issueId));
         ratingIssue.setUserMember(userService.findById(userMemberId));
         RatingIssue newRatingIssue = ratingIssueService.save(ratingIssue);
-        return ratingIssueService.findById(newRatingIssue.getId());
+        return ratingIssueService.findById(newRatingIssue.getId()).toApiResponse();
     }
 
     // Update Rating Partner
     @PutMapping(path = {"/{id}", "/{id}/"})
-    public RatingIssue update(@RequestBody RatingIssue ratingIssue, @PathVariable int id) {
+    public LinkedHashMap<String, Object> update(@RequestBody RatingIssue ratingIssue, @PathVariable int id) {
 
         if (ratingIssueService.findById(id) == null) {
             throw new RestNotFoundException("Rating partner id not found - " + id);
@@ -67,7 +67,7 @@ public class RatingIssueRestController {
 
         ratingIssue.setId(id);
         ratingIssueService.save(ratingIssue);
-        return ratingIssueService.findById(ratingIssue.getId());
+        return ratingIssueService.findById(ratingIssue.getId()).toApiResponse();
     }
 
     // Delete Rating Partner

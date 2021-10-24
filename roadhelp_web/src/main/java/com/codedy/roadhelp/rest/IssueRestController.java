@@ -51,14 +51,14 @@ public class IssueRestController {
 
     // Update Issues
     @PutMapping(path = {"/{id}", "/{id}/"})
-    public Issue update(@RequestBody Issue issue, @PathVariable int id) {
+    public LinkedHashMap<String, Object> update(@RequestBody Issue issue, @PathVariable int id) {
 
         if (issuesService.findById(id) == null) {
             throw new RestNotFoundException("Issuues id not found - " + id);
         }
         issue.setId(id);
         issuesService.save(issue);
-        return issuesService.findById(issue.getId());
+        return issuesService.findById(issue.getId()).toApiResponse();
     }
 
     // Delete Issues
@@ -74,19 +74,19 @@ public class IssueRestController {
 
     // tạo thông báo
     @PostMapping(path = {"/rescue/send", "/rescue/send/"})
-    public Issue createRescue(@RequestBody Issue issue) {
+    public LinkedHashMap<String, Object> createRescue(@RequestBody Issue issue) {
         issue.setId(0);
         Issue newIssue = issuesService.save(issue);
-        return issuesService.findById(newIssue.getId());
+        return issuesService.findById(newIssue.getId()).toApiResponse();
     }
     // Xem thông tin người giúp đỡ mình
     @GetMapping(path = {"/rescue/send/confirmation", "/rescue/send/confirmation/"})
-    public User showComfirmation(@RequestParam(defaultValue = "0") int id) {
+    public LinkedHashMap<String, Object> showComfirmation(@RequestParam(defaultValue = "0") int id) {
         Issue issue = issuesService.findById(id);
         if (issue == null) {
             throw new RestNotFoundException("Issues id not found - " + id);
         }
-        return issue.getUserPartner();
+        return issue.getUserPartner().toApiResponse();
     }
     // xác nhận hoàn thành sau khi partner hỗ trợ xog
     @PutMapping(path = {"/rescue/success/{id}", "/rescue/success/{id}/"})
@@ -124,19 +124,19 @@ public class IssueRestController {
 
     // Xem danh sách những người đang cần hỗ trợ
     @GetMapping(path = {"/rescue/receive", "/rescue/receive/"})
-    public List<Issue> showListRescue() {
+    public List<LinkedHashMap<String, Object>> showListRescue() {
         List<Issue> issues = issuesService.findIssueByStatus(IssueStatus.sent);
-            return issues;
+            return issues.stream().map(Issue::toApiResponse).toList();
     }
 
     // Xem chi tiết người đang cần hỗ trợ
     @GetMapping(path = {"/rescue/receive/details/{id}", "/rescue/receive/details/{id}/"})
-    public Issue showDetails(@PathVariable int id) {
+    public LinkedHashMap<String, Object> showDetails(@PathVariable int id) {
         Issue issue = issuesService.findById(id) ;
         if (issue == null) {
             throw new RestNotFoundException("Issues id not found - " + id);
         }
-        return issue;
+        return issue.toApiResponse();
     }
     // Xác nhận giúp
     @PutMapping(path = {"/rescue/receive/details", "/rescue/receive/details/"})
@@ -161,8 +161,8 @@ public class IssueRestController {
     }
     // Xem đánh giá sau khi hỗ trợ xong
     @GetMapping(path = {"/rescue/receive/show-reviews", "/rescue/receive/show-reviews/"})
-    public RatingIssue showRating(@RequestParam(defaultValue = "0") int ratingIssueId) {
-        return ratingIssueService.findById(ratingIssueId);
+    public LinkedHashMap<String, Object> showRating(@RequestParam(defaultValue = "0") int ratingIssueId) {
+        return ratingIssueService.findById(ratingIssueId).toApiResponse();
     }
 
 }

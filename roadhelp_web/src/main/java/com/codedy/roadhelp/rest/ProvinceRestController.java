@@ -44,7 +44,7 @@ public class ProvinceRestController {
 
     // Update Province
     @PutMapping(path = {"/{id}", "/{id}/"})
-    public Province update(@RequestBody Province province, @PathVariable int id) {
+    public LinkedHashMap<String, Object> update(@RequestBody Province province, @PathVariable int id) {
 
         if (provinceServiceService.findById(id) == null) {
             throw new RestNotFoundException("Province id not found - " + id);
@@ -52,7 +52,7 @@ public class ProvinceRestController {
 
         province.setId(id);
         provinceServiceService.save(province);
-        return provinceServiceService.findById(province.getId());
+        return provinceServiceService.findById(province.getId()).toApiResponse();
     }
 
     // Delete Province
