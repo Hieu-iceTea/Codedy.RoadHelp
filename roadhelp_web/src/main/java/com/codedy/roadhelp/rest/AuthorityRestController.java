@@ -34,15 +34,15 @@ public class AuthorityRestController {
 
     // Create Authority
     @PostMapping(path = {"", "/"})
-    public Authority store(@RequestBody Authority authority) {
+    public LinkedHashMap<String, Object> store(@RequestBody Authority authority) {
         authority.setId(0);
         Authority newAuthority = authorityService.save(authority);
-        return authorityService.findById(newAuthority.getId());
+        return authorityService.findById(newAuthority.getId()).toApiResponse();
     }
 
     // Update Authority
     @PutMapping(path = {"/{id}", "/{id}/"})
-    public Authority update(@RequestBody Authority authority, @PathVariable int id) {
+    public LinkedHashMap<String, Object> update(@RequestBody Authority authority, @PathVariable int id) {
 
         if (authorityService.findById(id) == null) {
             throw new RestNotFoundException("Authority id not found - " + id);
@@ -50,7 +50,7 @@ public class AuthorityRestController {
 
         authority.setId(id);
         authorityService.save(authority);
-        return authorityService.findById(authority.getId());
+        return authorityService.findById(authority.getId()).toApiResponse();
     }
 
     // Delete Authority
