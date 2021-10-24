@@ -1,10 +1,10 @@
-package com.codedy.roadhelp.restController;
+package com.codedy.roadhelp.rest;
 
 import com.codedy.roadhelp.model.District;
 import com.codedy.roadhelp.model.Garage;
 import com.codedy.roadhelp.model.Province;
 import com.codedy.roadhelp.model.Ward;
-import com.codedy.roadhelp.restController.exception.RestNotFoundException;
+import com.codedy.roadhelp.rest.exception.RestNotFoundException;
 import com.codedy.roadhelp.service.garage.GarageService;
 import com.codedy.roadhelp.service.ward.WardService;
 import org.springframework.beans.factory.annotation.Autowired;

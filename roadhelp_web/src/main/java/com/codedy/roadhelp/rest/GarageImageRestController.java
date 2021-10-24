@@ -1,11 +1,11 @@
-package com.codedy.roadhelp.restController;
+package com.codedy.roadhelp.rest;
 
 import com.codedy.roadhelp.model.Garage;
 import com.codedy.roadhelp.model.GarageImage;
-import com.codedy.roadhelp.restController.exception.RestNotFoundException;
+import com.codedy.roadhelp.rest.exception.RestNotFoundException;
 import com.codedy.roadhelp.service.garage.GarageService;
 import com.codedy.roadhelp.service.garageImage.GarageImageService;
-import com.codedy.roadhelp.untitlities.storage.service.StorageService;
+import com.codedy.roadhelp.util.storage.service.StorageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;

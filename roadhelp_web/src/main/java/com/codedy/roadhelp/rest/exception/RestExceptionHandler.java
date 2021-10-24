@@ -1,4 +1,4 @@
-package com.codedy.roadhelp.restController.exception;
+package com.codedy.roadhelp.rest.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 //@ControllerAdvice
-@ControllerAdvice(basePackages = "com.codedy.roadhelp.restController") //Target all Controllers within specific packages
+@ControllerAdvice(basePackages = "com.codedy.roadhelp.rest") //Target all Controllers within specific packages
 public class RestExceptionHandler {
 
     //Add an exception handler for restNotFoundException

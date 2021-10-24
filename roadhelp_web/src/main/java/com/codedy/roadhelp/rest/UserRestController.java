@@ -1,9 +1,9 @@
-package com.codedy.roadhelp.restController;
+package com.codedy.roadhelp.rest;
 
 
 import com.codedy.roadhelp.model.User;
 import com.codedy.roadhelp.payload.response.MessageResponse;
-import com.codedy.roadhelp.restController.exception.RestNotFoundException;
+import com.codedy.roadhelp.rest.exception.RestNotFoundException;
 import com.codedy.roadhelp.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
