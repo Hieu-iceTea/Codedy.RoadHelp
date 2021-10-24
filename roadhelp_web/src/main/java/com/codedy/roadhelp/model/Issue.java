@@ -36,11 +36,11 @@ public class Issue extends BaseModel implements Serializable {
     //region - Relationship -
     @ManyToOne
     @JoinColumn(name = "user_member_id")
-    private User userMembers;
+    private User userMember;
 
     @ManyToOne
     @JoinColumn(name = "user_partner_id")
-    private User userPartners;
+    private User userPartner;
 
     @OneToOne(mappedBy = "issue")
     private RatingIssue ratingIssue;
@@ -55,20 +55,20 @@ public class Issue extends BaseModel implements Serializable {
         this.category = category;
     }
 
-    public User getUserMembers() {
-        return userMembers;
+    public User getUserMember() {
+        return userMember;
     }
 
-    public void setUserMembers(User userMembers) {
-        this.userMembers = userMembers;
+    public void setUserMember(User userMember) {
+        this.userMember = userMember;
     }
 
-    public User getUserPartners() {
-        return userPartners;
+    public User getUserPartner() {
+        return userPartner;
     }
 
-    public void setUserPartners(User userPartners) {
-        this.userPartners = userPartners;
+    public void setUserPartner(User userPartner) {
+        this.userPartner = userPartner;
     }
 
     public RatingIssue getRatingIssues() {
@@ -152,8 +152,8 @@ public class Issue extends BaseModel implements Serializable {
     protected LinkedHashMap<String, Object> toHashMap() {
         LinkedHashMap<String, Object> hashMap = super.toHashMap();
 
-        hashMap.put("userMemberId", userMembers != null ? userMembers.getId() : null);
-        hashMap.put("userPartnerId", userPartners != null ? userPartners.getId() : null);
+        hashMap.put("userMemberId", userMember != null ? userMember.getId() : null);
+        hashMap.put("userPartnerId", userPartner != null ? userPartner.getId() : null);
 
         hashMap.put("longitude", longitude);
         hashMap.put("latitude", latitude);
@@ -181,12 +181,12 @@ public class Issue extends BaseModel implements Serializable {
 
     //@JsonProperty("userMember")
     private LinkedHashMap<String, Object> getUserMemberHashMap() {
-        return userMembers != null ? userMembers.toHashMap() : null;
+        return userMember != null ? userMember.toHashMap() : null;
     }
 
     //@JsonProperty("userPartner")
     private LinkedHashMap<String, Object> getUserPartnerHashMap() {
-        return userPartners != null ? userPartners.toHashMap() : null;
+        return userPartner != null ? userPartner.toHashMap() : null;
     }
 
     //@JsonProperty("ratingIssue")
