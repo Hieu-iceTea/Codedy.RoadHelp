@@ -15,13 +15,13 @@ public class Garage extends BaseModel implements Serializable {
     @Size(min = 2, max = 64)
     private String name;
 
-    private double rateAvg;
-
     @Size(max = 128)
     private String address;
 
     @Size(min = 10)
     private String phone;
+
+    private double rateAvg;
 
     private double longitude;
 
@@ -38,14 +38,14 @@ public class Garage extends BaseModel implements Serializable {
 
     //region - Relationship -
     @ManyToOne
-    @JoinColumn(name = "partner_id") //updatable = false, insertable = false
-    private User partner;
-
-    @OneToMany(mappedBy = "garage", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
-    private List<RatingGarage> ratingGarages;
+    @JoinColumn(name = "user_partner_id") //updatable = false, insertable = false
+    private User userPartner;
 
     @OneToMany(mappedBy = "garage", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
     private List<GarageImage> garageImages;
+
+    @OneToMany(mappedBy = "garage", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
+    private List<RatingGarage> ratingGarages;
 
     @ManyToOne
     @JoinColumn(name = "province_id") //updatable = false, insertable = false
@@ -62,61 +62,12 @@ public class Garage extends BaseModel implements Serializable {
 
 
     //region - Getter & Setter -
-
-    public User getPartner() {
-        return partner;
+    public String getName() {
+        return name;
     }
 
-    public void setPartner(User partner) {
-        this.partner = partner;
-    }
-
-    public Province getProvince() {
-        return province;
-    }
-
-    public void setProvince(Province province) {
-        this.province = province;
-    }
-
-    public District getDistrict() {
-        return district;
-    }
-
-    public void setDistrict(District district) {
-        this.district = district;
-    }
-
-    public Ward getWard() {
-        return ward;
-    }
-
-    public void setWard(Ward ward) {
-        this.ward = ward;
-    }
-
-    public List<GarageImage> getGarageImages() {
-        return garageImages;
-    }
-
-    public void setGarageImages(List<GarageImage> garageImages) {
-        this.garageImages = garageImages;
-    }
-
-    public Boolean getFeatured() {
-        return isFeatured;
-    }
-
-    public void setFeatured(Boolean featured) {
-        isFeatured = featured;
-    }
-
-    public double getRateAvg() {
-        return rateAvg;
-    }
-
-    public void setRateAvg(double rateAvg) {
-        this.rateAvg = rateAvg;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getAddress() {
@@ -133,6 +84,14 @@ public class Garage extends BaseModel implements Serializable {
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    public double getRateAvg() {
+        return rateAvg;
+    }
+
+    public void setRateAvg(double rateAvg) {
+        this.rateAvg = rateAvg;
     }
 
     public double getLongitude() {
@@ -167,6 +126,30 @@ public class Garage extends BaseModel implements Serializable {
         this.active = active;
     }
 
+    public Boolean getFeatured() {
+        return isFeatured;
+    }
+
+    public void setFeatured(Boolean featured) {
+        isFeatured = featured;
+    }
+
+    public User getUserPartner() {
+        return userPartner;
+    }
+
+    public void setUserPartner(User userPartner) {
+        this.userPartner = userPartner;
+    }
+
+    public List<GarageImage> getGarageImages() {
+        return garageImages;
+    }
+
+    public void setGarageImages(List<GarageImage> garageImages) {
+        this.garageImages = garageImages;
+    }
+
     public List<RatingGarage> getRatingGarages() {
         return ratingGarages;
     }
@@ -175,14 +158,29 @@ public class Garage extends BaseModel implements Serializable {
         this.ratingGarages = ratingGarages;
     }
 
-    public String getName() {
-        return name;
+    public Province getProvince() {
+        return province;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setProvince(Province province) {
+        this.province = province;
     }
 
+    public District getDistrict() {
+        return district;
+    }
+
+    public void setDistrict(District district) {
+        this.district = district;
+    }
+
+    public Ward getWard() {
+        return ward;
+    }
+
+    public void setWard(Ward ward) {
+        this.ward = ward;
+    }
     //endregion
 
 
@@ -200,7 +198,7 @@ public class Garage extends BaseModel implements Serializable {
     protected LinkedHashMap<String, Object> toHashMap() {
         LinkedHashMap<String, Object> hashMap = super.toHashMap();
 
-        hashMap.put("partnerId", partner != null ? partner.getId() : null);
+        hashMap.put("partnerId", userPartner != null ? userPartner.getId() : null);
         hashMap.put("provinceId", province != null ? province.getId() : null);
         hashMap.put("districtId", district != null ? district.getId() : null);
         hashMap.put("wardId", ward != null ? ward.getId() : null);
@@ -247,7 +245,7 @@ public class Garage extends BaseModel implements Serializable {
 
     //@JsonProperty("userPartner")
     private LinkedHashMap<String, Object> getUserPartnerHashMap() {
-        return partner != null ? partner.toHashMap() : null;
+        return userPartner != null ? userPartner.toHashMap() : null;
     }
 
     //@JsonProperty("ratingGarages")

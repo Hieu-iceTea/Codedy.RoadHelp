@@ -21,25 +21,17 @@ public class RatingIssue extends BaseModel implements Serializable {
 
 
     //region - Relationship -
-    @ManyToOne
-    @JoinColumn(name = "user_member_id")
-    private User userMember;
-
     @OneToOne
     @JoinColumn(name = "issue_id")
     private Issue issue;
+
+    @ManyToOne
+    @JoinColumn(name = "user_member_id")
+    private User userMember;
     //endregion
 
 
     //region - Getter & Setter -
-    public Issue getIssues() {
-        return issue;
-    }
-
-    public void setIssues(Issue issue) {
-        this.issue = issue;
-    }
-
     public int getRatePoint() {
         return ratePoint;
     }
@@ -56,14 +48,21 @@ public class RatingIssue extends BaseModel implements Serializable {
         this.comment = comment;
     }
 
-    public User getUsers() {
+    public Issue getIssue() {
+        return issue;
+    }
+
+    public void setIssue(Issue issue) {
+        this.issue = issue;
+    }
+
+    public User getUserMember() {
         return userMember;
     }
 
-    public void setUsers(User users) {
-        this.userMember = users;
+    public void setUserMember(User userMember) {
+        this.userMember = userMember;
     }
-
     //endregion
 
 

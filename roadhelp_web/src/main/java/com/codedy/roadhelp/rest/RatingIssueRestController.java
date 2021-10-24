@@ -51,8 +51,8 @@ public class RatingIssueRestController {
                                           @RequestParam(defaultValue = "0") int issueId) {
 
         ratingIssue.setId(0);
-        ratingIssue.setIssues(issuesService.findById(issueId));
-        ratingIssue.setUsers(userService.findById(userMemberId));
+        ratingIssue.setIssue(issuesService.findById(issueId));
+        ratingIssue.setUserMember(userService.findById(userMemberId));
         RatingIssue newRatingIssue = ratingIssueService.save(ratingIssue);
         return ratingIssueService.findById(newRatingIssue.getId());
     }

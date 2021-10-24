@@ -21,27 +21,34 @@ public class Province extends BaseModel implements Serializable {
 
     //region - Relationship -
     @OneToMany(mappedBy = "province", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
+    //@JsonBackReference(value = "garages")
+    private List<Garage> garages;
+
+    @OneToMany(mappedBy = "province", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
     //@JsonBackReference(value = "districts")
     private List<District> districts;
 
     @OneToMany(mappedBy = "province", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
     //@JsonBackReference(value = "wards")
     private List<Ward> wards;
-
-    @OneToMany(mappedBy = "province", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
-    //@JsonBackReference(value = "garages")
-    private List<Garage> garages;
     //endregion
 
 
     //region - Getter & Setter -
-
     public String getName() {
         return name;
     }
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
     }
 
     public List<Garage> getGarages() {
@@ -66,14 +73,6 @@ public class Province extends BaseModel implements Serializable {
 
     public void setWards(List<Ward> wards) {
         this.wards = wards;
-    }
-
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
     }
     //endregion
 
