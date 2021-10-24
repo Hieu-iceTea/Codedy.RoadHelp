@@ -24,13 +24,11 @@ public class User extends BaseModel implements Serializable {
     @Size(max = 128)
     private String email;
 
+    @Size(min = 10)
+    private String phone;
+
     @Size(min = 6)
     private String password;
-
-    @Size(max = 128)
-    private String image;
-
-    private UserGender gender;
 
     @Size(min = 2, max = 64)
     private String firstName;
@@ -38,26 +36,31 @@ public class User extends BaseModel implements Serializable {
     @Size(min = 2, max = 64)
     private String lastName;
 
-    @Size(min = 10)
-    private String phone;
+    @Size(max = 128)
+    private String image;
 
     private String address;
+
+    private UserGender gender;
 
     private Boolean active;
     //endregion
 
 
     //region - Relationship -
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private List<Authority> authorities;
+
     @OneToMany(mappedBy = "partner", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
     private List<Garage> garages;
-
-    @OneToMany(mappedBy = "userPartner", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
-    //@JsonBackReference(value = "issuesPartnerDetails")
-    private List<Issue> partnerIssues;
 
     @OneToMany(mappedBy = "userMember", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
     //@JsonBackReference(value = "issueMemberDetails")
     private List<Issue> memberIssues;
+
+    @OneToMany(mappedBy = "userPartner", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
+    //@JsonBackReference(value = "issuesPartnerDetails")
+    private List<Issue> partnerIssues;
 
     @OneToMany(mappedBy = "userMember")
     private List<RatingGarage> ratingGarages;
@@ -65,9 +68,6 @@ public class User extends BaseModel implements Serializable {
     @OneToMany(mappedBy = "userMember")
     //@JsonBackReference(value = "ratingIssues")
     private List<RatingIssue> ratingIssues;
-
-    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private List<Authority> authorities;
     //endregion
 
 

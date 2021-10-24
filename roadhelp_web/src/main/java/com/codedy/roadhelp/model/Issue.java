@@ -26,9 +26,9 @@ public class Issue extends BaseModel implements Serializable {
     @Size(max = 500)
     private String description;
 
-    private IssueStatus status;
-
     private IssueCategory category;
+
+    private IssueStatus status;
     //endregion
 
 

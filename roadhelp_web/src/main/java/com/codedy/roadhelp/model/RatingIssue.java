@@ -21,13 +21,13 @@ public class RatingIssue extends BaseModel implements Serializable {
 
 
     //region - Relationship -
-    @ManyToOne
-    @JoinColumn(name = "user_member_id")
-    private User userMember;
-
     @OneToOne
     @JoinColumn(name = "issue_id")
     private Issue issue;
+
+    @ManyToOne
+    @JoinColumn(name = "user_member_id")
+    private User userMember;
     //endregion
 
 

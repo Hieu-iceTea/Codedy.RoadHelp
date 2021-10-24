@@ -21,16 +21,16 @@ public class Province extends BaseModel implements Serializable {
 
     //region - Relationship -
     @OneToMany(mappedBy = "province", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
+    //@JsonBackReference(value = "garages")
+    private List<Garage> garages;
+
+    @OneToMany(mappedBy = "province", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
     //@JsonBackReference(value = "districts")
     private List<District> districts;
 
     @OneToMany(mappedBy = "province", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
     //@JsonBackReference(value = "wards")
     private List<Ward> wards;
-
-    @OneToMany(mappedBy = "province", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
-    //@JsonBackReference(value = "garages")
-    private List<Garage> garages;
     //endregion
 
 

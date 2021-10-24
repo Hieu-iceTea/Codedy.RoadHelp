@@ -15,13 +15,13 @@ public class Garage extends BaseModel implements Serializable {
     @Size(min = 2, max = 64)
     private String name;
 
-    private double rateAvg;
-
     @Size(max = 128)
     private String address;
 
     @Size(min = 10)
     private String phone;
+
+    private double rateAvg;
 
     private double longitude;
 
@@ -42,10 +42,10 @@ public class Garage extends BaseModel implements Serializable {
     private User partner;
 
     @OneToMany(mappedBy = "garage", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
-    private List<RatingGarage> ratingGarages;
+    private List<GarageImage> garageImages;
 
     @OneToMany(mappedBy = "garage", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
-    private List<GarageImage> garageImages;
+    private List<RatingGarage> ratingGarages;
 
     @ManyToOne
     @JoinColumn(name = "province_id") //updatable = false, insertable = false
