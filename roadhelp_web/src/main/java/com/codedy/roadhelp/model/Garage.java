@@ -1,16 +1,18 @@
 package com.codedy.roadhelp.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 import javax.persistence.*;
 import javax.validation.constraints.Size;
-import java.util.HashMap;
+import java.io.Serializable;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 @Entity
 @Table(name = "garage")
-public class Garage extends BaseModel {
+//@JsonIdentityInfo(
+//        scope = Garage.class,
+//        generator = ObjectIdGenerators.PropertyGenerator.class,
+//        property = "id")
+public class Garage extends BaseModel implements Serializable {
 
     //region - Define Fields -
     @Size(min = 2, max = 64)
@@ -34,47 +36,82 @@ public class Garage extends BaseModel {
     //@NotNull
     private Boolean active;
     private Boolean isFeatured;
-    //endregion
-
+//endregion
 
     //region - Relationship -
-    @JsonIgnore
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
+    @ManyToOne
     @JoinColumn(name = "partner_id") //updatable = false, insertable = false
-    private User userPartner;
+    private User partner;
 
-    @JsonIgnore
-    @OneToMany(mappedBy = "garage", fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
+    @OneToMany(mappedBy = "garage", cascade = {CascadeType.PERSIST, CascadeType.MERGE,
+            CascadeType.DETACH, CascadeType.REFRESH})
     private List<RatingGarage> ratingGarages;
 
-    @JsonIgnore
-    @OneToMany(mappedBy = "garage", fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
+    @OneToMany(mappedBy = "garage", cascade = {CascadeType.PERSIST, CascadeType.MERGE,
+            CascadeType.DETACH, CascadeType.REFRESH})
     private List<GarageImage> garageImages;
 
-    @JsonIgnore
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
+    @ManyToOne
     @JoinColumn(name = "province_id") //updatable = false, insertable = false
     private Province province;
 
-    @JsonIgnore
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
+    @ManyToOne
     @JoinColumn(name = "district_id") //updatable = false, insertable = false
     private District district;
 
-    @JsonIgnore
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
+    @ManyToOne
     @JoinColumn(name = "ward_id") //updatable = false, insertable = false
     private Ward ward;
     //endregion
 
-
     //region - Getter & Setter -
-    public String getName() {
-        return name;
+
+    public User getPartner() {
+        return partner;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setPartner(User partner) {
+        this.partner = partner;
+    }
+
+    public Province getProvince() {
+        return province;
+    }
+
+    public void setProvince(Province province) {
+        this.province = province;
+    }
+
+    public District getDistrict() {
+        return district;
+    }
+
+    public void setDistrict(District district) {
+        this.district = district;
+    }
+
+    public Ward getWard() {
+        return ward;
+    }
+
+    public void setWard(Ward ward) {
+        this.ward = ward;
+    }
+
+    public List<GarageImage> getGarageImages() {
+        return garageImages;
+    }
+
+    public void setGarageImages(List<GarageImage> garageImages) {
+        this.garageImages = garageImages;
+    }
+
+    public Boolean getFeatured() {
+        return isFeatured;
+    }
+
+    public void setFeatured(Boolean featured) {
+        isFeatured = featured;
     }
 
     public double getRateAvg() {
@@ -133,22 +170,6 @@ public class Garage extends BaseModel {
         this.active = active;
     }
 
-    public Boolean getFeatured() {
-        return isFeatured;
-    }
-
-    public void setFeatured(Boolean featured) {
-        isFeatured = featured;
-    }
-
-    public User getUserPartner() {
-        return userPartner;
-    }
-
-    public void setUserPartner(User userPartner) {
-        this.userPartner = userPartner;
-    }
-
     public List<RatingGarage> getRatingGarages() {
         return ratingGarages;
     }
@@ -157,37 +178,14 @@ public class Garage extends BaseModel {
         this.ratingGarages = ratingGarages;
     }
 
-    public List<GarageImage> getGarageImages() {
-        return garageImages;
+    public String getName() {
+        return name;
     }
 
-    public void setGarageImages(List<GarageImage> garageImages) {
-        this.garageImages = garageImages;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public Province getProvince() {
-        return province;
-    }
-
-    public void setProvince(Province province) {
-        this.province = province;
-    }
-
-    public District getDistrict() {
-        return district;
-    }
-
-    public void setDistrict(District district) {
-        this.district = district;
-    }
-
-    public Ward getWard() {
-        return ward;
-    }
-
-    public void setWard(Ward ward) {
-        this.ward = ward;
-    }
     //endregion
 
 
@@ -202,10 +200,10 @@ public class Garage extends BaseModel {
      *
      * @return
      */
-    public HashMap<String, Object> toHashMap() {
-        HashMap<String, Object> hashMap = super.toHashMap();
+    protected LinkedHashMap<String, Object> toHashMap() {
+        LinkedHashMap<String, Object> hashMap = super.toHashMap();
 
-        hashMap.put("partnerId", userPartner != null ? userPartner.getId() : null);
+        hashMap.put("partnerId", partner != null ? partner.getId() : null);
         hashMap.put("provinceId", province != null ? province.getId() : null);
         hashMap.put("districtId", district != null ? district.getId() : null);
         hashMap.put("wardId", ward != null ? ward.getId() : null);
@@ -223,33 +221,51 @@ public class Garage extends BaseModel {
         return hashMap;
     }
 
-    @JsonProperty("userPartner")
-    public HashMap<String, Object> getUserPartnerHashMap() {
-        return userPartner != null ? userPartner.toHashMap() : null;
+    public LinkedHashMap<String, Object> toApiResponse() {
+        LinkedHashMap<String, Object> hashMap = this.toHashMap();
+
+        hashMap.remove("partnerId");
+        hashMap.remove("provinceId");
+        hashMap.remove("districtId");
+        hashMap.remove("wardId");
+
+        hashMap.put("userPartner", getUserPartnerHashMap());
+        hashMap.put("ratingGarages", getRatingGaragesHashMap());
+        hashMap.put("garageImages", getGarageImagesHashMap());
+        hashMap.put("province", getProvinceHashMap());
+        hashMap.put("district", getDistrictHashMap());
+        hashMap.put("ward", getWardHashMap());
+
+        return hashMap;
     }
 
-    @JsonProperty("ratingGarages")
-    public List<HashMap<String, Object>> getRatingGaragesHashMap() {
+    //@JsonProperty("userPartner")
+    private LinkedHashMap<String, Object> getUserPartnerHashMap() {
+        return partner != null ? partner.toHashMap() : null;
+    }
+
+    //@JsonProperty("ratingGarages")
+    private List<LinkedHashMap<String, Object>> getRatingGaragesHashMap() {
         return ratingGarages != null ? ratingGarages.stream().map(RatingGarage::toHashMap).toList() : null;
     }
 
-    @JsonProperty("garageImages")
-    public List<HashMap<String, Object>> getGarageImagesHashMap() {
+    //@JsonProperty("garageImages")
+    private List<LinkedHashMap<String, Object>> getGarageImagesHashMap() {
         return garageImages != null ? garageImages.stream().map(GarageImage::toHashMap).toList() : null;
     }
 
-    @JsonProperty("province")
-    public HashMap<String, Object> getProvinceHashMap() {
+    //@JsonProperty("province")
+    private LinkedHashMap<String, Object> getProvinceHashMap() {
         return province != null ? province.toHashMap() : null;
     }
 
-    @JsonProperty("district")
-    public HashMap<String, Object> getDistrictHashMap() {
+    //@JsonProperty("district")
+    private LinkedHashMap<String, Object> getDistrictHashMap() {
         return district != null ? district.toHashMap() : null;
     }
 
-    @JsonProperty("ward")
-    public HashMap<String, Object> getWardHashMap() {
+    //@JsonProperty("ward")
+    private LinkedHashMap<String, Object> getWardHashMap() {
         return ward != null ? ward.toHashMap() : null;
     }
     //endregion

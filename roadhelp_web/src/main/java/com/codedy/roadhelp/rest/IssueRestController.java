@@ -1,16 +1,17 @@
-package com.codedy.roadhelp.rest;
+package com.codedy.roadhelp.restController;
 
 import com.codedy.roadhelp.model.Issue;
 import com.codedy.roadhelp.model.RatingIssue;
 import com.codedy.roadhelp.model.User;
 import com.codedy.roadhelp.model.enums.IssueStatus;
-import com.codedy.roadhelp.rest.exception.RestNotFoundException;
+import com.codedy.roadhelp.restController.exception.RestNotFoundException;
 import com.codedy.roadhelp.service.issues.IssuesService;
 import com.codedy.roadhelp.service.ratingIssue.RatingIssueService;
 import com.codedy.roadhelp.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.LinkedHashMap;
 import java.util.List;
 
 @RestController
@@ -26,26 +27,26 @@ public class IssueRestController {
 
     // List Issues
     @GetMapping(path = {"", "/", "/index"})
-    public List<Issue> index() {
-        return issuesService.findAll();
+    public List<LinkedHashMap<String, Object>> index() {
+        return issuesService.findAll().stream().map(Issue::toApiResponse).toList();
     }
 
     // Detail Issues
     @GetMapping(path = {"/{id}", "/{id}/"})
-    public Issue show(@PathVariable int id) {
+    public LinkedHashMap<String, Object> show(@PathVariable int id) {
         Issue issue = issuesService.findById(id);
         if (issue == null) {
             throw new RestNotFoundException("Issues id not found - " + id);
         }
-        return issue;
+        return issue.toApiResponse();
     }
 
     // Create Issues
     @PostMapping(path = {"", "/"})
-    public Issue store(@RequestBody Issue issue) {
+    public LinkedHashMap<String, Object> store(@RequestBody Issue issue) {
         issue.setId(0);
         Issue newIssue = issuesService.save(issue);
-        return issuesService.findById(newIssue.getId());
+        return issuesService.findById(newIssue.getId()).toApiResponse();
     }
 
     // Update Issues

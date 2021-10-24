@@ -4,8 +4,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
-import java.sql.Timestamp;
-import java.util.HashMap;
+import java.util.Date;
+import java.util.LinkedHashMap;
 
 /**
  * <b>Hieu_iceTea</b> <br><br>
@@ -22,21 +22,17 @@ public class BaseModel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    //@CreatedBy
+    //@Column(name = "created_by")
     private String createdBy;
-
-    //@CreatedDate
-    private Timestamp createdAt;
-
-    //@LastModifiedBy
+    //@Column(name = "created_at")
+    private Date createdAt;
+    //@Column(name = "updated_by")
     private String updatedBy;
-
-    //@LastModifiedDate
-    private Timestamp updatedAt;
+    //@Column(name = "updated_at")
+    private Date updatedAt;
 
     //@Version
     private int version;
-
     private Boolean deleted;
     //endregion
 
@@ -58,11 +54,11 @@ public class BaseModel {
         this.createdBy = createdBy;
     }
 
-    public Timestamp getCreatedAt() {
+    public Date getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(Timestamp createdAt) {
+    public void setCreatedAt(Date createdAt) {
         this.createdAt = createdAt;
     }
 
@@ -74,11 +70,11 @@ public class BaseModel {
         this.updatedBy = updatedBy;
     }
 
-    public Timestamp getUpdatedAt() {
+    public Date getUpdatedAt() {
         return updatedAt;
     }
 
-    public void setUpdatedAt(Timestamp updatedAt) {
+    public void setUpdatedAt(Date updatedAt) {
         this.updatedAt = updatedAt;
     }
 
@@ -99,6 +95,9 @@ public class BaseModel {
     }
     //endregion
 
+
+    //region - Relationship Helper -
+
     /**
      * Hàm này trả về cấu trúc nguyên thủy của entity này.<br/><br/>
      * <p>
@@ -108,8 +107,8 @@ public class BaseModel {
      *
      * @return
      */
-    public HashMap<String, Object> toHashMap() {
-        HashMap<String, Object> hashMap = new HashMap<>();
+    protected LinkedHashMap<String, Object> toHashMap() {
+        LinkedHashMap<String, Object> hashMap = new LinkedHashMap<>();
         hashMap.put("id", id);
         hashMap.put("createdAt", createdAt);
         hashMap.put("createdBy", createdBy);
@@ -120,5 +119,6 @@ public class BaseModel {
 
         return hashMap;
     }
+    //endregion
 
 }
