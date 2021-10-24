@@ -17,8 +17,11 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCrypt;
+import org.springframework.security.web.authentication.WebAuthenticationDetails;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.Date;
@@ -72,7 +75,7 @@ public class AuthController {
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<?> registerUser(@Valid @RequestBody User userRequest) {
+    public ResponseEntity<?> registerUser(@Valid @RequestBody User userRequest, HttpServletRequest request) {
         // Create new user's account
         User user = new User();
         user.setUsername(userRequest.getUsername());
@@ -92,6 +95,9 @@ public class AuthController {
 
         userService.save(user);
 
+        try {
+            request.login("username","password");
+        } catch(ServletException ignored) {}
 
         return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
     }
