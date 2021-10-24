@@ -47,54 +47,6 @@ public class Issue extends BaseModel implements Serializable {
 
 
     //region - Getter & Setter -
-    public IssueCategory getCategory() {
-        return category;
-    }
-
-    public void setCategory(IssueCategory category) {
-        this.category = category;
-    }
-
-    public User getUserMember() {
-        return userMember;
-    }
-
-    public void setUserMember(User userMember) {
-        this.userMember = userMember;
-    }
-
-    public User getUserPartner() {
-        return userPartner;
-    }
-
-    public void setUserPartner(User userPartner) {
-        this.userPartner = userPartner;
-    }
-
-    public RatingIssue getRatingIssues() {
-        return ratingIssue;
-    }
-
-    public void setRatingIssues(RatingIssue ratingIssue) {
-        this.ratingIssue = ratingIssue;
-    }
-
-    public RatingIssue getRatingPartner() {
-        return ratingIssue;
-    }
-
-    public void setRatingPartner(RatingIssue ratingIssue) {
-        this.ratingIssue = ratingIssue;
-    }
-
-    public IssueStatus getStatus() {
-        return status;
-    }
-
-    public void setStatus(IssueStatus status) {
-        this.status = status;
-    }
-
     public double getLongitude() {
         return longitude;
     }
@@ -135,7 +87,46 @@ public class Issue extends BaseModel implements Serializable {
         this.description = description;
     }
 
-//endregion
+    public IssueCategory getCategory() {
+        return category;
+    }
+
+    public void setCategory(IssueCategory category) {
+        this.category = category;
+    }
+
+    public IssueStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(IssueStatus status) {
+        this.status = status;
+    }
+
+    public User getUserMember() {
+        return userMember;
+    }
+
+    public void setUserMember(User userMember) {
+        this.userMember = userMember;
+    }
+
+    public User getUserPartner() {
+        return userPartner;
+    }
+
+    public void setUserPartner(User userPartner) {
+        this.userPartner = userPartner;
+    }
+
+    public RatingIssue getRatingIssue() {
+        return ratingIssue;
+    }
+
+    public void setRatingIssue(RatingIssue ratingIssue) {
+        this.ratingIssue = ratingIssue;
+    }
+    //endregion
 
 
     //region - Relationship Helper -

@@ -72,46 +72,6 @@ public class User extends BaseModel implements Serializable {
 
 
     //region - Getter & Setter -
-    public List<Garage> getGarages() {
-        return garages;
-    }
-
-    public void setGarages(List<Garage> garages) {
-        this.garages = garages;
-    }
-
-    public List<RatingIssue> getRatingIssues() {
-        return ratingIssues;
-    }
-
-    public void setRatingIssues(List<RatingIssue> ratingIssues) {
-        this.ratingIssues = ratingIssues;
-    }
-
-    public List<Issue> getIssuesPartnerDetails() {
-        return partnerIssues;
-    }
-
-    public void setIssuesPartnerDetails(List<Issue> issuePartnerDetails) {
-        this.partnerIssues = issuePartnerDetails;
-    }
-
-    public List<Issue> getIssuesMemberDetails() {
-        return memberIssues;
-    }
-
-    public void setIssuesMemberDetails(List<Issue> issueMemberDetails) {
-        this.memberIssues = issueMemberDetails;
-    }
-
-    public List<RatingIssue> getRatingPartners() {
-        return ratingIssues;
-    }
-
-    public void setRatingPartners(List<RatingIssue> ratingIssues) {
-        this.ratingIssues = ratingIssues;
-    }
-
     public String getUsername() {
         return username;
     }
@@ -128,28 +88,20 @@ public class User extends BaseModel implements Serializable {
         this.email = email;
     }
 
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
     public String getPassword() {
         return password;
     }
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public String getImage() {
-        return image;
-    }
-
-    public void setImage(String image) {
-        this.image = image;
-    }
-
-    public UserGender getGender() {
-        return gender;
-    }
-
-    public void setGender(UserGender gender) {
-        this.gender = gender;
     }
 
     public String getFirstName() {
@@ -168,37 +120,12 @@ public class User extends BaseModel implements Serializable {
         this.lastName = lastName;
     }
 
-    public String getPhone() {
-        return phone;
+    public String getImage() {
+        return image;
     }
 
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
-    public Boolean getActive() {
-        return active;
-    }
-
-    public void setActive(Boolean active) {
-        this.active = active;
-    }
-
-
-    public List<RatingGarage> getRatingGarages() {
-        return ratingGarages;
-    }
-
-    public void setRatingGarages(List<RatingGarage> ratingGarages) {
-        this.ratingGarages = ratingGarages;
-    }
-
-    public List<Authority> getAuthorities() {
-        return authorities;
-    }
-
-    public void setAuthorities(List<Authority> authorities) {
-        this.authorities = authorities;
+    public void setImage(String image) {
+        this.image = image;
     }
 
     public String getAddress() {
@@ -209,6 +136,69 @@ public class User extends BaseModel implements Serializable {
         this.address = address;
     }
 
+    public UserGender getGender() {
+        return gender;
+    }
+
+    public void setGender(UserGender gender) {
+        this.gender = gender;
+    }
+
+    public Boolean getActive() {
+        return active;
+    }
+
+    public void setActive(Boolean active) {
+        this.active = active;
+    }
+
+    public List<Authority> getAuthorities() {
+        return authorities;
+    }
+
+    public void setAuthorities(List<Authority> authorities) {
+        this.authorities = authorities;
+    }
+
+    public List<Garage> getGarages() {
+        return garages;
+    }
+
+    public void setGarages(List<Garage> garages) {
+        this.garages = garages;
+    }
+
+    public List<Issue> getMemberIssues() {
+        return memberIssues;
+    }
+
+    public void setMemberIssues(List<Issue> memberIssues) {
+        this.memberIssues = memberIssues;
+    }
+
+    public List<Issue> getPartnerIssues() {
+        return partnerIssues;
+    }
+
+    public void setPartnerIssues(List<Issue> partnerIssues) {
+        this.partnerIssues = partnerIssues;
+    }
+
+    public List<RatingGarage> getRatingGarages() {
+        return ratingGarages;
+    }
+
+    public void setRatingGarages(List<RatingGarage> ratingGarages) {
+        this.ratingGarages = ratingGarages;
+    }
+
+    public List<RatingIssue> getRatingIssues() {
+        return ratingIssues;
+    }
+
+    public void setRatingIssues(List<RatingIssue> ratingIssues) {
+        this.ratingIssues = ratingIssues;
+    }
     //endregion
 
 

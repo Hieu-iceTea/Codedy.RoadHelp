@@ -62,61 +62,12 @@ public class Garage extends BaseModel implements Serializable {
 
 
     //region - Getter & Setter -
-
-    public User getUserPartner() {
-        return userPartner;
+    public String getName() {
+        return name;
     }
 
-    public void setUserPartner(User userPartner) {
-        this.userPartner = userPartner;
-    }
-
-    public Province getProvince() {
-        return province;
-    }
-
-    public void setProvince(Province province) {
-        this.province = province;
-    }
-
-    public District getDistrict() {
-        return district;
-    }
-
-    public void setDistrict(District district) {
-        this.district = district;
-    }
-
-    public Ward getWard() {
-        return ward;
-    }
-
-    public void setWard(Ward ward) {
-        this.ward = ward;
-    }
-
-    public List<GarageImage> getGarageImages() {
-        return garageImages;
-    }
-
-    public void setGarageImages(List<GarageImage> garageImages) {
-        this.garageImages = garageImages;
-    }
-
-    public Boolean getFeatured() {
-        return isFeatured;
-    }
-
-    public void setFeatured(Boolean featured) {
-        isFeatured = featured;
-    }
-
-    public double getRateAvg() {
-        return rateAvg;
-    }
-
-    public void setRateAvg(double rateAvg) {
-        this.rateAvg = rateAvg;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getAddress() {
@@ -133,6 +84,14 @@ public class Garage extends BaseModel implements Serializable {
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    public double getRateAvg() {
+        return rateAvg;
+    }
+
+    public void setRateAvg(double rateAvg) {
+        this.rateAvg = rateAvg;
     }
 
     public double getLongitude() {
@@ -167,6 +126,30 @@ public class Garage extends BaseModel implements Serializable {
         this.active = active;
     }
 
+    public Boolean getFeatured() {
+        return isFeatured;
+    }
+
+    public void setFeatured(Boolean featured) {
+        isFeatured = featured;
+    }
+
+    public User getUserPartner() {
+        return userPartner;
+    }
+
+    public void setUserPartner(User userPartner) {
+        this.userPartner = userPartner;
+    }
+
+    public List<GarageImage> getGarageImages() {
+        return garageImages;
+    }
+
+    public void setGarageImages(List<GarageImage> garageImages) {
+        this.garageImages = garageImages;
+    }
+
     public List<RatingGarage> getRatingGarages() {
         return ratingGarages;
     }
@@ -175,14 +158,29 @@ public class Garage extends BaseModel implements Serializable {
         this.ratingGarages = ratingGarages;
     }
 
-    public String getName() {
-        return name;
+    public Province getProvince() {
+        return province;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setProvince(Province province) {
+        this.province = province;
     }
 
+    public District getDistrict() {
+        return district;
+    }
+
+    public void setDistrict(District district) {
+        this.district = district;
+    }
+
+    public Ward getWard() {
+        return ward;
+    }
+
+    public void setWard(Ward ward) {
+        this.ward = ward;
+    }
     //endregion
 
 

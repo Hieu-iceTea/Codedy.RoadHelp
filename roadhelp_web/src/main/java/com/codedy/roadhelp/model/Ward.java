@@ -35,6 +35,21 @@ public class Ward extends BaseModel implements Serializable {
 
 
     //region - Getter & Setter -
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getPrefix() {
+        return prefix;
+    }
+
+    public void setPrefix(String prefix) {
+        this.prefix = prefix;
+    }
 
     public List<Garage> getGarages() {
         return garages;
@@ -59,23 +74,6 @@ public class Ward extends BaseModel implements Serializable {
     public void setDistrict(District district) {
         this.district = district;
     }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getPrefix() {
-        return prefix;
-    }
-
-    public void setPrefix(String prefix) {
-        this.prefix = prefix;
-    }
-
     //endregion
 
 

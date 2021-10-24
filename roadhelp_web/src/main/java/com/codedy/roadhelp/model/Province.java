@@ -35,13 +35,20 @@ public class Province extends BaseModel implements Serializable {
 
 
     //region - Getter & Setter -
-
     public String getName() {
         return name;
     }
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
     }
 
     public List<Garage> getGarages() {
@@ -66,14 +73,6 @@ public class Province extends BaseModel implements Serializable {
 
     public void setWards(List<Ward> wards) {
         this.wards = wards;
-    }
-
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
     }
     //endregion
 

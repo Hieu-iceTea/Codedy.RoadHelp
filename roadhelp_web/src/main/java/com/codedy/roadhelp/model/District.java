@@ -35,30 +35,6 @@ public class District extends BaseModel implements Serializable {
 
 
     //region - Getter & Setter -
-    public Province getProvince() {
-        return province;
-    }
-
-    public void setProvince(Province province) {
-        this.province = province;
-    }
-
-    public List<Ward> getWards() {
-        return wards;
-    }
-
-    public void setWards(List<Ward> wards) {
-        this.wards = wards;
-    }
-
-    public List<Garage> getGarages() {
-        return garages;
-    }
-
-    public void setGarages(List<Garage> garages) {
-        this.garages = garages;
-    }
-
     public String getName() {
         return name;
     }
@@ -73,6 +49,30 @@ public class District extends BaseModel implements Serializable {
 
     public void setPrefix(String prefix) {
         this.prefix = prefix;
+    }
+
+    public List<Garage> getGarages() {
+        return garages;
+    }
+
+    public void setGarages(List<Garage> garages) {
+        this.garages = garages;
+    }
+
+    public Province getProvince() {
+        return province;
+    }
+
+    public void setProvince(Province province) {
+        this.province = province;
+    }
+
+    public List<Ward> getWards() {
+        return wards;
+    }
+
+    public void setWards(List<Ward> wards) {
+        this.wards = wards;
     }
     //endregion
 
