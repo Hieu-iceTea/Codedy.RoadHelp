@@ -18,7 +18,6 @@ public class User extends BaseModel implements Serializable {
     //region - Define Fields -
     @NotNull
     @Size(min = 6, max = 64)
-    @Column(name = "username")
     private String username;
 
     @Email
@@ -31,7 +30,6 @@ public class User extends BaseModel implements Serializable {
     @Size(max = 128)
     private String image;
 
-    @Column(name = "gender")
     private UserGender gender;
 
     @Size(min = 2, max = 64)
@@ -42,6 +40,8 @@ public class User extends BaseModel implements Serializable {
 
     @Size(min = 10)
     private String phone;
+
+    private String address;
 
     private Boolean active;
     //endregion
@@ -72,7 +72,6 @@ public class User extends BaseModel implements Serializable {
 
 
     //region - Getter & Setter -
-
     public List<Garage> getGarages() {
         return garages;
     }
@@ -202,6 +201,14 @@ public class User extends BaseModel implements Serializable {
         this.authorities = authorities;
     }
 
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
     //endregion
 
 
@@ -227,7 +234,7 @@ public class User extends BaseModel implements Serializable {
         hashMap.put("firstName", firstName);
         hashMap.put("lastName", lastName);
         hashMap.put("phone", phone);
-        //hashMap.put("address", address); //TODO
+        hashMap.put("address", address);
         hashMap.put("active", active);
 
         return hashMap;
