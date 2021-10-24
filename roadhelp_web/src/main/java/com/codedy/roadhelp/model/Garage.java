@@ -38,8 +38,8 @@ public class Garage extends BaseModel implements Serializable {
 
     //region - Relationship -
     @ManyToOne
-    @JoinColumn(name = "partner_id") //updatable = false, insertable = false
-    private User partner;
+    @JoinColumn(name = "user_partner_id") //updatable = false, insertable = false
+    private User userPartner;
 
     @OneToMany(mappedBy = "garage", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
     private List<GarageImage> garageImages;
@@ -63,12 +63,12 @@ public class Garage extends BaseModel implements Serializable {
 
     //region - Getter & Setter -
 
-    public User getPartner() {
-        return partner;
+    public User getUserPartner() {
+        return userPartner;
     }
 
-    public void setPartner(User partner) {
-        this.partner = partner;
+    public void setUserPartner(User userPartner) {
+        this.userPartner = userPartner;
     }
 
     public Province getProvince() {
@@ -200,7 +200,7 @@ public class Garage extends BaseModel implements Serializable {
     protected LinkedHashMap<String, Object> toHashMap() {
         LinkedHashMap<String, Object> hashMap = super.toHashMap();
 
-        hashMap.put("partnerId", partner != null ? partner.getId() : null);
+        hashMap.put("partnerId", userPartner != null ? userPartner.getId() : null);
         hashMap.put("provinceId", province != null ? province.getId() : null);
         hashMap.put("districtId", district != null ? district.getId() : null);
         hashMap.put("wardId", ward != null ? ward.getId() : null);
@@ -247,7 +247,7 @@ public class Garage extends BaseModel implements Serializable {
 
     //@JsonProperty("userPartner")
     private LinkedHashMap<String, Object> getUserPartnerHashMap() {
-        return partner != null ? partner.toHashMap() : null;
+        return userPartner != null ? userPartner.toHashMap() : null;
     }
 
     //@JsonProperty("ratingGarages")

@@ -29,7 +29,7 @@ public class RatingGarage extends BaseModel implements Serializable {
     private Garage garage;
 
     @ManyToOne
-    @JoinColumn(name = "user_id") //updatable = false, insertable = false
+    @JoinColumn(name = "user_member_id") //updatable = false, insertable = false
     private User userMember;
     //endregion
 
