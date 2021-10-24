@@ -51,7 +51,7 @@ public class RatingGarageRestController {
 
     // Update Rating Garage
     @PutMapping(path = {"/{id}", "/{id}/"})
-    public RatingGarage update(@RequestBody RatingGarage ratingGarage, @PathVariable int id) {
+    public LinkedHashMap<String, Object> update(@RequestBody RatingGarage ratingGarage, @PathVariable int id) {
 
         if (ratingGarageService.findById(id) == null) {
             throw new RestNotFoundException("Rating garage id not found - " + id);
@@ -59,7 +59,7 @@ public class RatingGarageRestController {
 
         ratingGarage.setId(id);
         ratingGarageService.save(ratingGarage);
-        return ratingGarageService.findById(ratingGarage.getId());
+        return ratingGarageService.findById(ratingGarage.getId()).toApiResponse();
     }
 
     // Delete Rating Garage
@@ -75,7 +75,7 @@ public class RatingGarageRestController {
 
     //region - Review Garage -
     @PostMapping(path = {"/repair-place/{garageId}/member-create-rating", "/repair-place/{garageId}/member-create-rating/"})
-    public RatingGarage reviewGarage(@RequestBody RatingGarage ratingGarage,
+    public LinkedHashMap<String, Object> reviewGarage(@RequestBody RatingGarage ratingGarage,
                                      @PathVariable int garageId,
                                      @RequestParam(defaultValue = "0") int memberId) {
         ratingGarage.setId(0);
@@ -97,7 +97,7 @@ public class RatingGarageRestController {
         garageService.save(garage);
 
         RatingGarage newRatingGarage = ratingGarageService.save(ratingGarage);
-        return ratingGarageService.findById(newRatingGarage.getId());
+        return ratingGarageService.findById(newRatingGarage.getId()).toApiResponse();
     }
     //endregion
 }
