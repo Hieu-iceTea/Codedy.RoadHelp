@@ -1,4 +1,4 @@
-package com.codedy.roadhelp.util;
+package com.codedy.roadhelp.util.storage;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;

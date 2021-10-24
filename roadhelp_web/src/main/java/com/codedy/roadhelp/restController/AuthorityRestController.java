@@ -1,7 +1,7 @@
-package com.codedy.roadhelp.rest;
+package com.codedy.roadhelp.restController;
 
 import com.codedy.roadhelp.model.Authority;
-import com.codedy.roadhelp.rest.exception.RestNotFoundException;
+import com.codedy.roadhelp.restController.exception.RestNotFoundException;
 import com.codedy.roadhelp.service.authority.AuthorityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

@@ -1,4 +1,4 @@
-package com.codedy.roadhelp.rest;
+package com.codedy.roadhelp.restController;
 
 import com.codedy.roadhelp.model.Authority;
 import com.codedy.roadhelp.model.User;

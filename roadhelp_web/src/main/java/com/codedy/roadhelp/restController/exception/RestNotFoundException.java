@@ -1,4 +1,4 @@
-package com.codedy.roadhelp.rest.exception;
+package com.codedy.roadhelp.restController.exception;
 
 public class RestNotFoundException extends RuntimeException {
 

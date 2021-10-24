@@ -1,7 +1,7 @@
 package com.codedy.roadhelp.util.storage.service;
 
 
-import com.codedy.roadhelp.util.Common;
+import com.codedy.roadhelp.util.storage.Common;
 import com.codedy.roadhelp.util.storage.exception.StorageException;
 import com.codedy.roadhelp.util.storage.exception.StorageFileNotFoundException;
 import net.bytebuddy.utility.RandomString;
