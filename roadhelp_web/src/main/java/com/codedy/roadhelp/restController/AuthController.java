@@ -1,4 +1,4 @@
-package com.codedy.roadhelp.rest;
+package com.codedy.roadhelp.restController;
 
 import com.codedy.roadhelp.model.Authority;
 import com.codedy.roadhelp.model.User;
@@ -20,7 +20,9 @@ import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
@@ -95,7 +97,7 @@ public class AuthController {
     }
 
     @PutMapping(path = {"/become-to-partner/{id}/setPartner", "/become-to-partner/{id}/setPartner/"})
-    public ResponseEntity<?> becomeToPartner(@PathVariable int id){
+    public ResponseEntity<?> becomeToPartner(@PathVariable int id) {
 
         User user = userService.findById(id);
         Authority authority = user.getAuthorities().get(0);

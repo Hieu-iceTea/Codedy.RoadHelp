@@ -1,4 +1,4 @@
-package com.codedy.roadhelp.util.storage.service;
+package com.codedy.roadhelp.untitlities.storage.service;
 
 import org.springframework.web.multipart.MultipartFile;
 

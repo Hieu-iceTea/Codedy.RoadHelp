@@ -1,4 +1,4 @@
-package com.codedy.roadhelp.rest.exception;
+package com.codedy.roadhelp.restController.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

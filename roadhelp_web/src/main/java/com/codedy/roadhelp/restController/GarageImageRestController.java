@@ -1,12 +1,11 @@
-package com.codedy.roadhelp.rest;
+package com.codedy.roadhelp.restController;
 
-import com.codedy.roadhelp.model.District;
 import com.codedy.roadhelp.model.Garage;
 import com.codedy.roadhelp.model.GarageImage;
-import com.codedy.roadhelp.rest.exception.RestNotFoundException;
+import com.codedy.roadhelp.restController.exception.RestNotFoundException;
 import com.codedy.roadhelp.service.garage.GarageService;
 import com.codedy.roadhelp.service.garageImage.GarageImageService;
-import com.codedy.roadhelp.util.storage.service.StorageService;
+import com.codedy.roadhelp.untitlities.storage.service.StorageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -19,12 +18,15 @@ import java.util.List;
 @RequestMapping(path = "/api/v1/garageImages")
 public class GarageImageRestController {
 
+    // Create GarageImage
+    private final String _path = "src/main/resources/static/" + "data-images/garage";
     @Autowired
     private GarageImageService garageImageService;
     @Autowired
     private GarageService garageService;
     @Autowired
     private StorageService storageService;
+
     // List GarageImage
     @GetMapping(path = {"", "/", "/index"})
     public List<LinkedHashMap<String, Object>> index() {
@@ -41,19 +43,16 @@ public class GarageImageRestController {
         return garageImage.toApiResponse();
     }
 
-    // Create GarageImage
-    private final String _path = "src/main/resources/static/" + "data-images/garage";
-
     @PostMapping(path = {"", "/"})
-    public LinkedHashMap<String, Object> store(@RequestParam int garageId, @RequestParam("File") MultipartFile file) throws IOException{
-       GarageImage garageImage = new GarageImage();
+    public LinkedHashMap<String, Object> store(@RequestParam int garageId, @RequestParam("File") MultipartFile file) throws IOException {
+        GarageImage garageImage = new GarageImage();
         Garage garage = garageService.findById(garageId);
 
         garageImage.setGarage(garage);
         //
         if (!file.isEmpty()) {
             // 02. Lưu file mới:
-            String fileName =  storageService.store(file, _path);
+            String fileName = storageService.store(file, _path);
             garageImage.setImage(fileName);
         }
         GarageImage newGarageImage = garageImageService.save(garageImage);
