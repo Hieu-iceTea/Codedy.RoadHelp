@@ -143,22 +143,11 @@ public class GarageRestController {
                                      @RequestParam(required = false, defaultValue = "0") int districtId,
                                      @RequestParam(required = false, defaultValue = "0") int wardId) {
         if (name.isEmpty() && provinceId < 1 && districtId < 1 && wardId < 1) {
-            return garageService.findAll().stream().map(Garage::toApiResponse).toList();
+            return garageService.findAllByProvinceIdAndDistrictIdAndWardId(provinceId, districtId, wardId).stream().map(Garage::toApiResponse).toList();
         } else if (!name.isEmpty() && provinceId < 1 && districtId < 1 && wardId < 1) {
-            return garageService.findAllByName(name).stream().map(Garage::toApiResponse).toList();
+            return garageService.findByNameContaining(name).stream().map(Garage::toApiResponse).toList();
         } else {
-            Province tmpProvince = new Province();
-            tmpProvince.setId(provinceId);
-
-            District tmpDistrict = new District();
-            tmpDistrict.setId(districtId);
-
-            Ward tmpWard = new Ward();
-            tmpWard.setId(wardId);
-            tmpWard.setProvince(tmpProvince);
-            tmpWard.setDistrict(tmpDistrict);
-
-            return garageService.findAllByProvinceAndDistrictAndWardIsOrName(tmpProvince, tmpDistrict, tmpWard, name).stream().map(Garage::toApiResponse).toList();
+            return garageService.findAllByProvinceIdAndDistrictIdAndWardIdAndNameContaining(provinceId, districtId, wardId, name).stream().map(Garage::toApiResponse).toList();
         }
     }
 }
