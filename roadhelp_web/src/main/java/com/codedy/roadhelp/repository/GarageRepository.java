@@ -12,6 +12,12 @@ public interface GarageRepository extends BaseRepository<Garage, Integer> {
 
     public List<Garage> findAllByProvinceIsAndDistrictIsAndWardIsOrName(Province province, District district, Ward ward, @Size(min = 2, max = 64) String name);
 
-    public List<Garage> findAllByName(@Size(min = 2, max = 64) String name);
+    //Tìm theo tên & Lọc theo tỉnh/huyện/xã:
+    public List<Garage> findAllByName(@Size(min = 2, max = 64) String name); // 1. Chỉ có tên
+    public List<Garage> findAllByProvinceIdAndDistrictIdAndWardId(int province_id, int district_id, int ward_id); // 2. Chỉ có tỉnh/huyện/xã
+    public List<Garage> findAllByProvinceIdAndDistrictIdAndWardIdAndName(int province_id, int district_id, int ward_id, @Size(min = 2, max = 64) String name); // 3. Có cả tên và tỉnh/huyện/xã
+
+    //Danh sách tiệm sửa xe đang quản lý: Lấy danh sách Garage theo UserPartnerId
+    public List<Garage> findAllByUserPartnerId(int userPartner_id);
 
 }
