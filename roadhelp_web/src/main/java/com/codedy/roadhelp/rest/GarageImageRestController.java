@@ -61,14 +61,14 @@ public class GarageImageRestController {
 
     // Update GarageImage
     @PutMapping(path = {"/{id}", "/{id}/"})
-    public GarageImage update(@RequestBody GarageImage garageImage, @PathVariable int id) {
+    public LinkedHashMap<String, Object> update(@RequestBody GarageImage garageImage, @PathVariable int id) {
 
         if (garageImageService.findById(id) == null) {
             throw new RestNotFoundException("GarageImage id not found - " + id);
         }
         garageImage.setId(id);
         garageImageService.save(garageImage);
-        return garageImageService.findById(garageImage.getId());
+        return garageImageService.findById(garageImage.getId()).toApiResponse();
     }
 
     // Delete GarageImage
