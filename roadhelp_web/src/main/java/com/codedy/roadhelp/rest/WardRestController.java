@@ -46,15 +46,15 @@ public class WardRestController {
 
     // Create Ward
     @PostMapping(path = {"", "/"})
-    public Ward store(@RequestBody Ward ward) {
+    public LinkedHashMap<String, Object> store(@RequestBody Ward ward) {
         ward.setId(0);
         Ward newWard = wardService.save(ward);
-        return wardService.findById(newWard.getId());
+        return wardService.findById(newWard.getId()).toApiResponse();
     }
 
     // Update Ward
     @PutMapping(path = {"/{id}", "/{id}/"})
-    public Ward update(@RequestBody Ward ward, @PathVariable int id) {
+    public LinkedHashMap<String, Object> update(@RequestBody Ward ward, @PathVariable int id) {
 
         if (wardService.findById(id) == null) {
             throw new RestNotFoundException("Ward id not found - " + id);
@@ -62,7 +62,7 @@ public class WardRestController {
 
         ward.setId(id);
         wardService.save(ward);
-        return wardService.findById(ward.getId());
+        return wardService.findById(ward.getId()).toApiResponse();
     }
 
     // Delete Ward
