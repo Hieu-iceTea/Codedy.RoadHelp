@@ -7,19 +7,17 @@ import java.util.List;
 
 @Entity
 @Table(name = "ward")
-/*@JsonIdentityInfo(
-        scope = Ward.class,
-        generator = ObjectIdGenerators.PropertyGenerator.class,
-        property = "id")*/
+//@JsonIdentityInfo(scope = Authority.class, generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Ward extends BaseModel implements Serializable {
+
     //region - Define Fields -
     @Column(name = "_name")
     private String name;
 
     @Column(name = "_prefix")
     private String prefix;
-
     //endregion
+
 
     //region - Relationship -
     @ManyToOne
@@ -30,11 +28,11 @@ public class Ward extends BaseModel implements Serializable {
     @JoinColumn(name = "_district_id") //updatable = false, insertable = false
     private District district;
 
-    @OneToMany(mappedBy = "ward", cascade = {CascadeType.PERSIST, CascadeType.MERGE,
-            CascadeType.DETACH, CascadeType.REFRESH})
+    @OneToMany(mappedBy = "ward", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
     //@JsonBackReference(value = "garages")
     private List<Garage> garages;
     //endregion
+
 
     //region - Getter & Setter -
 

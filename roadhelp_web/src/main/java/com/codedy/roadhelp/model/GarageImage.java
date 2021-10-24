@@ -10,24 +10,24 @@ import java.util.LinkedHashMap;
 
 @Entity
 @Table(name = "garageimage")
-//@JsonIdentityInfo(
-//        scope = GarageImage.class,
-//        generator = ObjectIdGenerators.PropertyGenerator.class,
-//        property = "id")
+//@JsonIdentityInfo(scope = Authority.class, generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class GarageImage extends BaseModel implements Serializable {
 
+    //region - Define Fields -
     @Size(max = 256)
     private String image;
+    //endregion
+
+
     //region - Relationship -
     @ManyToOne
     @JoinColumn(name = "garage_id") //updatable = false, insertable = false
-    /*@JsonIdentityInfo(
-            scope = Garage.class,
-            generator = ObjectIdGenerators.PropertyGenerator.class,
-            property = "id")*/
+    //@JsonIdentityInfo(scope = Authority.class, generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
     private Garage garage;
     //endregion
 
+
+    //region - Getter & Setter -
     public String getImage() {
         return image;
     }
@@ -43,6 +43,7 @@ public class GarageImage extends BaseModel implements Serializable {
     public void setGarage(Garage garage) {
         this.garage = garage;
     }
+    //endregion
 
 
     //region - Relationship Helper -

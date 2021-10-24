@@ -13,7 +13,6 @@ import java.util.LinkedHashMap;
 public class Issue extends BaseModel implements Serializable {
 
     //region - Define Fields -
-
     private double longitude;
 
     private double latitude;
@@ -30,8 +29,8 @@ public class Issue extends BaseModel implements Serializable {
     private IssueStatus status;
 
     private IssueCategory category;
+    //endregion
 
-//endregion
 
     //region - Relationship -
     @ManyToOne
@@ -44,7 +43,8 @@ public class Issue extends BaseModel implements Serializable {
 
     @OneToOne(mappedBy = "issue")
     private RatingIssue ratingIssue;
-//endregion
+    //endregion
+
 
     //region - Getter & Setter -
     public IssueCategory getCategory() {

@@ -7,34 +7,33 @@ import java.util.List;
 
 @Entity
 @Table(name = "province")
-/*@JsonIdentityInfo(
-        scope = Province.class,
-        generator = ObjectIdGenerators.PropertyGenerator.class,
-        property = "id")*/
+//@JsonIdentityInfo(scope = Authority.class, generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Province extends BaseModel implements Serializable {
 
+    //region - Define Fields -
     @Column(name = "_name")
     private String name;
 
     @Column(name = "_code")
     private String code;
+    //endregion
+
 
     //region - Relationship -
-    @OneToMany(mappedBy = "province", cascade = {CascadeType.PERSIST, CascadeType.MERGE,
-            CascadeType.DETACH, CascadeType.REFRESH})
+    @OneToMany(mappedBy = "province", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
     //@JsonBackReference(value = "districts")
     private List<District> districts;
 
-    @OneToMany(mappedBy = "province", cascade = {CascadeType.PERSIST, CascadeType.MERGE,
-            CascadeType.DETACH, CascadeType.REFRESH})
+    @OneToMany(mappedBy = "province", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
     //@JsonBackReference(value = "wards")
     private List<Ward> wards;
 
-    @OneToMany(mappedBy = "province", cascade = {CascadeType.PERSIST, CascadeType.MERGE,
-            CascadeType.DETACH, CascadeType.REFRESH})
+    @OneToMany(mappedBy = "province", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
     //@JsonBackReference(value = "garages")
     private List<Garage> garages;
     //endregion
+
+
     //region - Getter & Setter -
 
     public String getName() {

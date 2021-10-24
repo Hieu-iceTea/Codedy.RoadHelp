@@ -21,19 +21,18 @@ public class RatingGarage extends BaseModel implements Serializable {
     private String comment;
     //endregion
 
+
     //region - Relationship -
     @ManyToOne
     @JoinColumn(name = "garage_id") //updatable = false, insertable = false
-    /*@JsonIdentityInfo(
-            scope = Garage.class,
-            generator = ObjectIdGenerators.PropertyGenerator.class,
-            property = "id")*/
+    //@JsonIdentityInfo(scope = Authority.class, generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
     private Garage garage;
 
     @ManyToOne
     @JoinColumn(name = "user_id") //updatable = false, insertable = false
     private User userMember;
     //endregion
+
 
     //region - Getter & Setter -
     public int getRatePoint() {
@@ -67,7 +66,7 @@ public class RatingGarage extends BaseModel implements Serializable {
     public void setUserMember(User userMember) {
         this.userMember = userMember;
     }
-//endregion
+    //endregion
 
 
     //region - Relationship Helper -
