@@ -1,36 +1,26 @@
 package com.codedy.roadhelp.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
-
-import javax.persistence.*;
-import java.util.HashMap;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import java.io.Serializable;
+import java.util.LinkedHashMap;
 
 @Entity
 @Table(name = "authorities")
-public class Authority extends BaseModel {
+/*@JsonIdentityInfo(
+        scope = Authority.class,
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id")*/
+public class Authority extends BaseModel implements Serializable {
+//
 
-    //region - Define Fields -
     private String authority;
-    //endregion
-
-
     //region - Relationship -
-    @JsonIgnore
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
+    @ManyToOne
     @JoinColumn(name = "username", referencedColumnName = "username")
     private User user;
-    //endregion
-
-
-    //region - Getter & Setter -
-    public String getAuthority() {
-        return authority;
-    }
-
-    public void setAuthority(String authority) {
-        this.authority = authority;
-    }
 
     public User getUser() {
         return user;
@@ -41,6 +31,13 @@ public class Authority extends BaseModel {
     }
     //endregion
 
+    public String getAuthority() {
+        return authority;
+    }
+
+    public void setAuthority(String authority) {
+        this.authority = authority;
+    }
 
     //region - Relationship Helper -
 
@@ -53,8 +50,8 @@ public class Authority extends BaseModel {
      *
      * @return
      */
-    public HashMap<String, Object> toHashMap() {
-        HashMap<String, Object> hashMap = super.toHashMap();
+    protected LinkedHashMap<String, Object> toHashMap() {
+        LinkedHashMap<String, Object> hashMap = super.toHashMap();
 
         hashMap.put("username", user.getUsername());
         hashMap.put("authority", authority);
@@ -62,8 +59,19 @@ public class Authority extends BaseModel {
         return hashMap;
     }
 
-    @JsonProperty("user")
-    public HashMap<String, Object> getUserHashMap() {
+    public LinkedHashMap<String, Object> toApiResponse() {
+        LinkedHashMap<String, Object> hashMap = this.toHashMap();
+
+        hashMap.remove("username");
+
+        hashMap.put("user", getUserHashMap());
+        hashMap.put("authority", authority);
+
+        return hashMap;
+    }
+
+    //@JsonProperty("user")
+    private LinkedHashMap<String, Object> getUserHashMap() {
         return user != null ? user.toHashMap() : null;
     }
     //endregion

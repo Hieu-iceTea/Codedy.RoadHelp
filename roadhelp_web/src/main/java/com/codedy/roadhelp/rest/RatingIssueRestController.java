@@ -1,13 +1,14 @@
-package com.codedy.roadhelp.rest;
+package com.codedy.roadhelp.restController;
 
 import com.codedy.roadhelp.model.RatingIssue;
-import com.codedy.roadhelp.rest.exception.RestNotFoundException;
+import com.codedy.roadhelp.restController.exception.RestNotFoundException;
 import com.codedy.roadhelp.service.issues.IssuesService;
 import com.codedy.roadhelp.service.ratingIssue.RatingIssueService;
 import com.codedy.roadhelp.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.LinkedHashMap;
 import java.util.List;
 
 @RestController
@@ -23,18 +24,18 @@ public class RatingIssueRestController {
 
     // List Rating Partner
     @GetMapping(path = {"", "/", "/index"})
-    public List<RatingIssue> index() {
-        return ratingIssueService.findAll();
+    public List<LinkedHashMap<String, Object>> index() {
+        return ratingIssueService.findAll().stream().map(RatingIssue::toApiResponse).toList();
     }
 
     // Detail Rating Partner
     @GetMapping(path = {"/{id}", "/{id}/"})
-    public RatingIssue show(@PathVariable int id) {
+    public LinkedHashMap<String, Object> show(@PathVariable int id) {
         RatingIssue ratingIssue = ratingIssueService.findById(id);
         if (ratingIssue == null) {
             throw new RestNotFoundException("Rating partner id not found - " + id);
         }
-        return ratingIssue;
+        return ratingIssue.toApiResponse();
     }
 
     // Create Rating Partner
@@ -50,8 +51,8 @@ public class RatingIssueRestController {
                                           @RequestParam(defaultValue = "0") int issueId) {
 
         ratingIssue.setId(0);
-        ratingIssue.setIssue(issuesService.findById(issueId));
-        ratingIssue.setUserMember(userService.findById(userMemberId));
+        ratingIssue.setIssues(issuesService.findById(issueId));
+        ratingIssue.setUsers(userService.findById(userMemberId));
         RatingIssue newRatingIssue = ratingIssueService.save(ratingIssue);
         return ratingIssueService.findById(newRatingIssue.getId());
     }

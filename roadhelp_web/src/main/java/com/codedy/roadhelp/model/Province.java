@@ -1,55 +1,48 @@
 package com.codedy.roadhelp.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 import javax.persistence.*;
-import java.util.HashMap;
+import java.io.Serializable;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 @Entity
 @Table(name = "province")
-public class Province extends BaseModel {
+/*@JsonIdentityInfo(
+        scope = Province.class,
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id")*/
+public class Province extends BaseModel implements Serializable {
 
-    //region - Define Fields -
     @Column(name = "_name")
     private String name;
 
     @Column(name = "_code")
     private String code;
-    //endregion
-
 
     //region - Relationship -
-    @JsonIgnore
-    @OneToMany(mappedBy = "province", fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
-    private List<Garage> garages;
-
-    @JsonIgnore
-    @OneToMany(mappedBy = "province", fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
+    @OneToMany(mappedBy = "province", cascade = {CascadeType.PERSIST, CascadeType.MERGE,
+            CascadeType.DETACH, CascadeType.REFRESH})
+    //@JsonBackReference(value = "districts")
     private List<District> districts;
 
-    @JsonIgnore
-    @OneToMany(mappedBy = "province", fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
+    @OneToMany(mappedBy = "province", cascade = {CascadeType.PERSIST, CascadeType.MERGE,
+            CascadeType.DETACH, CascadeType.REFRESH})
+    //@JsonBackReference(value = "wards")
     private List<Ward> wards;
+
+    @OneToMany(mappedBy = "province", cascade = {CascadeType.PERSIST, CascadeType.MERGE,
+            CascadeType.DETACH, CascadeType.REFRESH})
+    //@JsonBackReference(value = "garages")
+    private List<Garage> garages;
     //endregion
-
-
     //region - Getter & Setter -
+
     public String getName() {
         return name;
     }
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
     }
 
     public List<Garage> getGarages() {
@@ -75,6 +68,14 @@ public class Province extends BaseModel {
     public void setWards(List<Ward> wards) {
         this.wards = wards;
     }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
     //endregion
 
 
@@ -89,8 +90,8 @@ public class Province extends BaseModel {
      *
      * @return
      */
-    public HashMap<String, Object> toHashMap() {
-        HashMap<String, Object> hashMap = super.toHashMap();
+    protected LinkedHashMap<String, Object> toHashMap() {
+        LinkedHashMap<String, Object> hashMap = super.toHashMap();
 
         hashMap.put("name", name);
         hashMap.put("code", code);
@@ -98,28 +99,40 @@ public class Province extends BaseModel {
         return hashMap;
     }
 
-    @JsonProperty("garages")
-    public List<HashMap<String, Object>> getGaragesHashMap() {
+    public LinkedHashMap<String, Object> toApiResponse() {
+        LinkedHashMap<String, Object> hashMap = this.toHashMap();
+
+        hashMap.put("garages", getGaragesHashMap());
+        hashMap.put("districts", getDistrictsHashMap());
+        hashMap.put("wards", getWardsHashMap());
+        /*hashMap.put("districtIds", getDistrictIdsHashMap());
+        hashMap.put("wardIds", getWardIdsHashMap());*/
+
+        return hashMap;
+    }
+
+    //@JsonProperty("garages")
+    private List<LinkedHashMap<String, Object>> getGaragesHashMap() {
         return garages != null ? garages.stream().map(Garage::toHashMap).toList() : null;
     }
 
-    @JsonProperty("districts")
-    public List<HashMap<String, Object>> getDistrictsHashMap() {
+    //@JsonProperty("districts")
+    private List<LinkedHashMap<String, Object>> getDistrictsHashMap() {
         return districts != null ? districts.stream().map(District::toHashMap).toList() : null;
     }
 
-    @JsonProperty("wards")
-    public List<HashMap<String, Object>> getWardsHashMap() {
+    //@JsonProperty("wards")
+    private List<LinkedHashMap<String, Object>> getWardsHashMap() {
         return wards != null ? wards.stream().map(Ward::toHashMap).toList() : null;
     }
 
-    /*@JsonProperty("districtIds")
-    public List<Integer> getDistrictIdsHashMap() {
+    /*//@JsonProperty("districtIds")
+    private List<Integer> getDistrictIdsHashMap() {
         return districts != null ? districts.stream().map(District::getId).toList() : null;
     }*/
 
-    /*@JsonProperty("wardIds")
-    public List<Integer> getWardIdsHashMap() {
+    /*//@JsonProperty("wardIds")
+    private List<Integer> getWardIdsHashMap() {
         return wards != null ? wards.stream().map(Ward::getId).toList() : null;
     }*/
     //endregion

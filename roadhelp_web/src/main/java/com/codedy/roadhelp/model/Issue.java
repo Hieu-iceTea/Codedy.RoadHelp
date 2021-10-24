@@ -2,18 +2,18 @@ package com.codedy.roadhelp.model;
 
 import com.codedy.roadhelp.model.enums.IssueCategory;
 import com.codedy.roadhelp.model.enums.IssueStatus;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
-import java.util.HashMap;
+import java.io.Serializable;
+import java.util.LinkedHashMap;
 
 @Entity
 @Table(name = "issue")
-public class Issue extends BaseModel {
+public class Issue extends BaseModel implements Serializable {
 
     //region - Define Fields -
+
     private double longitude;
 
     private double latitude;
@@ -30,27 +30,71 @@ public class Issue extends BaseModel {
     private IssueStatus status;
 
     private IssueCategory category;
-    //endregion
 
+//endregion
 
     //region - Relationship -
-    @JsonIgnore
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
+    @ManyToOne
     @JoinColumn(name = "user_member_id")
     private User userMember;
 
-    @JsonIgnore
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
+    @ManyToOne
     @JoinColumn(name = "user_partner_id")
     private User userPartner;
 
-    @JsonIgnore
-    @OneToOne(mappedBy = "issue", cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    @OneToOne(mappedBy = "issue")
     private RatingIssue ratingIssue;
-    //endregion
-
+//endregion
 
     //region - Getter & Setter -
+    public IssueCategory getCategory() {
+        return category;
+    }
+
+    public void setCategory(IssueCategory category) {
+        this.category = category;
+    }
+
+    public User getUserMember() {
+        return userMember;
+    }
+
+    public void setUserMember(User userMember) {
+        this.userMember = userMember;
+    }
+
+    public User getUserPartner() {
+        return userPartner;
+    }
+
+    public void setUserPartner(User userPartner) {
+        this.userPartner = userPartner;
+    }
+
+    public RatingIssue getRatingIssues() {
+        return ratingIssue;
+    }
+
+    public void setRatingIssues(RatingIssue ratingIssue) {
+        this.ratingIssue = ratingIssue;
+    }
+
+    public RatingIssue getRatingPartner() {
+        return ratingIssue;
+    }
+
+    public void setRatingPartner(RatingIssue ratingIssue) {
+        this.ratingIssue = ratingIssue;
+    }
+
+    public IssueStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(IssueStatus status) {
+        this.status = status;
+    }
+
     public double getLongitude() {
         return longitude;
     }
@@ -91,46 +135,7 @@ public class Issue extends BaseModel {
         this.description = description;
     }
 
-    public IssueStatus getStatus() {
-        return status;
-    }
-
-    public void setStatus(IssueStatus status) {
-        this.status = status;
-    }
-
-    public IssueCategory getCategory() {
-        return category;
-    }
-
-    public void setCategory(IssueCategory category) {
-        this.category = category;
-    }
-
-    public User getUserMember() {
-        return userMember;
-    }
-
-    public void setUserMember(User userMember) {
-        this.userMember = userMember;
-    }
-
-    public User getUserPartner() {
-        return userPartner;
-    }
-
-    public void setUserPartner(User userPartner) {
-        this.userPartner = userPartner;
-    }
-
-    public RatingIssue getRatingIssue() {
-        return ratingIssue;
-    }
-
-    public void setRatingIssue(RatingIssue ratingIssue) {
-        this.ratingIssue = ratingIssue;
-    }
-    //endregion
+//endregion
 
 
     //region - Relationship Helper -
@@ -144,8 +149,8 @@ public class Issue extends BaseModel {
      *
      * @return
      */
-    public HashMap<String, Object> toHashMap() {
-        HashMap<String, Object> hashMap = super.toHashMap();
+    protected LinkedHashMap<String, Object> toHashMap() {
+        LinkedHashMap<String, Object> hashMap = super.toHashMap();
 
         hashMap.put("userMemberId", userMember != null ? userMember.getId() : null);
         hashMap.put("userPartnerId", userPartner != null ? userPartner.getId() : null);
@@ -161,18 +166,31 @@ public class Issue extends BaseModel {
         return hashMap;
     }
 
-    @JsonProperty("userMember")
-    public HashMap<String, Object> getUserMemberHashMap() {
+    public LinkedHashMap<String, Object> toApiResponse() {
+        LinkedHashMap<String, Object> hashMap = this.toHashMap();
+
+        hashMap.remove("userMemberId");
+        hashMap.remove("userPartnerId");
+
+        hashMap.put("userMember", getUserMemberHashMap());
+        hashMap.put("userPartner", getUserPartnerHashMap());
+        hashMap.put("ratingIssue", getRatingIssueHashMap());
+
+        return hashMap;
+    }
+
+    //@JsonProperty("userMember")
+    private LinkedHashMap<String, Object> getUserMemberHashMap() {
         return userMember != null ? userMember.toHashMap() : null;
     }
 
-    @JsonProperty("userPartner")
-    public HashMap<String, Object> getUserPartnerHashMap() {
+    //@JsonProperty("userPartner")
+    private LinkedHashMap<String, Object> getUserPartnerHashMap() {
         return userPartner != null ? userPartner.toHashMap() : null;
     }
 
-    @JsonProperty("ratingIssue")
-    public HashMap<String, Object> getRatingIssueHashMap() {
+    //@JsonProperty("ratingIssue")
+    private LinkedHashMap<String, Object> getRatingIssueHashMap() {
         return ratingIssue != null ? ratingIssue.toHashMap() : null;
     }
     //endregion

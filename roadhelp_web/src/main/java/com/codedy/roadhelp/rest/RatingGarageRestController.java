@@ -1,14 +1,19 @@
-package com.codedy.roadhelp.rest;
+package com.codedy.roadhelp.restController;
 
 import com.codedy.roadhelp.model.Garage;
+import com.codedy.roadhelp.model.GarageImage;
 import com.codedy.roadhelp.model.RatingGarage;
-import com.codedy.roadhelp.rest.exception.RestNotFoundException;
+import com.codedy.roadhelp.payload.response.MessageResponse;
+import com.codedy.roadhelp.restController.exception.RestNotFoundException;
 import com.codedy.roadhelp.service.garage.GarageService;
 import com.codedy.roadhelp.service.ratingGarage.RatingGarageService;
 import com.codedy.roadhelp.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 @RestController
@@ -26,18 +31,18 @@ public class RatingGarageRestController {
 
     // List Rating Garage
     @GetMapping(path = {"", "/", "/index"})
-    public List<RatingGarage> index() {
-        return ratingGarageService.findAll();
+    public List<LinkedHashMap<String, Object>> index() {
+        return ratingGarageService.findAll().stream().map(RatingGarage::toApiResponse).toList();
     }
 
     // Detail Rating Garage
     @GetMapping(path = {"/{id}", "/{id}/"})
-    public RatingGarage show(@PathVariable int id) {
+    public LinkedHashMap<String, Object> show(@PathVariable int id) {
         RatingGarage ratingGarage = ratingGarageService.findById(id);
         if (ratingGarage == null) {
             throw new RestNotFoundException("Rating garage id not found - " + id);
         }
-        return ratingGarage;
+        return ratingGarage.toApiResponse();
     }
 
     // Create Rating Garage

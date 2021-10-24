@@ -1,16 +1,18 @@
 package com.codedy.roadhelp.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.util.HashMap;
+import java.io.Serializable;
+import java.util.LinkedHashMap;
 
 @Entity
 @Table(name = "ratingissues")
-public class RatingIssue extends BaseModel {
+/*@JsonIdentityInfo(
+        scope = RatingIssue.class,
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id")*/
+public class RatingIssue extends BaseModel implements Serializable {
 
     //region - Define Fields -
     @NotNull
@@ -22,19 +24,24 @@ public class RatingIssue extends BaseModel {
 
 
     //region - Relationship -
-    @JsonIgnore
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "issue_id")
-    private Issue issue;
-
-    @JsonIgnore
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
+    @ManyToOne
     @JoinColumn(name = "user_member_id")
     private User userMember;
+
+    @OneToOne
+    @JoinColumn(name = "issue_id")
+    private Issue issue;
     //endregion
 
-
     //region - Getter & Setter -
+    public Issue getIssues() {
+        return issue;
+    }
+
+    public void setIssues(Issue issue) {
+        this.issue = issue;
+    }
+
     public int getRatePoint() {
         return ratePoint;
     }
@@ -51,21 +58,14 @@ public class RatingIssue extends BaseModel {
         this.comment = comment;
     }
 
-    public Issue getIssue() {
-        return issue;
-    }
-
-    public void setIssue(Issue issue) {
-        this.issue = issue;
-    }
-
-    public User getUserMember() {
+    public User getUsers() {
         return userMember;
     }
 
-    public void setUserMember(User userMember) {
-        this.userMember = userMember;
+    public void setUsers(User users) {
+        this.userMember = users;
     }
+
     //endregion
 
 
@@ -80,8 +80,8 @@ public class RatingIssue extends BaseModel {
      *
      * @return
      */
-    public HashMap<String, Object> toHashMap() {
-        HashMap<String, Object> hashMap = super.toHashMap();
+    protected LinkedHashMap<String, Object> toHashMap() {
+        LinkedHashMap<String, Object> hashMap = super.toHashMap();
 
         hashMap.put("issueId", issue != null ? issue.getId() : null);
         hashMap.put("userMemberId", userMember != null ? userMember.getId() : null);
@@ -92,13 +92,25 @@ public class RatingIssue extends BaseModel {
         return hashMap;
     }
 
-    @JsonProperty("issue")
-    public HashMap<String, Object> getIssueHashMap() {
+    public LinkedHashMap<String, Object> toApiResponse() {
+        LinkedHashMap<String, Object> hashMap = this.toHashMap();
+
+        hashMap.remove("issueId");
+        hashMap.remove("userMemberId");
+
+        hashMap.put("issue", getIssueHashMap());
+        hashMap.put("userMember", getUserMemberHashMap());
+
+        return hashMap;
+    }
+
+    //@JsonProperty("issue")
+    private LinkedHashMap<String, Object> getIssueHashMap() {
         return issue != null ? issue.toHashMap() : null;
     }
 
-    @JsonProperty("userMember")
-    public HashMap<String, Object> getUserMemberHashMap() {
+    //@JsonProperty("userMember")
+    private LinkedHashMap<String, Object> getUserMemberHashMap() {
         return userMember != null ? userMember.toHashMap() : null;
     }
     //endregion

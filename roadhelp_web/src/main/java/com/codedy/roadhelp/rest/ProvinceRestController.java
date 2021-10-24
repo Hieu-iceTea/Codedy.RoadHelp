@@ -1,12 +1,16 @@
-package com.codedy.roadhelp.rest;
+package com.codedy.roadhelp.restController;
 
+import com.codedy.roadhelp.model.District;
+import com.codedy.roadhelp.model.GarageImage;
 import com.codedy.roadhelp.model.Province;
-import com.codedy.roadhelp.rest.exception.RestNotFoundException;
+import com.codedy.roadhelp.restController.exception.RestNotFoundException;
 import com.codedy.roadhelp.service.district.DistrictService;
+import com.codedy.roadhelp.service.province.ProvinceService;
 import com.codedy.roadhelp.service.province.ProvinceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.LinkedHashMap;
 import java.util.List;
 
 @RestController
@@ -19,26 +23,26 @@ public class ProvinceRestController {
 
     // List Province
     @GetMapping(path = {"", "/", "/index"})
-    public List<Province> index() {
-        return provinceServiceService.findAll();
+    public List<LinkedHashMap<String, Object>> index() {
+        return provinceServiceService.findAll().stream().map(Province::toApiResponse).toList();
     }
 
     // Detail Province
     @GetMapping(path = {"/{id}", "/{id}/"})
-    public Province show(@PathVariable int id) {
+    public LinkedHashMap<String, Object> show(@PathVariable int id) {
         Province province = provinceServiceService.findById(id);
         if (province == null) {
             throw new RestNotFoundException("Province id not found - " + id);
         }
-        return province;
+        return province.toApiResponse();
     }
 
     // Create Province
     @PostMapping(path = {"", "/"})
-    public Province store(@RequestBody Province province) {
+    public LinkedHashMap<String, Object> store(@RequestBody Province province) {
         province.setId(0);
         Province newProvince = provinceServiceService.save(province);
-        return provinceServiceService.findById(newProvince.getId());
+        return provinceServiceService.findById(newProvince.getId()).toApiResponse();
     }
 
     // Update Province

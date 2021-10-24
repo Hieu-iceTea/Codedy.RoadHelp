@@ -1,31 +1,33 @@
 package com.codedy.roadhelp.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
-
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 import javax.validation.constraints.Size;
-import java.util.HashMap;
+import java.io.Serializable;
+import java.util.LinkedHashMap;
 
 @Entity
 @Table(name = "garageimage")
-public class GarageImage extends BaseModel {
+//@JsonIdentityInfo(
+//        scope = GarageImage.class,
+//        generator = ObjectIdGenerators.PropertyGenerator.class,
+//        property = "id")
+public class GarageImage extends BaseModel implements Serializable {
 
-    //region - Define Fields -
     @Size(max = 256)
     private String image;
-    //endregion
-
-
     //region - Relationship -
-    @JsonIgnore
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
+    @ManyToOne
     @JoinColumn(name = "garage_id") //updatable = false, insertable = false
+    /*@JsonIdentityInfo(
+            scope = Garage.class,
+            generator = ObjectIdGenerators.PropertyGenerator.class,
+            property = "id")*/
     private Garage garage;
     //endregion
 
-
-    //region - Getter & Setter -
     public String getImage() {
         return image;
     }
@@ -41,7 +43,6 @@ public class GarageImage extends BaseModel {
     public void setGarage(Garage garage) {
         this.garage = garage;
     }
-    //endregion
 
 
     //region - Relationship Helper -
@@ -55,8 +56,8 @@ public class GarageImage extends BaseModel {
      *
      * @return
      */
-    public HashMap<String, Object> toHashMap() {
-        HashMap<String, Object> hashMap = super.toHashMap();
+    protected LinkedHashMap<String, Object> toHashMap() {
+        LinkedHashMap<String, Object> hashMap = super.toHashMap();
 
         hashMap.put("garageId", garage != null ? garage.getId() : null);
 
@@ -65,8 +66,18 @@ public class GarageImage extends BaseModel {
         return hashMap;
     }
 
-    @JsonProperty("garage")
-    public HashMap<String, Object> getGarageHashMap() {
+    public LinkedHashMap<String, Object> toApiResponse() {
+        LinkedHashMap<String, Object> hashMap = this.toHashMap();
+
+        hashMap.remove("garageId");
+
+        hashMap.put("garage", getGarageHashMap());
+
+        return hashMap;
+    }
+
+    //@JsonProperty("garage")
+    private LinkedHashMap<String, Object> getGarageHashMap() {
         return garage != null ? garage.toHashMap() : null;
     }
     //endregion
