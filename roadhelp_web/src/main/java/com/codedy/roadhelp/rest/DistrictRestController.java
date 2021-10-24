@@ -51,15 +51,15 @@ public class DistrictRestController {
 
     // Create District
     @PostMapping(path = {"", "/"})
-    public District store(@RequestBody District district) {
+    public LinkedHashMap<String, Object> store(@RequestBody District district) {
         district.setId(0);
         District newDistrict = districtService.save(district);
-        return districtService.findById(newDistrict.getId());
+        return districtService.findById(newDistrict.getId()).toApiResponse();
     }
 
     // Update District
     @PutMapping(path = {"/{id}", "/{id}/"})
-    public District update(@RequestBody District district, @PathVariable int id) {
+    public LinkedHashMap<String, Object> update(@RequestBody District district, @PathVariable int id) {
 
         if (districtService.findById(id) == null) {
             throw new RestNotFoundException("District id not found - " + id);
@@ -67,7 +67,7 @@ public class DistrictRestController {
 
         district.setId(id);
         districtService.save(district);
-        return districtService.findById(district.getId());
+        return districtService.findById(district.getId()).toApiResponse();
     }
 
     // Delete District
