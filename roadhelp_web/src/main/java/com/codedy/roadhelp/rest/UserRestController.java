@@ -54,13 +54,13 @@ public class UserRestController {
 
     //region - Create -
     @PostMapping(path = {"", "/"})
-    public User store(@RequestBody User user) {
+    public LinkedHashMap<String, Object> store(@RequestBody User user) {
 
         user.setId(0);
 
         User newUser = userService.save(user);
 
-        return userService.findById(newUser.getId());
+        return userService.findById(newUser.getId()).toApiResponse();
 
     }
     //endregion
@@ -68,7 +68,7 @@ public class UserRestController {
 
     //region - Edit -
     @PutMapping(path = {"/{id}", "/{id}/"})
-    public User update(@RequestBody User user, @PathVariable int id) {
+    public LinkedHashMap<String, Object> update(@RequestBody User user, @PathVariable int id) {
 
         if (userService.findById(id) == null) {
             throw new RestNotFoundException("User id not found - " + id);
@@ -79,7 +79,7 @@ public class UserRestController {
 
         userService.save(user);
 
-        return userService.findById(user.getId());
+        return userService.findById(user.getId()).toApiResponse();
 
     }
     //endregion
