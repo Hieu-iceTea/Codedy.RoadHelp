@@ -1,18 +1,16 @@
-package com.codedy.roadhelp.restController;
+package com.codedy.roadhelp.rest;
 
 import com.codedy.roadhelp.model.Issue;
-import com.codedy.roadhelp.model.RatingIssues;
+import com.codedy.roadhelp.model.RatingIssue;
 import com.codedy.roadhelp.model.User;
 import com.codedy.roadhelp.model.enums.IssueStatus;
-import com.codedy.roadhelp.restController.exception.RestNotFoundException;
+import com.codedy.roadhelp.rest.exception.RestNotFoundException;
 import com.codedy.roadhelp.service.issues.IssuesService;
 import com.codedy.roadhelp.service.ratingIssue.RatingIssueService;
 import com.codedy.roadhelp.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 @RestController
@@ -87,7 +85,7 @@ public class IssueRestController {
         if (issue == null) {
             throw new RestNotFoundException("Issues id not found - " + id);
         }
-        return issue.getUserPartners();
+        return issue.getUserPartner();
     }
     // xác nhận hoàn thành sau khi partner hỗ trợ xog
     @PutMapping(path = {"/rescue/success/{id}", "/rescue/success/{id}/"})
@@ -102,7 +100,7 @@ public class IssueRestController {
             issue.setId(id);
             issue.setStatus(IssueStatus.succeeded);
             issuesService.save(issue);
-            return "xác nhận " + issue.getUserPartners().getLastName() + " " + issue.getUserPartners().getFirstName() + " là người hỗ trợ!";
+            return "xác nhận " + issue.getUserPartner().getLastName() + " " + issue.getUserPartner().getFirstName() + " là người hỗ trợ!";
         }else return "sai status xác nhận! " +IssueStatus.waitMemberConfirm.toString();
 
     }
@@ -118,7 +116,7 @@ public class IssueRestController {
             issue.setId(id);
             issue.setStatus(IssueStatus.memberConfirmPartner);
             issuesService.save(issue);
-            return "xác nhận " + issue.getUserPartners().getLastName() + " " + issue.getUserPartners().getFirstName() + " là người hỗ trợ!";
+            return "xác nhận " + issue.getUserPartner().getLastName() + " " + issue.getUserPartner().getFirstName() + " là người hỗ trợ!";
         }else return "sai status xác nhận! " +IssueStatus.waitMemberConfirm.toString();
 
     }
@@ -152,17 +150,17 @@ public class IssueRestController {
                 throw new RestNotFoundException("Issues id not found - " + id);
             }
             issue.setId(id);
-            issue.setUserPartners(userPartner);
+            issue.setUserPartner(userPartner);
             issue.setStatus(IssueStatus.waitMemberConfirm);
             issuesService.save(issue);
-            return "xác nhận " + issue.getUserPartners().getLastName() + " " + issue.getUserPartners().getFirstName() + " hỗ trợ!";
+            return "xác nhận " + issue.getUserPartner().getLastName() + " " + issue.getUserPartner().getFirstName() + " hỗ trợ!";
         }else
             return "sai status xác nhận! " +IssueStatus.waitMemberConfirm.toString();
 
     }
     // Xem đánh giá sau khi hỗ trợ xong
     @GetMapping(path = {"/rescue/receive/show-reviews", "/rescue/receive/show-reviews/"})
-    public RatingIssues showRating(@RequestParam(defaultValue = "0") int ratingIssueId) {
+    public RatingIssue showRating(@RequestParam(defaultValue = "0") int ratingIssueId) {
         return ratingIssueService.findById(ratingIssueId);
     }
 

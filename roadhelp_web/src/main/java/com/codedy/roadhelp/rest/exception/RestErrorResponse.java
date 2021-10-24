@@ -1,4 +1,4 @@
-package com.codedy.roadhelp.restController.exception;
+package com.codedy.roadhelp.rest.exception;
 
 public class RestErrorResponse {
 

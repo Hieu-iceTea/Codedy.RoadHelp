@@ -9,8 +9,8 @@ import javax.validation.constraints.Size;
 import java.util.HashMap;
 
 @Entity
-@Table(name = "ratinggarage")
-public class RatingGarage extends BaseModel {
+@Table(name = "ratingissues")
+public class RatingIssue extends BaseModel {
 
     //region - Define Fields -
     @NotNull
@@ -23,13 +23,13 @@ public class RatingGarage extends BaseModel {
 
     //region - Relationship -
     @JsonIgnore
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
-    @JoinColumn(name = "garage_id") //updatable = false, insertable = false
-    private Garage garage;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "issue_id")
+    private Issue issue;
 
     @JsonIgnore
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
-    @JoinColumn(name = "user_member_id") //updatable = false, insertable = false
+    @JoinColumn(name = "user_member_id")
     private User userMember;
     //endregion
 
@@ -51,12 +51,12 @@ public class RatingGarage extends BaseModel {
         this.comment = comment;
     }
 
-    public Garage getGarage() {
-        return garage;
+    public Issue getIssue() {
+        return issue;
     }
 
-    public void setGarage(Garage garage) {
-        this.garage = garage;
+    public void setIssue(Issue issue) {
+        this.issue = issue;
     }
 
     public User getUserMember() {
@@ -83,7 +83,7 @@ public class RatingGarage extends BaseModel {
     public HashMap<String, Object> toHashMap() {
         HashMap<String, Object> hashMap = super.toHashMap();
 
-        hashMap.put("garageId", garage != null ? garage.getId() : null);
+        hashMap.put("issueId", issue != null ? issue.getId() : null);
         hashMap.put("userMemberId", userMember != null ? userMember.getId() : null);
 
         hashMap.put("ratePoint", ratePoint);
@@ -92,9 +92,9 @@ public class RatingGarage extends BaseModel {
         return hashMap;
     }
 
-    @JsonProperty("garage")
-    public HashMap<String, Object> getGarageHashMap() {
-        return garage != null ? garage.toHashMap() : null;
+    @JsonProperty("issue")
+    public HashMap<String, Object> getIssueHashMap() {
+        return issue != null ? issue.toHashMap() : null;
     }
 
     @JsonProperty("userMember")

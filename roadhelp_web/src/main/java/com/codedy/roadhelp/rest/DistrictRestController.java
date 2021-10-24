@@ -1,7 +1,7 @@
-package com.codedy.roadhelp.restController;
+package com.codedy.roadhelp.rest;
 
 import com.codedy.roadhelp.model.District;
-import com.codedy.roadhelp.restController.exception.RestNotFoundException;
+import com.codedy.roadhelp.rest.exception.RestNotFoundException;
 import com.codedy.roadhelp.service.district.DistrictService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -39,7 +39,7 @@ public class DistrictRestController {
 
     // Detail District
     @GetMapping(path = {"/{id}", "/{id}/"})
-    public District show(@PathVariable int id, @RequestParam int provinceId) {
+    public District show(@PathVariable int id) {
         District district = districtService.findById(id);
         if (district == null) {
             throw new RestNotFoundException("District id not found - " + id);

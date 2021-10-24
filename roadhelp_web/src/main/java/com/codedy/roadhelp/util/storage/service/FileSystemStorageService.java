@@ -1,9 +1,9 @@
-package com.codedy.roadhelp.untitlities.storage.service;
+package com.codedy.roadhelp.util.storage.service;
 
 
-import com.codedy.roadhelp.untitlities.storage.Common;
-import com.codedy.roadhelp.untitlities.storage.exception.StorageException;
-import com.codedy.roadhelp.untitlities.storage.exception.StorageFileNotFoundException;
+import com.codedy.roadhelp.util.Common;
+import com.codedy.roadhelp.util.storage.exception.StorageException;
+import com.codedy.roadhelp.util.storage.exception.StorageFileNotFoundException;
 import net.bytebuddy.utility.RandomString;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;

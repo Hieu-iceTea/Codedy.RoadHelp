@@ -1,21 +1,18 @@
 package com.codedy.roadhelp.model;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
-import java.util.Date;
+import java.sql.Timestamp;
+import java.util.HashMap;
 
 /**
  * <b>Hieu_iceTea</b> <br><br>
- *
+ * <p>
  * Chứa các trường hệ thống, dùng chung cho tất cả các bảng <br><br>
- *
+ * <p>
  * Created at: 14:45 2021-07-04
- *
  */
 @MappedSuperclass
 public class BaseModel {
@@ -25,17 +22,21 @@ public class BaseModel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    //@Column(name = "created_by")
+    //@CreatedBy
     private String createdBy;
-    //@Column(name = "created_at")
-    private Date createdAt;
-    //@Column(name = "updated_by")
+
+    //@CreatedDate
+    private Timestamp createdAt;
+
+    //@LastModifiedBy
     private String updatedBy;
-    //@Column(name = "updated_at")
-    private Date updatedAt;
+
+    //@LastModifiedDate
+    private Timestamp updatedAt;
 
     //@Version
     private int version;
+
     private Boolean deleted;
     //endregion
 
@@ -57,11 +58,11 @@ public class BaseModel {
         this.createdBy = createdBy;
     }
 
-    public Date getCreatedAt() {
+    public Timestamp getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(Date createdAt) {
+    public void setCreatedAt(Timestamp createdAt) {
         this.createdAt = createdAt;
     }
 
@@ -73,11 +74,11 @@ public class BaseModel {
         this.updatedBy = updatedBy;
     }
 
-    public Date getUpdatedAt() {
+    public Timestamp getUpdatedAt() {
         return updatedAt;
     }
 
-    public void setUpdatedAt(Date updatedAt) {
+    public void setUpdatedAt(Timestamp updatedAt) {
         this.updatedAt = updatedAt;
     }
 
@@ -97,5 +98,27 @@ public class BaseModel {
         this.deleted = deleted;
     }
     //endregion
+
+    /**
+     * Hàm này trả về cấu trúc nguyên thủy của entity này.<br/><br/>
+     * <p>
+     * Viết bởi: Hiếu iceTea<br/>
+     * Ngày: 23-10-2021<br/>
+     * Thời gian: 22:22<br/>
+     *
+     * @return
+     */
+    public HashMap<String, Object> toHashMap() {
+        HashMap<String, Object> hashMap = new HashMap<>();
+        hashMap.put("id", id);
+        hashMap.put("createdAt", createdAt);
+        hashMap.put("createdBy", createdBy);
+        hashMap.put("updatedAt", updatedAt);
+        hashMap.put("updatedBy", updatedBy);
+        hashMap.put("version", version);
+        hashMap.put("deleted", deleted);
+
+        return hashMap;
+    }
 
 }

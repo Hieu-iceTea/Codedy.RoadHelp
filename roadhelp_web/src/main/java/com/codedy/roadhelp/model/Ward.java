@@ -1,45 +1,58 @@
 package com.codedy.roadhelp.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
-import java.io.Serializable;
+import java.util.HashMap;
 import java.util.List;
 
 @Entity
 @Table(name = "ward")
-@JsonIdentityInfo(
-        scope = Ward.class,
-        generator = ObjectIdGenerators.PropertyGenerator.class,
-        property = "id")
-public class Ward extends BaseModel implements Serializable {
+public class Ward extends BaseModel {
+
     //region - Define Fields -
     @Column(name = "_name")
     private String name;
 
     @Column(name = "_prefix")
     private String prefix;
-
     //endregion
 
+
     //region - Relationship -
-    @ManyToOne
+    @JsonIgnore
+    @OneToMany(mappedBy = "ward", fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
+    private List<Garage> garages;
+
+    @JsonIgnore
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
     @JoinColumn(name = "_province_id") //updatable = false, insertable = false
     private Province province;
 
-    @ManyToOne
+    @JsonIgnore
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
     @JoinColumn(name = "_district_id") //updatable = false, insertable = false
     private District district;
-
-    @OneToMany(mappedBy = "ward", cascade = {CascadeType.PERSIST, CascadeType.MERGE,
-            CascadeType.DETACH, CascadeType.REFRESH})
-    @JsonBackReference(value = "garages")
-    private List<Garage> garages;
     //endregion
 
+
     //region - Getter & Setter -
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getPrefix() {
+        return prefix;
+    }
+
+    public void setPrefix(String prefix) {
+        this.prefix = prefix;
+    }
 
     public List<Garage> getGarages() {
         return garages;
@@ -64,22 +77,46 @@ public class Ward extends BaseModel implements Serializable {
     public void setDistrict(District district) {
         this.district = district;
     }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getPrefix() {
-        return prefix;
-    }
-
-    public void setPrefix(String prefix) {
-        this.prefix = prefix;
-    }
-
     //endregion
+
+
+    //region - Relationship Helper -
+
+    /**
+     * Hàm này trả về cấu trúc nguyên thủy của entity này.<br/><br/>
+     * <p>
+     * Viết bởi: Hiếu iceTea<br/>
+     * Ngày: 23-10-2021<br/>
+     * Thời gian: 22:22<br/>
+     *
+     * @return
+     */
+    public HashMap<String, Object> toHashMap() {
+        HashMap<String, Object> hashMap = super.toHashMap();
+
+        hashMap.put("provinceId", province != null ? province.getId() : null);
+        hashMap.put("districtId", district != null ? district.getId() : null);
+
+        hashMap.put("name", name);
+        hashMap.put("prefix", prefix);
+
+        return hashMap;
+    }
+
+    @JsonProperty("garages")
+    public List<HashMap<String, Object>> getGarageHashMap() {
+        return garages != null ? garages.stream().map(Garage::toHashMap).toList() : null;
+    }
+
+    @JsonProperty("province")
+    public HashMap<String, Object> getProvinceHashMap() {
+        return province != null ? province.toHashMap() : null;
+    }
+
+    @JsonProperty("district")
+    public HashMap<String, Object> getDistrictHashMap() {
+        return district != null ? district.toHashMap() : null;
+    }
+    //endregion
+
 }

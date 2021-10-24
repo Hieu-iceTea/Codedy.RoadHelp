@@ -2,18 +2,18 @@ package com.codedy.roadhelp.model;
 
 import com.codedy.roadhelp.model.enums.IssueCategory;
 import com.codedy.roadhelp.model.enums.IssueStatus;
-import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
-import java.io.Serializable;
+import java.util.HashMap;
 
 @Entity
 @Table(name = "issue")
-public class Issue extends BaseModel implements Serializable {
+public class Issue extends BaseModel {
 
     //region - Define Fields -
-
     private double longitude;
 
     private double latitude;
@@ -30,71 +30,27 @@ public class Issue extends BaseModel implements Serializable {
     private IssueStatus status;
 
     private IssueCategory category;
+    //endregion
 
-//endregion
 
     //region - Relationship -
-    @ManyToOne
+    @JsonIgnore
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
     @JoinColumn(name = "user_member_id")
-    private User userMembers;
+    private User userMember;
 
-    @ManyToOne
+    @JsonIgnore
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
     @JoinColumn(name = "user_partner_id")
-    private User userPartners;
+    private User userPartner;
 
-    @OneToOne(mappedBy="issue")
-    private RatingIssues ratingIssues;
-//endregion
+    @JsonIgnore
+    @OneToOne(mappedBy = "issue", cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    private RatingIssue ratingIssue;
+    //endregion
+
 
     //region - Getter & Setter -
-    public IssueCategory getCategory() {
-        return category;
-    }
-
-    public void setCategory(IssueCategory category) {
-        this.category = category;
-    }
-
-    public User getUserMembers() {
-        return userMembers;
-    }
-
-    public void setUserMembers(User userMembers) {
-        this.userMembers = userMembers;
-    }
-
-    public User getUserPartners() {
-        return userPartners;
-    }
-
-    public void setUserPartners(User userPartners) {
-        this.userPartners = userPartners;
-    }
-
-    public RatingIssues getRatingIssues() {
-        return ratingIssues;
-    }
-
-    public void setRatingIssues(RatingIssues ratingIssues) {
-        this.ratingIssues = ratingIssues;
-    }
-
-    public RatingIssues getRatingPartner() {
-        return ratingIssues;
-    }
-
-    public void setRatingPartner(RatingIssues ratingIssues) {
-        this.ratingIssues = ratingIssues;
-    }
-
-    public IssueStatus getStatus() {
-        return status;
-    }
-
-    public void setStatus(IssueStatus status) {
-        this.status = status;
-    }
-
     public double getLongitude() {
         return longitude;
     }
@@ -135,6 +91,90 @@ public class Issue extends BaseModel implements Serializable {
         this.description = description;
     }
 
-//endregion
+    public IssueStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(IssueStatus status) {
+        this.status = status;
+    }
+
+    public IssueCategory getCategory() {
+        return category;
+    }
+
+    public void setCategory(IssueCategory category) {
+        this.category = category;
+    }
+
+    public User getUserMember() {
+        return userMember;
+    }
+
+    public void setUserMember(User userMember) {
+        this.userMember = userMember;
+    }
+
+    public User getUserPartner() {
+        return userPartner;
+    }
+
+    public void setUserPartner(User userPartner) {
+        this.userPartner = userPartner;
+    }
+
+    public RatingIssue getRatingIssue() {
+        return ratingIssue;
+    }
+
+    public void setRatingIssue(RatingIssue ratingIssue) {
+        this.ratingIssue = ratingIssue;
+    }
+    //endregion
+
+
+    //region - Relationship Helper -
+
+    /**
+     * Hàm này trả về cấu trúc nguyên thủy của entity này.<br/><br/>
+     * <p>
+     * Viết bởi: Hiếu iceTea<br/>
+     * Ngày: 23-10-2021<br/>
+     * Thời gian: 22:22<br/>
+     *
+     * @return
+     */
+    public HashMap<String, Object> toHashMap() {
+        HashMap<String, Object> hashMap = super.toHashMap();
+
+        hashMap.put("userMemberId", userMember != null ? userMember.getId() : null);
+        hashMap.put("userPartnerId", userPartner != null ? userPartner.getId() : null);
+
+        hashMap.put("longitude", longitude);
+        hashMap.put("latitude", latitude);
+        hashMap.put("phone", phone);
+        hashMap.put("address", address);
+        hashMap.put("category", category);
+        hashMap.put("description", description);
+        hashMap.put("status", status);
+
+        return hashMap;
+    }
+
+    @JsonProperty("userMember")
+    public HashMap<String, Object> getUserMemberHashMap() {
+        return userMember != null ? userMember.toHashMap() : null;
+    }
+
+    @JsonProperty("userPartner")
+    public HashMap<String, Object> getUserPartnerHashMap() {
+        return userPartner != null ? userPartner.toHashMap() : null;
+    }
+
+    @JsonProperty("ratingIssue")
+    public HashMap<String, Object> getRatingIssueHashMap() {
+        return ratingIssue != null ? ratingIssue.toHashMap() : null;
+    }
+    //endregion
 
 }
