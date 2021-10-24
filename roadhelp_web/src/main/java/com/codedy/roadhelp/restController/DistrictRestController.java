@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 @RestController
@@ -18,7 +19,7 @@ public class DistrictRestController {
 
     // List District
     @GetMapping(path = {"", "/", "/index"})
-    public List<District> index(@RequestParam(defaultValue = "0") int provinceId) {
+    public List<LinkedHashMap<String, Object>> index(@RequestParam(defaultValue = "0") int provinceId) {
         List<District> districts = districtService.findAll();
         List<District> districtsByProvinceId = new ArrayList<>();
         for (District d: districts
@@ -29,23 +30,23 @@ public class DistrictRestController {
 
         }
         if(provinceId > 0){
-            return districtsByProvinceId;
+            return districtsByProvinceId.stream().map(District::toApiResponse).toList();
         }
         else {
-            return districtService.findAll();
+            return districtService.findAll().stream().map(District::toApiResponse).toList();
 
         }
     }
 
     // Detail District
     @GetMapping(path = {"/{id}", "/{id}/"})
-    public District show(@PathVariable int id, @RequestParam int provinceId) {
+    public LinkedHashMap<String, Object> show(@PathVariable int id) {
         District district = districtService.findById(id);
         if (district == null) {
             throw new RestNotFoundException("District id not found - " + id);
         }
 
-        return district;
+        return district.toApiResponse();
     }
 
     // Create District

@@ -1,5 +1,6 @@
 package com.codedy.roadhelp.restController;
 
+import com.codedy.roadhelp.model.GarageImage;
 import com.codedy.roadhelp.model.RatingIssues;
 import com.codedy.roadhelp.restController.exception.RestNotFoundException;
 import com.codedy.roadhelp.service.issues.IssuesService;
@@ -8,6 +9,7 @@ import com.codedy.roadhelp.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.LinkedHashMap;
 import java.util.List;
 
 @RestController
@@ -23,18 +25,18 @@ public class RatingIssueRestController {
 
     // List Rating Partner
     @GetMapping(path = {"", "/", "/index"})
-    public List<RatingIssues> index() {
-        return ratingIssueService.findAll();
+    public List<LinkedHashMap<String, Object>> index() {
+        return ratingIssueService.findAll().stream().map(RatingIssues::toApiResponse).toList();
     }
 
     // Detail Rating Partner
     @GetMapping(path = {"/{id}", "/{id}/"})
-    public RatingIssues show(@PathVariable int id) {
+    public LinkedHashMap<String, Object> show(@PathVariable int id) {
         RatingIssues ratingIssues = ratingIssueService.findById(id);
         if (ratingIssues == null) {
             throw new RestNotFoundException("Rating partner id not found - " + id);
         }
-        return ratingIssues;
+        return ratingIssues.toApiResponse();
     }
 
     // Create Rating Partner

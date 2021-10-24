@@ -1,6 +1,7 @@
 package com.codedy.roadhelp.restController;
 
 
+import com.codedy.roadhelp.model.GarageImage;
 import com.codedy.roadhelp.model.User;
 import com.codedy.roadhelp.payload.response.MessageResponse;
 import com.codedy.roadhelp.restController.exception.RestNotFoundException;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 
@@ -30,14 +32,14 @@ public class UserRestController {
 
     //region - Display -
     @GetMapping(path = {"", "/", "/index"})
-    public List<User> index() {
+    public List<LinkedHashMap<String, Object>> index() {
 
-        return userService.findAll();
+        return userService.findAll().stream().map(User::toApiResponse).toList();
 
     }
 
     @GetMapping(path = {"/{id}", "/{id}/"})
-    public User show(@PathVariable int id) {
+    public LinkedHashMap<String, Object> show(@PathVariable int id) {
 
         User user = userService.findById(id);
 
@@ -46,7 +48,7 @@ public class UserRestController {
             //throw new RuntimeException("User id not found - " + id);
         }
 
-        return user;
+        return user.toApiResponse();
 
     }
     //endregion

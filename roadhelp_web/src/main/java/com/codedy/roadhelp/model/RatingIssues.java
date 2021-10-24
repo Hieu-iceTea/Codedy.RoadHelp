@@ -1,19 +1,17 @@
 package com.codedy.roadhelp.model;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
+import java.util.LinkedHashMap;
 
 @Entity
 @Table(name = "ratingissues")
-@JsonIdentityInfo(
+/*@JsonIdentityInfo(
         scope = RatingIssues.class,
         generator = ObjectIdGenerators.PropertyGenerator.class,
-        property = "id")
+        property = "id")*/
 public class RatingIssues extends BaseModel implements Serializable {
 
     //region - Define Fields -
@@ -31,7 +29,7 @@ public class RatingIssues extends BaseModel implements Serializable {
     private User userMember;
 
     @OneToOne
-    @JoinColumn(name="issue_id")
+    @JoinColumn(name = "issue_id")
     private Issue issue;
     //endregion
 
@@ -43,6 +41,7 @@ public class RatingIssues extends BaseModel implements Serializable {
     public void setIssues(Issue issue) {
         this.issue = issue;
     }
+
     public int getRatePoint() {
         return ratePoint;
     }
@@ -67,6 +66,53 @@ public class RatingIssues extends BaseModel implements Serializable {
         this.userMember = users;
     }
 
+    //endregion
+
+
+    //region - Relationship Helper -
+
+    /**
+     * Hàm này trả về cấu trúc nguyên thủy của entity này.<br/><br/>
+     * <p>
+     * Viết bởi: Hiếu iceTea<br/>
+     * Ngày: 23-10-2021<br/>
+     * Thời gian: 22:22<br/>
+     *
+     * @return
+     */
+    protected LinkedHashMap<String, Object> toHashMap() {
+        LinkedHashMap<String, Object> hashMap = super.toHashMap();
+
+        hashMap.put("issueId", issue != null ? issue.getId() : null);
+        hashMap.put("userMemberId", userMember != null ? userMember.getId() : null);
+
+        hashMap.put("ratePoint", ratePoint);
+        hashMap.put("comment", comment);
+
+        return hashMap;
+    }
+
+    public LinkedHashMap<String, Object> toApiResponse() {
+        LinkedHashMap<String, Object> hashMap = this.toHashMap();
+
+        hashMap.remove("issueId");
+        hashMap.remove("userMemberId");
+
+        hashMap.put("issue", getIssueHashMap());
+        hashMap.put("userMember", getUserMemberHashMap());
+
+        return hashMap;
+    }
+
+    //@JsonProperty("issue")
+    private LinkedHashMap<String, Object> getIssueHashMap() {
+        return issue != null ? issue.toHashMap() : null;
+    }
+
+    //@JsonProperty("userMember")
+    private LinkedHashMap<String, Object> getUserMemberHashMap() {
+        return userMember != null ? userMember.toHashMap() : null;
+    }
     //endregion
 
 }

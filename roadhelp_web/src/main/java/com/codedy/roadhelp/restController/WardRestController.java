@@ -1,6 +1,7 @@
 package com.codedy.roadhelp.restController;
 
 import com.codedy.roadhelp.model.District;
+import com.codedy.roadhelp.model.GarageImage;
 import com.codedy.roadhelp.model.Ward;
 import com.codedy.roadhelp.restController.exception.RestNotFoundException;
 import com.codedy.roadhelp.service.ward.WardService;
@@ -9,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 @RestController
@@ -20,7 +22,7 @@ public class WardRestController {
 
     // List Ward
     @GetMapping(path = {"", "/", "/index"})
-    public List<Ward> index(@RequestParam(defaultValue = "0") int provinceId, @RequestParam(defaultValue = "0") int districtId) {
+    public List<LinkedHashMap<String, Object>> index(@RequestParam(defaultValue = "0") int provinceId, @RequestParam(defaultValue = "0") int districtId) {
         List<Ward> wards = wardService.findAll();
         List<Ward> wardsByDistrictId = new ArrayList<>();
         for (Ward d: wards
@@ -30,19 +32,19 @@ public class WardRestController {
             }
         }
         if(provinceId >= 1 && districtId >= 1){
-            return wardsByDistrictId;
-        }else return wardService.findAll();
+            return wardsByDistrictId.stream().map(Ward::toApiResponse).toList();
+        }else return wardService.findAll().stream().map(Ward::toApiResponse).toList();
     }
 
     // Detail Ward
     @GetMapping(path = {"/{id}", "/{id}/"})
-    public Ward show(@PathVariable int id) {
+    public LinkedHashMap<String, Object> show(@PathVariable int id) {
         Ward ward = wardService.findById(id);
 
         if (ward == null) {
             throw new RestNotFoundException("Ward id not found - " + id);
         }
-        return ward;
+        return ward.toApiResponse();
     }
 
     // Create Ward

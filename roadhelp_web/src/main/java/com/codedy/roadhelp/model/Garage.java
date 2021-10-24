@@ -1,13 +1,9 @@
 package com.codedy.roadhelp.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 @Entity
@@ -190,6 +186,88 @@ public class Garage extends BaseModel implements Serializable {
         this.name = name;
     }
 
+    //endregion
+
+
+    //region - Relationship Helper -
+
+    /**
+     * Hàm này trả về cấu trúc nguyên thủy của entity này.<br/><br/>
+     * <p>
+     * Viết bởi: Hiếu iceTea<br/>
+     * Ngày: 23-10-2021<br/>
+     * Thời gian: 22:22<br/>
+     *
+     * @return
+     */
+    protected LinkedHashMap<String, Object> toHashMap() {
+        LinkedHashMap<String, Object> hashMap = super.toHashMap();
+
+        hashMap.put("partnerId", partner != null ? partner.getId() : null);
+        hashMap.put("provinceId", province != null ? province.getId() : null);
+        hashMap.put("districtId", district != null ? district.getId() : null);
+        hashMap.put("wardId", ward != null ? ward.getId() : null);
+
+        hashMap.put("name", name);
+        hashMap.put("phone", phone);
+        hashMap.put("rateAvg", rateAvg);
+        hashMap.put("address", address);
+        hashMap.put("longitude", longitude);
+        hashMap.put("latitude", latitude);
+        hashMap.put("description", description);
+        hashMap.put("active", active);
+        hashMap.put("isFeatured", isFeatured);
+
+        return hashMap;
+    }
+
+    public LinkedHashMap<String, Object> toApiResponse() {
+        LinkedHashMap<String, Object> hashMap = this.toHashMap();
+
+        hashMap.remove("partnerId");
+        hashMap.remove("provinceId");
+        hashMap.remove("districtId");
+        hashMap.remove("wardId");
+
+        hashMap.put("userPartner", getUserPartnerHashMap());
+        hashMap.put("ratingGarages", getRatingGaragesHashMap());
+        hashMap.put("garageImages", getGarageImagesHashMap());
+        hashMap.put("province", getProvinceHashMap());
+        hashMap.put("district", getDistrictHashMap());
+        hashMap.put("ward", getWardHashMap());
+
+        return hashMap;
+    }
+
+    //@JsonProperty("userPartner")
+    private LinkedHashMap<String, Object> getUserPartnerHashMap() {
+        return partner != null ? partner.toHashMap() : null;
+    }
+
+    //@JsonProperty("ratingGarages")
+    private List<LinkedHashMap<String, Object>> getRatingGaragesHashMap() {
+        return ratingGarages != null ? ratingGarages.stream().map(RatingGarage::toHashMap).toList() : null;
+    }
+
+    //@JsonProperty("garageImages")
+    private List<LinkedHashMap<String, Object>> getGarageImagesHashMap() {
+        return garageImages != null ? garageImages.stream().map(GarageImage::toHashMap).toList() : null;
+    }
+
+    //@JsonProperty("province")
+    private LinkedHashMap<String, Object> getProvinceHashMap() {
+        return province != null ? province.toHashMap() : null;
+    }
+
+    //@JsonProperty("district")
+    private LinkedHashMap<String, Object> getDistrictHashMap() {
+        return district != null ? district.toHashMap() : null;
+    }
+
+    //@JsonProperty("ward")
+    private LinkedHashMap<String, Object> getWardHashMap() {
+        return ward != null ? ward.toHashMap() : null;
+    }
     //endregion
 
 }

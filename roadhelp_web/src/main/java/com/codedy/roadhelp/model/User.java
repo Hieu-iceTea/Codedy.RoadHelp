@@ -1,21 +1,21 @@
 package com.codedy.roadhelp.model;
 
 import com.codedy.roadhelp.model.enums.UserGender;
-import com.fasterxml.jackson.annotation.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 @Entity
 @Table(name = "users")
-@JsonIdentityInfo(
+/*@JsonIdentityInfo(
         scope = User.class,
         generator = ObjectIdGenerators.PropertyGenerator.class,
-        property = "id")
+        property = "id")*/
 public class User extends BaseModel implements Serializable {
 
     //region - Define Fields -
@@ -44,7 +44,7 @@ public class User extends BaseModel implements Serializable {
     @Size(min = 10)
     private String phone;
 
-//    @NotNull
+    //    @NotNull
     private Boolean active;
     //endregion
 
@@ -53,21 +53,21 @@ public class User extends BaseModel implements Serializable {
             CascadeType.DETACH, CascadeType.REFRESH})
     private List<Garage> garages;
 
-    @OneToMany(mappedBy = "userPartners",cascade = {CascadeType.PERSIST, CascadeType.MERGE,
+    @OneToMany(mappedBy = "userPartners", cascade = {CascadeType.PERSIST, CascadeType.MERGE,
             CascadeType.DETACH, CascadeType.REFRESH})
-    @JsonBackReference(value = "issuesPartnerDetails")
+    //@JsonBackReference(value = "issuesPartnerDetails")
     private List<Issue> issuePartnerDetails;
 
-    @OneToMany(mappedBy = "userMembers",cascade = {CascadeType.PERSIST, CascadeType.MERGE,
+    @OneToMany(mappedBy = "userMembers", cascade = {CascadeType.PERSIST, CascadeType.MERGE,
             CascadeType.DETACH, CascadeType.REFRESH})
-    @JsonBackReference(value = "issueMemberDetails")
+    //@JsonBackReference(value = "issueMemberDetails")
     private List<Issue> issueMemberDetails;
 
     @OneToMany(mappedBy = "userMember")
     private List<RatingGarage> ratingGarages;
 
     @OneToMany(mappedBy = "userMember")
-    @JsonBackReference(value = "ratingIssues")
+    //@JsonBackReference(value = "ratingIssues")
     private List<RatingIssues> ratingIssues;
 
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
@@ -196,6 +196,7 @@ public class User extends BaseModel implements Serializable {
     public void setRatingGarages(List<RatingGarage> ratingGarages) {
         this.ratingGarages = ratingGarages;
     }
+
     public List<Authority> getAuthorities() {
         return authorities;
     }
@@ -205,4 +206,80 @@ public class User extends BaseModel implements Serializable {
     }
 
     //endregion
+
+
+    //region - Relationship Helper -
+
+    /**
+     * Hàm này trả về cấu trúc nguyên thủy của entity này.<br/><br/>
+     * <p>
+     * Viết bởi: Hiếu iceTea<br/>
+     * Ngày: 23-10-2021<br/>
+     * Thời gian: 22:22<br/>
+     *
+     * @return
+     */
+    protected LinkedHashMap<String, Object> toHashMap() {
+        LinkedHashMap<String, Object> hashMap = super.toHashMap();
+
+        hashMap.put("username", username);
+        hashMap.put("email", email);
+        hashMap.put("password", password);
+        hashMap.put("image", image);
+        hashMap.put("gender", gender);
+        hashMap.put("firstName", firstName);
+        hashMap.put("lastName", lastName);
+        hashMap.put("phone", phone);
+        //hashMap.put("address", address); //TODO
+        hashMap.put("active", active);
+
+        return hashMap;
+    }
+
+    public LinkedHashMap<String, Object> toApiResponse() {
+        LinkedHashMap<String, Object> hashMap = this.toHashMap();
+
+        hashMap.put("authorities", getAuthoritiesHashMap());
+        hashMap.put("garages", getGaragesHashMap());
+        hashMap.put("memberIssues", getMemberIssuesHashMap());
+        hashMap.put("partnerIssues", getPartnerIssuesHashMap());
+        hashMap.put("ratingGarages", getRatingGaragesHashMap());
+        hashMap.put("ratingIssues", getRatingIssuesHashMap());
+
+        return hashMap;
+    }
+
+
+    //@JsonProperty("authorities")
+    private List<LinkedHashMap<String, Object>> getAuthoritiesHashMap() {
+        return authorities != null ? authorities.stream().map(Authority::toHashMap).toList() : null;
+    }
+
+    //@JsonProperty("garages")
+    private List<LinkedHashMap<String, Object>> getGaragesHashMap() {
+        return garages != null ? garages.stream().map(Garage::toHashMap).toList() : null;
+    }
+
+    //@JsonProperty("memberIssues")
+    private List<LinkedHashMap<String, Object>> getMemberIssuesHashMap() {
+        return issueMemberDetails != null ? issueMemberDetails.stream().map(Issue::toHashMap).toList() : null;
+    }
+
+    //@JsonProperty("partnerIssues")
+    private List<LinkedHashMap<String, Object>> getPartnerIssuesHashMap() {
+        return issuePartnerDetails != null ? issuePartnerDetails.stream().map(Issue::toHashMap).toList() : null;
+    }
+
+    //@JsonProperty("ratingGarages")
+    private List<LinkedHashMap<String, Object>> getRatingGaragesHashMap() {
+        return ratingGarages != null ? ratingGarages.stream().map(RatingGarage::toHashMap).toList() : null;
+    }
+
+    //@JsonProperty("ratingIssues")
+    private List<LinkedHashMap<String, Object>> getRatingIssuesHashMap() {
+        return ratingIssues != null ? ratingIssues.stream().map(RatingIssues::toHashMap).toList() : null;
+    }
+
+    //endregion
+
 }

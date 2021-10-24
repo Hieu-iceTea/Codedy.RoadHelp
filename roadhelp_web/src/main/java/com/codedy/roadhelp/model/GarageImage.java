@@ -1,15 +1,13 @@
 package com.codedy.roadhelp.model;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
+import java.util.LinkedHashMap;
+
 @Entity
 @Table(name = "garageimage")
 //@JsonIdentityInfo(
@@ -23,10 +21,10 @@ public class GarageImage extends BaseModel implements Serializable {
     //region - Relationship -
     @ManyToOne
     @JoinColumn(name = "garage_id") //updatable = false, insertable = false
-    @JsonIdentityInfo(
-        scope = Garage.class,
-        generator = ObjectIdGenerators.PropertyGenerator.class,
-        property = "id")
+    /*@JsonIdentityInfo(
+            scope = Garage.class,
+            generator = ObjectIdGenerators.PropertyGenerator.class,
+            property = "id")*/
     private Garage garage;
     //endregion
 
@@ -45,5 +43,43 @@ public class GarageImage extends BaseModel implements Serializable {
     public void setGarage(Garage garage) {
         this.garage = garage;
     }
+
+
+    //region - Relationship Helper -
+
+    /**
+     * Hàm này trả về cấu trúc nguyên thủy của entity này.<br/><br/>
+     * <p>
+     * Viết bởi: Hiếu iceTea<br/>
+     * Ngày: 23-10-2021<br/>
+     * Thời gian: 22:22<br/>
+     *
+     * @return
+     */
+    protected LinkedHashMap<String, Object> toHashMap() {
+        LinkedHashMap<String, Object> hashMap = super.toHashMap();
+
+        hashMap.put("garageId", garage != null ? garage.getId() : null);
+
+        hashMap.put("image", image);
+
+        return hashMap;
+    }
+
+    public LinkedHashMap<String, Object> toApiResponse() {
+        LinkedHashMap<String, Object> hashMap = this.toHashMap();
+
+        hashMap.remove("garageId");
+
+        hashMap.put("garage", getGarageHashMap());
+
+        return hashMap;
+    }
+
+    //@JsonProperty("garage")
+    private LinkedHashMap<String, Object> getGarageHashMap() {
+        return garage != null ? garage.toHashMap() : null;
+    }
+    //endregion
 
 }

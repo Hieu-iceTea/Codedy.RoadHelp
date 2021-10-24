@@ -1,5 +1,6 @@
 package com.codedy.roadhelp.restController;
 
+import com.codedy.roadhelp.model.District;
 import com.codedy.roadhelp.model.Garage;
 import com.codedy.roadhelp.model.GarageImage;
 import com.codedy.roadhelp.restController.exception.RestNotFoundException;
@@ -16,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 @RestController
@@ -30,25 +32,25 @@ public class GarageImageRestController {
     private StorageService storageService;
     // List GarageImage
     @GetMapping(path = {"", "/", "/index"})
-    public List<GarageImage> index() {
-        return garageImageService.findAll();
+    public List<LinkedHashMap<String, Object>> index() {
+        return garageImageService.findAll().stream().map(GarageImage::toApiResponse).toList();
     }
 
     // Detail GarageImage
     @GetMapping(path = {"/{id}", "/{id}/"})
-    public GarageImage show(@PathVariable int id) {
+    public LinkedHashMap<String, Object> show(@PathVariable int id) {
         GarageImage garageImage = garageImageService.findById(id);
         if (garageImage == null) {
             throw new RestNotFoundException("GarageImage id not found - " + id);
         }
-        return garageImage;
+        return garageImage.toApiResponse();
     }
 
     // Create GarageImage
     private final String _path = "src/main/resources/static/" + "data-images/garage";
 
     @PostMapping(path = {"", "/"})
-    public GarageImage store(@RequestParam int garageId, @RequestParam("File") MultipartFile file) throws IOException{
+    public LinkedHashMap<String, Object> store(@RequestParam int garageId, @RequestParam("File") MultipartFile file) throws IOException{
        GarageImage garageImage = new GarageImage();
         Garage garage = garageService.findById(garageId);
 
@@ -60,7 +62,7 @@ public class GarageImageRestController {
             garageImage.setImage(fileName);
         }
         GarageImage newGarageImage = garageImageService.save(garageImage);
-        return garageImageService.findById(newGarageImage.getId());
+        return garageImageService.findById(newGarageImage.getId()).toApiResponse();
     }
 
     // Update GarageImage

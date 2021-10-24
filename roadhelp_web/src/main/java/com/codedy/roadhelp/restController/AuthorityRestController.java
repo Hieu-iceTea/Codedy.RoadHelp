@@ -6,6 +6,7 @@ import com.codedy.roadhelp.service.authority.AuthorityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.LinkedHashMap;
 import java.util.List;
 
 @RestController
@@ -17,18 +18,18 @@ public class AuthorityRestController {
 
     // List Authority
     @GetMapping(path = {"", "/", "/index"})
-    public List<Authority> index() {
-        return authorityService.findAll();
+    public List<LinkedHashMap<String, Object>> index() {
+        return authorityService.findAll().stream().map(Authority::toApiResponse).toList();
     }
 
     // Detail Authority
     @GetMapping(path = {"/{id}", "/{id}/"})
-    public Authority show(@PathVariable int id) {
+    public LinkedHashMap<String, Object> show(@PathVariable int id) {
         Authority authority = authorityService.findById(id);
         if (authority == null) {
             throw new RestNotFoundException("Authority id not found - " + id);
         }
-        return authority;
+        return authority.toApiResponse();
     }
 
     // Create Authority

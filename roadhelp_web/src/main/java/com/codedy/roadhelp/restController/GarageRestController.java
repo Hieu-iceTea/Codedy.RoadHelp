@@ -4,7 +4,6 @@ import com.codedy.roadhelp.model.District;
 import com.codedy.roadhelp.model.Garage;
 import com.codedy.roadhelp.model.Province;
 import com.codedy.roadhelp.model.Ward;
-import com.codedy.roadhelp.repository.GarageRepository;
 import com.codedy.roadhelp.restController.exception.RestNotFoundException;
 import com.codedy.roadhelp.service.garage.GarageService;
 import com.codedy.roadhelp.service.ward.WardService;
@@ -12,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 @RestController
@@ -26,18 +26,18 @@ public class GarageRestController {
 
     // List Garage
     @GetMapping(path = {"", "/", "/index"})
-    public List<Garage> index() {
-        return garageService.findAll();
+    public List<LinkedHashMap<String, Object>> index() {
+        return garageService.findAll().stream().map(Garage::toApiResponse).toList();
     }
 
     // Detail Garage
     @GetMapping(path = {"/{id}", "/{id}/"})
-    public Garage show(@PathVariable int id) {
+    public LinkedHashMap<String, Object> show(@PathVariable int id) {
         Garage garage = garageService.findById(id);
         if (garage == null) {
             throw new RestNotFoundException("Garage id not found - " + id);
         }
-        return garage;
+        return garage.toApiResponse();
     }
 
     // Create Garage
