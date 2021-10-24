@@ -42,22 +42,22 @@ public class GarageRestController {
 
     // Create Garage
     @PostMapping(path = {"", "/"})
-    public Garage store(@RequestBody Garage garage) {
+    public LinkedHashMap<String, Object> store(@RequestBody Garage garage) {
         garage.setId(0);
         Garage newGarage = garageService.save(garage);
-        return garageService.findById(newGarage.getId());
+        return garageService.findById(newGarage.getId()).toApiResponse();
     }
 
     // Update Garage
     @PutMapping(path = {"/{id}", "/{id}/"})
-    public Garage update(@RequestBody Garage garage, @PathVariable int id) {
+    public LinkedHashMap<String, Object> update(@RequestBody Garage garage, @PathVariable int id) {
 
         if (garageService.findById(id) == null) {
             throw new RestNotFoundException("Garage id not found - " + id);
         }
         garage.setId(id);
         garageService.save(garage);
-        return garageService.findById(garage.getId());
+        return garageService.findById(garage.getId()).toApiResponse();
     }
 
     // Delete Garage
@@ -73,31 +73,31 @@ public class GarageRestController {
 
     // Chi tiết tiệm sửa xe
     @GetMapping(path = {"/repair-place-manage/{id}", "/repair-place-manage/{id}/"})
-    public Garage garageDetails(@PathVariable int id) {
+    public LinkedHashMap<String, Object> garageDetails(@PathVariable int id) {
         Garage garage = garageService.findById(id);
         if (garage == null) {
             throw new RestNotFoundException("Garage id not found - " + id);
         }
-        return garage;
+        return garage.toApiResponse();
     }
 
     // Thêm tiệm sửa xe
     @PostMapping(path = {"/repair-place-manage", "/repair-place-manage/"})
-    public Garage storeGarage(@RequestBody Garage garage) {
+    public LinkedHashMap<String, Object> storeGarage(@RequestBody Garage garage) {
         garage.setId(0);
         Garage newGarage = garageService.save(garage);
-        return garageService.findById(newGarage.getId());
+        return garageService.findById(newGarage.getId()).toApiResponse();
     }
 
     // Danh sách tiệm sửa xe đang quản lý
     @GetMapping(path = {"/repair-place-manage", "/repair-place-manage/"})
-    public List<Garage> listGarage(@RequestParam(defaultValue = "0") int PartnerId) {
+    public List<LinkedHashMap<String, Object>> listGarage(@RequestParam(defaultValue = "0") int PartnerId) {
         List<Garage> garages = garageService.findAll();
-        List<Garage> garagesByProvinceId = new ArrayList<>();
+        List<LinkedHashMap<String, Object>> garagesByProvinceId = new ArrayList<>();
         for (Garage d : garages
         ) {
             if (d.getProvince().getId() == PartnerId) {
-                garagesByProvinceId.add(d);
+                garagesByProvinceId.add(d.toApiResponse());
             }
 
         }
@@ -105,14 +105,14 @@ public class GarageRestController {
         if (PartnerId > 0) {
             return garagesByProvinceId;
         } else {
-            return garageService.findAll();
+            return garageService.findAll().stream().map(Garage::toApiResponse).toList();
         }
     }
 
 
     // Chi tiết tiệm sửa xe - Chỉnh sửa
     @PutMapping(path = {"/repair-place-manage/{id}", "/repair-place-manage/{id}/"})
-    public Garage repair_update(@RequestBody Garage garage, @PathVariable int id) {
+    public LinkedHashMap<String, Object> repair_update(@RequestBody Garage garage, @PathVariable int id) {
 
         if (garageService.findById(id) == null) {
             throw new RestNotFoundException("Garage id not found - " + id);
@@ -120,7 +120,7 @@ public class GarageRestController {
         garage.setId(id);
         garageService.save(garage);
 
-        return garageService.findById(garage.getId());
+        return garageService.findById(garage.getId()).toApiResponse();
     }
 
     // Chi tiết tiệm sửa xe - Xóa / Tạm dừng hoạt động
@@ -138,14 +138,14 @@ public class GarageRestController {
 
     // Tìm kiếm tiệm sửa xe theo tên
     @GetMapping(path = {"/repair-place", "/repair-place"})
-    public List<Garage> searchGarage(@RequestParam(required = false, defaultValue = "") String name,
+    public List<LinkedHashMap<String, Object>> searchGarage(@RequestParam(required = false, defaultValue = "") String name,
                                      @RequestParam(required = false, defaultValue = "0") int provinceId,
                                      @RequestParam(required = false, defaultValue = "0") int districtId,
                                      @RequestParam(required = false, defaultValue = "0") int wardId) {
         if (name.isEmpty() && provinceId < 1 && districtId < 1 && wardId < 1) {
-            return garageService.findAll();
+            return garageService.findAll().stream().map(Garage::toApiResponse).toList();
         } else if (!name.isEmpty() && provinceId < 1 && districtId < 1 && wardId < 1) {
-            return garageService.findAllByName(name);
+            return garageService.findAllByName(name).stream().map(Garage::toApiResponse).toList();
         } else {
             Province tmpProvince = new Province();
             tmpProvince.setId(provinceId);
@@ -158,7 +158,7 @@ public class GarageRestController {
             tmpWard.setProvince(tmpProvince);
             tmpWard.setDistrict(tmpDistrict);
 
-            return garageService.findAllByProvinceAndDistrictAndWardIsOrName(tmpProvince, tmpDistrict, tmpWard, name);
+            return garageService.findAllByProvinceAndDistrictAndWardIsOrName(tmpProvince, tmpDistrict, tmpWard, name).stream().map(Garage::toApiResponse).toList();
         }
     }
 }
