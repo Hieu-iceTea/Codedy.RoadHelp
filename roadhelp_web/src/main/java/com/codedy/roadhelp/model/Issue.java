@@ -43,7 +43,7 @@ public class Issue extends BaseModel implements Serializable {
     private User userPartners;
 
     @OneToOne(mappedBy = "issue")
-    private RatingIssues ratingIssues;
+    private RatingIssue ratingIssue;
 //endregion
 
     //region - Getter & Setter -
@@ -71,20 +71,20 @@ public class Issue extends BaseModel implements Serializable {
         this.userPartners = userPartners;
     }
 
-    public RatingIssues getRatingIssues() {
-        return ratingIssues;
+    public RatingIssue getRatingIssues() {
+        return ratingIssue;
     }
 
-    public void setRatingIssues(RatingIssues ratingIssues) {
-        this.ratingIssues = ratingIssues;
+    public void setRatingIssues(RatingIssue ratingIssue) {
+        this.ratingIssue = ratingIssue;
     }
 
-    public RatingIssues getRatingPartner() {
-        return ratingIssues;
+    public RatingIssue getRatingPartner() {
+        return ratingIssue;
     }
 
-    public void setRatingPartner(RatingIssues ratingIssues) {
-        this.ratingIssues = ratingIssues;
+    public void setRatingPartner(RatingIssue ratingIssue) {
+        this.ratingIssue = ratingIssue;
     }
 
     public IssueStatus getStatus() {
@@ -191,7 +191,7 @@ public class Issue extends BaseModel implements Serializable {
 
     //@JsonProperty("ratingIssue")
     private LinkedHashMap<String, Object> getRatingIssueHashMap() {
-        return ratingIssues != null ? ratingIssues.toHashMap() : null;
+        return ratingIssue != null ? ratingIssue.toHashMap() : null;
     }
     //endregion
 

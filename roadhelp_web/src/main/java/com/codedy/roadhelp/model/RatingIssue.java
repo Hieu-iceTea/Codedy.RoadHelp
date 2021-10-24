@@ -9,10 +9,10 @@ import java.util.LinkedHashMap;
 @Entity
 @Table(name = "ratingissues")
 /*@JsonIdentityInfo(
-        scope = RatingIssues.class,
+        scope = RatingIssue.class,
         generator = ObjectIdGenerators.PropertyGenerator.class,
         property = "id")*/
-public class RatingIssues extends BaseModel implements Serializable {
+public class RatingIssue extends BaseModel implements Serializable {
 
     //region - Define Fields -
     @NotNull

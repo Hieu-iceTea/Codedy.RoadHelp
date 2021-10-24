@@ -1,7 +1,7 @@
 package com.codedy.roadhelp.repository;
 
-import com.codedy.roadhelp.model.RatingIssues;
+import com.codedy.roadhelp.model.RatingIssue;
 
-public interface RatingIssueRepository extends BaseRepository<RatingIssues, Integer>{
+public interface RatingIssueRepository extends BaseRepository<RatingIssue, Integer>{
 
 }

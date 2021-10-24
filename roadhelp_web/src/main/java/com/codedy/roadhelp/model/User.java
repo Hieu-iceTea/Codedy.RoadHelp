@@ -68,7 +68,7 @@ public class User extends BaseModel implements Serializable {
 
     @OneToMany(mappedBy = "userMember")
     //@JsonBackReference(value = "ratingIssues")
-    private List<RatingIssues> ratingIssues;
+    private List<RatingIssue> ratingIssues;
 
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<Authority> authorities;
@@ -84,11 +84,11 @@ public class User extends BaseModel implements Serializable {
         this.garages = garages;
     }
 
-    public List<RatingIssues> getRatingIssues() {
+    public List<RatingIssue> getRatingIssues() {
         return ratingIssues;
     }
 
-    public void setRatingIssues(List<RatingIssues> ratingIssues) {
+    public void setRatingIssues(List<RatingIssue> ratingIssues) {
         this.ratingIssues = ratingIssues;
     }
 
@@ -108,11 +108,11 @@ public class User extends BaseModel implements Serializable {
         this.issueMemberDetails = issueMemberDetails;
     }
 
-    public List<RatingIssues> getRatingPartners() {
+    public List<RatingIssue> getRatingPartners() {
         return ratingIssues;
     }
 
-    public void setRatingPartners(List<RatingIssues> ratingIssues) {
+    public void setRatingPartners(List<RatingIssue> ratingIssues) {
         this.ratingIssues = ratingIssues;
     }
 
@@ -277,7 +277,7 @@ public class User extends BaseModel implements Serializable {
 
     //@JsonProperty("ratingIssues")
     private List<LinkedHashMap<String, Object>> getRatingIssuesHashMap() {
-        return ratingIssues != null ? ratingIssues.stream().map(RatingIssues::toHashMap).toList() : null;
+        return ratingIssues != null ? ratingIssues.stream().map(RatingIssue::toHashMap).toList() : null;
     }
 
     //endregion

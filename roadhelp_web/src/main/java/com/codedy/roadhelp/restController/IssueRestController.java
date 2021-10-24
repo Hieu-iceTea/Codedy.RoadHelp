@@ -1,8 +1,7 @@
 package com.codedy.roadhelp.restController;
 
-import com.codedy.roadhelp.model.Garage;
 import com.codedy.roadhelp.model.Issue;
-import com.codedy.roadhelp.model.RatingIssues;
+import com.codedy.roadhelp.model.RatingIssue;
 import com.codedy.roadhelp.model.User;
 import com.codedy.roadhelp.model.enums.IssueStatus;
 import com.codedy.roadhelp.restController.exception.RestNotFoundException;
@@ -12,8 +11,6 @@ import com.codedy.roadhelp.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 
@@ -164,7 +161,7 @@ public class IssueRestController {
     }
     // Xem đánh giá sau khi hỗ trợ xong
     @GetMapping(path = {"/rescue/receive/show-reviews", "/rescue/receive/show-reviews/"})
-    public RatingIssues showRating(@RequestParam(defaultValue = "0") int ratingIssueId) {
+    public RatingIssue showRating(@RequestParam(defaultValue = "0") int ratingIssueId) {
         return ratingIssueService.findById(ratingIssueId);
     }
 
