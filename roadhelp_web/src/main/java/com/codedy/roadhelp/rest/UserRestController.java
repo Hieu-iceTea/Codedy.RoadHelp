@@ -8,6 +8,7 @@ import com.codedy.roadhelp.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCrypt;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -105,12 +106,20 @@ public class UserRestController {
     //region - Change Password -
     @PutMapping(path = {"/my-account/{id}/change-password", "/my-account/{id}/change-password/"})
     public ResponseEntity<?> changePassword(@Valid @RequestBody HashMap<String, String> requestBody, @PathVariable int id) {
+
         User user = userService.findById(id);
         String password = requestBody.get("password");
-        user.setPassword(BCrypt.hashpw(password, BCrypt.gensalt(12)));
+        String oldPassword = requestBody.get("oldpassword");
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        String dbPassword = user.getPassword();
 
-        userService.save(user);
-        return ResponseEntity.ok(new MessageResponse("Change password successfully!"));
+        if (passwordEncoder.matches(oldPassword, dbPassword)) {
+            user.setPassword(BCrypt.hashpw(password, BCrypt.gensalt(10)));
+            userService.save(user);
+            return ResponseEntity.ok(new MessageResponse("Change password successfully!"));
+        } else {
+            return ResponseEntity.ok(new MessageResponse("Your old password is wrong"));
+        }
     }
     //endregion
 }
