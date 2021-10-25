@@ -142,12 +142,23 @@ public class GarageRestController {
                                      @RequestParam(required = false, defaultValue = "0") int provinceId,
                                      @RequestParam(required = false, defaultValue = "0") int districtId,
                                      @RequestParam(required = false, defaultValue = "0") int wardId) {
-        if (name.isEmpty() && provinceId < 1 && districtId < 1 && wardId < 1) {
-            return garageService.findAllByProvinceIdAndDistrictIdAndWardId(provinceId, districtId, wardId).stream().map(Garage::toApiResponse).toList();
-        } else if (!name.isEmpty() && provinceId < 1 && districtId < 1 && wardId < 1) {
-            return garageService.findByNameContaining(name).stream().map(Garage::toApiResponse).toList();
-        } else {
+        // 1. Có tất cả tên và tỉnh/huyện/xã
+        if (!name.isEmpty() && (provinceId >= 1 || districtId >= 1 || wardId >= 1)) {
             return garageService.findAllByProvinceIdAndDistrictIdAndWardIdAndNameContaining(provinceId, districtId, wardId, name).stream().map(Garage::toApiResponse).toList();
         }
+
+        // 2. Chỉ có tên
+        if (!name.isEmpty()) {
+            return garageService.findByNameContaining(name).stream().map(Garage::toApiResponse).toList();
+        }
+
+        // 3. Nếu chỉ có tỉnh/huyện/xã
+        if (provinceId >= 1 || districtId >= 1 || wardId >= 1) {
+            return garageService.findAllByProvinceIdAndDistrictIdAndWardId(provinceId, districtId, wardId).stream().map(Garage::toApiResponse).toList();
+        }
+
+        //Mặc định getAll()
+        return garageService.findAll().stream().map(Garage::toApiResponse).toList();
+
     }
 }

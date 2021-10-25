@@ -20,15 +20,11 @@ public class WardRestController {
     // List Ward
     @GetMapping(path = {"", "/", "/index"})
     public List<LinkedHashMap<String, Object>> index(@RequestParam(defaultValue = "0") int provinceId, @RequestParam(defaultValue = "0") int districtId) {
-        List<Ward> wardByDistrict = wardService.findAllByDistrictId(districtId);
-        List<Ward> wardByDistrictAndProvince = wardService.findAllByDistrictIdAndProvinceId(districtId,provinceId);
-
         if(provinceId >= 1 && districtId >= 1){
-            return wardByDistrictAndProvince.stream().map(Ward::toApiResponse).toList();
+            return wardService.findAllByDistrictIdAndProvinceId(districtId,provinceId).stream().map(Ward::toApiResponse).toList();
         }
        else if(districtId >= 1){
-            return wardByDistrict.stream().map(Ward::toApiResponse).toList();
-
+            return wardService.findAllByDistrictId(districtId).stream().map(Ward::toApiResponse).toList();
        }
         else return wardService.findAll().stream().map(Ward::toApiResponse).toList();
     }
