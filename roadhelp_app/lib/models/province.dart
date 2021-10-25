@@ -13,6 +13,8 @@ class Province extends BaseModel {
   List<Garage>? garages;
   List<District>? districts;
   List<Ward>? wards;
+  List<int>? districtIds;
+  List<int>? wardIds;
 
   Province({
     this.name,
@@ -21,6 +23,8 @@ class Province extends BaseModel {
     this.garages,
     this.districts,
     this.wards,
+    this.districtIds,
+    this.wardIds,
     //
     int? id,
     DateTime? createdAt,
@@ -45,9 +49,18 @@ class Province extends BaseModel {
       name: json['name'],
       code: json['code'],
       //Relationship
-      /*garages: Garage.fromJsonToList(json['garages']),
-      districts: District.fromJsonToList(json['districts']),
-      wards: Ward.fromJsonToList(json['wards']),*/
+      garages:
+          json['garages'] != null ? Garage.fromJsonToList(json['garages']) : [],
+      districts: json['districts'] != null
+          ? District.fromJsonToList(json['districts'])
+          : [],
+      wards: json['wards'] != null ? Ward.fromJsonToList(json['wards']) : [],
+      districtIds: json['districtIds'] != null
+          ? json['districtIds'].map<int>((element) => element).toList()
+          : [],
+      wardIds: json['wardIds'] != null
+          ? json['wardIds'].map<int>((element) => element).toList()
+          : [],
       //
       id: json['id'],
       //createdAt: json['createdAt'],

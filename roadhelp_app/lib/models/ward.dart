@@ -54,9 +54,12 @@ class Ward extends BaseModel {
       name: json['name'],
       prefix: json['prefix'],
       //Relationship
-      /*garages: Garage.fromJsonToList(json['garages']),
-      province: Province.fromJson(json['province']),
-      district: District.fromJson(json['district']),*/
+      garages:
+          json['garages'] != null ? Garage.fromJsonToList(json['garages']) : [],
+      province:
+          json['province'] != null ? Province.fromJson(json['province']) : null,
+      district:
+          json['district'] != null ? District.fromJson(json['district']) : null,
       //
       id: json['id'],
       //createdAt: json['createdAt'],
@@ -78,8 +81,12 @@ class Ward extends BaseModel {
     return json.encode({
       'provinceId': provinceId,
       'districtId': districtId,
+      //
       'name': name,
       'prefix': prefix,
+      //Relationship
+      'province': json.decode(province!.toJson()),
+      'district': json.decode(district!.toJson()),
       //
       'id': id,
       //'createdAt': createdAt,

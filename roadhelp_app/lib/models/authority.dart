@@ -42,8 +42,8 @@ class Authority extends BaseModel {
       username: json['username'],
       authority: json['authority'],
       //Relationship
-      user: User.fromJson(json['user']),
-      //json.decode(json['user'])
+      user: json['user'] != null ? User.fromJson(json['user']) : null,
+      //TODO: Thử thay thế cái này xem đc ko: json.decode(json['user'])
       //
       id: json['id'],
       //createdAt: json['createdAt'],
@@ -67,6 +67,8 @@ class Authority extends BaseModel {
     return json.encode({
       'username': username,
       'authority': authority,
+      //Relationship
+      'user': json.decode(user!.toJson()),
       //
       'id': id,
       //'createdAt': createdAt,

@@ -6,11 +6,11 @@ import 'garage.dart';
 
 class RatingGarage extends BaseModel {
   //
-  int? garageID;
-  int? userID;
+  int? garageId;
+  int? userMemberId;
 
   //
-  double? ratePoint;
+  int? ratePoint;
   String? comment;
 
   //Relationship
@@ -18,8 +18,8 @@ class RatingGarage extends BaseModel {
   User? userMember;
 
   RatingGarage({
-    this.garageID,
-    this.userID,
+    this.garageId,
+    this.userMemberId,
     this.ratePoint,
     this.comment,
     //Relationship
@@ -46,13 +46,15 @@ class RatingGarage extends BaseModel {
   //
   factory RatingGarage.fromJson(Map<String, dynamic> json) {
     return RatingGarage(
-      garageID: json['garageID'],
-      userID: json['userID'],
+      garageId: json['garageId'],
+      userMemberId: json['userMemberId'],
+      //
       ratePoint: json['ratePoint'],
       comment: json['comment'],
       //Relationship
-      garage: Garage.fromJson(json['garage']),
-      userMember: User.fromJson(json['userMember']),
+      garage: json['garage'] != null ? Garage.fromJson(json['garage']) : null,
+      userMember:
+          json['userMember'] != null ? User.fromJson(json['userMember']) : null,
       //
       id: json['id'],
       //createdAt: json['createdAt'],
@@ -74,10 +76,14 @@ class RatingGarage extends BaseModel {
   //
   String toJson() {
     return json.encode({
-      'garageID': garageID,
-      'userID': userID,
+      'garageId': garageId,
+      'userMemberId': userMemberId,
+      //
       'ratePoint': ratePoint,
       'comment': comment,
+      //Relationship
+      'userMember': json.decode(userMember!.toJson()),
+      'garage': json.decode(garage!.toJson()),
       //
       'id': id,
       //'createdAt': createdAt,

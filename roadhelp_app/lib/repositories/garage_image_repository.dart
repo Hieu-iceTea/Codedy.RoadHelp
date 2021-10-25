@@ -4,7 +4,7 @@ import '/config/constants.dart';
 import '/helper/http_helper.dart';
 
 class GarageImageRepository {
-  static final String _url = baseApiUrl + "api/v1/garageImages/";
+  static const String _url = baseApiUrl + "api/v1/garageImages/";
 
   static Future<List<GarageImage>> findAll() async {
     var responseBody = await HttpHelper.get(

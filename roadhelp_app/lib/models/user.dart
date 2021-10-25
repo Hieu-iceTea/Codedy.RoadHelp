@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:roadhelp/config/constants.dart';
+
 import '/config/enums.dart';
 import '/models/garage.dart';
 import '/models/issues.dart';
@@ -28,13 +30,17 @@ class User extends BaseModel {
   String? address;
   double? rateAvg;
 
-  //
-  String? imageUrl;
+  //Xử lý sau khi get API (chuyển từ image -> imageUrl):
+  String? get imageUrl {
+    if (image != null) {
+      return baseApiUrl + "data-images/user/" + image!;
+    }
+  }
 
   //Relationship
   List<Authority>? authorities;
-  List<Issues>? issueMembers;
-  List<Issues>? issuePartners;
+  List<Issues>? memberIssues;
+  List<Issues>? partnerIssues;
   List<RatingIssues>? ratingIssues;
   List<RatingGarage>? ratingGarages;
   List<Garage>? garages;
@@ -53,13 +59,12 @@ class User extends BaseModel {
     this.rateAvg,
     //Relationship
     this.authorities,
-    this.issueMembers,
-    this.issuePartners,
+    this.memberIssues,
+    this.partnerIssues,
     this.ratingIssues,
     this.ratingGarages,
     this.garages,
     //
-    this.imageUrl,
     int? id,
     DateTime? createdAt,
     String? createdBy,
@@ -79,25 +84,39 @@ class User extends BaseModel {
 
   //
   factory User.fromJson(Map<String, dynamic> json) {
+    var tmp = UserGender.female;
+
     return User(
       username: json['username'],
       email: json['email'],
-      phone: json['phone'],
       password: json['password'],
+      image: json['image'],
+      gender: UserGender.values
+          .firstWhere((e) => e.toString() == "UserGender." + json['gender']),
       firstName: json['firstName'],
       lastName: json['lastName'],
-      image: json['image'],
-      gender: UserGender.values[json['gender']],
-      active: json['active'],
+      phone: json['phone'],
       address: json['address'],
+      active: json['active'],
       rateAvg: json['rateAvg'],
       //Relationship
-      authorities: Authority.fromJsonToList(json['authorities']),
-      issueMembers: Issues.fromJsonToList(json['issueMembers']),
-      issuePartners: Issues.fromJsonToList(json['issuePartners']),
-      ratingIssues: RatingIssues.fromJsonToList(json['ratingIssues']),
-      ratingGarages: RatingGarage.fromJsonToList(json['ratingGarages']),
-      garages: Garage.fromJsonToList(json['garages']),
+      authorities: json['authorities'] != null
+          ? Authority.fromJsonToList(json['authorities'])
+          : [],
+      garages:
+          json['garages'] != null ? Garage.fromJsonToList(json['garages']) : [],
+      memberIssues: json['memberIssues'] != null
+          ? Issues.fromJsonToList(json['memberIssues'])
+          : [],
+      partnerIssues: json['partnerIssues'] != null
+          ? Issues.fromJsonToList(json['partnerIssues'])
+          : [],
+      ratingGarages: json['ratingGarages'] != null
+          ? RatingGarage.fromJsonToList(json['ratingGarages'])
+          : [],
+      ratingIssues: json['ratingIssues'] != null
+          ? RatingIssues.fromJsonToList(json['ratingIssues'])
+          : [],
       //
       id: json['id'],
       //createdAt: json['createdAt'],
@@ -124,7 +143,7 @@ class User extends BaseModel {
       'firstName': firstName,
       'lastName': lastName,
       'image': image,
-      'gender': gender,
+      'gender': gender, //TODO: kiểm tra lại, chuyển từ ENUM -> String
       'active': active,
       'address': address,
       'rateAvg': rateAvg,

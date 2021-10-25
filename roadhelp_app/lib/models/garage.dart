@@ -25,7 +25,7 @@ class Garage extends BaseModel {
   double? latitude;
   String? description;
   bool? active;
-  bool isFeatured;
+  bool featured;
 
   //Relationship
   User? userPartner;
@@ -49,7 +49,7 @@ class Garage extends BaseModel {
     this.latitude,
     this.description,
     this.active,
-    this.isFeatured = false,
+    this.featured = false,
     //Relationship:
     this.userPartner,
     this.garageImages = const [],
@@ -78,7 +78,7 @@ class Garage extends BaseModel {
   //
   factory Garage.fromJson(Map<String, dynamic> json) {
     return Garage(
-      userPartnerId: json['partnerId'],
+      userPartnerId: json['userPartnerId'],
       provinceId: json['provinceId'],
       districtId: json['districtId'],
       wardId: json['wardId'],
@@ -91,14 +91,22 @@ class Garage extends BaseModel {
       latitude: json['latitude'],
       description: json['description'],
       active: json['active'],
-      isFeatured: json['featured'] ?? false,
+      featured: json['featured'] ?? false,
       //Relationship:
-      //userPartner: User.fromJson(json['userPartner']),
-      garageImages: json['garageImages'] != null ? GarageImage.fromJsonToList(json['garageImages']) : [],
-      //ratingGarages: RatingGarage.fromJsonToList(json['ratingGarages']),
-      province: Province.fromJson(json['province']),
-      district: District.fromJson(json['district']),
-      ward: Ward.fromJson(json['ward']),
+      userPartner: json['userPartner'] != null
+          ? User.fromJson(json['userPartner'])
+          : null,
+      ratingGarages: json['ratingGarages'] != null
+          ? RatingGarage.fromJsonToList(json['ratingGarages'])
+          : [],
+      garageImages: json['garageImages'] != null
+          ? GarageImage.fromJsonToList(json['garageImages'])
+          : [],
+      province:
+          json['province'] != null ? Province.fromJson(json['province']) : null,
+      district:
+          json['district'] != null ? District.fromJson(json['district']) : null,
+      ward: json['ward'] != null ? Ward.fromJson(json['ward']) : null,
       //
       id: json['id'],
       //createdAt: json['createdAt'],
@@ -131,9 +139,9 @@ class Garage extends BaseModel {
       'latitude': latitude,
       'description': description,
       'active': active,
-      'isFeatured': isFeatured,
+      'isFeatured': featured,
       //
-      'partner': json.decode(userPartner!.toJson()),
+      'userPartner': json.decode(userPartner!.toJson()),
       'province': json.decode(province!.toJson()),
       'district': json.decode(district!.toJson()),
       'ward': json.decode(ward!.toJson()),
@@ -168,30 +176,30 @@ Garage getTmpGarage() {
   return Garage(
     id: Random().nextInt(1000),
     garageImages: [
-      GarageImage(
-          imageUrl: "https://picsum.photos/500/400?random=" +
-              Random().nextInt(99).toString()),
-      GarageImage(
-          imageUrl: "https://picsum.photos/500/400?random=" +
-              Random().nextInt(99).toString()),
-      GarageImage(
-          imageUrl: "https://picsum.photos/500/400?random=" +
-              Random().nextInt(99).toString()),
-      GarageImage(
-          imageUrl: "https://picsum.photos/500/400?random=" +
-              Random().nextInt(99).toString()),
-      GarageImage(
-          imageUrl: "https://picsum.photos/500/400?random=" +
-              Random().nextInt(99).toString()),
-      GarageImage(
-          imageUrl: "https://picsum.photos/500/400?random=" +
-              Random().nextInt(99).toString()),
-      GarageImage(
-          imageUrl: "https://picsum.photos/500/400?random=" +
-              Random().nextInt(99).toString()),
-      GarageImage(
-          imageUrl: "https://picsum.photos/500/400?random=" +
-              Random().nextInt(99).toString()),
+      GarageImage()
+        ..imageUrl = "https://picsum.photos/500/400?random=" +
+            Random().nextInt(99).toString(),
+      GarageImage()
+        ..imageUrl = "https://picsum.photos/500/400?random=" +
+            Random().nextInt(99).toString(),
+      GarageImage()
+        ..imageUrl = "https://picsum.photos/500/400?random=" +
+            Random().nextInt(99).toString(),
+      GarageImage()
+        ..imageUrl = "https://picsum.photos/500/400?random=" +
+            Random().nextInt(99).toString(),
+      GarageImage()
+        ..imageUrl = "https://picsum.photos/500/400?random=" +
+            Random().nextInt(99).toString(),
+      GarageImage()
+        ..imageUrl = "https://picsum.photos/500/400?random=" +
+            Random().nextInt(99).toString(),
+      GarageImage()
+        ..imageUrl = "https://picsum.photos/500/400?random=" +
+            Random().nextInt(99).toString(),
+      GarageImage()
+        ..imageUrl = "https://picsum.photos/500/400?random=" +
+            Random().nextInt(99).toString(),
     ],
     name: "Garage Name™ " + Random().nextInt(99).toString(),
     phone: "012345678",
@@ -201,18 +209,18 @@ Garage getTmpGarage() {
     ratingGarages: [
       RatingGarage(
           id: Random().nextInt(1000),
-          garageID: 1,
-          userID: 1,
-          ratePoint: 4.5,
+          garageId: 1,
+          userMemberId: 1,
+          ratePoint: 4,
           comment: "This is Comment for garage..."),
       RatingGarage(
           id: Random().nextInt(1000),
-          garageID: 1,
-          userID: 2,
-          ratePoint: 4.5,
+          garageId: 1,
+          userMemberId: 2,
+          ratePoint: 5,
           comment: "This is Comment for garage..."),
     ],
-    isFeatured: true,
+    featured: true,
   );
 }
 
