@@ -91,11 +91,13 @@ class Auth {
       //extend
       expiryDate: json['expiryDate'] != null
           ? DateTime.parse(json['expiryDate'])
-          : DateTime.now().add(
-              Duration(
-                seconds: json['expiresIn'],
-              ),
-            ),
+          : json['expiresIn'] != null
+              ? DateTime.now().add(
+                  Duration(
+                    seconds: json['expiresIn'],
+                  ),
+                )
+              : null,
     );
   }
 
