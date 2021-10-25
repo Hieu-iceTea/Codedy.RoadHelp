@@ -17,6 +17,7 @@ class District extends BaseModel {
   List<Garage>? garages;
   Province? province;
   List<Ward>? wards;
+  List<int>? wardIds;
 
   District({
     this.provinceId,
@@ -26,6 +27,7 @@ class District extends BaseModel {
     this.garages,
     this.province,
     this.wards,
+    this.wardIds,
     //
     int? id,
     DateTime? createdAt,
@@ -48,12 +50,18 @@ class District extends BaseModel {
   factory District.fromJson(Map<String, dynamic> json) {
     return District(
       provinceId: json['provinceId'],
+      //
       name: json['name'],
       prefix: json['prefix'],
       //Relationship
-      /*garages: Garage.fromJsonToList(json['garages']),
-      province: Province.fromJson(json['province']),
-      wards: Ward.fromJsonToList(json['wards']),*/
+      garages:
+          json['garages'] != null ? Garage.fromJsonToList(json['garages']) : [],
+      province:
+          json['province'] != null ? Province.fromJson(json['province']) : null,
+      wards: json['wards'] != null ? Ward.fromJsonToList(json['wards']) : [],
+      wardIds: json['wardIds'] != null
+          ? json['wardIds'].map<int>((element) => element).toList()
+          : [],
       //
       id: json['id'],
       //createdAt: json['createdAt'],
@@ -74,8 +82,11 @@ class District extends BaseModel {
   String toJson() {
     return json.encode({
       'provinceId': provinceId,
+      //
       'name': name,
       'prefix': prefix,
+      //Relationship
+      'province': json.decode(province!.toJson()),
       //
       'id': id,
       //'createdAt': createdAt,

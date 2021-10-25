@@ -15,12 +15,20 @@ class GarageImage extends BaseModel {
   Garage? garage;
 
   //Xử lý sau khi get API (chuyển từ image -> imageUrl):
-  String? imageUrl;
+  String? get imageUrl {
+    if (image != null) {
+      return baseApiUrl + "data-images/garage/" + image!;
+    }
+  }
+
+  //TODO: nhớ bỏ dòng này khi app có dữ liệu thật, k còn dữ liệu fake
+  set imageUrl(String? imageUrl) {
+    this.imageUrl = imageUrl;
+  }
 
   GarageImage({
     this.garageId,
     this.image,
-    this.imageUrl,
     //Relationship
     this.garage,
     //
@@ -45,11 +53,10 @@ class GarageImage extends BaseModel {
   factory GarageImage.fromJson(Map<String, dynamic> json) {
     return GarageImage(
       garageId: json['garageId'],
+      //
       image: json['image'],
       //Relationship
-      garage: json['garage'] is int ? null : Garage.fromJson(json['garage']),
-      //
-      imageUrl: baseApiUrl + "data-images/garage/" + json['image'],
+      garage: json['garage'] != null ? Garage.fromJson(json['garage']) : null,
       //
       id: json['id'],
       //createdAt: json['createdAt'],
@@ -72,7 +79,10 @@ class GarageImage extends BaseModel {
   String toJson() {
     return json.encode({
       'garageId': garageId,
+      //
       'image': image,
+      //Relationship
+      'garage': json.decode(garage!.toJson()),
       //
       'id': id,
       //'createdAt': createdAt,

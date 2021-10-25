@@ -44,6 +44,8 @@ public class User extends BaseModel implements Serializable {
     private UserGender gender;
 
     private Boolean active;
+
+    private double rateAvg;
     //endregion
 
 
@@ -199,6 +201,14 @@ public class User extends BaseModel implements Serializable {
     public void setRatingIssues(List<RatingIssue> ratingIssues) {
         this.ratingIssues = ratingIssues;
     }
+
+    public double getRateAvg() {
+        return rateAvg;
+    }
+
+    public void setRateAvg(double rateAvg) {
+        this.rateAvg = rateAvg;
+    }
     //endregion
 
 
@@ -226,6 +236,7 @@ public class User extends BaseModel implements Serializable {
         hashMap.put("phone", phone);
         hashMap.put("address", address);
         hashMap.put("active", active);
+        hashMap.put("rateAvg", rateAvg);
 
         return hashMap;
     }

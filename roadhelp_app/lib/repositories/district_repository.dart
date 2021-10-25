@@ -4,7 +4,7 @@ import '/config/constants.dart';
 import '/helper/http_helper.dart';
 
 class DistrictRepository {
-  static final String _url = baseApiUrl + "api/v1/districts/";
+  static const String _url = baseApiUrl + "api/v1/districts/";
 
   static Future<List<District>> findAll() async {
     var responseBody = await HttpHelper.get(

@@ -34,7 +34,7 @@ class GarageDescription extends StatelessWidget {
             width: getProportionateScreenWidth(64),
             decoration: BoxDecoration(
               color:
-                  garage.isFeatured ? Color(0xFFFFE6E6) : Color(0xFFF5F6F9),
+                  garage.featured ? Color(0xFFFFE6E6) : Color(0xFFF5F6F9),
               borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(20),
                 bottomLeft: Radius.circular(20),
@@ -43,7 +43,7 @@ class GarageDescription extends StatelessWidget {
             child: SvgPicture.asset(
               "assets/icons/Heart Icon_2.svg",
               color:
-                  garage.isFeatured ? Color(0xFFFF4848) : Color(0xFFDBDEE4),
+                  garage.featured ? Color(0xFFFF4848) : Color(0xFFDBDEE4),
               height: getProportionateScreenWidth(16),
             ),
           ),

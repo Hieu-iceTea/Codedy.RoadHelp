@@ -61,17 +61,25 @@ class Issues extends BaseModel {
     return Issues(
       userMemberId: json['userMemberId'],
       userPartnerId: json['userPartnerId'],
-      address: json['address'],
-      phone: json['phone'],
+      //
       longitude: json['longitude'],
       latitude: json['latitude'],
-      category: json['category'],
+      phone: json['phone'],
+      address: json['address'],
+      category: IssueCategory.values.firstWhere(
+          (e) => e.toString() == "IssueCategory." + json['category']),
       description: json['description'],
-      status: json['status'],
+      status: IssueStatus.values
+          .firstWhere((e) => e.toString() == "IssueStatus." + json['status']),
       //Relationship
-      userMember: User.fromJson(json['userMember']),
-      userPartner: User.fromJson(json['userPartner']),
-      ratingIssue: RatingIssues.fromJson(json['ratingIssue']),
+      userMember:
+          json['userMember'] != null ? User.fromJson(json['userMember']) : null,
+      userPartner: json['userPartner'] != null
+          ? User.fromJson(json['userPartner'])
+          : null,
+      ratingIssue: json['ratingIssue'] != null
+          ? RatingIssues.fromJson(json['ratingIssue'])
+          : null,
       //
       id: json['id'],
       //createdAt: json['createdAt'],
@@ -93,13 +101,18 @@ class Issues extends BaseModel {
     return json.encode({
       'userMemberId': userMemberId,
       'userPartnerId': userPartnerId,
+      //
       'address': address,
       'phone': phone,
       'longitude': longitude,
       'latitude': latitude,
-      'category': category,
+      'category': category, //TODO: kiểm tra lại, chuyển từ ENUM -> String
       'description': description,
-      'status': status,
+      'status': status, //TODO: kiểm tra lại, chuyển từ ENUM -> String
+      //Relationship
+      'userMember': json.decode(userMember!.toJson()),
+      'userPartner': json.decode(userPartner!.toJson()),
+      'ratingIssue': json.decode(ratingIssue!.toJson()),
       //
       'id': id,
       //'createdAt': createdAt,

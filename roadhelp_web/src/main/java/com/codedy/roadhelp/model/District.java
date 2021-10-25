@@ -116,6 +116,7 @@ public class District extends BaseModel implements Serializable {
         hashMap.put("garages", getGarageHashMap());
         hashMap.put("province", getProvinceHashMap());
         hashMap.put("wards", getWardsHashMap());
+        //hashMap.put("wardIds", getWardIdsHashMap());
 
         return hashMap;
     }
@@ -136,8 +137,8 @@ public class District extends BaseModel implements Serializable {
         return wards != null ? wards.stream().map(Ward::toHashMap).toList() : null;
     }
 
-    /*@JsonProperty("wardIds")
-    public List<Integer> getWardIdsHashMap() {
+    /*//@JsonProperty("wardIds")
+    private List<Integer> getWardIdsHashMap() {
         return wards != null ? wards.stream().map(Ward::getId).toList() : null;
     }*/
     //endregion

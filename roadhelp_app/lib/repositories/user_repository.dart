@@ -3,7 +3,7 @@ import '/helper/http_helper.dart';
 import '/models/user.dart';
 
 class UserRepository {
-  static final String _url = baseApiUrl + "api/v1/users/";
+  static const String _url = baseApiUrl + "api/v1/users/";
 
   static Future<List<User>> findAll() async {
     var responseBody = await HttpHelper.get(

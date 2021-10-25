@@ -198,7 +198,7 @@ public class Garage extends BaseModel implements Serializable {
     protected LinkedHashMap<String, Object> toHashMap() {
         LinkedHashMap<String, Object> hashMap = super.toHashMap();
 
-        hashMap.put("partnerId", userPartner != null ? userPartner.getId() : null);
+        hashMap.put("userPartnerId", userPartner != null ? userPartner.getId() : null);
         hashMap.put("provinceId", province != null ? province.getId() : null);
         hashMap.put("districtId", district != null ? district.getId() : null);
         hashMap.put("wardId", ward != null ? ward.getId() : null);
@@ -211,7 +211,7 @@ public class Garage extends BaseModel implements Serializable {
         hashMap.put("latitude", latitude);
         hashMap.put("description", description);
         hashMap.put("active", active);
-        hashMap.put("isFeatured", isFeatured);
+        hashMap.put("featured", isFeatured);
 
         return hashMap;
     }
@@ -228,7 +228,7 @@ public class Garage extends BaseModel implements Serializable {
     public LinkedHashMap<String, Object> toApiResponse() {
         LinkedHashMap<String, Object> hashMap = this.toHashMap();
 
-        hashMap.remove("partnerId");
+        hashMap.remove("userPartnerId");
         hashMap.remove("provinceId");
         hashMap.remove("districtId");
         hashMap.remove("wardId");

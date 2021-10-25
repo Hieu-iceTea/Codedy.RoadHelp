@@ -35,7 +35,7 @@ CREATE TABLE IF NOT EXISTS `users`
     `last_name`  VARCHAR(64),
     `phone`      VARCHAR(16),
     `address`    VARCHAR(128),
-    `rate_avg`   double       default null,
+    `rate_avg`   DOUBLE       DEFAULT 0,
 
     `active`     BOOLEAN      DEFAULT TRUE,
 
@@ -62,7 +62,7 @@ CREATE TABLE IF NOT EXISTS `garage`
 
     `name`            VARCHAR(64) NOT NULL,
     `phone`           VARCHAR(16),
-    `rate_avg`        double      NULL,
+    `rate_avg`        DOUBLE       DEFAULT 0,
     `address`         VARCHAR(128),
     `longitude`       double,
     `latitude`        double,

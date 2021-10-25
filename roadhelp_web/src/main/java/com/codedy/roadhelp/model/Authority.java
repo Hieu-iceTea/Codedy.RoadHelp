@@ -78,7 +78,6 @@ public class Authority extends BaseModel implements Serializable {
         hashMap.remove("username");
 
         hashMap.put("user", getUserHashMap());
-        hashMap.put("authority", authority);
 
         return hashMap;
     }

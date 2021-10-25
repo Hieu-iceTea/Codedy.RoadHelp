@@ -6,11 +6,11 @@ import 'issues.dart';
 
 class RatingIssues extends BaseModel {
   //
-  String? userMemberId;
-  String? issueId;
+  int? userMemberId;
+  int? issueId;
 
   //
-  double? ratePoint;
+  int? ratePoint;
   String? comment;
 
   //Relationship
@@ -46,13 +46,15 @@ class RatingIssues extends BaseModel {
   //
   factory RatingIssues.fromJson(Map<String, dynamic> json) {
     return RatingIssues(
-      userMemberId: json['userId'],
       issueId: json['issueId'],
+      userMemberId: json['userMemberId'],
+      //
       ratePoint: json['ratePoint'],
       comment: json['comment'],
       //Relationship
-      issue: Issues.fromJson(json['issue']),
-      userMember: User.fromJson(json['userMember']),
+      issue: json['issue'] != null ? Issues.fromJson(json['issue']) : null,
+      userMember:
+          json['userMember'] != null ? User.fromJson(json['userMember']) : null,
       //
       id: json['id'],
       //createdAt: json['createdAt'],
@@ -74,10 +76,14 @@ class RatingIssues extends BaseModel {
   //
   String toJson() {
     return json.encode({
-      'userId': userMemberId,
+      'userMemberId': userMemberId,
       'issueId': issueId,
+      //
       'ratePoint': ratePoint,
       'comment': comment,
+      //Relationship
+      'userMember': json.decode(userMember!.toJson()),
+      'issue': json.decode(issue!.toJson()),
       //
       'id': id,
       //'createdAt': createdAt,
