@@ -30,8 +30,18 @@ public class GarageServiceImplement extends BaseServiceImplement<Garage, Integer
     }
 
     @Override
-    public List<Garage> findAllByName(String name) {
-        return garageRepository.findAllByName(name);
+    public List<Garage> findByNameContaining(String name) {
+        return garageRepository.findByNameContaining(name);
+    }
+
+    @Override
+    public List<Garage> findAllByProvinceIdAndDistrictIdAndWardId(int province_id, int district_id, int ward_id) {
+        return garageRepository.findAllByProvinceIdAndDistrictIdAndWardId(province_id, district_id, ward_id);
+    }
+
+    @Override
+    public List<Garage> findAllByProvinceIdAndDistrictIdAndWardIdAndNameContaining(int province_id, int district_id, int ward_id, String name) {
+        return garageRepository.findAllByProvinceIdAndDistrictIdAndWardIdAndNameContaining(province_id, district_id, ward_id, name);
     }
     //endregion
 }
