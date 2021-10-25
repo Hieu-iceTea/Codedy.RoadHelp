@@ -202,13 +202,13 @@ INSERT INTO users (id, username, email, password, image, gender, first_name, las
 VALUE (3, 'Admin_Demo', 'admin_demo.codedy@gmail.com', '$2y$10$//Od0OmEqRwFepW3wynrYOwslyvaS.snzBbpWwskF1Zrg5fNI.eTe','admin_demo.jpg', 1, 'CODEDY', 'Admin Demo', '0868 6633 16','Hồ Tây', FALSE);
 
 INSERT INTO users (id, username, email, password, image, gender, first_name, last_name,phone,address, active)
-VALUE (4, 'Staff_A', 'staff_a.codedy@gmail.com', '$2y$10$//Od0OmEqRwFepW3wynrYOwslyvaS.snzBbpWwskF1Zrg5fNI.eTe','staff_a.jpg', 1, 'CODEDY', 'Staff A', '0868 6633 17','Hà Đông', TRUE);
+VALUE (4, 'Partner', 'partner.codedy@gmail.com', '$2y$10$//Od0OmEqRwFepW3wynrYOwslyvaS.snzBbpWwskF1Zrg5fNI.eTe','partner.jpg', 1, 'CODEDY', 'Partner', '0868 6633 17','Hà Đông', TRUE);
 
 INSERT INTO users (id, username, email, password, image, gender, first_name, last_name,phone,address, active)
-VALUE (5, 'Staff_B', 'staff_b.codedy@gmail.com', '$2y$10$//Od0OmEqRwFepW3wynrYOwslyvaS.snzBbpWwskF1Zrg5fNI.eTe','staff_b.jpg', 2, 'CODEDY', 'Staff B', '0869 6633 18','Hà tây', TRUE);
+VALUE (5, 'Partner_B', 'partner_b.codedy@gmail.com', '$2y$10$//Od0OmEqRwFepW3wynrYOwslyvaS.snzBbpWwskF1Zrg5fNI.eTe','partner_b.jpg', 2, 'CODEDY', 'Partner B', '0869 6633 18','Hà tây', FALSE);
 
 INSERT INTO users (id, username, email, password, image, gender, first_name, last_name,phone,address, active)
-VALUE (6, 'Customer', 'codedy.demo@gmail.com', '$2y$10$//Od0OmEqRwFepW3wynrYOwslyvaS.snzBbpWwskF1Zrg5fNI.eTe','customer.jpg', 1, 'CODEDY', 'Customer', '0869 6633 19','Hà tây', TRUE);
+VALUE (6, 'Member', 'member.codedy@gmail.com', '$2y$10$//Od0OmEqRwFepW3wynrYOwslyvaS.snzBbpWwskF1Zrg5fNI.eTe','member.jpg', 1, 'CODEDY', 'Member', '0869 6633 19','Hà tây', TRUE);
 
 INSERT INTO users (id, username, email, password, image, gender, first_name, last_name,phone,address, active)
 VALUE (7, 'AnhNTTH1908059', 'AnhNTTH1908059@fpt.edu.vn', '$2y$10$//Od0OmEqRwFepW3wynrYOwslyvaS.snzBbpWwskF1Zrg5fNI.eTe','AnhNTTH1908059.jpg', 1, 'Nguyễn Trung', 'Anh', '0869 6633 20','Hà tây', TRUE);
@@ -223,10 +223,14 @@ INSERT INTO users (id, username, email, password, image, gender, first_name, las
 VALUE (10, 'DinhHieu9999', 'HieuNDTH1908028@fpt.edu.vn', '$2y$10$//Od0OmEqRwFepW3wynrYOwslyvaS.snzBbpWwskF1Zrg5fNI.eTe','DinhHieu9999.jpg', 1, 'Nguyễn Đình', 'Hiếu', '0870 6633 23','Hà tây', TRUE);
 
 INSERT INTO users (id, username, email, password, image, gender, first_name, last_name,phone,address, active)
-VALUE (11, 'ManhHung', 'ThiDK@fpt.edu.vn ', '$2y$10$//Od0OmEqRwFepW3wynrYOwslyvaS.snzBbpWwskF1Zrg5fNI.eTe','ManhHung.jpg', 2, 'Đặng Kim', 'Thi', '0871 6633 24','Hà tây', TRUE);
+VALUE (11, 'ThiDk', 'ThiDK@fpt.edu.vn ', '$2y$10$//Od0OmEqRwFepW3wynrYOwslyvaS.snzBbpWwskF1Zrg5fNI.eTe','ThiDk.jpg', 2, 'Đặng Kim', 'Thi', '0871 6633 24','Hà tây', TRUE);
 
 INSERT INTO users (id, username, email, password, image, gender, first_name, last_name,phone,address, active)
-VALUE (12, 'Staff_C', 'staff_c.codedy@gmail.com', '$2y$10$//Od0OmEqRwFepW3wynrYOwslyvaS.snzBbpWwskF1Zrg5fNI.eTe','staff_c.jpg', 1, 'CODEDY', 'Staff C', '0871 6633 25','Hà tây', TRUE);
+VALUE (12, 'Member_B', 'member_b.codedy@gmail.com', '$2y$10$//Od0OmEqRwFepW3wynrYOwslyvaS.snzBbpWwskF1Zrg5fNI.eTe','member_b.jpg', 1, 'CODEDY', 'Member B', '0871 6633 25','Hà tây', FALSE);
+
+INSERT INTO users (id, username, email, password, image, gender, first_name, last_name,phone,address, active)
+VALUE (13, 'ManhHung', 'ManhHung@fpt.edu.vn ', '$2y$10$//Od0OmEqRwFepW3wynrYOwslyvaS.snzBbpWwskF1Zrg5fNI.eTe','ManhHung.jpg', 2, 'Manh', 'Hung', '0871 6633 24','Hà tây', TRUE);
+
 
 
 #endregion
@@ -439,12 +443,16 @@ VALUE (9, 12, 12, 4, 'Tốt');
 
 INSERT INTO authorities (username, authority)
 VALUES
+('Host', 'ROLE_HOST'),
 ('Admin', 'ROLE_ADMIN'),
-('Member', 'ROLE_MEMBER'),
+('Admin_Demo', 'ROLE_ADMIN'),
 ('Partner', 'ROLE_PARTNER'),
-('Hung', 'ROLE_MEMBER'),
-('Huy', 'ROLE_MEMBER'),
-('Hieu', 'ROLE_PARTNER'),
-('Vu', 'ROLE_MEMBER'),
-('TrungAnh', 'ROLE_MEMBER'),
-('Hoa', 'ROLE_PARTNER');
+('Partner_B', 'ROLE_PARTNER'),
+('Member', 'ROLE_MEMBER'),
+('AnhNTTH1908059', 'ROLE_MEMBER'),
+('HuyVQTH1909003', 'ROLE_MEMBER'),
+('HungNPMTH1908050', 'ROLE_PARTNER'),
+('DinhHieu9999', 'ROLE_PARTNER'),
+('ThiDk', 'ROLE_PARTNER'),
+('Member_B', 'ROLE_MEMBER'),
+('ManhHung', 'ROLE_PARTNER');
