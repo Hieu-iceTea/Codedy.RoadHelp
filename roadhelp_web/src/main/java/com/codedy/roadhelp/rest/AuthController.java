@@ -81,7 +81,7 @@ public class AuthController {
         user.setUsername(userRequest.getUsername());
         user.setPhone(userRequest.getPhone());
         user.setEmail(userRequest.getEmail());
-        user.setPassword(BCrypt.hashpw(userRequest.getPassword(), BCrypt.gensalt(12)));
+        user.setPassword(BCrypt.hashpw(userRequest.getPassword(), BCrypt.gensalt(10)));
 
         // Create new authority
         Authority authority = new Authority();

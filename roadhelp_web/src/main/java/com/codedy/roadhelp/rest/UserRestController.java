@@ -114,7 +114,7 @@ public class UserRestController {
         String dbPassword = user.getPassword();
 
         if (passwordEncoder.matches(oldPassword, dbPassword)) {
-            user.setPassword(BCrypt.hashpw(password, BCrypt.gensalt(12)));
+            user.setPassword(BCrypt.hashpw(password, BCrypt.gensalt(10)));
             userService.save(user);
             return ResponseEntity.ok(new MessageResponse("Change password successfully!"));
         } else {
