@@ -20,17 +20,10 @@ public class DistrictRestController {
     // List District
     @GetMapping(path = {"", "/", "/index"})
     public List<LinkedHashMap<String, Object>> index(@RequestParam(defaultValue = "0") int provinceId) {
-        List<District> districts = districtService.findAll();
-        List<District> districtsByProvinceId = new ArrayList<>();
-        for (District d: districts
-        ) {
-            if (d.getProvince().getId() == provinceId){
-                districtsByProvinceId.add(d);
-            }
+        List<District> districts = districtService.findAllByProvinceId(provinceId);
 
-        }
         if(provinceId > 0){
-            return districtsByProvinceId.stream().map(District::toApiResponse).toList();
+            return districts.stream().map(District::toApiResponse).toList();
         }
         else {
             return districtService.findAll().stream().map(District::toApiResponse).toList();
