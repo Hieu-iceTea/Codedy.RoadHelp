@@ -20,4 +20,5 @@ public interface GarageService extends BaseService<Garage, Integer> {
 
     public List<Garage> findAllByProvinceIdAndDistrictIdAndWardIdAndNameContaining(int province_id, int district_id, int ward_id, @Size(min = 2, max = 64) String name); // 3. Có cả tên và tỉnh/huyện/xã
 
+    public List<Garage> findAllByIsFeatured(Boolean isFeatured);
 }

@@ -51,4 +51,12 @@ class GarageRepository {
       url: _url + id.toString(),
     );
   }
+
+  static Future<List<Garage>> findAllByFeatured({bool featured = true}) async {
+    var responseBody = await HttpHelper.get(
+      url: _url + "featured?isFeatured=" + featured.toString(),
+    );
+
+    return Garage.fromJsonToList(responseBody);
+  }
 }

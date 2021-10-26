@@ -43,5 +43,10 @@ public class GarageServiceImplement extends BaseServiceImplement<Garage, Integer
     public List<Garage> findAllByProvinceIdAndDistrictIdAndWardIdAndNameContaining(int province_id, int district_id, int ward_id, String name) {
         return garageRepository.findAllByProvinceIdAndDistrictIdAndWardIdAndNameContaining(province_id, district_id, ward_id, name);
     }
+
+    @Override
+    public List<Garage> findAllByIsFeatured(Boolean isFeatured) {
+        return garageRepository.findAllByIsFeatured(isFeatured);
+    }
     //endregion
 }
