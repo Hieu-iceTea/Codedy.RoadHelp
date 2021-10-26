@@ -2,8 +2,14 @@ import 'package:flutter/foundation.dart';
 import 'package:roadhelp/models/user.dart';
 import 'package:roadhelp/repositories/user_repository.dart';
 
+import 'auth_provider.dart';
+
 class UserProvider with ChangeNotifier {
-  final List<User> _items = [];
+  List<User> _items = [];
+
+  final AuthProvider? authProvider;
+
+  UserProvider(this.authProvider, this._items);
 
   List<User> get items {
     return [..._items];

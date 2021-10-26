@@ -2,8 +2,14 @@ import 'package:flutter/foundation.dart';
 import 'package:roadhelp/models/garage_image.dart';
 import 'package:roadhelp/repositories/garage_image_repository.dart';
 
+import 'auth_provider.dart';
+
 class GarageImageProvider with ChangeNotifier {
-  final List<GarageImage> _items = [];
+  List<GarageImage> _items = [];
+
+  final AuthProvider? authProvider;
+
+  GarageImageProvider(this.authProvider, this._items);
 
   List<GarageImage> get items {
     return [..._items];

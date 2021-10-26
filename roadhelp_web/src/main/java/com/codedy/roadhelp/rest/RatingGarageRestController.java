@@ -100,4 +100,10 @@ public class RatingGarageRestController {
         return ratingGarageService.findById(newRatingGarage.getId()).toApiResponse();
     }
     //endregion
+
+    // List Rating Garage
+    @GetMapping(path = {"/byGarage/{garageId}", "/byGarage/{garageId}/"})
+    public List<LinkedHashMap<String, Object>> ByGarage(@PathVariable int garageId) {
+        return ratingGarageService.findAllByGarageId(garageId).stream().map(RatingGarage::toApiResponse).toList();
+    }
 }

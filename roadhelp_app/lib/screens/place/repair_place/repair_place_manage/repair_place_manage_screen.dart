@@ -29,7 +29,7 @@ class RepairPlaceManageScreen extends StatelessWidget {
           ),
           Consumer<GarageProvider>(
             builder: (context, value, child) => Text(
-              "${value.items.length} mục",
+              "${value.itemsByPartner.length} mục",
               style: Theme.of(context).textTheme.caption,
             ),
           ),

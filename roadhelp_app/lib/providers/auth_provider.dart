@@ -10,12 +10,12 @@ import 'package:shared_preferences/shared_preferences.dart';
 class AuthProvider with ChangeNotifier {
   /// NOTE: Phần này chỉ phục vụ xác thực, không phải là entity model có thật trong database
 
-  Auth _item = Auth();
+  Auth _authData = Auth();
   Timer? _authTimer;
   final String _authDataKey = "Auth_Data";
 
-  Auth get item {
-    return _item;
+  Auth get authData {
+    return _authData;
   }
 
   Future<Auth> login(Auth itemRequest) async {
@@ -24,13 +24,13 @@ class AuthProvider with ChangeNotifier {
       throw Exception("❌ Đăng nhập lỗi");
     }
 
-    _item = itemResponse;
+    _authData = itemResponse;
 
-    _item.currentUser = await UserRepository.findById(_item.userId!);
+    _authData.currentUser = await UserRepository.findById(_authData.userId!);
 
     //Lưu dữ liệu đăng nhập vào SharedPreferences
     if (itemRequest.rememberMe) {
-      final authData = _item.toJson();
+      final authData = _authData.toJson();
       final sharedPreferences = await SharedPreferences.getInstance();
       sharedPreferences.setString(_authDataKey, authData);
     }
@@ -38,19 +38,19 @@ class AuthProvider with ChangeNotifier {
     _setAutoLogoutTimer();
 
     notifyListeners();
-    return _item;
+    return _authData;
   }
 
   Future<Auth> signup(Auth item) async {
     Auth itemResponse = await AuthRepository.signup(item);
-    _item = itemResponse;
+    _authData = itemResponse;
     notifyListeners();
     return itemResponse;
   }
 
   Future<Auth> logout() async {
     //xóa thông tin đăng nhập hiện tại trong Provider:
-    _item = Auth();
+    _authData = Auth();
     if (_authTimer != null) {
       _authTimer!.cancel();
       _authTimer = null;
@@ -63,7 +63,7 @@ class AuthProvider with ChangeNotifier {
     sharedPreferences.remove(_authDataKey);
     //sharedPreferences.clear();
 
-    return _item;
+    return _authData;
   }
 
   Future<bool> tryAutoLogin() async {
@@ -79,9 +79,9 @@ class AuthProvider with ChangeNotifier {
       return false;
     }
 
-    _item = authFromSharedPreferences;
+    _authData = authFromSharedPreferences;
 
-    _item.currentUser = await UserRepository.findById(_item.userId!);
+    _authData.currentUser = await UserRepository.findById(_authData.userId!);
 
     _setAutoLogoutTimer();
 
@@ -93,7 +93,7 @@ class AuthProvider with ChangeNotifier {
     if (_authTimer != null) {
       _authTimer!.cancel();
     }
-    final timeToExpiry = _item.expiryDate!.difference(DateTime.now()).inSeconds;
+    final timeToExpiry = _authData.expiryDate!.difference(DateTime.now()).inSeconds;
     _authTimer = Timer(Duration(seconds: timeToExpiry), logout);
   }
 }

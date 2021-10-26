@@ -2,8 +2,14 @@ import 'package:flutter/foundation.dart';
 import 'package:roadhelp/models/province.dart';
 import 'package:roadhelp/repositories/province_repository.dart';
 
+import 'auth_provider.dart';
+
 class ProvinceProvider with ChangeNotifier {
-  final List<Province> _items = [];
+  List<Province> _items = [];
+
+  final AuthProvider? authProvider;
+
+  ProvinceProvider(this.authProvider, this._items);
 
   List<Province> get items {
     return [..._items];

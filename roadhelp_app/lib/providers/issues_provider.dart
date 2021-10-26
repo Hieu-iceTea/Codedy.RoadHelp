@@ -2,8 +2,14 @@ import 'package:flutter/foundation.dart';
 import 'package:roadhelp/models/issues.dart';
 import 'package:roadhelp/repositories/issues_repository.dart';
 
+import 'auth_provider.dart';
+
 class IssuesProvider with ChangeNotifier {
-  final List<Issues> _items = [];
+  List<Issues> _items = [];
+
+  final AuthProvider? authProvider;
+
+  IssuesProvider(this.authProvider, this._items);
 
   List<Issues> get items {
     return [..._items];

@@ -19,34 +19,74 @@ final List<SingleChildWidget> providers = [
   ChangeNotifierProvider(
     create: (context) => AuthProvider(),
   ),
-  ChangeNotifierProvider(
-    create: (context) => AuthorityProvider(),
+  ChangeNotifierProxyProvider<AuthProvider, AuthorityProvider>(
+    create: (ctx) => AuthorityProvider(null, []),
+    update: (ctx, authProvider, previousData) => AuthorityProvider(
+      authProvider,
+      previousData != null ? previousData.items : [],
+    ),
   ),
-  ChangeNotifierProvider(
-    create: (context) => DistrictProvider(),
+  ChangeNotifierProxyProvider<AuthProvider, DistrictProvider>(
+    create: (ctx) => DistrictProvider(null, []),
+    update: (ctx, authProvider, previousData) => DistrictProvider(
+      authProvider,
+      previousData != null ? previousData.items : [],
+    ),
   ),
-  ChangeNotifierProvider(
-    create: (context) => GarageImageProvider(),
+  ChangeNotifierProxyProvider<AuthProvider, GarageImageProvider>(
+    create: (ctx) => GarageImageProvider(null, []),
+    update: (ctx, authProvider, previousData) => GarageImageProvider(
+      authProvider,
+      previousData != null ? previousData.items : [],
+    ),
   ),
-  ChangeNotifierProvider(
-    create: (context) => GarageProvider(),
+  ChangeNotifierProxyProvider<AuthProvider, GarageProvider>(
+    create: (ctx) => GarageProvider(null, []),
+    update: (ctx, authProvider, previousData) => GarageProvider(
+      authProvider,
+      previousData != null ? previousData.items : [],
+    ),
   ),
-  ChangeNotifierProvider(
-    create: (context) => IssuesProvider(),
+  ChangeNotifierProxyProvider<AuthProvider, IssuesProvider>(
+    create: (ctx) => IssuesProvider(null, []),
+    update: (ctx, authProvider, previousData) => IssuesProvider(
+      authProvider,
+      previousData != null ? previousData.items : [],
+    ),
   ),
-  ChangeNotifierProvider(
-    create: (context) => ProvinceProvider(),
+  ChangeNotifierProxyProvider<AuthProvider, ProvinceProvider>(
+    create: (ctx) => ProvinceProvider(null, []),
+    update: (ctx, authProvider, previousData) => ProvinceProvider(
+      authProvider,
+      previousData != null ? previousData.items : [],
+    ),
   ),
-  ChangeNotifierProvider(
-    create: (context) => RatingGarageProvider(),
+  ChangeNotifierProxyProvider<AuthProvider, RatingGarageProvider>(
+    create: (ctx) => RatingGarageProvider(null, []),
+    update: (ctx, authProvider, previousData) => RatingGarageProvider(
+      authProvider,
+      previousData != null ? previousData.items : [],
+    ),
   ),
-  ChangeNotifierProvider(
-    create: (context) => RatingIssuesProvider(),
+  ChangeNotifierProxyProvider<AuthProvider, RatingIssuesProvider>(
+    create: (ctx) => RatingIssuesProvider(null, []),
+    update: (ctx, authProvider, previousData) => RatingIssuesProvider(
+      authProvider,
+      previousData != null ? previousData.items : [],
+    ),
   ),
-  ChangeNotifierProvider(
-    create: (context) => UserProvider(),
+  ChangeNotifierProxyProvider<AuthProvider, UserProvider>(
+    create: (ctx) => UserProvider(null, []),
+    update: (ctx, authProvider, previousData) => UserProvider(
+      authProvider,
+      previousData != null ? previousData.items : [],
+    ),
   ),
-  ChangeNotifierProvider(
-    create: (context) => WardProvider(),
+  ChangeNotifierProxyProvider<AuthProvider, WardProvider>(
+    create: (ctx) => WardProvider(null, []),
+    update: (ctx, authProvider, previousData) => WardProvider(
+      authProvider,
+      previousData != null ? previousData.items : [],
+    ),
   ),
 ];

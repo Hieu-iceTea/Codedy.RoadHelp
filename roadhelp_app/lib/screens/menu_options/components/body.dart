@@ -18,7 +18,7 @@ class Body extends StatelessWidget {
         padding: EdgeInsets.symmetric(vertical: 20),
         child: Column(
           children: [
-            ProfilePic(imageUrl: authProvider.item.currentUser?.imageUrl),
+            ProfilePic(imageUrl: authProvider.authData.currentUser?.imageUrl),
             SizedBox(height: 20),
             MenuItem(
               text: "Tài Khoản Của Tôi",
@@ -26,8 +26,8 @@ class Body extends StatelessWidget {
               press: () =>
                   Navigator.pushNamed(context, MyAccountScreen.routeName),
             ),
-            if (authProvider.item.currentUser != null &&
-                authProvider.item.currentUser!
+            if (authProvider.authData.currentUser != null &&
+                authProvider.authData.currentUser!
                     .hasAuthority(AuthorityRole.member.key))
               MenuItem(
                 text: "Trở Thành Đối Tác",
@@ -35,8 +35,8 @@ class Body extends StatelessWidget {
                 press: () => Navigator.pushNamed(
                     context, BecomeToPartnerScreen.routeName),
               ),
-            if (authProvider.item.currentUser != null &&
-                authProvider.item.currentUser!
+            if (authProvider.authData.currentUser != null &&
+                authProvider.authData.currentUser!
                     .hasAuthority(AuthorityRole.partner.key))
               MenuItem(
                 text: "Quản Lý Tiệm Sửa Xe",
