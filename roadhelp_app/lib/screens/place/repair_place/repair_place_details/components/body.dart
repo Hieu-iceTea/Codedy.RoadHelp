@@ -4,6 +4,7 @@ import 'package:roadhelp/components/rounded_icon_btn.dart';
 import 'package:roadhelp/config/size_config.dart';
 import 'package:roadhelp/models/garage.dart';
 import 'package:roadhelp/providers/garage_provider.dart';
+import 'package:roadhelp/screens/place/repair_place/repair_place_details/components/garage_rating.dart';
 
 import '/components/default_button.dart';
 import 'garage_description.dart';
@@ -33,58 +34,7 @@ class Body extends StatelessWidget {
                   color: Color(0xFFF6F7F9),
                   child: Column(
                     children: [
-                      Column(
-                        children: [
-                          Padding(
-                            padding: EdgeInsets.symmetric(
-                                horizontal: getProportionateScreenWidth(20)),
-                            child: (garage.ratingGarages != null &&
-                                    garage.ratingGarages!.isNotEmpty)
-                                ? Text(
-                                    "Reviews (" +
-                                        garage.ratingGarages!.length
-                                            .toString() +
-                                        ")",
-                                    style:
-                                        Theme.of(context).textTheme.headline6,
-                                  )
-                                : Text(
-                                    "Reviews (0)",
-                                    style:
-                                        Theme.of(context).textTheme.headline6,
-                                  ),
-                          ),
-                          (garage.ratingGarages != null &&
-                                  garage.ratingGarages!.isNotEmpty)
-                              ? ListView.separated(
-                                  separatorBuilder:
-                                      (BuildContext context, int index) =>
-                                          const Divider(),
-                                  padding: EdgeInsets.all(
-                                      getProportionateScreenWidth(15)),
-                                  physics: const NeverScrollableScrollPhysics(),
-                                  shrinkWrap: true,
-                                  itemCount: 10,
-                                  itemBuilder: (ctx, index) => ListTile(
-                                    onTap: () {},
-                                    leading: Image.network(
-                                        "https://picsum.photos/100?random=$index"),
-                                    title: Text('User Name $index'),
-                                    subtitle: Text('Cửa hàng phụ vụ rất \ntốt'),
-                                    trailing: RoundedIconBtn(
-                                      icon: Icons.thumb_up,
-                                      press: () {},
-                                    ),
-                                    isThreeLine: true,
-                                  ),
-                                )
-                              : const Padding(
-                                  padding: EdgeInsets.only(top: 10),
-                                  child:
-                                      Text("Chưa có đánh giá nào về gara này."),
-                                )
-                        ],
-                      ),
+                      GarageRating(garage: garage),
                       TopRoundedContainer(
                         color: Colors.white,
                         child: Padding(

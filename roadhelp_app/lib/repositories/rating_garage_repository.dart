@@ -51,4 +51,15 @@ class RatingGarageRepository {
       url: _url + id.toString(),
     );
   }
+
+  //#region - Extend -
+  static Future<List<RatingGarage>> findAllByGarageId(
+      {required int garageId}) async {
+    var responseBody = await HttpHelper.get(
+      url: _url + "byGarage/" + garageId.toString(),
+    );
+
+    return RatingGarage.fromJsonToList(responseBody);
+  }
+//#endregion
 }

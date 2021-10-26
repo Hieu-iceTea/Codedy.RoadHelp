@@ -1,12 +1,17 @@
 import 'package:flutter/foundation.dart';
 import 'package:roadhelp/models/garage.dart';
 import 'package:roadhelp/models/garage_image.dart';
+import 'package:roadhelp/providers/auth_provider.dart';
 import 'package:roadhelp/repositories/garage_image_repository.dart';
 import 'package:roadhelp/repositories/garage_repository.dart';
 
 class GarageProvider with ChangeNotifier {
-  final List<Garage> _items = [];
+  List<Garage> _items = [];
   final List<Garage> _itemsByPartner = [];
+
+  final AuthProvider? authProvider;
+
+  GarageProvider(this.authProvider, this._items);
 
   List<Garage> get items {
     return [..._items];
@@ -71,7 +76,9 @@ class GarageProvider with ChangeNotifier {
   Future<List<Garage>> fetchAllDataByPartner() async {
     //https://flutter.dev/docs/cookbook/networking/fetch-data
     try {
-      List<Garage> _itemsLoaded = await GarageRepository.findAllByPartnerId(partnerId: 1); //TODO: Cần sửa lại
+      List<Garage> _itemsLoaded = await GarageRepository.findAllByPartnerId(
+        partnerId: authProvider!.authData.userId!,
+      );
       _itemsByPartner.clear();
       _itemsByPartner.addAll(_itemsLoaded);
       notifyListeners();

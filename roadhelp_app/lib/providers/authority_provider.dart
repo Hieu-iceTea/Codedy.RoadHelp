@@ -2,8 +2,14 @@ import 'package:flutter/foundation.dart';
 import 'package:roadhelp/models/authority.dart';
 import 'package:roadhelp/repositories/authority_repository.dart';
 
+import 'auth_provider.dart';
+
 class AuthorityProvider with ChangeNotifier {
-  final List<Authority> _items = [];
+  List<Authority> _items = [];
+
+  final AuthProvider? authProvider;
+
+  AuthorityProvider(this.authProvider, this._items);
 
   List<Authority> get items {
     return [..._items];

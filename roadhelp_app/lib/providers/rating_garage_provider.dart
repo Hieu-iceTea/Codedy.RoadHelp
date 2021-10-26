@@ -2,8 +2,14 @@ import 'package:flutter/foundation.dart';
 import 'package:roadhelp/models/rating_garage.dart';
 import 'package:roadhelp/repositories/rating_garage_repository.dart';
 
+import 'auth_provider.dart';
+
 class RatingGarageProvider with ChangeNotifier {
-  final List<RatingGarage> _items = [];
+  List<RatingGarage> _items = [];
+
+  final AuthProvider? authProvider;
+
+  RatingGarageProvider(this.authProvider, this._items);
 
   List<RatingGarage> get items {
     return [..._items];

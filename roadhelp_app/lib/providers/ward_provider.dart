@@ -2,8 +2,14 @@ import 'package:flutter/foundation.dart';
 import 'package:roadhelp/models/ward.dart';
 import 'package:roadhelp/repositories/ward_repository.dart';
 
+import 'auth_provider.dart';
+
 class WardProvider with ChangeNotifier {
-  final List<Ward> _items = [];
+  List<Ward> _items = [];
+
+  final AuthProvider? authProvider;
+
+  WardProvider(this.authProvider, this._items);
 
   List<Ward> get items {
     return [..._items];

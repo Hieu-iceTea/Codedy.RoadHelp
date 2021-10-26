@@ -2,8 +2,14 @@ import 'package:flutter/foundation.dart';
 import 'package:roadhelp/models/district.dart';
 import 'package:roadhelp/repositories/district_repository.dart';
 
+import 'auth_provider.dart';
+
 class DistrictProvider with ChangeNotifier {
-  final List<District> _items = [];
+  List<District> _items = [];
+
+  final AuthProvider? authProvider;
+
+  DistrictProvider(this.authProvider, this._items);
 
   List<District> get items {
     return [..._items];

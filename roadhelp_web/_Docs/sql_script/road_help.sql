@@ -237,40 +237,40 @@ VALUE (13, 'ManhHung', 'ManhHung@fpt.edu.vn ', '$2y$10$//Od0OmEqRwFepW3wynrYOwsl
 
 #region Insert garage
 INSERT INTO garage (id,user_partner_id,district_id,province_id,ward_id,name,rate_avg,latitude, longitude, address, description, phone, active,is_featured)
-VALUE (1,1,32,2, 476,'Sửa xe, bơm vá Vũ Hòa', 4.0,21.012252, 105.840863, 'Đường Lê Duẩn', 'chuyên sửa xe', '032 87 99 000', TRUE,1);
+VALUE (1,5,32,2, 476,'Sửa xe, bơm vá Vũ Hòa', 4.0,21.012252, 105.840863, 'Đường Lê Duẩn', 'chuyên sửa xe', '032 87 99 000', TRUE,1);
 
 INSERT INTO garage (id,user_partner_id,district_id,province_id,ward_id,name,rate_avg,latitude, longitude, address, description, phone, active,is_featured)
-VALUE (2,2,32,2, 476,'Garage Quang Huy', 4.1,21.012125, 105.839031, 'Đường Lê Duẩn', 'chuyên sửa xe', '0868 6633 15', TRUE,1);
+VALUE (2,4,32,2, 476,'Garage Quang Huy', 4.1,21.012125, 105.839031, 'Đường Lê Duẩn', 'chuyên sửa xe', '0868 6633 15', TRUE,1);
 
 INSERT INTO garage (id,user_partner_id,district_id,province_id,ward_id,name,rate_avg,latitude, longitude, address, description, phone, active,is_featured)
-VALUE (3,3,32,2, 476,'Showroom Đình Hiếu', 4.2,21.010844, 105.839912, 'Ven Hồ Ba Mẫu', 'chuyên sửa xe', '0869 6633 16', FALSE,1);
+VALUE (3,4,32,2, 476,'Showroom Đình Hiếu', 4.2,21.010844, 105.839912, 'Ven Hồ Ba Mẫu', 'chuyên sửa xe', '0869 6633 16', FALSE,1);
 
 INSERT INTO garage (id,user_partner_id,district_id,province_id,ward_id,name,rate_avg,latitude, longitude, address, description, phone, active,is_featured)
 VALUE (4,4,32,2, 476,'Sửa xe Mạnh Hùng', 4.3,21.009477, 105.841029, 'Ven Hồ Ba Mẫu', 'chuyên sửa xe', '0869 6633 51', TRUE,1);
 
 INSERT INTO garage (id,user_partner_id,district_id,province_id,ward_id,name,rate_avg,latitude, longitude, address, description, phone, active,is_featured)
-VALUE (5,5,32,2, 476,'Sửa xe Trung Anh', 4.4,21.008315, 105.841887, 'Ven Hồ Ba Mẫu', 'chuyên sửa xe', '0870 6633 52', TRUE,1);
+VALUE (5,4,32,2, 476,'Sửa xe Trung Anh', 4.4,21.008315, 105.841887, 'Ven Hồ Ba Mẫu', 'chuyên sửa xe', '0870 6633 52', TRUE,1);
 
 INSERT INTO garage (id,user_partner_id,district_id,province_id,ward_id,name,rate_avg,latitude, longitude, address, description, phone, active,is_featured)
-VALUE (6,6,32,2, 476,'Sửa xe, bơm vá Vũ Vũ', 4.5,21.008075, 105.843947, 'Ven Hồ Ba Mẫu', 'chuyên sửa xe', '0870 6633 45', TRUE,0);
+VALUE (6,5,32,2, 476,'Sửa xe, bơm vá Vũ Vũ', 4.5,21.008075, 105.843947, 'Ven Hồ Ba Mẫu', 'chuyên sửa xe', '0870 6633 45', TRUE,0);
 
 INSERT INTO garage (id,user_partner_id,district_id,province_id,ward_id,name,rate_avg,latitude, longitude, address, description, phone, active,is_featured)
-VALUE (7,7,32,2, 476,'Sửa xe Hoa Hoa', 4.6,21.008706, 105.845481, 'Ven Hồ Ba Mẫu', 'chuyên sửa xe', '0871 6633 11', TRUE,0);
+VALUE (7,4,32,2, 476,'Sửa xe Hoa Hoa', 4.6,21.008706, 105.845481, 'Ven Hồ Ba Mẫu', 'chuyên sửa xe', '0871 6633 11', TRUE,0);
 
 INSERT INTO garage (id,user_partner_id,district_id,province_id,ward_id,name,rate_avg,latitude, longitude, address, description, phone, active,is_featured)
-VALUE (8,8,32,2, 476,'Garage Hoa Hồng', 4.7,21.009637, 105.845857, 'Ven Hồ Ba Mẫu', 'chuyên sửa xe', '0871 6633 33', TRUE,1);
+VALUE (8,5,32,2, 476,'Garage Hoa Hồng', 4.7,21.009637, 105.845857, 'Ven Hồ Ba Mẫu', 'chuyên sửa xe', '0871 6633 33', TRUE,1);
 
 INSERT INTO garage (id,user_partner_id,district_id,province_id,ward_id,name,rate_avg,latitude, longitude, address, description, phone, active,is_featured)
-VALUE (9,9,32,2, 476,'Garage Hoa Hồng 2', 4.8,21.011054, 105.846041, 'Ven Hồ Ba Mẫu', 'chuyên sửa xe', '0872 6633 44', TRUE,0);
+VALUE (9,4,32,2, 476,'Garage Hoa Hồng 2', 4.8,21.011054, 105.846041, 'Ven Hồ Ba Mẫu', 'chuyên sửa xe', '0872 6633 44', TRUE,0);
 
 INSERT INTO garage (id,user_partner_id,district_id,province_id,ward_id,name,rate_avg,latitude, longitude, address, description, phone, active,is_featured)
-VALUE (10,10,32,2, 476,'Garage Quang Huy 2', 4.9,21.013774, 105.841152, 'Đường Lê Duẩn', 'chuyên sửa xe', '0872 6633 55', TRUE,0);
+VALUE (10,5,32,2, 476,'Garage Quang Huy 2', 4.9,21.013774, 105.841152, 'Đường Lê Duẩn', 'chuyên sửa xe', '0872 6633 55', TRUE,0);
 
 INSERT INTO garage (id,user_partner_id,district_id,province_id,ward_id,name,rate_avg,latitude, longitude, address, description, phone, active,is_featured)
-VALUE (11,11,32,2, 476,'Garage Quang Huy 3', 4.1,21.014415, 105.840133, 'Đường Lê Duẩn', 'chuyên sửa xe', '0873 6633 66', TRUE,0);
+VALUE (11,5,32,2, 476,'Garage Quang Huy 3', 4.1,21.014415, 105.840133, 'Đường Lê Duẩn', 'chuyên sửa xe', '0873 6633 66', TRUE,0);
 
 INSERT INTO garage (id,user_partner_id,district_id,province_id,ward_id,name,rate_avg,latitude, longitude, address, description, phone, active,is_featured)
-VALUE (12,12,32,2, 476,'Garage Quang Huy 4', 5.0,21.013804, 105.839543, 'Đường Lê Duẩn', 'chuyên sửa xe', '0873 6633 22', TRUE,0);
+VALUE (12,5,32,2, 476,'Garage Quang Huy 4', 5.0,21.013804, 105.839543, 'Đường Lê Duẩn', 'chuyên sửa xe', '0873 6633 22', TRUE,0);
 
 
 #endregion
