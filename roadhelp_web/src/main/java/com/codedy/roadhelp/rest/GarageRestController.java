@@ -161,4 +161,9 @@ public class GarageRestController {
         return garageService.findAll().stream().map(Garage::toApiResponse).toList();
 
     }
+
+    @GetMapping(path = {"/featured", "/featured/"})
+    public List<LinkedHashMap<String, Object>> garagesFeatured(@RequestParam(required = false, defaultValue = "true") Boolean isFeatured) {
+        return garageService.findAllByIsFeatured(isFeatured).stream().map(Garage::toApiResponse).toList();
+    }
 }

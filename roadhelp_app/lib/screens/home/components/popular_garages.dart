@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:roadhelp/helper/util.dart';
 import 'package:roadhelp/models/garage.dart';
-import 'package:roadhelp/providers/garage_provider.dart';
+import 'package:roadhelp/repositories/garage_repository.dart';
 import 'package:roadhelp/screens/place/repair_place/repair_place/repair_place_screen.dart';
 
 import '../../../config/size_config.dart';
@@ -11,8 +10,10 @@ import 'section_title.dart';
 
 class PopularGarages extends StatelessWidget {
   Future<List<Garage>> _fetchAllData(BuildContext context) async {
-    return await Provider.of<GarageProvider>(context, listen: false)
-        .fetchAllData();
+    /*return await Provider.of<GarageProvider>(context, listen: false)
+        .fetchAllData();*/
+
+    return await GarageRepository.findAllByFeatured();
   }
 
   @override
@@ -34,24 +35,18 @@ class PopularGarages extends StatelessWidget {
           future: _fetchAllData(context),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
-              return Consumer<GarageProvider>(
-                builder: (context, value, child) => SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: Row(
-                    children: [
-                      ...List.generate(
-                        value.items.length,
-                        (index) {
-                          if (value.items[index].featured)
-                            return GarageCard(garage: value.items[index]);
-
-                          return SizedBox
-                              .shrink(); // here by default width and height is 0
-                        },
-                      ),
-                      SizedBox(width: getProportionateScreenWidth(20)),
-                    ],
-                  ),
+              return SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  children: [
+                    ...List.generate(
+                      snapshot.data!.length,
+                      (index) {
+                        return GarageCard(garage: snapshot.data![index]);
+                      },
+                    ),
+                    SizedBox(width: getProportionateScreenWidth(20)),
+                  ],
                 ),
               );
             } else if (snapshot.hasError) {
