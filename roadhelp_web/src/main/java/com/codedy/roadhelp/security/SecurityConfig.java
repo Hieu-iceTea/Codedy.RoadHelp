@@ -55,8 +55,22 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.cors().and().csrf().disable()
                 .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
-                .authorizeRequests().antMatchers(HttpMethod.POST,"/auth/**").permitAll()
-                .antMatchers(HttpMethod.POST, "/auth/register").permitAll()
+                .authorizeRequests()
+
+                .antMatchers("/").permitAll()
+                .antMatchers(HttpMethod.GET, "/data-images/**").permitAll()
+                .antMatchers(HttpMethod.POST, "/auth/**").permitAll()
+
+                //Config:
+                // Only PARTNER
+                .antMatchers(HttpMethod.GET, "/api/v1/garages/byPartner/**").hasAuthority("ROLE_PARTNER")
+
+                // Only MEMBER
+
+                // Both: MEMBER & PARTNER
+                .antMatchers(HttpMethod.GET, "/api/v1/garages/featured/**").hasAnyAuthority("ROLE_PARTNER", "ROLE_MEMBER")
+                .antMatchers(HttpMethod.GET, "/api/v1/garages/ratingGarages/byGarage/**").hasAnyAuthority("ROLE_PARTNER", "ROLE_MEMBER")
+
                 .antMatchers(HttpMethod.POST, "/rescue/send").hasAuthority("ROLE_MEMBER")
                 .antMatchers(HttpMethod.GET, "/rescue/send/confirmation").hasAuthority("ROLE_MEMBER")
                 .antMatchers(HttpMethod.POST, "/rescue/send/confirmation").hasAuthority("ROLE_MEMBER")
