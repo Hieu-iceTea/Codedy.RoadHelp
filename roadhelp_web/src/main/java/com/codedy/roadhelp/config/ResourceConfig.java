@@ -12,7 +12,7 @@ public class ResourceConfig implements WebMvcConfigurer {
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        exposeDirectory("src/main/resources/static/front/data-images", "front/data-images", registry);
+        exposeDirectory("src/main/resources/static/data-images", "data-images", registry);
     }
 
     public void exposeDirectory(String dirName, String urlName, ResourceHandlerRegistry registry) {
