@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
+import 'package:roadhelp/helper/http_helper.dart';
 import 'package:roadhelp/models/auth.dart';
 import 'package:roadhelp/repositories/auth_repository.dart';
 import 'package:roadhelp/repositories/user_repository.dart';
@@ -26,6 +27,7 @@ class AuthProvider with ChangeNotifier {
 
     _authData = itemResponse;
 
+    notifyListeners();
     _authData.currentUser = await UserRepository.findById(_authData.userId!);
 
     //Lưu dữ liệu đăng nhập vào SharedPreferences
@@ -37,7 +39,7 @@ class AuthProvider with ChangeNotifier {
 
     _setAutoLogoutTimer();
 
-    notifyListeners();
+    //notifyListeners();
     return _authData;
   }
 
@@ -81,11 +83,12 @@ class AuthProvider with ChangeNotifier {
 
     _authData = authFromSharedPreferences;
 
+    notifyListeners();
     _authData.currentUser = await UserRepository.findById(_authData.userId!);
 
     _setAutoLogoutTimer();
 
-    notifyListeners();
+    //notifyListeners();
     return true;
   }
 
@@ -93,7 +96,17 @@ class AuthProvider with ChangeNotifier {
     if (_authTimer != null) {
       _authTimer!.cancel();
     }
-    final timeToExpiry = _authData.expiryDate!.difference(DateTime.now()).inSeconds;
+    final timeToExpiry =
+        _authData.expiryDate!.difference(DateTime.now()).inSeconds;
     _authTimer = Timer(Duration(seconds: timeToExpiry), logout);
+  }
+
+  @override
+  void notifyListeners() {
+    if (_authData.isAuth) {
+      HttpHelper.accessToken = _authData.accessToken!;
+    }
+
+    super.notifyListeners();
   }
 }
