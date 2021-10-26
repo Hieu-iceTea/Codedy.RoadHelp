@@ -220,7 +220,7 @@ INSERT INTO users (id, username, email, password, image, gender, first_name, las
 VALUE (9, 'HungNPMTH1908050', 'HungNPMTH1908050@fpt.edu.vn', '$2y$10$//Od0OmEqRwFepW3wynrYOwslyvaS.snzBbpWwskF1Zrg5fNI.eTe','HungNPMTH1908050.jpg', 1, 'Nông Phan Mạnh', 'Hùng', '0870 6633 22','Hà tây', TRUE);
 
 INSERT INTO users (id, username, email, password, image, gender, first_name, last_name,phone,address, active)
-VALUE (10, 'DinhHieu9999', 'HieuNDTH1908028@fpt.edu.vn', '$2y$10$//Od0OmEqRwFepW3wynrYOwslyvaS.snzBbpWwskF1Zrg5fNI.eTe','DinhHieu9999.jpg', 1, 'Nguyễn Đình', 'Hiếu', '0870 6633 23','Hà tây', TRUE);
+VALUE (10, 'DinhHieu8896', 'HieuNDTH1908028@fpt.edu.vn', '$2y$10$//Od0OmEqRwFepW3wynrYOwslyvaS.snzBbpWwskF1Zrg5fNI.eTe','DinhHieu8896.jpg', 1, 'Nguyễn Đình', 'Hiếu', '0870 6633 23','Hà tây', TRUE);
 
 INSERT INTO users (id, username, email, password, image, gender, first_name, last_name,phone,address, active)
 VALUE (11, 'ThiDk', 'ThiDK@fpt.edu.vn ', '$2y$10$//Od0OmEqRwFepW3wynrYOwslyvaS.snzBbpWwskF1Zrg5fNI.eTe','ThiDk.jpg', 2, 'Đặng Kim', 'Thi', '0871 6633 24','Hà tây', TRUE);
@@ -452,7 +452,7 @@ VALUES
 ('AnhNTTH1908059', 'ROLE_MEMBER'),
 ('HuyVQTH1909003', 'ROLE_MEMBER'),
 ('HungNPMTH1908050', 'ROLE_PARTNER'),
-('DinhHieu9999', 'ROLE_PARTNER'),
+('DinhHieu8896', 'ROLE_PARTNER'),
 ('ThiDk', 'ROLE_PARTNER'),
 ('Member_B', 'ROLE_MEMBER'),
 ('ManhHung', 'ROLE_PARTNER');
