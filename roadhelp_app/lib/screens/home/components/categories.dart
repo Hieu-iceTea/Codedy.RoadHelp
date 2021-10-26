@@ -11,17 +11,17 @@ class Categories extends StatelessWidget {
   Widget build(BuildContext context) {
     List<Map<String, dynamic>> categories = [
       {
-        "icon": "assets/icons/Flash Icon.svg",
+        "icon": "assets/icons/Shop Icon.svg",
         "text": "Tiệm Sửa Xe",
         "routeName": RepairPlaceScreen.routeName,
       },
       {
-        "icon": "assets/icons/Bill Icon.svg",
+        "icon": "assets/icons/Flash Icon.svg",
         "text": "Cứu Hộ Khẩn",
         "routeName": SendRescueScreen.routeName,
       },
       {
-        "icon": "assets/icons/Game Icon.svg",
+        "icon": "assets/icons/Bill Icon.svg",
         "text": "Cây Xăng",
         "routeName": GasPlaceScreen.routeName,
       },
