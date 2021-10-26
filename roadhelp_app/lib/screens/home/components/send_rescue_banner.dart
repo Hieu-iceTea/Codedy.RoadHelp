@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:roadhelp/screens/emergency_rescue/send/send_rescue/send_rescue_screen.dart';
 import 'package:roadhelp/screens/place/repair_place/repair_place/repair_place_screen.dart';
 
 import '../../../config/size_config.dart';
 
-class DiscountBanner extends StatelessWidget {
-  const DiscountBanner({
+class SendRescueBanner extends StatelessWidget {
+  const SendRescueBanner({
     Key? key,
   }) : super(key: key);
 
@@ -12,7 +13,7 @@ class DiscountBanner extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.pushNamed(context, RepairPlaceScreen.routeName);
+        Navigator.pushNamed(context, SendRescueScreen.routeName);
       },
       child: Container(
         // height: 90,
