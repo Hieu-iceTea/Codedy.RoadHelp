@@ -51,4 +51,23 @@ class GarageRepository {
       url: _url + id.toString(),
     );
   }
+
+  //#region - Extend -
+  static Future<List<Garage>> findAllByFeatured({bool featured = true}) async {
+    var responseBody = await HttpHelper.get(
+      url: _url + "featured?isFeatured=" + featured.toString(),
+    );
+
+    return Garage.fromJsonToList(responseBody);
+  }
+
+  static Future<List<Garage>> findAllByPartnerId(
+      {required int partnerId}) async {
+    var responseBody = await HttpHelper.get(
+      url: _url + "byPartner/" + partnerId.toString(),
+    );
+
+    return Garage.fromJsonToList(responseBody);
+  }
+//#endregion
 }

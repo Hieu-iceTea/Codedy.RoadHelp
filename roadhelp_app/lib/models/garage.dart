@@ -175,7 +175,7 @@ final List<Garage> demoGarages = [
 Garage getTmpGarage() {
   return Garage(
     id: Random().nextInt(1000),
-    garageImages: [
+    /*garageImages: [
       GarageImage()
         ..imageUrl = "https://picsum.photos/500/400?random=" +
             Random().nextInt(99).toString(),
@@ -200,7 +200,7 @@ Garage getTmpGarage() {
       GarageImage()
         ..imageUrl = "https://picsum.photos/500/400?random=" +
             Random().nextInt(99).toString(),
-    ],
+    ],*/
     name: "Garage Name™ " + Random().nextInt(99).toString(),
     phone: "012345678",
     address: "Thanh Xuan, Ha Noi",

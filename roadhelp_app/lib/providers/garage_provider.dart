@@ -6,9 +6,14 @@ import 'package:roadhelp/repositories/garage_repository.dart';
 
 class GarageProvider with ChangeNotifier {
   final List<Garage> _items = [];
+  final List<Garage> _itemsByPartner = [];
 
   List<Garage> get items {
     return [..._items];
+  }
+
+  List<Garage> get itemsByPartner {
+    return [..._itemsByPartner];
   }
 
   Future<List<Garage>> fetchAllData() async {
@@ -61,4 +66,19 @@ class GarageProvider with ChangeNotifier {
     _items[index].garageImages.removeWhere((element) => element.id == garageImage.id);
     notifyListeners();
   }
+
+  //#region - Extend -
+  Future<List<Garage>> fetchAllDataByPartner() async {
+    //https://flutter.dev/docs/cookbook/networking/fetch-data
+    try {
+      List<Garage> _itemsLoaded = await GarageRepository.findAllByPartnerId(partnerId: 1); //TODO: Cần sửa lại
+      _itemsByPartner.clear();
+      _itemsByPartner.addAll(_itemsLoaded);
+      notifyListeners();
+      return _itemsByPartner;
+    } catch (error) {
+      rethrow;
+    }
+  }
+  //#endregion
 }

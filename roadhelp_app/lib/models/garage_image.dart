@@ -22,9 +22,9 @@ class GarageImage extends BaseModel {
   }
 
   //TODO: nhớ bỏ dòng này khi app có dữ liệu thật, k còn dữ liệu fake
-  set imageUrl(String? imageUrl) {
+  /*set imageUrl(String? imageUrl) {
     this.imageUrl = imageUrl;
-  }
+  }*/
 
   GarageImage({
     this.garageId,

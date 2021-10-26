@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:roadhelp/models/auth.dart';
 import 'package:roadhelp/repositories/auth_repository.dart';
+import 'package:roadhelp/repositories/user_repository.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthProvider with ChangeNotifier {
@@ -17,20 +18,27 @@ class AuthProvider with ChangeNotifier {
     return _item;
   }
 
-  Future<Auth> login(Auth item) async {
-    Auth itemResponse = await AuthRepository.login(item);
+  Future<Auth> login(Auth itemRequest) async {
+    Auth itemResponse = await AuthRepository.login(itemRequest);
+    if (!itemResponse.isAuth) {
+      throw Exception("❌ Đăng nhập lỗi");
+    }
+
     _item = itemResponse;
-    _setAutoLogoutTimer();
-    notifyListeners();
+
+    _item.currentUser = await UserRepository.findById(_item.userId!);
 
     //Lưu dữ liệu đăng nhập vào SharedPreferences
-    if (item.rememberMe) {
-      final authData = itemResponse.toJson();
+    if (itemRequest.rememberMe) {
+      final authData = _item.toJson();
       final sharedPreferences = await SharedPreferences.getInstance();
       sharedPreferences.setString(_authDataKey, authData);
     }
 
-    return itemResponse;
+    _setAutoLogoutTimer();
+
+    notifyListeners();
+    return _item;
   }
 
   Future<Auth> signup(Auth item) async {
@@ -65,16 +73,19 @@ class AuthProvider with ChangeNotifier {
     }
 
     final extractedAuthData = json.decode(prefs.getString(_authDataKey)!);
-    Auth auth = Auth.fromJson(extractedAuthData);
+    Auth authFromSharedPreferences = Auth.fromJson(extractedAuthData);
 
-    if (auth.expiryDate!.isBefore(DateTime.now())) {
+    if (authFromSharedPreferences.expiryDate!.isBefore(DateTime.now())) {
       return false;
     }
 
-    _item = auth;
-    notifyListeners();
+    _item = authFromSharedPreferences;
+
+    _item.currentUser = await UserRepository.findById(_item.userId!);
 
     _setAutoLogoutTimer();
+
+    notifyListeners();
     return true;
   }
 

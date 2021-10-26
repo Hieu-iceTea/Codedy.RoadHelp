@@ -109,6 +109,12 @@ public class GarageRestController {
         }
     }
 
+    // Danh sách tiệm sửa xe đang quản lý - V2 (Hiếu iceTea)
+    @GetMapping(path = {"/byPartner/{partnerId}", "/byPartner/{partnerId}/"})
+    public List<LinkedHashMap<String, Object>> byPartner(@PathVariable int partnerId) {
+        return garageService.findAllByUserPartnerId(partnerId).stream().map(Garage::toApiResponse).toList();
+    }
+
 
     // Chi tiết tiệm sửa xe - Chỉnh sửa
     @PutMapping(path = {"/repair-place-manage/{id}", "/repair-place-manage/{id}/"})
@@ -160,5 +166,10 @@ public class GarageRestController {
         //Mặc định getAll()
         return garageService.findAll().stream().map(Garage::toApiResponse).toList();
 
+    }
+
+    @GetMapping(path = {"/featured", "/featured/"})
+    public List<LinkedHashMap<String, Object>> garagesFeatured(@RequestParam(required = false, defaultValue = "true") Boolean isFeatured) {
+        return garageService.findAllByIsFeatured(isFeatured).stream().map(Garage::toApiResponse).toList();
     }
 }

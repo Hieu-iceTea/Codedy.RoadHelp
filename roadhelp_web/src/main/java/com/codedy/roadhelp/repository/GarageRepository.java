@@ -22,4 +22,6 @@ public interface GarageRepository extends BaseRepository<Garage, Integer> {
     //Danh sách tiệm sửa xe đang quản lý: Lấy danh sách Garage theo UserPartnerId
     public List<Garage> findAllByUserPartnerId(int userPartner_id);
 
+    //Danh sách tiệm sửa xe nổi bật
+    public List<Garage> findAllByIsFeatured(Boolean isFeatured);
 }
