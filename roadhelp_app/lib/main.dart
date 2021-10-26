@@ -23,7 +23,7 @@ class MyApp extends StatelessWidget {
           debugShowCheckedModeBanner: false,
           title: 'Road Help',
           theme: theme(),
-          home: authProvider.item.isAuth
+          home: authProvider.authData.isAuth
               ? HomeScreen()
               : FutureBuilder(
                   future: authProvider.tryAutoLogin(),
