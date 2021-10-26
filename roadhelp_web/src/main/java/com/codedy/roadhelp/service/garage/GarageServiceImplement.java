@@ -48,5 +48,10 @@ public class GarageServiceImplement extends BaseServiceImplement<Garage, Integer
     public List<Garage> findAllByIsFeatured(Boolean isFeatured) {
         return garageRepository.findAllByIsFeatured(isFeatured);
     }
+
+    @Override
+    public List<Garage> findAllByUserPartnerId(int userPartner_id) {
+        return garageRepository.findAllByUserPartnerId(userPartner_id);
+    }
     //endregion
 }
