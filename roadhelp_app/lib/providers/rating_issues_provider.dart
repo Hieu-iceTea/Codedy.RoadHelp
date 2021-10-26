@@ -2,8 +2,14 @@ import 'package:flutter/foundation.dart';
 import 'package:roadhelp/models/rating_issues.dart';
 import 'package:roadhelp/repositories/rating_issues_repository.dart';
 
+import 'auth_provider.dart';
+
 class RatingIssuesProvider with ChangeNotifier {
-  final List<RatingIssues> _items = [];
+  List<RatingIssues> _items = [];
+
+  final AuthProvider? authProvider;
+
+  RatingIssuesProvider(this.authProvider, this._items);
 
   List<RatingIssues> get items {
     return [..._items];

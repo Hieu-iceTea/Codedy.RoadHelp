@@ -1,12 +1,17 @@
 import 'package:flutter/foundation.dart';
 import 'package:roadhelp/models/garage.dart';
 import 'package:roadhelp/models/garage_image.dart';
+import 'package:roadhelp/providers/auth_provider.dart';
 import 'package:roadhelp/repositories/garage_image_repository.dart';
 import 'package:roadhelp/repositories/garage_repository.dart';
 
 class GarageProvider with ChangeNotifier {
-  final List<Garage> _items = [];
+  List<Garage> _items = [];
   final List<Garage> _itemsByPartner = [];
+
+  final AuthProvider? authProvider;
+
+  GarageProvider(this.authProvider, this._items);
 
   List<Garage> get items {
     return [..._items];
