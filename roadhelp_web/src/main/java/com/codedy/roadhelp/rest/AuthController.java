@@ -58,6 +58,8 @@ public class AuthController {
         Date exp = new Date(iat + jwtExpirationMs);
         int expiresIn = jwtExpirationMs / 1000;
 
+        String notification = "Login successfully!";
+
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String jwt = jwtUtils.generateJwtToken(authentication);
 
@@ -71,11 +73,12 @@ public class AuthController {
                 userDetails.getUsername(),
                 exp,
                 expiresIn,
+                notification,
                 roles));
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<?> registerUser(@Valid @RequestBody User userRequest, HttpServletRequest request) {
+    public ResponseEntity<?> registerUser(@Valid @RequestBody User userRequest, @RequestParam(value = "autoLogin", required = false, defaultValue = "false") boolean autoLogin) {
         // Create new user's account
         User user = new User();
         user.setUsername(userRequest.getUsername());
@@ -95,11 +98,38 @@ public class AuthController {
 
         userService.save(user);
 
-        try {
-            request.login("username","password");
-        } catch(ServletException ignored) {}
+
+        // Tự động đăng nhập
+        if (autoLogin == true){
+            Authentication authentication = authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(userRequest.getUsername(), userRequest.getPassword()));
+
+            Date date = new Date();
+            long iat = date.getTime();
+            Date exp = new Date(iat + jwtExpirationMs);
+            int expiresIn = jwtExpirationMs / 1000;
+
+            String notification = "User registered successfully!";
+
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+            String jwt = jwtUtils.generateJwtToken(authentication);
+
+            UserDetailsImpl userDetails = (UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            List<String> roles = userDetails.getAuthorities().stream()
+                    .map(item -> item.getAuthority())
+                    .collect(Collectors.toList());
+
+            return ResponseEntity.ok(new JwtResponse(jwt,
+                    userDetails.getId(),
+                    userDetails.getUsername(),
+                    exp,
+                    expiresIn,
+                    notification,
+                    roles));
+        }
 
         return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
+
     }
 
     @PutMapping(path = {"/become-to-partner/{id}/setPartner", "/become-to-partner/{id}/setPartner/"})
