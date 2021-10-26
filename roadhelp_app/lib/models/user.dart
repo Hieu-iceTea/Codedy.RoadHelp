@@ -35,6 +35,8 @@ class User extends BaseModel {
     if (image != null) {
       return baseApiUrl + "data-images/user/" + image!;
     }
+
+    return baseApiUrl + "data-images/user/" + "_default_user.png";
   }
 
   bool hasAuthority(String authority) {
@@ -98,15 +100,13 @@ class User extends BaseModel {
 
   //
   factory User.fromJson(Map<String, dynamic> json) {
-    var tmp = UserGender.female;
-
     return User(
       username: json['username'],
       email: json['email'],
       password: json['password'],
       image: json['image'],
-      gender: UserGender.values
-          .firstWhere((e) => e.toString() == "UserGender." + json['gender']),
+      gender: json['gender'] != null ? UserGender.values
+          .firstWhere((e) => e.toString() == "UserGender." + json['gender']) : null,
       firstName: json['firstName'],
       lastName: json['lastName'],
       phone: json['phone'],

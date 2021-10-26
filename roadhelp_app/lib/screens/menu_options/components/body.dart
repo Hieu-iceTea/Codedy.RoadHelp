@@ -26,16 +26,18 @@ class Body extends StatelessWidget {
               press: () =>
                   Navigator.pushNamed(context, MyAccountScreen.routeName),
             ),
-            if (authProvider.item.currentUser!
-                .hasAuthority(AuthorityRole.member.key))
+            if (authProvider.item.currentUser != null &&
+                authProvider.item.currentUser!
+                    .hasAuthority(AuthorityRole.member.key))
               MenuItem(
                 text: "Trở Thành Đối Tác",
                 icon: "assets/icons/Flash Icon.svg",
                 press: () => Navigator.pushNamed(
                     context, BecomeToPartnerScreen.routeName),
               ),
-            if (authProvider.item.currentUser!
-                .hasAuthority(AuthorityRole.partner.key))
+            if (authProvider.item.currentUser != null &&
+                authProvider.item.currentUser!
+                    .hasAuthority(AuthorityRole.partner.key))
               MenuItem(
                 text: "Quản Lý Tiệm Sửa Xe",
                 icon: "assets/icons/Shop Icon.svg",
