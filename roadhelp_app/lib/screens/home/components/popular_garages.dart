@@ -23,7 +23,7 @@ class PopularGarages extends StatelessWidget {
           padding:
               EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
           child: SectionTitle(
-            title: "Popular Garages",
+            title: "Tiệm sửa xe nổi bật",
             press: () {
               Navigator.pushNamed(context, RepairPlaceScreen.routeName);
             },

@@ -25,9 +25,9 @@ class DiscountBanner extends StatelessWidget {
         TextSpan(
           style: TextStyle(color: Colors.white),
           children: [
-            TextSpan(text: "A Summer Surpise\n"),
+            TextSpan(text: "Bạn đang gặp sự cố trên đường?\n"),
             TextSpan(
-              text: "Cashback 20%",
+              text: "Gọi hỗ trợ khẩn khấp",
               style: TextStyle(
                 fontSize: getProportionateScreenWidth(24),
                 fontWeight: FontWeight.bold,
