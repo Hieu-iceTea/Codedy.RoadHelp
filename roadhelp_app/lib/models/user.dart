@@ -37,6 +37,20 @@ class User extends BaseModel {
     }
   }
 
+  bool hasAuthority(String authority) {
+    if(authorities == null || authorities!.isEmpty) {
+      return false;
+    }
+
+    for(var element in authorities!) {
+      if(element.authority == authority) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
   //Relationship
   List<Authority>? authorities;
   List<Issues>? memberIssues;
