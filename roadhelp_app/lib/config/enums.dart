@@ -83,3 +83,31 @@ extension UserGenderExtension on UserGender {
   }
 }
 //#endregion
+
+
+//#region - User -
+enum AuthorityRole {
+  member,
+  partner,
+}
+
+extension AuthorityExtension on AuthorityRole {
+  String get key {
+    switch (this) {
+      case AuthorityRole.member:
+        return 'ROLE_MEMBER';
+      case AuthorityRole.partner:
+        return 'ROLE_PARTNER';
+    }
+  }
+
+  String get value {
+    switch (this) {
+      case AuthorityRole.member:
+        return 'Thành viên';
+      case AuthorityRole.partner:
+        return 'Đối tác';
+    }
+  }
+}
+//#endregion

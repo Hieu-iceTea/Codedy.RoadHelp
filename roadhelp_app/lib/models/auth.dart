@@ -1,5 +1,8 @@
 import 'dart:convert';
 
+import 'package:roadhelp/models/user.dart';
+import 'package:roadhelp/repositories/user_repository.dart';
+
 class Auth {
   /// NOTE: Phần này chỉ phục vụ xác thực, không phải là entity model có thật trong database
 
@@ -22,6 +25,8 @@ class Auth {
   String? message;
 
   //extend
+  User? currentUser;
+
   DateTime? expiryDate;
 
   /*DateTime? get expiryDate {

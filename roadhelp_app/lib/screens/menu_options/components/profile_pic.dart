@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class ProfilePic extends StatelessWidget {
-  const ProfilePic({
+  String? imageUrl;
+
+  ProfilePic({
+    required this.imageUrl,
     Key? key,
   }) : super(key: key);
 
@@ -15,9 +18,14 @@ class ProfilePic extends StatelessWidget {
         fit: StackFit.expand,
         clipBehavior: Clip.none,
         children: [
-          CircleAvatar(
-            backgroundImage: AssetImage("assets/images/Profile Image.png"),
-          ),
+          imageUrl != null
+              ? CircleAvatar(
+                  backgroundImage: NetworkImage(imageUrl!),
+                )
+              : const CircleAvatar(
+                  backgroundImage:
+                      AssetImage("assets/images/Profile Image.png"),
+                ),
           Positioned(
             right: -16,
             bottom: 0,
