@@ -22,6 +22,9 @@ class AuthProvider with ChangeNotifier {
     _item = itemResponse;
     _setAutoLogoutTimer();
     notifyListeners();
+    if(!itemResponse.isAuth) {
+      throw Exception("❌ Đăng nhập lỗi");
+    }
 
     //Lưu dữ liệu đăng nhập vào SharedPreferences
     if (item.rememberMe) {
