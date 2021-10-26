@@ -6,10 +6,10 @@ import 'package:roadhelp/providers/garage_provider.dart';
 import 'package:roadhelp/screens/place/repair_place/repair_place/repair_place_screen.dart';
 
 import '../../../config/size_config.dart';
-import 'product_card.dart';
+import 'garage_card.dart';
 import 'section_title.dart';
 
-class PopularProducts extends StatelessWidget {
+class PopularGarages extends StatelessWidget {
   Future<List<Garage>> _fetchAllData(BuildContext context) async {
     return await Provider.of<GarageProvider>(context, listen: false)
         .fetchAllData();
@@ -43,7 +43,7 @@ class PopularProducts extends StatelessWidget {
                         value.items.length,
                         (index) {
                           if (value.items[index].featured)
-                            return ProductCard(garage: value.items[index]);
+                            return GarageCard(garage: value.items[index]);
 
                           return SizedBox
                               .shrink(); // here by default width and height is 0
