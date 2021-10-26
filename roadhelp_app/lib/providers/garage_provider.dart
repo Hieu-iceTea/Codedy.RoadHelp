@@ -76,7 +76,9 @@ class GarageProvider with ChangeNotifier {
   Future<List<Garage>> fetchAllDataByPartner() async {
     //https://flutter.dev/docs/cookbook/networking/fetch-data
     try {
-      List<Garage> _itemsLoaded = await GarageRepository.findAllByPartnerId(partnerId: 1); //TODO: Cần sửa lại
+      List<Garage> _itemsLoaded = await GarageRepository.findAllByPartnerId(
+        partnerId: authProvider!.authData.userId!,
+      );
       _itemsByPartner.clear();
       _itemsByPartner.addAll(_itemsLoaded);
       notifyListeners();

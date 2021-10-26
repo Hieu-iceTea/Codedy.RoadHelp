@@ -15,7 +15,7 @@ class Body extends StatefulWidget {
 class _BodyState extends State<Body> {
   Future<List<Garage>> _fetchAllData(BuildContext context) async {
     return await Provider.of<GarageProvider>(context, listen: false)
-        .fetchAllData();
+        .fetchAllDataByPartner();
   }
 
   @override
@@ -30,9 +30,9 @@ class _BodyState extends State<Body> {
                 builder: (context, value, child) => ListView.separated(
                   padding: EdgeInsets.symmetric(
                       horizontal: getProportionateScreenWidth(15)),
-                  itemCount: value.items.length,
+                  itemCount: value.itemsByPartner.length,
                   itemBuilder: (ctx, index) => RepairPlaceItem(
-                    garage: value.items[index],
+                    garage: value.itemsByPartner[index],
                   ),
                   separatorBuilder: (context, index) => const Divider(),
                 ),
