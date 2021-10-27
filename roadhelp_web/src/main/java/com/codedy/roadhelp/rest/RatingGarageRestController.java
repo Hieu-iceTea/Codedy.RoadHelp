@@ -16,6 +16,7 @@ import java.util.List;
 @RequestMapping(path = "/api/v1/ratingGarages")
 public class RatingGarageRestController {
 
+    //region - Autowired Service -
     @Autowired
     private RatingGarageService ratingGarageService;
 
@@ -24,14 +25,17 @@ public class RatingGarageRestController {
 
     @Autowired
     private UserService userService;
+    //endregion
 
-    // List Rating Garage
+
+    //region - Base -
+    // List
     @GetMapping(path = {"", "/", "/index"})
     public List<LinkedHashMap<String, Object>> index() {
         return ratingGarageService.findAll().stream().map(RatingGarage::toApiResponse).toList();
     }
 
-    // Detail Rating Garage
+    // Detail
     @GetMapping(path = {"/{id}", "/{id}/"})
     public LinkedHashMap<String, Object> show(@PathVariable int id) {
         RatingGarage ratingGarage = ratingGarageService.findById(id);
@@ -41,7 +45,7 @@ public class RatingGarageRestController {
         return ratingGarage.toApiResponse();
     }
 
-    // Create Rating Garage
+    // Create
     @PostMapping(path = {"", "/"})
     public RatingGarage store(@RequestBody RatingGarage ratingGarage) {
         ratingGarage.setId(0);
@@ -49,7 +53,7 @@ public class RatingGarageRestController {
         return ratingGarageService.findById(newRatingGarage.getId());
     }
 
-    // Update Rating Garage
+    // Update
     @PutMapping(path = {"/{id}", "/{id}/"})
     public LinkedHashMap<String, Object> update(@RequestBody RatingGarage ratingGarage, @PathVariable int id) {
 
@@ -62,7 +66,7 @@ public class RatingGarageRestController {
         return ratingGarageService.findById(ratingGarage.getId()).toApiResponse();
     }
 
-    // Delete Rating Garage
+    // Delete
     @DeleteMapping(path = {"/{id}", "/{id}/"})
     public String delete(@PathVariable int id) {
         if (ratingGarageService.findById(id) == null) {
@@ -72,8 +76,11 @@ public class RatingGarageRestController {
         ratingGarageService.deleteById(id);
         return "Deleted rating garage id - " + id;
     }
+    //endregion
 
-    //region - Review Garage -
+
+    //region - Extend -
+    // Review Garage -
     @PostMapping(path = {"/repair-place/{garageId}/member-create-rating", "/repair-place/{garageId}/member-create-rating/"})
     public LinkedHashMap<String, Object> reviewGarage(@RequestBody RatingGarage ratingGarage,
                                      @PathVariable int garageId,
@@ -99,11 +106,12 @@ public class RatingGarageRestController {
         RatingGarage newRatingGarage = ratingGarageService.save(ratingGarage);
         return ratingGarageService.findById(newRatingGarage.getId()).toApiResponse();
     }
-    //endregion
 
     // List Rating Garage
     @GetMapping(path = {"/byGarage/{garageId}", "/byGarage/{garageId}/"})
     public List<LinkedHashMap<String, Object>> ByGarage(@PathVariable int garageId) {
         return ratingGarageService.findAllByGarageId(garageId).stream().map(RatingGarage::toApiResponse).toList();
     }
+    //endregion
+
 }

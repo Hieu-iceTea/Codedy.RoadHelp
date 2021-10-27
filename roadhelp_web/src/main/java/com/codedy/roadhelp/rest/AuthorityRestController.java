@@ -13,16 +13,20 @@ import java.util.List;
 @RequestMapping(path = "/api/v1/authorities")
 public class AuthorityRestController {
 
+    //region - Autowired Service -
     @Autowired
     private AuthorityService authorityService;
+    //endregion
 
-    // List Authority
+
+    //region - Base -
+    // List All
     @GetMapping(path = {"", "/", "/index"})
     public List<LinkedHashMap<String, Object>> index() {
         return authorityService.findAll().stream().map(Authority::toApiResponse).toList();
     }
 
-    // Detail Authority
+    // Detail
     @GetMapping(path = {"/{id}", "/{id}/"})
     public LinkedHashMap<String, Object> show(@PathVariable int id) {
         Authority authority = authorityService.findById(id);
@@ -32,7 +36,7 @@ public class AuthorityRestController {
         return authority.toApiResponse();
     }
 
-    // Create Authority
+    // Create
     @PostMapping(path = {"", "/"})
     public LinkedHashMap<String, Object> store(@RequestBody Authority authority) {
         authority.setId(0);
@@ -40,7 +44,7 @@ public class AuthorityRestController {
         return authorityService.findById(newAuthority.getId()).toApiResponse();
     }
 
-    // Update Authority
+    // Update
     @PutMapping(path = {"/{id}", "/{id}/"})
     public LinkedHashMap<String, Object> update(@RequestBody Authority authority, @PathVariable int id) {
 
@@ -53,7 +57,7 @@ public class AuthorityRestController {
         return authorityService.findById(authority.getId()).toApiResponse();
     }
 
-    // Delete Authority
+    // Delete
     @DeleteMapping(path = {"/{id}", "/{id}/"})
     public String delete(@PathVariable int id) {
         if (authorityService.findById(id) == null) {
@@ -63,4 +67,6 @@ public class AuthorityRestController {
         authorityService.deleteById(id);
         return "Deleted authorityService id - " + id;
     }
+    //endregion
+
 }

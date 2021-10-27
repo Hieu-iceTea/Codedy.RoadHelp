@@ -1,9 +1,6 @@
 package com.codedy.roadhelp.rest;
 
-import com.codedy.roadhelp.model.District;
 import com.codedy.roadhelp.model.Garage;
-import com.codedy.roadhelp.model.Province;
-import com.codedy.roadhelp.model.Ward;
 import com.codedy.roadhelp.rest.exception.RestNotFoundException;
 import com.codedy.roadhelp.service.garage.GarageService;
 import com.codedy.roadhelp.service.ward.WardService;
@@ -18,19 +15,22 @@ import java.util.List;
 @RequestMapping(path = "/api/v1/garages")
 public class GarageRestController {
 
+    //region - Autowired Service -
     @Autowired
     private WardService wardService;
-
     @Autowired
     private GarageService garageService;
+    //endregion
 
-    // List Garage
+
+    //region - Base -
+    // List
     @GetMapping(path = {"", "/", "/index"})
     public List<LinkedHashMap<String, Object>> index() {
         return garageService.findAll().stream().map(Garage::toApiResponse).toList();
     }
 
-    // Detail Garage
+    // Detail
     @GetMapping(path = {"/{id}", "/{id}/"})
     public LinkedHashMap<String, Object> show(@PathVariable int id) {
         Garage garage = garageService.findById(id);
@@ -40,7 +40,7 @@ public class GarageRestController {
         return garage.toApiResponse();
     }
 
-    // Create Garage
+    // Create
     @PostMapping(path = {"", "/"})
     public LinkedHashMap<String, Object> store(@RequestBody Garage garage) {
         garage.setId(0);
@@ -48,7 +48,7 @@ public class GarageRestController {
         return garageService.findById(newGarage.getId()).toApiResponse();
     }
 
-    // Update Garage
+    // Update
     @PutMapping(path = {"/{id}", "/{id}/"})
     public LinkedHashMap<String, Object> update(@RequestBody Garage garage, @PathVariable int id) {
 
@@ -60,7 +60,7 @@ public class GarageRestController {
         return garageService.findById(garage.getId()).toApiResponse();
     }
 
-    // Delete Garage
+    // Delete
     @DeleteMapping(path = {"/{id}", "/{id}/"})
     public String delete(@PathVariable int id) {
         if (garageService.findById(id) == null) {
@@ -70,7 +70,10 @@ public class GarageRestController {
         garageService.deleteById(id);
         return "Deleted garage id - " + id;
     }
+    //endregion
 
+
+    //region - Extend -
     // Chi tiết tiệm sửa xe
     @GetMapping(path = {"/repair-place-manage/{id}", "/repair-place-manage/{id}/"})
     public LinkedHashMap<String, Object> garageDetails(@PathVariable int id) {
@@ -145,9 +148,9 @@ public class GarageRestController {
     // Tìm kiếm tiệm sửa xe theo tên
     @GetMapping(path = {"/repair-place", "/repair-place"})
     public List<LinkedHashMap<String, Object>> searchGarage(@RequestParam(required = false, defaultValue = "") String name,
-                                     @RequestParam(required = false, defaultValue = "0") int provinceId,
-                                     @RequestParam(required = false, defaultValue = "0") int districtId,
-                                     @RequestParam(required = false, defaultValue = "0") int wardId) {
+                                                            @RequestParam(required = false, defaultValue = "0") int provinceId,
+                                                            @RequestParam(required = false, defaultValue = "0") int districtId,
+                                                            @RequestParam(required = false, defaultValue = "0") int wardId) {
         // 1. Có tất cả tên và tỉnh/huyện/xã
         if (!name.isEmpty() && (provinceId >= 1 || districtId >= 1 || wardId >= 1)) {
             return garageService.findAllByProvinceIdAndDistrictIdAndWardIdAndNameContaining(provinceId, districtId, wardId, name).stream().map(Garage::toApiResponse).toList();
@@ -172,4 +175,6 @@ public class GarageRestController {
     public List<LinkedHashMap<String, Object>> garagesFeatured(@RequestParam(required = false, defaultValue = "true") Boolean isFeatured) {
         return garageService.findAllByIsFeatured(isFeatured).stream().map(Garage::toApiResponse).toList();
     }
+    //endregion
+
 }

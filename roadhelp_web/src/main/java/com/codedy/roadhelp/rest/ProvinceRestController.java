@@ -14,10 +14,13 @@ import java.util.List;
 @RequestMapping(path = "/api/v1/provinces")
 public class ProvinceRestController {
 
+    //region - Autowired Service -
     @Autowired
     private ProvinceService provinceServiceService;
-    private DistrictService districtService;
+    //endregion
 
+
+    //region - Base -
     // List Province
     @GetMapping(path = {"", "/", "/index"})
     public List<LinkedHashMap<String, Object>> index() {
@@ -65,4 +68,6 @@ public class ProvinceRestController {
         provinceServiceService.deleteById(id);
         return "Deleted province id - " + id;
     }
+    //endregion
+
 }

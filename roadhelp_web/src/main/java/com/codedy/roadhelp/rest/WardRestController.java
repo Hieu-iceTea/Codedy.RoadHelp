@@ -14,9 +14,13 @@ import java.util.List;
 @RequestMapping(path = "/api/v1/wards")
 public class WardRestController {
 
+    //region - Autowired Service -
     @Autowired
     private WardService wardService;
+    //endregion
 
+
+    //region - Base -
     // List Ward
     @GetMapping(path = {"", "/", "/index"})
     public List<LinkedHashMap<String, Object>> index(@RequestParam(defaultValue = "0") int provinceId, @RequestParam(defaultValue = "0") int districtId) {
@@ -71,4 +75,6 @@ public class WardRestController {
         wardService.deleteById(id);
         return "Deleted ward id - " + id;
     }
+    //endregion
+
 }

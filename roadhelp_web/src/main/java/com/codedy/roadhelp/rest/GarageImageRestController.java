@@ -18,22 +18,27 @@ import java.util.List;
 @RequestMapping(path = "/api/v1/garageImages")
 public class GarageImageRestController {
 
-    // Create GarageImage
     private final String _path = "src/main/resources/static/" + "data-images/garage";
+
+
+    //region - Autowired Service -
     @Autowired
     private GarageImageService garageImageService;
     @Autowired
     private GarageService garageService;
     @Autowired
     private StorageService storageService;
+    //endregion
 
-    // List GarageImage
+
+    //region - Base -
+    // List
     @GetMapping(path = {"", "/", "/index"})
     public List<LinkedHashMap<String, Object>> index() {
         return garageImageService.findAll().stream().map(GarageImage::toApiResponse).toList();
     }
 
-    // Detail GarageImage
+    // Detail
     @GetMapping(path = {"/{id}", "/{id}/"})
     public LinkedHashMap<String, Object> show(@PathVariable int id) {
         GarageImage garageImage = garageImageService.findById(id);
@@ -43,6 +48,7 @@ public class GarageImageRestController {
         return garageImage.toApiResponse();
     }
 
+    // Create
     @PostMapping(path = {"", "/"})
     public LinkedHashMap<String, Object> store(@RequestParam int garageId, @RequestParam("File") MultipartFile file) throws IOException {
         GarageImage garageImage = new GarageImage();
@@ -59,7 +65,7 @@ public class GarageImageRestController {
         return garageImageService.findById(newGarageImage.getId()).toApiResponse();
     }
 
-    // Update GarageImage
+    // Update
     @PutMapping(path = {"/{id}", "/{id}/"})
     public LinkedHashMap<String, Object> update(@RequestBody GarageImage garageImage, @PathVariable int id) {
 
@@ -71,7 +77,7 @@ public class GarageImageRestController {
         return garageImageService.findById(garageImage.getId()).toApiResponse();
     }
 
-    // Delete GarageImage
+    // Delete
     @DeleteMapping(path = {"/{id}", "/{id}/"})
     public String delete(@PathVariable int id) {
         if (garageImageService.findById(id) == null) {
@@ -82,4 +88,6 @@ public class GarageImageRestController {
         garageImageService.deleteById(id);
         return "Deleted garageImage id - " + id;
     }
+    //endregion
+
 }

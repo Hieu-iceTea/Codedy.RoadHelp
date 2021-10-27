@@ -18,20 +18,24 @@ import java.util.List;
 @RequestMapping(path = "/api/v1/issues")
 public class IssueRestController {
 
+    //region - Autowired Service -
     @Autowired
     private IssuesService issuesService;
     @Autowired
     private UserService userService;
     @Autowired
     private RatingIssueService ratingIssueService;
+    //endregion
 
-    // List Issues
+
+    //region - Base -
+    // List
     @GetMapping(path = {"", "/", "/index"})
     public List<LinkedHashMap<String, Object>> index() {
         return issuesService.findAll().stream().map(Issue::toApiResponse).toList();
     }
 
-    // Detail Issues
+    // Detail
     @GetMapping(path = {"/{id}", "/{id}/"})
     public LinkedHashMap<String, Object> show(@PathVariable int id) {
         Issue issue = issuesService.findById(id);
@@ -41,7 +45,7 @@ public class IssueRestController {
         return issue.toApiResponse();
     }
 
-    // Create Issues
+    // Create
     @PostMapping(path = {"", "/"})
     public LinkedHashMap<String, Object> store(@RequestBody Issue issue) {
         issue.setId(0);
@@ -49,7 +53,7 @@ public class IssueRestController {
         return issuesService.findById(newIssue.getId()).toApiResponse();
     }
 
-    // Update Issues
+    // Update
     @PutMapping(path = {"/{id}", "/{id}/"})
     public LinkedHashMap<String, Object> update(@RequestBody Issue issue, @PathVariable int id) {
 
@@ -61,7 +65,7 @@ public class IssueRestController {
         return issuesService.findById(issue.getId()).toApiResponse();
     }
 
-    // Delete Issues
+    // Delete
     @DeleteMapping(path = {"/{id}", "/{id}/"})
     public String delete(@PathVariable int id) {
         if (issuesService.findById(id) == null) {
@@ -71,7 +75,10 @@ public class IssueRestController {
         issuesService.deleteById(id);
         return "Deleted issues id - " + id;
     }
+    //endregion
 
+
+    //region - Extend -
     // tạo thông báo
     @PostMapping(path = {"/rescue/send", "/rescue/send/"})
     public LinkedHashMap<String, Object> createRescue(@RequestBody Issue issue) {
@@ -164,5 +171,6 @@ public class IssueRestController {
     public LinkedHashMap<String, Object> showRating(@RequestParam(defaultValue = "0") int ratingIssueId) {
         return ratingIssueService.findById(ratingIssueId).toApiResponse();
     }
+    //endregion
 
 }
