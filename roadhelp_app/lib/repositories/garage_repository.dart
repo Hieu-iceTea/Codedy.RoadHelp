@@ -6,9 +6,25 @@ import '/helper/http_helper.dart';
 class GarageRepository {
   static const String _url = baseApiUrl + "api/v1/garages/";
 
-  static Future<List<Garage>> findAll() async {
+  static Future<List<Garage>> findAll(
+      {String? name, int? provinceId, int? districtId, int? wardId}) async {
+    String url = _url + "?";
+
+    if (name != null) {
+      url += "&name=$name";
+    }
+    if (provinceId != null) {
+      url += "&provinceId=$provinceId";
+    }
+    if (districtId != null) {
+      url += "&districtId=$districtId";
+    }
+    if (wardId != null) {
+      url += "&wardId=$wardId";
+    }
+
     var responseBody = await HttpHelper.get(
-      url: _url,
+      url: url,
     );
 
     /*List<Garage> items = [
