@@ -16,10 +16,16 @@ class GarageProvider with ChangeNotifier {
     return [..._items];
   }
 
-  Future<List<Garage>> fetchAllData() async {
+  Future<List<Garage>> fetchAllData(
+      {String? name, int? provinceId, int? districtId, int? wardId}) async {
     //https://flutter.dev/docs/cookbook/networking/fetch-data
     try {
-      List<Garage> _itemsLoaded = await GarageRepository.findAll();
+      List<Garage> _itemsLoaded = await GarageRepository.findAll(
+        name: name,
+        provinceId: provinceId,
+        districtId: districtId,
+        wardId: wardId,
+      );
       _items.clear();
       _items.addAll(_itemsLoaded);
       notifyListeners();

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../../../../../components/custom_map.dart';
-import 'header_bar.dart';
 
 class Body extends StatelessWidget {
   const Body({Key? key}) : super(key: key);
@@ -9,9 +8,8 @@ class Body extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: Stack(children: [
-        CustomMap(
-            /*markers: {
+      child: CustomMap(
+          /*markers: {
             const Marker(
                 markerId: MarkerId('Marker_0'),
                 position: LatLng(21.0291518, 105.8523056)),
@@ -21,12 +19,7 @@ class Body extends StatelessWidget {
           },
           initialCameraPosition: LatLng(21.0291518, 105.8523056),
           onTap: (_) => {},*/
-            ),
-        Positioned(
-          top: 10,
-          child: HeaderBar(),
-        ),
-      ]),
+          ),
     );
   }
 }
