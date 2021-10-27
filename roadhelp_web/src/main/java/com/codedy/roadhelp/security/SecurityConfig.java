@@ -80,7 +80,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
                 // Only MEMBER
                 .antMatchers(HttpMethod.POST, "/api/v1/issues/rescue/send/**").hasAuthority("ROLE_MEMBER")
-                .antMatchers(HttpMethod.PUT, "/auth/become-to-partner/**").hasAuthority("ROLE_MEMBER")
+                .antMatchers(HttpMethod.POST, "/auth/become-to-partner/**").hasAuthority("ROLE_MEMBER")
                 .antMatchers(HttpMethod.POST, "/api/v1/issues/issues/send/**").hasAuthority("ROLE_MEMBER")
                 .antMatchers(HttpMethod.GET, "/api/v1/issues/**/userPartner/**").hasAuthority("ROLE_MEMBER")
                 .antMatchers(HttpMethod.PUT, "/api/v1/issues/**/member-confirm-partner/**").hasAuthority("ROLE_MEMBER")
