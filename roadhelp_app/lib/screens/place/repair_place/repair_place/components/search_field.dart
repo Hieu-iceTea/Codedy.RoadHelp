@@ -1,6 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:roadhelp/config/size_config.dart';
+import 'package:roadhelp/helper/keyboard.dart';
+import 'package:roadhelp/models/district.dart';
+import 'package:roadhelp/models/province.dart';
+import 'package:roadhelp/models/ward.dart';
+import 'package:roadhelp/providers/garage_provider.dart';
 
 import 'location_filter_form.dart';
 
@@ -14,6 +20,11 @@ class SearchField extends StatefulWidget {
 }
 
 class _SearchFieldState extends State<SearchField> {
+  String? keyword;
+  Province? provinceSelected;
+  District? districtSelected;
+  Ward? wardSelected;
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -31,7 +42,8 @@ class _SearchFieldState extends State<SearchField> {
         ],
       ),
       child: TextField(
-        onChanged: (value) => print(value),
+        onChanged: (value) => keyword = value,
+        onEditingComplete: () => _submitForm(),
         decoration: InputDecoration(
           contentPadding: EdgeInsets.symmetric(
               horizontal: getProportionateScreenWidth(20),
@@ -71,9 +83,28 @@ class _SearchFieldState extends State<SearchField> {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(8.0),
           ),
-          content: LocationFilterForm(onSubmit: (provinceSelected, districtSelected, wardSelected) => {}),
+          content: LocationFilterForm(
+            onSubmit: (provinceSelected, districtSelected, wardSelected) {
+              this.provinceSelected = provinceSelected;
+              this.districtSelected = districtSelected;
+              this.wardSelected = wardSelected;
+
+              _submitForm();
+            },
+          ),
         );
       },
     );
+  }
+
+  Future<void> _submitForm() async {
+    await Provider.of<GarageProvider>(context, listen: false).fetchAllData(
+      name: keyword,
+      provinceId: provinceSelected?.id,
+      districtId: districtSelected?.id,
+      wardId: wardSelected?.id,
+    );
+
+    KeyboardUtil.hideKeyboard(context);
   }
 }

@@ -18,6 +18,7 @@ class RepairPlaceScreen extends StatelessWidget {
     SizeConfig().init(context);
 
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: Stack(
         children: [
           SlidingUpPanel(

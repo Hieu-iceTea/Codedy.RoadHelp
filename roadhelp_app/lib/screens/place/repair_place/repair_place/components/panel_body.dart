@@ -6,14 +6,27 @@ import 'package:roadhelp/providers/garage_provider.dart';
 
 import 'garage_item.dart';
 
-class PanelBody extends StatelessWidget {
+class PanelBody extends StatefulWidget {
   PanelBody({
     Key? key,
   }) : super(key: key);
 
+  @override
+  State<PanelBody> createState() => _PanelBodyState();
+}
+
+class _PanelBodyState extends State<PanelBody> {
+  bool isFirstLoad = true;
+
   Future<List<Garage>> _fetchAllData(BuildContext context) async {
-    return await Provider.of<GarageProvider>(context, listen: false)
-        .fetchAllData();
+    if (isFirstLoad) {
+      isFirstLoad = false;
+
+      return await Provider.of<GarageProvider>(context, listen: false)
+          .fetchAllData();
+    }
+
+    return Provider.of<GarageProvider>(context, listen: false).items;
   }
 
   @override
