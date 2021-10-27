@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
@@ -19,6 +20,13 @@ class HttpHelper {
         Uri.parse(url),
         headers: {
           ..._authHeader,
+        },
+      ).timeout(
+        const Duration(seconds: 5),
+        onTimeout: () {
+          // Time has run out, do what you wanted to do.
+          throw TimeoutException(
+              'Hết thời gian chờ máy chủ phản hồi. Vui lòng kiểm tra internet và thử lại!');
         },
       );
 
@@ -53,6 +61,13 @@ class HttpHelper {
           ..._authHeader,
         },
         body: body,
+      ).timeout(
+        const Duration(seconds: 5),
+        onTimeout: () {
+          // Time has run out, do what you wanted to do.
+          throw TimeoutException(
+              'Hết thời gian chờ máy chủ phản hồi. Vui lòng kiểm tra internet và thử lại!');
+        },
       );
 
       if (response.body.isEmpty) {
@@ -81,6 +96,13 @@ class HttpHelper {
           ..._authHeader,
         },
         body: body,
+      ).timeout(
+        const Duration(seconds: 5),
+        onTimeout: () {
+          // Time has run out, do what you wanted to do.
+          throw TimeoutException(
+              'Hết thời gian chờ máy chủ phản hồi. Vui lòng kiểm tra internet và thử lại!');
+        },
       );
 
       if (response.body.isEmpty) {
@@ -107,6 +129,13 @@ class HttpHelper {
         headers: {
           'content-type': 'application/json',
           ..._authHeader,
+        },
+      ).timeout(
+        const Duration(seconds: 5),
+        onTimeout: () {
+          // Time has run out, do what you wanted to do.
+          throw TimeoutException(
+              'Hết thời gian chờ máy chủ phản hồi. Vui lòng kiểm tra internet và thử lại!');
         },
       );
 
