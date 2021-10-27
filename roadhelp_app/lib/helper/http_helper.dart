@@ -4,10 +4,23 @@ import 'dart:io';
 import 'package:http/http.dart' as http;
 
 class HttpHelper {
+  static String accessToken = "";
+
+  static Map<String, String> get _authHeader {
+    return {
+      'Authorization': 'Bearer ' + accessToken,
+    };
+  }
+
   static Future<dynamic> get({required String url}) async {
     //https://flutter.dev/docs/cookbook/networking/fetch-data
     try {
-      final response = await http.get(Uri.parse(url));
+      final response = await http.get(
+        Uri.parse(url),
+        headers: {
+          ..._authHeader,
+        },
+      );
 
       if (response.body.isEmpty) {
         throw const HttpException(
@@ -35,7 +48,10 @@ class HttpHelper {
     try {
       final response = await http.post(
         Uri.parse(url),
-        headers: {'content-type': 'application/json'},
+        headers: {
+          'content-type': 'application/json',
+          ..._authHeader,
+        },
         body: body,
       );
 
@@ -60,7 +76,10 @@ class HttpHelper {
     try {
       final response = await http.put(
         Uri.parse(url),
-        headers: {'content-type': 'application/json'},
+        headers: {
+          'content-type': 'application/json',
+          ..._authHeader,
+        },
         body: body,
       );
 
@@ -83,7 +102,13 @@ class HttpHelper {
 
   static Future<dynamic> delete({required String url}) async {
     try {
-      final response = await http.delete(Uri.parse(url));
+      final response = await http.delete(
+        Uri.parse(url),
+        headers: {
+          'content-type': 'application/json',
+          ..._authHeader,
+        },
+      );
 
       if (response.body.isEmpty) {
         throw const HttpException('❌ Failed. ResponseBody is Empty');
