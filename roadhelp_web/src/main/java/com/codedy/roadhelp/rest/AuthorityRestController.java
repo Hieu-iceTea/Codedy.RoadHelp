@@ -13,54 +13,62 @@ import java.util.List;
 @RequestMapping(path = "/api/v1/authorities")
 public class AuthorityRestController {
 
+    //region - Autowired Service -
     @Autowired
     private AuthorityService authorityService;
+    //endregion
 
-    // List Authority
+
+    //region - Base -
+    // List All
     @GetMapping(path = {"", "/", "/index"})
     public List<LinkedHashMap<String, Object>> index() {
         return authorityService.findAll().stream().map(Authority::toApiResponse).toList();
     }
 
-    // Detail Authority
+    // Detail
     @GetMapping(path = {"/{id}", "/{id}/"})
     public LinkedHashMap<String, Object> show(@PathVariable int id) {
         Authority authority = authorityService.findById(id);
+
         if (authority == null) {
             throw new RestNotFoundException("Authority id not found - " + id);
         }
+
         return authority.toApiResponse();
     }
 
-    // Create Authority
+    // Create
     @PostMapping(path = {"", "/"})
     public LinkedHashMap<String, Object> store(@RequestBody Authority authority) {
         authority.setId(0);
-        Authority newAuthority = authorityService.save(authority);
-        return authorityService.findById(newAuthority.getId()).toApiResponse();
+        return authorityService.save(authority).toApiResponse();
     }
 
-    // Update Authority
+    // Update
     @PutMapping(path = {"/{id}", "/{id}/"})
     public LinkedHashMap<String, Object> update(@RequestBody Authority authority, @PathVariable int id) {
 
-        if (authorityService.findById(id) == null) {
+        if (!authorityService.existsById(id)) {
             throw new RestNotFoundException("Authority id not found - " + id);
         }
 
         authority.setId(id);
-        authorityService.save(authority);
-        return authorityService.findById(authority.getId()).toApiResponse();
+
+        return authorityService.save(authority).toApiResponse();
     }
 
-    // Delete Authority
+    // Delete
     @DeleteMapping(path = {"/{id}", "/{id}/"})
     public String delete(@PathVariable int id) {
-        if (authorityService.findById(id) == null) {
+        if (!authorityService.existsById(id)) {
             throw new RestNotFoundException("Authority id not found - " + id);
         }
 
         authorityService.deleteById(id);
+
         return "Deleted authorityService id - " + id;
     }
+    //endregion
+
 }

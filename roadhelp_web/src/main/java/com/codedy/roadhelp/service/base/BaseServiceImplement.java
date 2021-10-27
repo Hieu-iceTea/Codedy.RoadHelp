@@ -13,7 +13,6 @@ public class BaseServiceImplement<T extends BaseModel, ID extends Serializable> 
 
     private final BaseRepository<T, ID> repository;
 
-
     public BaseServiceImplement(BaseRepository<T, ID> repository) {
         this.repository = repository;
     }
@@ -61,6 +60,12 @@ public class BaseServiceImplement<T extends BaseModel, ID extends Serializable> 
     @Transactional
     public void deleteById(ID id) {
         repository.deleteById(id);
+    }
+
+    @Override
+    @Transactional
+    public boolean existsById(ID id) {
+        return repository.existsById(id);
     }
 
 }

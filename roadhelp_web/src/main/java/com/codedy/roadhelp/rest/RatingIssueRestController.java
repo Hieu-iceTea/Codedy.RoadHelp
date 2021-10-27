@@ -15,70 +15,68 @@ import java.util.List;
 @RequestMapping(path = "/api/v1/ratingIssues")
 public class RatingIssueRestController {
 
+    //region - Autowired Service -
     @Autowired
     private RatingIssueService ratingIssueService;
+
     @Autowired
     private UserService userService;
+
     @Autowired
     private IssuesService issuesService;
+    //endregion
 
-    // List Rating Partner
+
+    //region - Base -
+    // List
     @GetMapping(path = {"", "/", "/index"})
     public List<LinkedHashMap<String, Object>> index() {
         return ratingIssueService.findAll().stream().map(RatingIssue::toApiResponse).toList();
     }
 
-    // Detail Rating Partner
+    // Detail
     @GetMapping(path = {"/{id}", "/{id}/"})
     public LinkedHashMap<String, Object> show(@PathVariable int id) {
         RatingIssue ratingIssue = ratingIssueService.findById(id);
+
         if (ratingIssue == null) {
-            throw new RestNotFoundException("Rating partner id not found - " + id);
+            throw new RestNotFoundException("Rating issue id not found - " + id);
         }
+
         return ratingIssue.toApiResponse();
     }
 
-    // Create Rating Partner
+    // Create
     @PostMapping(path = {"", "/"})
     public LinkedHashMap<String, Object> store(@RequestBody RatingIssue ratingIssue) {
         ratingIssue.setId(0);
-        RatingIssue newRatingIssue = ratingIssueService.save(ratingIssue);
-        return ratingIssueService.findById(newRatingIssue.getId()).toApiResponse();
-    }
-    // Gửi đánh giá cứu hộ
-    @PostMapping(path = {"/rescue/send/post-reviews", "/rescue/send/post-reviews/"})
-    public LinkedHashMap<String, Object> createReviewRescue(@RequestBody RatingIssue ratingIssue, @RequestParam(defaultValue = "0") int userMemberId,
-                                          @RequestParam(defaultValue = "0") int issueId) {
 
-        ratingIssue.setId(0);
-        ratingIssue.setIssue(issuesService.findById(issueId));
-        ratingIssue.setUserMember(userService.findById(userMemberId));
-        RatingIssue newRatingIssue = ratingIssueService.save(ratingIssue);
-        return ratingIssueService.findById(newRatingIssue.getId()).toApiResponse();
+        return ratingIssueService.save(ratingIssue).toApiResponse();
     }
 
-    // Update Rating Partner
+    // Update
     @PutMapping(path = {"/{id}", "/{id}/"})
     public LinkedHashMap<String, Object> update(@RequestBody RatingIssue ratingIssue, @PathVariable int id) {
-
-        if (ratingIssueService.findById(id) == null) {
-            throw new RestNotFoundException("Rating partner id not found - " + id);
+        if (!ratingIssueService.existsById(id)) {
+            throw new RestNotFoundException("Rating issue id not found - " + id);
         }
 
         ratingIssue.setId(id);
-        ratingIssueService.save(ratingIssue);
-        return ratingIssueService.findById(ratingIssue.getId()).toApiResponse();
+
+        return ratingIssueService.save(ratingIssue).toApiResponse();
     }
 
-    // Delete Rating Partner
+    // Delete
     @DeleteMapping(path = {"/{id}", "/{id}/"})
     public String delete(@PathVariable int id) {
-        if (ratingIssueService.findById(id) == null) {
-            throw new RestNotFoundException("Rating partner id not found - " + id);
+        if (!ratingIssueService.existsById(id)) {
+            throw new RestNotFoundException("Rating issue id not found - " + id);
         }
 
         ratingIssueService.deleteById(id);
-        return "Deleted rating partner id - " + id;
+
+        return "Deleted rating issue id - " + id;
     }
+    //endregion
 
 }

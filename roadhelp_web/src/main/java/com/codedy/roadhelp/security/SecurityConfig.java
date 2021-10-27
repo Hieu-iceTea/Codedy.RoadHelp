@@ -57,9 +57,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
                 .authorizeRequests()
 
-                .antMatchers("/").permitAll()
+                .antMatchers(HttpMethod.GET, "/").permitAll()
                 .antMatchers(HttpMethod.GET, "/data-images/**").permitAll()
                 .antMatchers(HttpMethod.POST, "/auth/**").permitAll()
+                //.antMatchers("/api/v0/**").permitAll() //Test Only
+                //.antMatchers("/api/v1/**").permitAll() //Test Only
 
                 //Config:
                 // Only PARTNER
@@ -93,6 +95,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.PATCH, "/api/v1/users/my-account/**").hasAnyAuthority("ROLE_PARTNER", "ROLE_MEMBER")
                 .antMatchers(HttpMethod.PATCH, "/api/v1/users/my-account/**/change-password").hasAnyAuthority("ROLE_PARTNER", "ROLE_MEMBER")
                 .antMatchers(HttpMethod.PUT, "/api/v1/users/my-account/**/change-password").hasAnyAuthority("ROLE_PARTNER", "ROLE_MEMBER")
+
                 .anyRequest().authenticated();
 
         http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);

@@ -21,15 +21,14 @@ import java.util.List;
 @RequestMapping(path = "/api/v1/users")
 public class UserRestController {
 
-    //TODO: Sửa lỗi vòng lặp đệ quy khi xử lý JSON, lý do relationship giữa các bảng.
-
     //region - Autowired Service -
     @Autowired
     private UserService userService;
     //endregion
 
 
-    //region - Display -
+    //region - Base -
+    // List
     @GetMapping(path = {"", "/", "/index"})
     public List<LinkedHashMap<String, Object>> index() {
 
@@ -37,6 +36,7 @@ public class UserRestController {
 
     }
 
+    // Details
     @GetMapping(path = {"/{id}", "/{id}/"})
     public LinkedHashMap<String, Object> show(@PathVariable int id) {
 
@@ -50,52 +50,41 @@ public class UserRestController {
         return user.toApiResponse();
 
     }
-    //endregion
 
-
-    //region - Create -
+    // Create
     @PostMapping(path = {"", "/"})
     public LinkedHashMap<String, Object> store(@RequestBody User user) {
 
         user.setId(0);
 
-        User newUser = userService.save(user);
-
-        return userService.findById(newUser.getId()).toApiResponse();
+        return userService.save(user).toApiResponse();
 
     }
-    //endregion
 
-
-    //region - Edit -
+    // update
     @PutMapping(path = {"/{id}", "/{id}/"})
     public LinkedHashMap<String, Object> update(@RequestBody User user, @PathVariable int id) {
 
-        if (userService.findById(id) == null) {
+        if (!userService.existsById(id)) {
             throw new RestNotFoundException("User id not found - " + id);
             //throw new RuntimeException("User id not found - " + id);
         }
 
         user.setId(id);
 
-        userService.save(user);
-
-        return userService.findById(user.getId()).toApiResponse();
+        return userService.save(user).toApiResponse();
 
     }
-    //endregion
 
-
-    //region - Delete -
+    // Delete
     @DeleteMapping(path = {"/{id}", "/{id}/"})
     public String delete(@PathVariable int id) {
 
-        if (userService.findById(id) == null) {
+        if (!userService.existsById(id)) {
             throw new RestNotFoundException("User id not found - " + id);
             //throw new RuntimeException("User id not found - " + id);
         }
 
-        // 02. Xóa bản ghi database
         userService.deleteById(id);
 
         return "Deleted user id - " + id;
@@ -103,23 +92,31 @@ public class UserRestController {
     }
     //endregion
 
-    //region - Change Password -
-    @PutMapping(path = {"/my-account/{id}/change-password", "/my-account/{id}/change-password/"})
-    public ResponseEntity<?> changePassword(@Valid @RequestBody HashMap<String, String> requestBody, @PathVariable int id) {
 
+    //region - Extend -
+    // Change Password
+    @PutMapping(path = {"/{id}/change-password", "/{id}/change-password/"})
+    public ResponseEntity<?> changePassword(@Valid @RequestBody HashMap<String, String> requestBody, @PathVariable int id) {
         User user = userService.findById(id);
-        String password = requestBody.get("password");
-        String oldPassword = requestBody.get("oldpassword");
-        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+
+        if (user == null) {
+            throw new RestNotFoundException("User id not found - " + id);
+        }
+
+        String newPassword = requestBody.get("password");
+        String oldPassword = requestBody.get("oldPassword");
         String dbPassword = user.getPassword();
 
-        if (passwordEncoder.matches(oldPassword, dbPassword)) {
-            user.setPassword(BCrypt.hashpw(password, BCrypt.gensalt(12)));
-            userService.save(user);
-            return ResponseEntity.ok(new MessageResponse("Change password successfully!"));
-        } else {
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        if (!passwordEncoder.matches(oldPassword, dbPassword)) {
             return ResponseEntity.ok(new MessageResponse("Your old password is wrong"));
         }
+
+        user.setPassword(BCrypt.hashpw(newPassword, BCrypt.gensalt(12)));
+        userService.save(user);
+
+        return ResponseEntity.ok(new MessageResponse("Change password successfully!"));
     }
     //endregion
+
 }

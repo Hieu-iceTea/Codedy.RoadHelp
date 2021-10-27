@@ -6,7 +6,6 @@ import com.codedy.roadhelp.service.district.DistrictService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 
@@ -14,22 +13,27 @@ import java.util.List;
 @RequestMapping(path = "/api/v1/districts")
 public class DistrictRestController {
 
+    //region - Autowired Service -
     @Autowired
     private DistrictService districtService;
+    //endregion
 
-    // List District
+
+    //region - Base -
+    // List
     @GetMapping(path = {"", "/", "/index"})
     public List<LinkedHashMap<String, Object>> index(@RequestParam(defaultValue = "0") int provinceId) {
-        if(provinceId > 0){
+        if (provinceId > 0) {
             return districtService.findAllByProvinceId(provinceId).stream().map(District::toApiResponse).toList();
         }
         return districtService.findAll().stream().map(District::toApiResponse).toList();
     }
 
-    // Detail District
+    // Detail
     @GetMapping(path = {"/{id}", "/{id}/"})
     public LinkedHashMap<String, Object> show(@PathVariable int id) {
         District district = districtService.findById(id);
+
         if (district == null) {
             throw new RestNotFoundException("District id not found - " + id);
         }
@@ -37,35 +41,37 @@ public class DistrictRestController {
         return district.toApiResponse();
     }
 
-    // Create District
+    // Create
     @PostMapping(path = {"", "/"})
     public LinkedHashMap<String, Object> store(@RequestBody District district) {
         district.setId(0);
-        District newDistrict = districtService.save(district);
-        return districtService.findById(newDistrict.getId()).toApiResponse();
+
+        return districtService.save(district).toApiResponse();
     }
 
-    // Update District
+    // Update
     @PutMapping(path = {"/{id}", "/{id}/"})
     public LinkedHashMap<String, Object> update(@RequestBody District district, @PathVariable int id) {
-
-        if (districtService.findById(id) == null) {
+        if (!districtService.existsById(id)) {
             throw new RestNotFoundException("District id not found - " + id);
         }
 
         district.setId(id);
-        districtService.save(district);
-        return districtService.findById(district.getId()).toApiResponse();
+
+        return districtService.save(district).toApiResponse();
     }
 
-    // Delete District
+    // Delete
     @DeleteMapping(path = {"/{id}", "/{id}/"})
     public String delete(@PathVariable int id) {
-        if (districtService.findById(id) == null) {
+        if (!districtService.existsById(id)) {
             throw new RestNotFoundException("District id not found - " + id);
         }
 
         districtService.deleteById(id);
+
         return "Deleted district id - " + id;
     }
+    //endregion
+
 }
