@@ -60,7 +60,7 @@ class HttpHelper {
       }
 
       if (response.statusCode == 200) {
-        return json.decode(response.body);
+        return json.decode(utf8.decode(response.bodyBytes));
       } else {
         throw HttpException('❌ Error. \nStatusCode: ' +
             response.statusCode.toString() +
@@ -88,7 +88,7 @@ class HttpHelper {
       }
 
       if (response.statusCode == 200) {
-        return json.decode(response.body);
+        return json.decode(utf8.decode(response.bodyBytes));
       } else {
         throw HttpException('❌ Error. \nStatusCode: ' +
             response.statusCode.toString() +
@@ -121,7 +121,7 @@ class HttpHelper {
             (json.decode(response.body)['message'] ?? ""));
       }
 
-      return response.body;
+      return json.decode(utf8.decode(response.bodyBytes));
     } catch (error) {
       rethrow;
     }
