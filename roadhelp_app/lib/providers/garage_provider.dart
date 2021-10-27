@@ -7,7 +7,6 @@ import 'package:roadhelp/repositories/garage_repository.dart';
 
 class GarageProvider with ChangeNotifier {
   List<Garage> _items = [];
-  final List<Garage> _itemsByPartner = [];
 
   final AuthProvider? authProvider;
 
@@ -15,10 +14,6 @@ class GarageProvider with ChangeNotifier {
 
   List<Garage> get items {
     return [..._items];
-  }
-
-  List<Garage> get itemsByPartner {
-    return [..._itemsByPartner];
   }
 
   Future<List<Garage>> fetchAllData() async {
@@ -59,16 +54,21 @@ class GarageProvider with ChangeNotifier {
 
   //image
   Future<void> createGarageImage(GarageImage garageImage) async {
-    GarageImage garageImageResponse = await GarageImageRepository.create(garageImage);
-    final index = _items.indexWhere((element) => element.id == garageImage.garageId);
+    GarageImage garageImageResponse =
+        await GarageImageRepository.create(garageImage);
+    final index =
+        _items.indexWhere((element) => element.id == garageImage.garageId);
     _items[index].garageImages.add(garageImageResponse);
     notifyListeners();
   }
 
   Future<void> removeGarageImage(GarageImage garageImage) async {
     await GarageImageRepository.deleteById(garageImage.id!);
-    final index = _items.indexWhere((element) => element.id == garageImage.garageId);
-    _items[index].garageImages.removeWhere((element) => element.id == garageImage.id);
+    final index =
+        _items.indexWhere((element) => element.id == garageImage.garageId);
+    _items[index]
+        .garageImages
+        .removeWhere((element) => element.id == garageImage.id);
     notifyListeners();
   }
 
@@ -79,13 +79,13 @@ class GarageProvider with ChangeNotifier {
       List<Garage> _itemsLoaded = await GarageRepository.findAllByPartnerId(
         partnerId: authProvider!.authData.userId!,
       );
-      _itemsByPartner.clear();
-      _itemsByPartner.addAll(_itemsLoaded);
+      _items.clear();
+      _items.addAll(_itemsLoaded);
       notifyListeners();
-      return _itemsByPartner;
+      return _items;
     } catch (error) {
       rethrow;
     }
   }
-  //#endregion
+//#endregion
 }

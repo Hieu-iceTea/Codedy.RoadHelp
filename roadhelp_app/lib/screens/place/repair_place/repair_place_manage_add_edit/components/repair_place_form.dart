@@ -266,8 +266,6 @@ class _RepairPlaceFormState extends State<RepairPlaceForm> {
 
     _formKey.currentState!.save();
 
-    widget.garage!.userPartner = User(id: 1); //TODO
-
     try {
       if (widget.garage!.id == null) {
         await Provider.of<GarageProvider>(context, listen: false)
