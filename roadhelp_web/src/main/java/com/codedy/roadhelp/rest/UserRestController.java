@@ -95,22 +95,27 @@ public class UserRestController {
 
     //region - Extend -
     // Change Password
-    @PutMapping(path = {"/my-account/{id}/change-password", "/my-account/{id}/change-password/"})
+    @PutMapping(path = {"/{id}/change-password", "/{id}/change-password/"})
     public ResponseEntity<?> changePassword(@Valid @RequestBody HashMap<String, String> requestBody, @PathVariable int id) {
-
         User user = userService.findById(id);
-        String password = requestBody.get("password");
-        String oldPassword = requestBody.get("oldpassword");
-        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+
+        if (user == null) {
+            throw new RestNotFoundException("User id not found - " + id);
+        }
+
+        String newPassword = requestBody.get("password");
+        String oldPassword = requestBody.get("oldPassword");
         String dbPassword = user.getPassword();
 
-        if (passwordEncoder.matches(oldPassword, dbPassword)) {
-            user.setPassword(BCrypt.hashpw(password, BCrypt.gensalt(12)));
-            userService.save(user);
-            return ResponseEntity.ok(new MessageResponse("Change password successfully!"));
-        } else {
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        if (!passwordEncoder.matches(oldPassword, dbPassword)) {
             return ResponseEntity.ok(new MessageResponse("Your old password is wrong"));
         }
+
+        user.setPassword(BCrypt.hashpw(newPassword, BCrypt.gensalt(12)));
+        userService.save(user);
+
+        return ResponseEntity.ok(new MessageResponse("Change password successfully!"));
     }
     //endregion
 

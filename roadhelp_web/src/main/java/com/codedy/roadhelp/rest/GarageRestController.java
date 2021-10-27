@@ -31,8 +31,12 @@ public class GarageRestController {
     //region - Base -
     // List
     @GetMapping(path = {"", "/", "/index"})
-    public List<LinkedHashMap<String, Object>> index() {
-        return garageService.findAll().stream().map(Garage::toApiResponse).toList();
+    public List<LinkedHashMap<String, Object>> index(@RequestParam(required = false, defaultValue = "") String name,
+                                                     @RequestParam(required = false, defaultValue = "0") int provinceId,
+                                                     @RequestParam(required = false, defaultValue = "0") int districtId,
+                                                     @RequestParam(required = false, defaultValue = "0") int wardId) {
+        //return garageService.findAll().stream().map(Garage::toApiResponse).toList();
+        return this.search(name, provinceId, districtId, wardId);
     }
 
     // Detail
@@ -82,14 +86,15 @@ public class GarageRestController {
 
 
     //region - Extend -
+
     // = = = = = = = = = = = = = = = For Member = = = = = = = = = = = = = = = //
 
     // Tìm kiếm tiệm sửa xe theo tên, Tỉnh/Huyện/Xã
-    @GetMapping(path = {"/repair-place", "/repair-place"})
-    public List<LinkedHashMap<String, Object>> searchGarage(@RequestParam(required = false, defaultValue = "") String name,
-                                                            @RequestParam(required = false, defaultValue = "0") int provinceId,
-                                                            @RequestParam(required = false, defaultValue = "0") int districtId,
-                                                            @RequestParam(required = false, defaultValue = "0") int wardId) {
+    @GetMapping(path = {"/search", "/search"})
+    public List<LinkedHashMap<String, Object>> search(@RequestParam(required = false, defaultValue = "") String name,
+                                                      @RequestParam(required = false, defaultValue = "0") int provinceId,
+                                                      @RequestParam(required = false, defaultValue = "0") int districtId,
+                                                      @RequestParam(required = false, defaultValue = "0") int wardId) {
         // 1. Có tất cả tên và tỉnh/huyện/xã
         if (!name.isEmpty() && (provinceId >= 1 || districtId >= 1 || wardId >= 1)) {
             return garageService.findAllByProvinceIdAndDistrictIdAndWardIdAndNameContaining(provinceId, districtId, wardId, name).stream().map(Garage::toApiResponse).toList();
@@ -116,33 +121,17 @@ public class GarageRestController {
         return garageService.findAllByIsFeatured(isFeatured).stream().map(Garage::toApiResponse).toList();
     }
 
-
     // Member viết đánh giá garage -
-    @PostMapping(path = {"/repair-place/{garageId}/member-create-rating", "/repair-place/{garageId}/member-create-rating/"})
-    public LinkedHashMap<String, Object> reviewGarage(@RequestBody RatingGarage ratingGarage,
-                                                      @PathVariable int garageId,
-                                                      @RequestParam(defaultValue = "0") int memberId) {
+    @PostMapping(path = {"/{garageId}/ratingGarage", "/{garageId}/ratingGarage/"})
+    public LinkedHashMap<String, Object> reviewGarage(@RequestBody RatingGarage ratingGarage, @PathVariable int garageId) {
         ratingGarage.setId(0);
-        ratingGarage.setGarage(garageService.findById(garageId));
-        ratingGarage.setUserMember(userService.findById(memberId));
 
         Garage garage = garageService.findById(garageId);
-        List<RatingGarage> ratingGarages = ratingGarageService.findAllByGarageId(garageId);
-        int count = ratingGarageService.findAllByGarageId(garageId).toArray().length;
-        double amountRating = 0;
-        for (RatingGarage ratings : ratingGarages) {
-            amountRating += ratings.getRatePoint();
-        }
+        ratingGarage.setGarage(garage);
 
-        amountRating += ratingGarage.getRatePoint();
-
-        garage.setRateAvg(amountRating / (count + 1));
-
-        garageService.save(garage);
-
-        RatingGarage newRatingGarage = ratingGarageService.save(ratingGarage);
-        return ratingGarageService.findById(newRatingGarage.getId()).toApiResponse();
+        return ratingGarageService.save(ratingGarage).toApiResponse();
     }
+
 
     // = = = = = = = = = = = = = = = For Partner = = = = = = = = = = = = = = = //
 
@@ -152,17 +141,15 @@ public class GarageRestController {
         return garageService.findAllByUserPartnerId(partnerId).stream().map(Garage::toApiResponse).toList();
     }
 
-    // Chi tiết tiệm sửa xe -  Tạm dừng hoạt động
-    @PutMapping(path = {"/repair-place-manage/{id}/setActive", "/repair-place-manage/{Id}/setActive/"})
-    public String repair_delete(@PathVariable int id, @RequestParam(value = "setActive", required = false,
-            defaultValue = "true") boolean setActive) {
-
+    // Tạm dừng hoạt động garage
+    @PutMapping(path = {"/{id}/setActive", "/{id}/setActive"})
+    public String repair_delete(@PathVariable int id, @RequestParam boolean active) {
         Garage garage = garageService.findById(id);
-        garage.setActive(setActive);
+        garage.setActive(active);
+
         garageService.save(garage);
 
-        return " garage id - " + garage.getId() + " Set active - " + setActive;
-
+        return "Garage id: " + garage.getId() + " - Set active: " + active;
     }
     //endregion
 

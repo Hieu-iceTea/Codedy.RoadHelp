@@ -132,10 +132,11 @@ public class AuthController {
 
     }
 
-    @PutMapping(path = {"/become-to-partner/{id}/setPartner", "/become-to-partner/{id}/setPartner/"})
-    public ResponseEntity<?> becomeToPartner(@PathVariable int id) {
+    @PutMapping(path = {"/become-to-partner/{userMemberId}", "/become-to-partner/{userMemberId}/"})
+    public ResponseEntity<?> becomeToPartner(@PathVariable int userMemberId) {
 
-        User user = userService.findById(id);
+        User user = userService.findById(userMemberId);
+
         Authority authority = user.getAuthorities().get(0);
         authority.setUser(user);
         authority.setAuthority("ROLE_PARTNER");
@@ -143,7 +144,9 @@ public class AuthController {
         List<Authority> authorities = new ArrayList<>();
         authorities.add(authority);
         authority.setId(authority.getId());
+
         authorityService.save(authority);
+
         return ResponseEntity.ok(new MessageResponse("Become to partner successfully!"));
     }
 }

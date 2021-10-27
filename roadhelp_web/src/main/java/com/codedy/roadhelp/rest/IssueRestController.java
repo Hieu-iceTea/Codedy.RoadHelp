@@ -2,12 +2,10 @@ package com.codedy.roadhelp.rest;
 
 import com.codedy.roadhelp.model.Issue;
 import com.codedy.roadhelp.model.RatingIssue;
-import com.codedy.roadhelp.model.User;
 import com.codedy.roadhelp.model.enums.IssueStatus;
 import com.codedy.roadhelp.rest.exception.RestNotFoundException;
 import com.codedy.roadhelp.service.issues.IssuesService;
 import com.codedy.roadhelp.service.ratingIssue.RatingIssueService;
-import com.codedy.roadhelp.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,9 +19,6 @@ public class IssueRestController {
     //region - Autowired Service -
     @Autowired
     private IssuesService issuesService;
-
-    @Autowired
-    private UserService userService;
 
     @Autowired
     private RatingIssueService ratingIssueService;
@@ -86,106 +81,112 @@ public class IssueRestController {
     //region - Extend -
     // = = = = = = = = = = = = = = = For Member = = = = = = = = = = = = = = = //
 
-    // Gửi yêu cầu cứu hộ
-    @PostMapping(path = {"/rescue/send", "/rescue/send/"})
-    public LinkedHashMap<String, Object> createRescue(@RequestBody Issue issue) {
-        issue.setId(0);
-        Issue newIssue = issuesService.save(issue);
-        return issuesService.findById(newIssue.getId()).toApiResponse();
+    // Member Gửi yêu cầu cứu hộ
+    @PostMapping(path = {"/send", "/send/"})
+    public LinkedHashMap<String, Object> sendIssue(@RequestBody Issue issue) {
+        return this.store(issue);
     }
 
-    // Xem thông tin người giúp đỡ mình
-    @GetMapping(path = {"/rescue/send/confirmation", "/rescue/send/confirmation/"})
-    public LinkedHashMap<String, Object> showComfirmation(@RequestParam(defaultValue = "0") int id) {
+    // Member Xem thông tin người giúp đỡ mình
+    @GetMapping(path = {"/{id}/userPartner", "/{id}/userPartner/"})
+    public LinkedHashMap<String, Object> userPartner(@PathVariable int id) {
         Issue issue = issuesService.findById(id);
+
         if (issue == null) {
             throw new RestNotFoundException("Issues id not found - " + id);
         }
+
+        if (issue.getUserPartner() == null) {
+            throw new RestNotFoundException("UserPartner for Issues id not found - " + id);
+        }
+
         return issue.getUserPartner().toApiResponse();
     }
 
-    // Xác nhận thông tin người giúp đỡ mình
-    @PutMapping(path = {"/rescue/send/confirmation", "/rescue/send/confirmation/"})
-    public String acceptComfirmation(@RequestBody Issue issue, @RequestParam(defaultValue = "0") int id) {
-        if (issue.getStatus().toString() == IssueStatus.waitMemberConfirm.toString()) {
+    // Member Xác nhận thông tin người giúp đỡ mình
+    @PutMapping(path = {"/{id}/member-confirm-partner", "/{id}/member-confirm-partner/"})
+    public String memberConfirmPartner(@PathVariable int id) {
+        Issue issue = issuesService.findById(id);
 
-            if (issuesService.findById(id) == null) {
-                throw new RestNotFoundException("Issuues id not found - " + id);
-            }
-            issue.setId(id);
-            issue.setStatus(IssueStatus.memberConfirmPartner);
-            issuesService.save(issue);
-            return "xác nhận " + issue.getUserPartner().getLastName() + " " + issue.getUserPartner().getFirstName() + " là người hỗ trợ!";
-        } else return "sai status xác nhận! " + IssueStatus.waitMemberConfirm.toString();
+        if (issue == null) {
+            throw new RestNotFoundException("Issues id not found - " + id);
+        }
 
+        if (issue.getStatus() != IssueStatus.waitMemberConfirm) {
+            return "Lỗi: Không trong trạng thái chờ member xác nhận, Status hiện tại: " + issue.getStatus();
+        }
+
+        issue.setStatus(IssueStatus.memberConfirmPartner);
+
+        issuesService.save(issue);
+
+        return "Xác nhận '" + issue.getUserPartner().getFirstName() + " " + issue.getUserPartner().getLastName() + "' là người hỗ trợ!";
     }
 
-    // xác nhận hoàn thành sau khi partner hỗ trợ xog
-    @PutMapping(path = {"/rescue/success/{id}", "/rescue/success/{id}/"})
+    // Member xác nhận hoàn thành sau khi partner hỗ trợ xog
+    @PutMapping(path = {"/{id}/setStatusSuccess", "/{id}/setStatusSuccess/"})
     public String rescueSuccess(@PathVariable int id) {
         Issue issue = issuesService.findById(id);
 
-        if (issue.getStatus().toString() == IssueStatus.memberConfirmPartner.toString()) {
+        if (issue == null) {
+            throw new RestNotFoundException("Issues id not found - " + id);
+        }
 
-            if (issuesService.findById(id) == null) {
-                throw new RestNotFoundException("Issuues id not found - " + id);
-            }
-            issue.setId(id);
-            issue.setStatus(IssueStatus.succeeded);
-            issuesService.save(issue);
-            return "xác nhận " + issue.getUserPartner().getLastName() + " " + issue.getUserPartner().getFirstName() + " là người hỗ trợ!";
-        } else return "sai status xác nhận! " + IssueStatus.waitMemberConfirm.toString();
+        if (issue.getStatus() != IssueStatus.memberConfirmPartner) {
+            return "Lỗi: Trạng thái hiện tại không phải là memberConfirmPartner, Status hiện tại: " + issue.getStatus();
+        }
 
+        issue.setStatus(IssueStatus.succeeded);
+
+        issuesService.save(issue);
+
+        return "Issue có ID " + id + "được thay đổi trạng thái thành: 'Thành công'";
     }
 
-    // Gửi đánh giá cứu hộ
-    @PostMapping(path = {"/rescue/send/post-reviews", "/rescue/send/post-reviews/"})
-    public LinkedHashMap<String, Object> createReviewRescue(@RequestBody RatingIssue ratingIssue, @RequestParam(defaultValue = "0") int userMemberId,
-                                                            @RequestParam(defaultValue = "0") int issueId) {
-
+    // Member viết đánh giá issue sau khi được cứu hộ xong -
+    @PostMapping(path = {"/{issueId}/ratingIssue", "/{issueId}/ratingIssue/"})
+    public LinkedHashMap<String, Object> ratingIssue(@RequestBody RatingIssue ratingIssue, @PathVariable int issueId) {
         ratingIssue.setId(0);
-        ratingIssue.setIssue(issuesService.findById(issueId));
-        ratingIssue.setUserMember(userService.findById(userMemberId));
-        RatingIssue newRatingIssue = ratingIssueService.save(ratingIssue);
-        return ratingIssueService.findById(newRatingIssue.getId()).toApiResponse();
+
+        Issue issue = issuesService.findById(issueId);
+        ratingIssue.setIssue(issue);
+
+        return ratingIssueService.save(ratingIssue).toApiResponse();
     }
 
 
     // = = = = = = = = = = = = = = = For Partner = = = = = = = = = = = = = = = //
 
-    // Xem danh sách những người đang cần hỗ trợ
-    @GetMapping(path = {"/rescue/receive", "/rescue/receive/"})
+    // Partner Xem danh sách những người đang cần hỗ trợ
+    @GetMapping(path = {"/byStatusSent", "/byStatusSent/"})
     public List<LinkedHashMap<String, Object>> showListRescue() {
-        List<Issue> issues = issuesService.findIssueByStatus(IssueStatus.sent);
-        return issues.stream().map(Issue::toApiResponse).toList();
+        return issuesService.findIssueByStatus(IssueStatus.sent).stream().map(Issue::toApiResponse).toList();
     }
 
-    // Xác nhận giúp
-    @PutMapping(path = {"/rescue/receive/details", "/rescue/receive/details/"})
-    public String acceptReceive(@RequestBody Issue issue, @RequestParam(defaultValue = "0") int id
-            , @RequestParam(defaultValue = "0") int userPartnerId) {
+    // Partner Xác nhận giúp
+    @PutMapping(path = {"/{id}/partner-confirm-member", "/{id}/partner-confirm-member"})
+    public String partnerConfirmMember(@PathVariable int id) {
+        Issue issue = issuesService.findById(id);
 
-        User userPartner = userService.findById(userPartnerId);
-        if (issue.getStatus().toString() == IssueStatus.sent.toString()) {
+        if (issue == null) {
+            throw new RestNotFoundException("Issues id not found - " + id);
+        }
 
-            if (issuesService.findById(id)
-                    == null) {
-                throw new RestNotFoundException("Issues id not found - " + id);
-            }
-            issue.setId(id);
-            issue.setUserPartner(userPartner);
-            issue.setStatus(IssueStatus.waitMemberConfirm);
-            issuesService.save(issue);
-            return "xác nhận " + issue.getUserPartner().getLastName() + " " + issue.getUserPartner().getFirstName() + " hỗ trợ!";
-        } else
-            return "sai status xác nhận! " + IssueStatus.waitMemberConfirm.toString();
+        if (issue.getStatus() != IssueStatus.sent) {
+            return "Lỗi: Không trong trạng thái 'sent', Status hiện tại: " + issue.getStatus();
+        }
 
+        issue.setStatus(IssueStatus.waitMemberConfirm);
+
+        issuesService.save(issue);
+
+        return "Partner xác nhận muốn hỗ trợ: '" + issue.getUserMember().getFirstName() + " " + issue.getUserMember().getLastName();
     }
 
-    // Xem đánh giá sau khi hỗ trợ xong
-    @GetMapping(path = {"/rescue/receive/show-reviews", "/rescue/receive/show-reviews/"})
-    public LinkedHashMap<String, Object> showRating(@RequestParam(defaultValue = "0") int ratingIssueId) {
-        return ratingIssueService.findById(ratingIssueId).toApiResponse();
+    // Partner Xem đánh giá sau khi hỗ trợ xong
+    @GetMapping(path = {"/{id}/ratingIssue", "/{id}/ratingIssue/"})
+    public LinkedHashMap<String, Object> ratingIssue(@PathVariable int id) {
+        return ratingIssueService.findByIssueId(id).toApiResponse();
     }
     //endregion
 

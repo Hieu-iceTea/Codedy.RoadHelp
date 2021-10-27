@@ -10,4 +10,7 @@ public interface RatingGarageService extends BaseService<RatingGarage, Integer> 
 
     List<RatingGarage> findAllByGarageId(int id);
 
+    @Override
+    RatingGarage save(RatingGarage item);
+
 }
