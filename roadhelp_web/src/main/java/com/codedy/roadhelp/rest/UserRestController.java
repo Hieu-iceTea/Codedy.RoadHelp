@@ -104,7 +104,7 @@ public class UserRestController {
     //region - Extend -
     // Update Avatar
     @PutMapping(path = {"/{id}/update-avatar", "/{id}/update-avatar/"})
-    public ResponseEntity<?> updateAvatar(@PathVariable int id, @RequestParam MultipartFile imageFile) {
+    public LinkedHashMap<String, Object> updateAvatar(@PathVariable int id, @RequestParam MultipartFile imageFile) {
         User user = userService.findById(id);
 
         if (user == null) {
@@ -123,9 +123,7 @@ public class UserRestController {
             user.setImage(fileName);
         }
 
-        userService.save(user);
-
-        return ResponseEntity.ok(new MessageResponse("Update Avatar successfully!"));
+        return this.update(user, id);
     }
 
     // Change Password
