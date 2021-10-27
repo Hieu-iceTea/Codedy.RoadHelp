@@ -3,6 +3,7 @@ import 'package:roadhelp/config/size_config.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 import 'components/body.dart';
+import 'components/header_bar.dart';
 import 'components/panel_body.dart';
 import 'components/panel_header.dart';
 
@@ -17,25 +18,33 @@ class RepairPlaceScreen extends StatelessWidget {
     SizeConfig().init(context);
 
     return Scaffold(
-      body: SlidingUpPanel(
-        //backdropEnabled: true,
-        collapsed: PanelHeader(opacity: 1),
-        maxHeight: SizeConfig.screenHeight * .75,
-        minHeight: 95.0,
-        parallaxEnabled: true,
-        parallaxOffset: .5,
-        header: PanelHeader(opacity: 0.9),
-        panel: SingleChildScrollView(
-          child: Column(
-            children: [PanelBody()],
+      body: Stack(
+        children: [
+          SlidingUpPanel(
+            //backdropEnabled: true,
+            collapsed: PanelHeader(opacity: 1),
+            maxHeight: SizeConfig.screenHeight * .75,
+            minHeight: 95.0,
+            parallaxEnabled: true,
+            parallaxOffset: .5,
+            header: PanelHeader(opacity: 0.9),
+            panel: SingleChildScrollView(
+              child: Column(
+                children: [PanelBody()],
+              ),
+            ),
+            //panelBuilder: (scrollController) => _panel(scrollController),
+            body: const Body(),
+            borderRadius: const BorderRadius.only(
+              topLeft: Radius.circular(18.0),
+              topRight: Radius.circular(18.0),
+            ),
           ),
-        ),
-        //panelBuilder: (scrollController) => _panel(scrollController),
-        body: const Body(),
-        borderRadius: const BorderRadius.only(
-          topLeft: Radius.circular(18.0),
-          topRight: Radius.circular(18.0),
-        ),
+          Positioned(
+            top: 10,
+            child: HeaderBar(),
+          )
+        ],
       ),
     );
   }

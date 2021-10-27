@@ -13,24 +13,28 @@ class GarageItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListTile(
-      onTap: () => Navigator.pushNamed(
-        context,
-        RepairPlaceDetailsScreen.routeName,
-        arguments: RepairPlaceDetailsArguments(garage: garage),
+    return Card(
+      child: ListTile(
+        onTap: () => Navigator.pushNamed(
+          context,
+          RepairPlaceDetailsScreen.routeName,
+          arguments: RepairPlaceDetailsArguments(garage: garage),
+        ),
+        leading: Hero(
+          tag: garage.id.toString(),
+          child: garage.garageImages.isNotEmpty
+              ? Image.network(garage.garageImages[0].imageUrl!)
+              : const Text("No\nImage", textAlign: TextAlign.center),
+        ),
+        title: Text(garage.name!),
+        subtitle: Text(garage.phone! + '\n' + garage.address! + '| 2 Km'),
+        trailing: RoundedIconBtn(
+          icon: Icons.directions,
+          showShadow: true,
+          press: () {},
+        ),
+        isThreeLine: true,
       ),
-      leading: Hero(
-        tag: garage.id.toString(),
-        child: Image.network("https://picsum.photos/500/400?random=1"),
-      ),
-      title: Text(garage.name!),
-      subtitle: Text(garage.phone! + '\n' + garage.address! + '| 2 Km'),
-      trailing: RoundedIconBtn(
-        icon: Icons.directions,
-        showShadow: true,
-        press: () {},
-      ),
-      isThreeLine: true,
     );
   }
 }
