@@ -82,8 +82,9 @@ class RatingIssues extends BaseModel {
       'ratePoint': ratePoint,
       'comment': comment,
       //Relationship
-      'userMember': json.decode(userMember!.toJson()),
-      'issue': json.decode(issue!.toJson()),
+      'userMember':
+          userMember != null ? json.decode(userMember!.toJson()) : null,
+      'issue': issue != null ? json.decode(issue!.toJson()) : null,
       //
       'id': id,
       //'createdAt': createdAt,

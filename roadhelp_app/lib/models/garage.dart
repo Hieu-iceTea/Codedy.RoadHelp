@@ -141,10 +141,11 @@ class Garage extends BaseModel {
       'active': active,
       'isFeatured': featured,
       //
-      'userPartner': json.decode(userPartner!.toJson()),
-      'province': json.decode(province!.toJson()),
-      'district': json.decode(district!.toJson()),
-      'ward': json.decode(ward!.toJson()),
+      'userPartner':
+          userPartner != null ? json.decode(userPartner!.toJson()) : null,
+      'province': province != null ? json.decode(province!.toJson()) : null,
+      'district': district != null ? json.decode(district!.toJson()) : null,
+      'ward': ward != null ? json.decode(ward!.toJson()) : null,
       //
       'id': id,
       //'createdAt': createdAt,

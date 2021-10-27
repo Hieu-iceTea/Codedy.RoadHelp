@@ -106,13 +106,16 @@ class Issues extends BaseModel {
       'phone': phone,
       'longitude': longitude,
       'latitude': latitude,
-      'category': category, //TODO: kiểm tra lại, chuyển từ ENUM -> String
+      'category': category != null ? category!.index : null,
       'description': description,
-      'status': status, //TODO: kiểm tra lại, chuyển từ ENUM -> String
+      'status': status != null ? status!.index : null,
       //Relationship
-      'userMember': json.decode(userMember!.toJson()),
-      'userPartner': json.decode(userPartner!.toJson()),
-      'ratingIssue': json.decode(ratingIssue!.toJson()),
+      'userMember':
+          userMember != null ? json.decode(userMember!.toJson()) : null,
+      'userPartner':
+          userPartner != null ? json.decode(userPartner!.toJson()) : null,
+      'ratingIssue':
+          ratingIssue != null ? json.decode(ratingIssue!.toJson()) : null,
       //
       'id': id,
       //'createdAt': createdAt,

@@ -82,7 +82,7 @@ class GarageImage extends BaseModel {
       //
       'image': image,
       //Relationship
-      'garage': json.decode(garage!.toJson()),
+      'garage': garage != null ? json.decode(garage!.toJson()) : null,
       //
       'id': id,
       //'createdAt': createdAt,

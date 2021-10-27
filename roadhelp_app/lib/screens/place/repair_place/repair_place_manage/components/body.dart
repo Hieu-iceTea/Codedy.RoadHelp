@@ -30,9 +30,9 @@ class _BodyState extends State<Body> {
                 builder: (context, value, child) => ListView.separated(
                   padding: EdgeInsets.symmetric(
                       horizontal: getProportionateScreenWidth(15)),
-                  itemCount: value.itemsByPartner.length,
+                  itemCount: value.items.length,
                   itemBuilder: (ctx, index) => RepairPlaceItem(
-                    garage: value.itemsByPartner[index],
+                    garage: value.items[index],
                   ),
                   separatorBuilder: (context, index) => const Divider(),
                 ),
