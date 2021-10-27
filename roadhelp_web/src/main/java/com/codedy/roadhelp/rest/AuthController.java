@@ -132,12 +132,13 @@ public class AuthController {
 
     }
 
-    @PutMapping(path = {"/become-to-partner/{userMemberId}", "/become-to-partner/{userMemberId}/"})
+    @PostMapping(path = {"/become-to-partner/{userMemberId}", "/become-to-partner/{userMemberId}/"})
     public ResponseEntity<?> becomeToPartner(@PathVariable int userMemberId) {
 
         User user = userService.findById(userMemberId);
 
-        Authority authority = user.getAuthorities().get(0);
+        // Create new authority
+        Authority authority = new Authority();
         authority.setUser(user);
         authority.setAuthority("ROLE_PARTNER");
 
