@@ -40,12 +40,12 @@ class User extends BaseModel {
   }
 
   bool hasAuthority(String authority) {
-    if(authorities == null || authorities!.isEmpty) {
+    if (authorities == null || authorities!.isEmpty) {
       return false;
     }
 
-    for(var element in authorities!) {
-      if(element.authority == authority) {
+    for (var element in authorities!) {
+      if (element.authority == authority) {
         return true;
       }
     }
@@ -105,8 +105,10 @@ class User extends BaseModel {
       email: json['email'],
       password: json['password'],
       image: json['image'],
-      gender: json['gender'] != null ? UserGender.values
-          .firstWhere((e) => e.toString() == "UserGender." + json['gender']) : null,
+      gender: json['gender'] != null
+          ? UserGender.values
+              .firstWhere((e) => e.toString() == "UserGender." + json['gender'])
+          : null,
       firstName: json['firstName'],
       lastName: json['lastName'],
       phone: json['phone'],
@@ -157,7 +159,7 @@ class User extends BaseModel {
       'firstName': firstName,
       'lastName': lastName,
       'image': image,
-      'gender': gender, //TODO: kiểm tra lại, chuyển từ ENUM -> String
+      'gender': gender != null ? gender!.index : null,
       'active': active,
       'address': address,
       'rateAvg': rateAvg,

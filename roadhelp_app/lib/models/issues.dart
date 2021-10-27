@@ -106,9 +106,9 @@ class Issues extends BaseModel {
       'phone': phone,
       'longitude': longitude,
       'latitude': latitude,
-      'category': category, //TODO: kiểm tra lại, chuyển từ ENUM -> String
+      'category': category != null ? category!.index : null,
       'description': description,
-      'status': status, //TODO: kiểm tra lại, chuyển từ ENUM -> String
+      'status': status != null ? status!.index : null,
       //Relationship
       'userMember':
           userMember != null ? json.decode(userMember!.toJson()) : null,
