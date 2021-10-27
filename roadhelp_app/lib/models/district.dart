@@ -86,7 +86,7 @@ class District extends BaseModel {
       'name': name,
       'prefix': prefix,
       //Relationship
-      'province': json.decode(province!.toJson()),
+      'province': province != null ? json.decode(province!.toJson()) : null,
       //
       'id': id,
       //'createdAt': createdAt,

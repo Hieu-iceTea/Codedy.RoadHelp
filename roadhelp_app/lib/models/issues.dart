@@ -110,9 +110,12 @@ class Issues extends BaseModel {
       'description': description,
       'status': status, //TODO: kiểm tra lại, chuyển từ ENUM -> String
       //Relationship
-      'userMember': json.decode(userMember!.toJson()),
-      'userPartner': json.decode(userPartner!.toJson()),
-      'ratingIssue': json.decode(ratingIssue!.toJson()),
+      'userMember':
+          userMember != null ? json.decode(userMember!.toJson()) : null,
+      'userPartner':
+          userPartner != null ? json.decode(userPartner!.toJson()) : null,
+      'ratingIssue':
+          ratingIssue != null ? json.decode(ratingIssue!.toJson()) : null,
       //
       'id': id,
       //'createdAt': createdAt,

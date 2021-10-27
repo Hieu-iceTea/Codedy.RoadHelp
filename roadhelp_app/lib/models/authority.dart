@@ -68,7 +68,7 @@ class Authority extends BaseModel {
       'username': username,
       'authority': authority,
       //Relationship
-      'user': json.decode(user!.toJson()),
+      'user': user != null ? json.decode(user!.toJson()) : null,
       //
       'id': id,
       //'createdAt': createdAt,

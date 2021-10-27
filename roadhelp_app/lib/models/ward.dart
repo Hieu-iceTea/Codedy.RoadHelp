@@ -85,8 +85,8 @@ class Ward extends BaseModel {
       'name': name,
       'prefix': prefix,
       //Relationship
-      'province': json.decode(province!.toJson()),
-      'district': json.decode(district!.toJson()),
+      'province': province != null ? json.decode(province!.toJson()) : null,
+      'district': district != null ? json.decode(district!.toJson()) : null,
       //
       'id': id,
       //'createdAt': createdAt,

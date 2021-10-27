@@ -82,8 +82,9 @@ class RatingGarage extends BaseModel {
       'ratePoint': ratePoint,
       'comment': comment,
       //Relationship
-      'userMember': json.decode(userMember!.toJson()),
-      'garage': json.decode(garage!.toJson()),
+      'userMember':
+          userMember != null ? json.decode(userMember!.toJson()) : null,
+      'garage': garage != null ? json.decode(garage!.toJson()) : null,
       //
       'id': id,
       //'createdAt': createdAt,
