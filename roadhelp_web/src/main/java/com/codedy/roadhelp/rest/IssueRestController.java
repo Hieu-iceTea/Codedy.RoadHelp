@@ -1,6 +1,7 @@
 package com.codedy.roadhelp.rest;
 
 import com.codedy.roadhelp.model.Issue;
+import com.codedy.roadhelp.model.RatingIssue;
 import com.codedy.roadhelp.model.User;
 import com.codedy.roadhelp.model.enums.IssueStatus;
 import com.codedy.roadhelp.rest.exception.RestNotFoundException;
@@ -83,7 +84,9 @@ public class IssueRestController {
 
 
     //region - Extend -
-    // tạo thông báo
+    // = = = = = = = = = = = = = = = For Member = = = = = = = = = = = = = = = //
+
+    // Gửi yêu cầu cứu hộ
     @PostMapping(path = {"/rescue/send", "/rescue/send/"})
     public LinkedHashMap<String, Object> createRescue(@RequestBody Issue issue) {
         issue.setId(0);
@@ -99,6 +102,22 @@ public class IssueRestController {
             throw new RestNotFoundException("Issues id not found - " + id);
         }
         return issue.getUserPartner().toApiResponse();
+    }
+
+    // Xác nhận thông tin người giúp đỡ mình
+    @PutMapping(path = {"/rescue/send/confirmation", "/rescue/send/confirmation/"})
+    public String acceptComfirmation(@RequestBody Issue issue, @RequestParam(defaultValue = "0") int id) {
+        if (issue.getStatus().toString() == IssueStatus.waitMemberConfirm.toString()) {
+
+            if (issuesService.findById(id) == null) {
+                throw new RestNotFoundException("Issuues id not found - " + id);
+            }
+            issue.setId(id);
+            issue.setStatus(IssueStatus.memberConfirmPartner);
+            issuesService.save(issue);
+            return "xác nhận " + issue.getUserPartner().getLastName() + " " + issue.getUserPartner().getFirstName() + " là người hỗ trợ!";
+        } else return "sai status xác nhận! " + IssueStatus.waitMemberConfirm.toString();
+
     }
 
     // xác nhận hoàn thành sau khi partner hỗ trợ xog
@@ -119,37 +138,26 @@ public class IssueRestController {
 
     }
 
-    // Xác nhận thông tin người giúp đỡ mình
-    @PutMapping(path = {"/rescue/send/confirmation", "/rescue/send/confirmation/"})
-    public String acceptComfirmation(@RequestBody Issue issue, @RequestParam(defaultValue = "0") int id) {
-        if (issue.getStatus().toString() == IssueStatus.waitMemberConfirm.toString()) {
+    // Gửi đánh giá cứu hộ
+    @PostMapping(path = {"/rescue/send/post-reviews", "/rescue/send/post-reviews/"})
+    public LinkedHashMap<String, Object> createReviewRescue(@RequestBody RatingIssue ratingIssue, @RequestParam(defaultValue = "0") int userMemberId,
+                                                            @RequestParam(defaultValue = "0") int issueId) {
 
-            if (issuesService.findById(id) == null) {
-                throw new RestNotFoundException("Issuues id not found - " + id);
-            }
-            issue.setId(id);
-            issue.setStatus(IssueStatus.memberConfirmPartner);
-            issuesService.save(issue);
-            return "xác nhận " + issue.getUserPartner().getLastName() + " " + issue.getUserPartner().getFirstName() + " là người hỗ trợ!";
-        } else return "sai status xác nhận! " + IssueStatus.waitMemberConfirm.toString();
-
+        ratingIssue.setId(0);
+        ratingIssue.setIssue(issuesService.findById(issueId));
+        ratingIssue.setUserMember(userService.findById(userMemberId));
+        RatingIssue newRatingIssue = ratingIssueService.save(ratingIssue);
+        return ratingIssueService.findById(newRatingIssue.getId()).toApiResponse();
     }
+
+
+    // = = = = = = = = = = = = = = = For Partner = = = = = = = = = = = = = = = //
 
     // Xem danh sách những người đang cần hỗ trợ
     @GetMapping(path = {"/rescue/receive", "/rescue/receive/"})
     public List<LinkedHashMap<String, Object>> showListRescue() {
         List<Issue> issues = issuesService.findIssueByStatus(IssueStatus.sent);
         return issues.stream().map(Issue::toApiResponse).toList();
-    }
-
-    // Xem chi tiết người đang cần hỗ trợ
-    @GetMapping(path = {"/rescue/receive/details/{id}", "/rescue/receive/details/{id}/"})
-    public LinkedHashMap<String, Object> showDetails(@PathVariable int id) {
-        Issue issue = issuesService.findById(id);
-        if (issue == null) {
-            throw new RestNotFoundException("Issues id not found - " + id);
-        }
-        return issue.toApiResponse();
     }
 
     // Xác nhận giúp

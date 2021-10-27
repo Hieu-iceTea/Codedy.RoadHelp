@@ -79,19 +79,4 @@ public class RatingIssueRestController {
     }
     //endregion
 
-
-    //region - Extend -
-    // Gửi đánh giá cứu hộ
-    @PostMapping(path = {"/rescue/send/post-reviews", "/rescue/send/post-reviews/"})
-    public LinkedHashMap<String, Object> createReviewRescue(@RequestBody RatingIssue ratingIssue, @RequestParam(defaultValue = "0") int userMemberId,
-                                                            @RequestParam(defaultValue = "0") int issueId) {
-
-        ratingIssue.setId(0);
-        ratingIssue.setIssue(issuesService.findById(issueId));
-        ratingIssue.setUserMember(userService.findById(userMemberId));
-        RatingIssue newRatingIssue = ratingIssueService.save(ratingIssue);
-        return ratingIssueService.findById(newRatingIssue.getId()).toApiResponse();
-    }
-    //endregion
-
 }
