@@ -5,11 +5,13 @@ import com.codedy.roadhelp.model.User;
 import com.codedy.roadhelp.payload.response.MessageResponse;
 import com.codedy.roadhelp.rest.exception.RestNotFoundException;
 import com.codedy.roadhelp.service.user.UserService;
+import com.codedy.roadhelp.util.storage.service.StorageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import java.util.HashMap;
@@ -21,9 +23,15 @@ import java.util.List;
 @RequestMapping(path = "/api/v1/users")
 public class UserRestController {
 
+    private final String _path = "src/main/resources/static/" + "data-images/user";
+
+
     //region - Autowired Service -
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private StorageService storageService;
     //endregion
 
 
@@ -94,6 +102,32 @@ public class UserRestController {
 
 
     //region - Extend -
+    // Update Avatar
+    @PutMapping(path = {"/{id}/update-avatar", "/{id}/update-avatar/"})
+    public ResponseEntity<?> updateAvatar(@PathVariable int id, @RequestParam MultipartFile imageFile) {
+        User user = userService.findById(id);
+
+        if (user == null) {
+            throw new RestNotFoundException("User id not found - " + id);
+        }
+
+        //Xử lý file
+        if (!imageFile.isEmpty()) {
+            // 01. Xóa file cũ nếu có:
+            if (user.getImage() != null) {
+                storageService.delete(user.getImage(), _path);
+            }
+
+            // 02. Lưu file mới:
+            String fileName = storageService.store(imageFile, _path);
+            user.setImage(fileName);
+        }
+
+        userService.save(user);
+
+        return ResponseEntity.ok(new MessageResponse("Update Avatar successfully!"));
+    }
+
     // Change Password
     @PutMapping(path = {"/{id}/change-password", "/{id}/change-password/"})
     public ResponseEntity<?> changePassword(@Valid @RequestBody HashMap<String, String> requestBody, @PathVariable int id) {
