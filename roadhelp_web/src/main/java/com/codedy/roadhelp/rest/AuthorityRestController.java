@@ -30,9 +30,11 @@ public class AuthorityRestController {
     @GetMapping(path = {"/{id}", "/{id}/"})
     public LinkedHashMap<String, Object> show(@PathVariable int id) {
         Authority authority = authorityService.findById(id);
+
         if (authority == null) {
             throw new RestNotFoundException("Authority id not found - " + id);
         }
+
         return authority.toApiResponse();
     }
 
@@ -40,31 +42,31 @@ public class AuthorityRestController {
     @PostMapping(path = {"", "/"})
     public LinkedHashMap<String, Object> store(@RequestBody Authority authority) {
         authority.setId(0);
-        Authority newAuthority = authorityService.save(authority);
-        return authorityService.findById(newAuthority.getId()).toApiResponse();
+        return authorityService.save(authority).toApiResponse();
     }
 
     // Update
     @PutMapping(path = {"/{id}", "/{id}/"})
     public LinkedHashMap<String, Object> update(@RequestBody Authority authority, @PathVariable int id) {
 
-        if (authorityService.findById(id) == null) {
+        if (!authorityService.existsById(id)) {
             throw new RestNotFoundException("Authority id not found - " + id);
         }
 
         authority.setId(id);
-        authorityService.save(authority);
-        return authorityService.findById(authority.getId()).toApiResponse();
+
+        return authorityService.save(authority).toApiResponse();
     }
 
     // Delete
     @DeleteMapping(path = {"/{id}", "/{id}/"})
     public String delete(@PathVariable int id) {
-        if (authorityService.findById(id) == null) {
+        if (!authorityService.existsById(id)) {
             throw new RestNotFoundException("Authority id not found - " + id);
         }
 
         authorityService.deleteById(id);
+
         return "Deleted authorityService id - " + id;
     }
     //endregion

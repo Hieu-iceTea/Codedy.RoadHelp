@@ -33,6 +33,7 @@ public class DistrictRestController {
     @GetMapping(path = {"/{id}", "/{id}/"})
     public LinkedHashMap<String, Object> show(@PathVariable int id) {
         District district = districtService.findById(id);
+
         if (district == null) {
             throw new RestNotFoundException("District id not found - " + id);
         }
@@ -44,31 +45,31 @@ public class DistrictRestController {
     @PostMapping(path = {"", "/"})
     public LinkedHashMap<String, Object> store(@RequestBody District district) {
         district.setId(0);
-        District newDistrict = districtService.save(district);
-        return districtService.findById(newDistrict.getId()).toApiResponse();
+
+        return districtService.save(district).toApiResponse();
     }
 
     // Update
     @PutMapping(path = {"/{id}", "/{id}/"})
     public LinkedHashMap<String, Object> update(@RequestBody District district, @PathVariable int id) {
-
-        if (districtService.findById(id) == null) {
+        if (!districtService.existsById(id)) {
             throw new RestNotFoundException("District id not found - " + id);
         }
 
         district.setId(id);
-        districtService.save(district);
-        return districtService.findById(district.getId()).toApiResponse();
+
+        return districtService.save(district).toApiResponse();
     }
 
     // Delete
     @DeleteMapping(path = {"/{id}", "/{id}/"})
     public String delete(@PathVariable int id) {
-        if (districtService.findById(id) == null) {
+        if (!districtService.existsById(id)) {
             throw new RestNotFoundException("District id not found - " + id);
         }
 
         districtService.deleteById(id);
+
         return "Deleted district id - " + id;
     }
     //endregion

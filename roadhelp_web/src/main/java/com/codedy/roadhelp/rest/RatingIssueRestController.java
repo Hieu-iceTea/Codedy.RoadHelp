@@ -18,8 +18,10 @@ public class RatingIssueRestController {
     //region - Autowired Service -
     @Autowired
     private RatingIssueService ratingIssueService;
+
     @Autowired
     private UserService userService;
+
     @Autowired
     private IssuesService issuesService;
     //endregion
@@ -36,9 +38,11 @@ public class RatingIssueRestController {
     @GetMapping(path = {"/{id}", "/{id}/"})
     public LinkedHashMap<String, Object> show(@PathVariable int id) {
         RatingIssue ratingIssue = ratingIssueService.findById(id);
+
         if (ratingIssue == null) {
-            throw new RestNotFoundException("Rating partner id not found - " + id);
+            throw new RestNotFoundException("Rating issue id not found - " + id);
         }
+
         return ratingIssue.toApiResponse();
     }
 
@@ -46,32 +50,32 @@ public class RatingIssueRestController {
     @PostMapping(path = {"", "/"})
     public LinkedHashMap<String, Object> store(@RequestBody RatingIssue ratingIssue) {
         ratingIssue.setId(0);
-        RatingIssue newRatingIssue = ratingIssueService.save(ratingIssue);
-        return ratingIssueService.findById(newRatingIssue.getId()).toApiResponse();
+
+        return ratingIssueService.save(ratingIssue).toApiResponse();
     }
 
     // Update
     @PutMapping(path = {"/{id}", "/{id}/"})
     public LinkedHashMap<String, Object> update(@RequestBody RatingIssue ratingIssue, @PathVariable int id) {
-
-        if (ratingIssueService.findById(id) == null) {
-            throw new RestNotFoundException("Rating partner id not found - " + id);
+        if (!ratingIssueService.existsById(id)) {
+            throw new RestNotFoundException("Rating issue id not found - " + id);
         }
 
         ratingIssue.setId(id);
-        ratingIssueService.save(ratingIssue);
-        return ratingIssueService.findById(ratingIssue.getId()).toApiResponse();
+
+        return ratingIssueService.save(ratingIssue).toApiResponse();
     }
 
     // Delete
     @DeleteMapping(path = {"/{id}", "/{id}/"})
     public String delete(@PathVariable int id) {
-        if (ratingIssueService.findById(id) == null) {
-            throw new RestNotFoundException("Rating partner id not found - " + id);
+        if (!ratingIssueService.existsById(id)) {
+            throw new RestNotFoundException("Rating issue id not found - " + id);
         }
 
         ratingIssueService.deleteById(id);
-        return "Deleted rating partner id - " + id;
+
+        return "Deleted rating issue id - " + id;
     }
     //endregion
 

@@ -3,7 +3,6 @@ package com.codedy.roadhelp.rest;
 import com.codedy.roadhelp.model.Garage;
 import com.codedy.roadhelp.rest.exception.RestNotFoundException;
 import com.codedy.roadhelp.service.garage.GarageService;
-import com.codedy.roadhelp.service.ward.WardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,8 +15,6 @@ import java.util.List;
 public class GarageRestController {
 
     //region - Autowired Service -
-    @Autowired
-    private WardService wardService;
     @Autowired
     private GarageService garageService;
     //endregion
@@ -34,9 +31,11 @@ public class GarageRestController {
     @GetMapping(path = {"/{id}", "/{id}/"})
     public LinkedHashMap<String, Object> show(@PathVariable int id) {
         Garage garage = garageService.findById(id);
+
         if (garage == null) {
             throw new RestNotFoundException("Garage id not found - " + id);
         }
+
         return garage.toApiResponse();
     }
 
@@ -44,30 +43,31 @@ public class GarageRestController {
     @PostMapping(path = {"", "/"})
     public LinkedHashMap<String, Object> store(@RequestBody Garage garage) {
         garage.setId(0);
-        Garage newGarage = garageService.save(garage);
-        return garageService.findById(newGarage.getId()).toApiResponse();
+
+        return garageService.save(garage).toApiResponse();
     }
 
     // Update
     @PutMapping(path = {"/{id}", "/{id}/"})
     public LinkedHashMap<String, Object> update(@RequestBody Garage garage, @PathVariable int id) {
-
-        if (garageService.findById(id) == null) {
+        if (!garageService.existsById(id)) {
             throw new RestNotFoundException("Garage id not found - " + id);
         }
+
         garage.setId(id);
-        garageService.save(garage);
-        return garageService.findById(garage.getId()).toApiResponse();
+
+        return garageService.save(garage).toApiResponse();
     }
 
     // Delete
     @DeleteMapping(path = {"/{id}", "/{id}/"})
     public String delete(@PathVariable int id) {
-        if (garageService.findById(id) == null) {
+        if (!garageService.existsById(id)) {
             throw new RestNotFoundException("Garage id not found - " + id);
         }
 
         garageService.deleteById(id);
+
         return "Deleted garage id - " + id;
     }
     //endregion
