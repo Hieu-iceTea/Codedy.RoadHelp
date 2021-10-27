@@ -34,7 +34,9 @@ class GarageRepository {
       body: item.toJson(),
     );
 
-    return Garage.fromJson(responseBody);
+    //return Garage.fromJson(responseBody);
+    //load relationship after save - Cần tải lại, vì sau khi lưu sẽ mất các relationship, VD: mất danh sách ảnh
+    return GarageRepository.findById(Garage.fromJson(responseBody).id!);
   }
 
   static Future<Garage> update(Garage item) async {
@@ -43,7 +45,9 @@ class GarageRepository {
       body: item.toJson(),
     );
 
-    return Garage.fromJson(responseBody);
+    //return Garage.fromJson(responseBody);
+    //load relationship after save - Cần tải lại, vì sau khi lưu sẽ mất các relationship, VD: mất danh sách ảnh
+    return GarageRepository.findById(Garage.fromJson(responseBody).id!);
   }
 
   static Future<dynamic> deleteById(int id) async {
