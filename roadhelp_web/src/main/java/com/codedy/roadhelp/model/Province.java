@@ -110,10 +110,12 @@ public class Province extends BaseModel implements Serializable {
         LinkedHashMap<String, Object> hashMap = this.toHashMap();
 
         hashMap.put("garages", getGaragesHashMap());
-        hashMap.put("districts", getDistrictsHashMap());
-        hashMap.put("wards", getWardsHashMap());
-        /*hashMap.put("districtIds", getDistrictIdsHashMap());
-        hashMap.put("wardIds", getWardIdsHashMap());*/
+        /*hashMap.put("districts", getDistrictsHashMap());
+        hashMap.put("wards", getWardsHashMap());*/
+
+        //Vì sanh sách quá nhiều, nên để giảm tải cho server, chỉ trả về List<ID> chứ không trả về List<Object>
+        hashMap.put("districtIds", getDistrictIdsHashMap());
+        hashMap.put("wardIds", getWardIdsHashMap());
 
         return hashMap;
     }
@@ -133,15 +135,15 @@ public class Province extends BaseModel implements Serializable {
         return wards != null ? wards.stream().map(Ward::toHashMap).toList() : null;
     }
 
-    /*//@JsonProperty("districtIds")
+    //@JsonProperty("districtIds")
     private List<Integer> getDistrictIdsHashMap() {
         return districts != null ? districts.stream().map(District::getId).toList() : null;
-    }*/
+    }
 
-    /*//@JsonProperty("wardIds")
+    //@JsonProperty("wardIds")
     private List<Integer> getWardIdsHashMap() {
         return wards != null ? wards.stream().map(Ward::getId).toList() : null;
-    }*/
+    }
     //endregion
 
 }
