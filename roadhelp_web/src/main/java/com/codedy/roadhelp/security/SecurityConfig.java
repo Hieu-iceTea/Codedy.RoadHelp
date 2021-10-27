@@ -66,35 +66,45 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 //Config:
                 // Only PARTNER
                 .antMatchers(HttpMethod.GET, "/api/v1/garages/byPartner/**").hasAuthority("ROLE_PARTNER")
-                .antMatchers(HttpMethod.GET, "/api/v1/issues/rescue/receive").hasAuthority("ROLE_PARTNER")
-                .antMatchers(HttpMethod.GET, "/api/v1/issues/rescue/receive/details/**").hasAuthority("ROLE_PARTNER")
-                .antMatchers(HttpMethod.PUT, "/api/v1/issues/rescue/receive/details/**").hasAuthority("ROLE_PARTNER")
-                .antMatchers(HttpMethod.GET, "/api/v1/issues/rescue/receive/show-reviews/**").hasAuthority("ROLE_PARTNER")
-                .antMatchers(HttpMethod.POST, "/api/v1/garages/repair-place-manage").hasAuthority("ROLE_PARTNER")
-                .antMatchers(HttpMethod.GET, "/api/v1/garages/repair-place-manage/**").hasAuthority("ROLE_PARTNER")
-                .antMatchers(HttpMethod.PUT, "/api/v1/garages/repair-place-manage/**").hasAuthority("ROLE_PARTNER")
-                .antMatchers(HttpMethod.PATCH, "/api/v1/garages/repair-place-manage/**").hasAuthority("ROLE_PARTNER")
-                .antMatchers(HttpMethod.PUT, "/api/v1/garages/repair-place-manage/**/setActive").hasAuthority("ROLE_PARTNER")
-                .antMatchers(HttpMethod.PATCH, "/api/v1/garages/repair-place-manage/**/setActive").hasAuthority("ROLE_PARTNER")
-                .antMatchers(HttpMethod.GET, "/api/v1/users/my-account-partner/**/review-about-me").hasAuthority("ROLE_PARTNER")
+                .antMatchers(HttpMethod.GET, "/api/v1/issues/byStatusSent/**").hasAuthority("ROLE_PARTNER")
+                .antMatchers(HttpMethod.GET, "/api/v1/issues/**").hasAuthority("ROLE_PARTNER")
+                .antMatchers(HttpMethod.PUT, "/api/v1/issues/**/partner-confirm-member/**").hasAuthority("ROLE_PARTNER")
+                .antMatchers(HttpMethod.GET, "/api/v1/garages/byPartner/**").hasAuthority("ROLE_PARTNER")
+                .antMatchers(HttpMethod.POST, "/api/v1/garages/**").hasAuthority("ROLE_PARTNER")
+                .antMatchers(HttpMethod.PUT, "/api/v1/garages/**").hasAuthority("ROLE_PARTNER")
+                .antMatchers(HttpMethod.PUT, "/api/v1/garages/**/setActive/**").hasAuthority("ROLE_PARTNER")
+                .antMatchers(HttpMethod.GET, "/api/v1/user/**/ratingIssue/**").hasAuthority("ROLE_PARTNER")
+                .antMatchers(HttpMethod.POST, "/api/v1/garageImages/**").hasAuthority("ROLE_PARTNER")
+                .antMatchers(HttpMethod.PUT, "/api/v1/garageImages/**").hasAuthority("ROLE_PARTNER")
+
 
                 // Only MEMBER
-                .antMatchers(HttpMethod.POST, "/api/v1/issues/rescue/send").hasAuthority("ROLE_MEMBER")
-                .antMatchers(HttpMethod.GET, "/api/v1/issues/rescue/send/confirmation/**").hasAuthority("ROLE_MEMBER")
-                .antMatchers(HttpMethod.PUT, "/api/v1/issues/rescue/send/confirmation/**").hasAuthority("ROLE_MEMBER")
-                .antMatchers(HttpMethod.PUT, "/api/v1/issues/rescue/success/**").hasAuthority("ROLE_MEMBER")
-                .antMatchers(HttpMethod.POST, "/api/v1/issues/rescue/send/post-reviews/**").hasAuthority("ROLE_MEMBER")
-                .antMatchers(HttpMethod.GET, "/api/v1/garages/repair-place").hasAuthority("ROLE_MEMBER")
-                .antMatchers(HttpMethod.GET, "/api/v1/garages/repair-place/details/**").hasAuthority("ROLE_MEMBER")
+                .antMatchers(HttpMethod.POST, "/api/v1/issues/rescue/send/**").hasAuthority("ROLE_MEMBER")
+                .antMatchers(HttpMethod.PUT, "/auth/become-to-partner/**").hasAuthority("ROLE_MEMBER")
+                .antMatchers(HttpMethod.POST, "/api/v1/issues/issues/send/**").hasAuthority("ROLE_MEMBER")
+                .antMatchers(HttpMethod.GET, "/api/v1/issues/**/userPartner/**").hasAuthority("ROLE_MEMBER")
+                .antMatchers(HttpMethod.PUT, "/api/v1/issues/**/member-confirm-partner/**").hasAuthority("ROLE_MEMBER")
+                .antMatchers(HttpMethod.PUT, "/api/v1/issues/**/setStatusSuccess/**").hasAuthority("ROLE_MEMBER")
+                .antMatchers(HttpMethod.POST, "/api/v1/issues/**/ratingIssue/**").hasAuthority("ROLE_MEMBER")
+                .antMatchers(HttpMethod.GET, "/api/v1/garages/**").hasAuthority("ROLE_MEMBER")
+
 
                 // Both: MEMBER & PARTNER
-                .antMatchers(HttpMethod.GET, "/api/v1/garages/featured/**").hasAnyAuthority("ROLE_PARTNER", "ROLE_MEMBER")
-                .antMatchers(HttpMethod.GET, "/api/v1/garages/ratingGarages/byGarage/**").hasAnyAuthority("ROLE_PARTNER", "ROLE_MEMBER")
-                .antMatchers(HttpMethod.GET, "/api/v1/users/my-account/**").hasAnyAuthority("ROLE_PARTNER", "ROLE_MEMBER")
-                .antMatchers(HttpMethod.PUT, "/api/v1/users/my-account/**").hasAnyAuthority("ROLE_PARTNER", "ROLE_MEMBER")
-                .antMatchers(HttpMethod.PATCH, "/api/v1/users/my-account/**").hasAnyAuthority("ROLE_PARTNER", "ROLE_MEMBER")
-                .antMatchers(HttpMethod.PATCH, "/api/v1/users/my-account/**/change-password").hasAnyAuthority("ROLE_PARTNER", "ROLE_MEMBER")
-                .antMatchers(HttpMethod.PUT, "/api/v1/users/my-account/**/change-password").hasAnyAuthority("ROLE_PARTNER", "ROLE_MEMBER")
+                .antMatchers(HttpMethod.GET, "/api/v1/issues/**/ratingIssue/**").hasAnyAuthority("ROLE_PARTNER", "ROLE_MEMBER")
+                .antMatchers("/api/v1/garages/featured/**").hasAnyAuthority("ROLE_PARTNER", "ROLE_MEMBER")
+                .antMatchers(HttpMethod.GET, "/api/v1/garages/**").hasAnyAuthority("ROLE_PARTNER", "ROLE_MEMBER")
+                .antMatchers(HttpMethod.POST, "/api/v1/garages/**/ratingGarage/**").hasAnyAuthority("ROLE_PARTNER", "ROLE_MEMBER")
+                .antMatchers(HttpMethod.GET, "/api/v1/garages/**/ratingGarage/**").hasAnyAuthority("ROLE_PARTNER", "ROLE_MEMBER")
+                .antMatchers(HttpMethod.GET, "/api/v1/user/**").hasAnyAuthority("ROLE_PARTNER", "ROLE_MEMBER")
+                .antMatchers(HttpMethod.PUT, "/api/v1/user/**/change-password/**").hasAnyAuthority("ROLE_PARTNER", "ROLE_MEMBER")
+                .antMatchers("/api/v1/user/**/update-avatar/**").hasAnyAuthority("ROLE_PARTNER", "ROLE_MEMBER")
+                .antMatchers(HttpMethod.GET, "/api/v1/provinces/**").hasAnyAuthority("ROLE_PARTNER", "ROLE_MEMBER")
+                .antMatchers(HttpMethod.GET, "/api/v1/districts/**").hasAnyAuthority("ROLE_PARTNER", "ROLE_MEMBER")
+                .antMatchers(HttpMethod.GET, "/api/v1/wards/**").hasAnyAuthority("ROLE_PARTNER", "ROLE_MEMBER")
+                .antMatchers("/api/v1/ratingGarages/byGarage/**").hasAnyAuthority("ROLE_PARTNER", "ROLE_MEMBER")
+
+
+
 
                 .anyRequest().authenticated();
 
