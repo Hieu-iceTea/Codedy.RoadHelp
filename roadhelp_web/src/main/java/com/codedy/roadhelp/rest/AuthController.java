@@ -23,9 +23,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
@@ -137,17 +135,27 @@ public class AuthController {
 
         User user = userService.findById(userMemberId);
 
-        // Create new authority
+        List<Authority> auths = user.getAuthorities();
+
+        String role = "ROLE_PARTNER";
+
         Authority authority = new Authority();
-        authority.setUser(user);
-        authority.setAuthority("ROLE_PARTNER");
 
-        List<Authority> authorities = new ArrayList<>();
-        authorities.add(authority);
-        authority.setId(authority.getId());
+        for (var auth : auths) {
+            if (!Objects.equals(auth.getAuthority(), role)) {
+                authority.setUser(user);
+                authority.setAuthority("ROLE_PARTNER");
 
-        authorityService.save(authority);
+                List<Authority> authorities = new ArrayList<>();
+                authorities.add(authority);
+                authority.setId(authority.getId());
 
-        return ResponseEntity.ok(new MessageResponse("Become to partner successfully!"));
+                authorityService.save(authority);
+
+                return ResponseEntity.ok(new MessageResponse("Become to partner successfully!"));
+            }
+        }
+
+        return ResponseEntity.ok(new MessageResponse("Become to partner failure!"));
     }
 }
