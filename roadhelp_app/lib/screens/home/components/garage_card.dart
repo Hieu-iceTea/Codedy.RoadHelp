@@ -3,7 +3,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:roadhelp/models/garage.dart';
 import 'package:roadhelp/screens/place/repair_place/repair_place_details/repair_place_details_screen.dart';
 
-import '/screens/details/details_screen.dart';
 import '../../../config/constants.dart';
 import '../../../config/size_config.dart';
 
@@ -28,7 +27,8 @@ class GarageCard extends StatelessWidget {
           onTap: () => Navigator.pushNamed(
             context,
             RepairPlaceDetailsScreen.routeName,
-            arguments: RepairPlaceDetailsArguments(garage: garage, isManage: true),
+            arguments:
+                RepairPlaceDetailsArguments(garage: garage, isManage: true),
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -43,9 +43,18 @@ class GarageCard extends StatelessWidget {
                   ),
                   child: Hero(
                     tag: garage.id.toString(),
-                    child: garage.garageImages.isNotEmpty
-                        ? Image.network(garage.garageImages[0].imageUrl!)
-                        : const Text("No\nImage", textAlign: TextAlign.center),
+                    child: ClipRRect(
+                      borderRadius: const BorderRadius.all(Radius.circular(6)),
+                      child: garage.garageImages.isNotEmpty
+                          ? Image.network(
+                              garage.garageImages[0].imageUrl!,
+                              //height: double.infinity,
+                              //width: 80,
+                              fit: BoxFit.cover,
+                            )
+                          : const Text("No\nImage",
+                              textAlign: TextAlign.center),
+                    ),
                   ),
                 ),
               ),
@@ -58,13 +67,19 @@ class GarageCard extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
-                    "${garage.rateAvg} ⭐",
-                    style: TextStyle(
-                      fontSize: getProportionateScreenWidth(18),
-                      fontWeight: FontWeight.w600,
-                      color: kPrimaryColor,
-                    ),
+                  Row(
+                    children: [
+                      Text(
+                        "${garage.rateAvg}",
+                        style: TextStyle(
+                          fontSize: getProportionateScreenWidth(16),
+                          fontWeight: FontWeight.w600,
+                          color: kPrimaryColor,
+                        ),
+                      ),
+                      const SizedBox(width: 4),
+                      SvgPicture.asset("assets/icons/Star Icon.svg", height: 14),
+                    ],
                   ),
                   InkWell(
                     borderRadius: BorderRadius.circular(50),

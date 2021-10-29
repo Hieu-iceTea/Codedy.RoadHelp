@@ -47,6 +47,7 @@ class PopularGarages extends StatelessWidget {
                     ),
                     SizedBox(width: getProportionateScreenWidth(20)),
                   ],
+                  crossAxisAlignment: CrossAxisAlignment.start,
                 ),
               );
             } else if (snapshot.hasError) {
