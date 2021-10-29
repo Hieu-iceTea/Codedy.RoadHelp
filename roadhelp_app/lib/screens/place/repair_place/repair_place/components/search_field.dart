@@ -51,7 +51,7 @@ class _SearchFieldState extends State<SearchField> {
           border: InputBorder.none,
           focusedBorder: InputBorder.none,
           enabledBorder: InputBorder.none,
-          hintText: "Search...",
+          hintText: "Tìm kiếm...",
           prefixIcon: IconButton(
             onPressed: () => {},
             icon: Icon(Icons.search),
@@ -72,7 +72,7 @@ class _SearchFieldState extends State<SearchField> {
       builder: (BuildContext context) {
         return AlertDialog(
           title: const Text(
-            'Location Filter',
+            'Bộ lọc vị trí',
             textAlign: TextAlign.center,
           ),
           titleTextStyle: const TextStyle(

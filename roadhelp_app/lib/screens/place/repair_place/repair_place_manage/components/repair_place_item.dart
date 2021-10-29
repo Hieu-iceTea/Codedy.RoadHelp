@@ -21,9 +21,15 @@ class RepairPlaceItem extends StatelessWidget {
       leading: Hero(
         tag: garage.id.toString(),
         child: ClipRRect(
-          borderRadius: const BorderRadius.all(Radius.circular(10)),
+          borderRadius: const BorderRadius.all(Radius.circular(6)),
           child: garage.garageImages.isNotEmpty
-              ? Image.network(garage.garageImages[0].imageUrl!)
+              ? AspectRatio(
+                  aspectRatio: 3 / 2,
+                  child: Image.network(
+                    garage.garageImages[0].imageUrl!,
+                    fit: BoxFit.cover,
+                  ),
+                )
               : const Text("No\nImage", textAlign: TextAlign.center),
         ),
       ),

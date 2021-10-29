@@ -45,7 +45,7 @@ class PanelHeader extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               Text(
-                "List Repair Place",
+                "Tiệm sửa xe",
                 style: TextStyle(
                   fontWeight: FontWeight.normal,
                   fontSize: 24.0,

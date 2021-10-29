@@ -21,11 +21,19 @@ class GarageItem extends StatelessWidget {
           arguments: RepairPlaceDetailsArguments(garage: garage),
         ),
         leading: Hero(
-          tag: garage.id.toString(),
-          child: garage.garageImages.isNotEmpty
-              ? Image.network(garage.garageImages[0].imageUrl!)
-              : const Text("No\nImage", textAlign: TextAlign.center),
-        ),
+            tag: garage.id.toString(),
+            child: ClipRRect(
+              borderRadius: const BorderRadius.all(Radius.circular(6)),
+              child: garage.garageImages.isNotEmpty
+                  ? AspectRatio(
+                      aspectRatio: 3 / 2,
+                      child: Image.network(
+                        garage.garageImages[0].imageUrl!,
+                        fit: BoxFit.cover,
+                      ),
+                    )
+                  : const Text("No\nImage", textAlign: TextAlign.center),
+            )),
         title: Text(garage.name!),
         subtitle: Text(garage.phone! + '\n' + garage.address! + '| 2 Km'),
         trailing: RoundedIconBtn(
