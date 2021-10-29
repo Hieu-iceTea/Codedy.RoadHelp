@@ -23,11 +23,12 @@ class RepairPlaceItem extends StatelessWidget {
         child: ClipRRect(
           borderRadius: const BorderRadius.all(Radius.circular(6)),
           child: garage.garageImages.isNotEmpty
-              ? Image.network(
-                  garage.garageImages[0].imageUrl!,
-                  height: double.infinity,
-                  width: 80,
-                  fit: BoxFit.cover,
+              ? AspectRatio(
+                  aspectRatio: 3 / 2,
+                  child: Image.network(
+                    garage.garageImages[0].imageUrl!,
+                    fit: BoxFit.cover,
+                  ),
                 )
               : const Text("No\nImage", textAlign: TextAlign.center),
         ),
