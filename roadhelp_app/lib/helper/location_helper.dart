@@ -10,8 +10,10 @@ class LocationHelper {
   static String generateLocationPreviewImage({
     required double latitude,
     required double longitude,
+    int width = 600,
+    int height = 300,
   }) {
-    return 'https://maps.googleapis.com/maps/api/staticmap?&zoom=16&size=600x300&markers=color:red|$latitude,$longitude&key=$GOOGLE_API_KEY';
+    return 'https://maps.googleapis.com/maps/api/staticmap?&zoom=16&size=${width}x$height&markers=color:red|$latitude,$longitude&key=$GOOGLE_API_KEY';
   }
 
   static Future<String> getPlaceAddress(double lat, double lng) async {

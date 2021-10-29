@@ -24,7 +24,13 @@ class IssueListItem extends StatelessWidget {
         child: ClipRRect(
           borderRadius: const BorderRadius.all(Radius.circular(10)),
           child: issue.userMember?.imageUrl != null
-              ? Image.network(issue.userMember!.imageUrl!)
+              ? AspectRatio(
+                  aspectRatio: 1 / 1,
+                  child: Image.network(
+                    issue.userMember!.imageUrl!,
+                    fit: BoxFit.cover,
+                  ),
+                )
               : const Text("No\nImage", textAlign: TextAlign.center),
         ),
       ),

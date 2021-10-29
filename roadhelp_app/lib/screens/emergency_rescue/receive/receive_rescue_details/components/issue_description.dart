@@ -25,6 +25,7 @@ class IssueDescription extends StatelessWidget {
             style: Theme.of(context).textTheme.headline6,
           ),
         ),
+        const SizedBox(height: 10),
         Padding(
             padding: EdgeInsets.only(
               left: getProportionateScreenWidth(10),
@@ -33,6 +34,15 @@ class IssueDescription extends StatelessWidget {
             ),
             child: Column(
               children: [
+                ListTile(
+                  leading: Icon(Icons.person),
+                  title: Text(
+                    issue.userMember!.firstName! +
+                        " " +
+                        issue.userMember!.lastName!,
+                    style: TextStyle(color: kTextColor),
+                  ),
+                ),
                 ListTile(
                   leading: Icon(Icons.phone),
                   title: Text(
@@ -47,42 +57,38 @@ class IssueDescription extends StatelessWidget {
                     style: TextStyle(color: kTextColor),
                   ),
                 ),
+                ListTile(
+                  leading: Icon(Icons.description),
+                  title: Text(
+                    issue.description!,
+                    style: TextStyle(color: kTextColor),
+                  ),
+                ),
               ],
             )),
-        Padding(
+        /*Padding(
           padding: EdgeInsets.only(
             left: getProportionateScreenWidth(20),
             right: getProportionateScreenWidth(64),
           ),
-          child: Text(
-            issue.description!,
-            maxLines: 3,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Text("Chi tiết:"),
+              Row(
+                children: [
+                  const SizedBox(width: 60),
+                  Expanded(
+                    child: Text(
+                      issue.description!,
+                      style: const TextStyle(fontSize: 16),
+                    ),
+                  ),
+                ],
+              )
+            ],
           ),
-        ),
-        Padding(
-          padding: EdgeInsets.symmetric(
-            horizontal: getProportionateScreenWidth(20),
-            vertical: 10,
-          ),
-          child: GestureDetector(
-            onTap: () {},
-            child: Row(
-              children: [
-                Text(
-                  "See More Detail",
-                  style: TextStyle(
-                      fontWeight: FontWeight.w600, color: kPrimaryColor),
-                ),
-                SizedBox(width: 5),
-                Icon(
-                  Icons.arrow_forward_ios,
-                  size: 12,
-                  color: kPrimaryColor,
-                ),
-              ],
-            ),
-          ),
-        )
+        ),*/
       ],
     );
   }

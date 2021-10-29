@@ -3,7 +3,6 @@ import 'package:roadhelp/config/size_config.dart';
 import 'package:roadhelp/models/issues.dart';
 
 import 'components/body.dart';
-import 'components/custom_app_bar.dart';
 
 class ReceiveRescueDetailsScreen extends StatelessWidget {
   static String routeName = "/receive_rescue_details";
@@ -21,10 +20,6 @@ class ReceiveRescueDetailsScreen extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: Color(0xFFF5F6F9),
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(AppBar().preferredSize.height),
-        child: CustomAppBar(),
-      ),
       body: Body(issue: arguments.issue),
     );
   }
