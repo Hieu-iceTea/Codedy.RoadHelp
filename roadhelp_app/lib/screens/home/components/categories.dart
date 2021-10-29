@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:roadhelp/screens/emergency_rescue/receive/receive_rescue/receive_rescue_screen.dart';
 import 'package:roadhelp/screens/emergency_rescue/send/send_rescue/send_rescue_screen.dart';
 import 'package:roadhelp/screens/place/gas_place/gas_place_screen.dart';
 import 'package:roadhelp/screens/place/repair_place/repair_place/repair_place_screen.dart';
@@ -32,8 +33,8 @@ class Categories extends StatelessWidget {
       },
       {
         "icon": "assets/icons/Discover.svg",
-        "text": "Xem Thêm",
-        "routeName": null,
+        "text": "Nhận Cứu Hộ",
+        "routeName": ReceiveRescueScreen.routeName,
       },
     ];
     return Padding(

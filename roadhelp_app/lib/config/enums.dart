@@ -15,15 +15,15 @@ extension IssueCategoryExtension on IssueCategory {
   String get name {
     switch (this) {
       case IssueCategory.brokenTire:
-        return 'brokenTire';
+        return 'Lốp xe bị hỏng';
       case IssueCategory.brokenBrake:
-        return 'brokenBrake';
+        return 'Phanh bị hỏng';
       case IssueCategory.brokenChain:
-        return 'brokenChain';
+        return 'Xích bị hỏng';
       case IssueCategory.brokenEngine:
-        return 'brokenEngine';
+        return 'Động cơ bị hỏng.';
       case IssueCategory.other:
-        return 'other';
+        return 'Khác';
       default:
         return "_ERROR_";
     }
