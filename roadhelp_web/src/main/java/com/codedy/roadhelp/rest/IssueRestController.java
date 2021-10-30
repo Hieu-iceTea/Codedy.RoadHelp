@@ -1,5 +1,6 @@
 package com.codedy.roadhelp.rest;
 
+import com.codedy.roadhelp.dto.WebSocketDto;
 import com.codedy.roadhelp.model.Issue;
 import com.codedy.roadhelp.model.RatingIssue;
 import com.codedy.roadhelp.model.User;
@@ -9,6 +10,7 @@ import com.codedy.roadhelp.service.issues.IssuesService;
 import com.codedy.roadhelp.service.ratingIssue.RatingIssueService;
 import com.codedy.roadhelp.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.LinkedHashMap;
@@ -18,17 +20,16 @@ import java.util.List;
 @RequestMapping(path = "/api/v1/issues")
 public class IssueRestController {
 
+    @Autowired
+    SimpMessagingTemplate simpMessagingTemplate;
     //region - Autowired Service -
     @Autowired
     private IssuesService issuesService;
-
     @Autowired
     private RatingIssueService ratingIssueService;
-
     @Autowired
     private UserService userService;
     //endregion
-
 
     //region - Base -
     // List
@@ -193,6 +194,14 @@ public class IssueRestController {
         issue.setStatus(IssueStatus.waitMemberConfirm);
 
         issuesService.save(issue);
+
+        // Gửi thông báo tới máy member bằng WebSocket :
+        LinkedHashMap<String, Object> data = new LinkedHashMap<>();
+        data.put("issueStatus", issue.getStatus());
+        WebSocketDto webSocketDto = new WebSocketDto();
+        webSocketDto.setData(data);
+        webSocketDto.setMessage("Issue này đã được Partner xác nhận giúp."); // Không cần thiết, chỉ test thôi
+        simpMessagingTemplate.convertAndSend("/topic/issue/memberWaitPartner/" + issue.getId(), webSocketDto);
 
         LinkedHashMap<String, Object> response = new LinkedHashMap<>();
         response.put("message", "Bạn đã xác nhận muốn hỗ trợ: '" + issue.getUserMember().getFirstName() + " " + issue.getUserMember().getLastName() + "'");

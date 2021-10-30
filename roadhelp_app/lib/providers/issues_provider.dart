@@ -76,7 +76,7 @@ class IssuesProvider with ChangeNotifier {
     return message;
   }
 
-  Future<void> send(Issues item) async {
+  Future<Issues> send(Issues item) async {
     if (!authProvider!.authData.isAuth) {
       throw Exception(
           "Chưa đăng nhập, hoặc hết thời gian đăng nhập. Vui lòng đăng xuất & đăng nhập lại");
@@ -87,6 +87,7 @@ class IssuesProvider with ChangeNotifier {
     Issues itemResponse = await IssuesRepository.send(item);
     _items.add(itemResponse);
     notifyListeners();
+    return itemResponse;
   }
 //#endregion
 }

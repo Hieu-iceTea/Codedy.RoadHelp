@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:roadhelp/providers/issues_provider.dart';
-import 'package:roadhelp/screens/emergency_rescue/send/wait/wait_screen.dart';
+import 'package:roadhelp/screens/emergency_rescue/send/send_rescue_confirm/send_rescue_confirm_screen.dart';
+import 'package:roadhelp/screens/emergency_rescue/send/wait_websocket/wait_websocket_screen.dart';
 
 import '/components/custom_surfix_icon.dart';
 import '/components/default_button.dart';
@@ -191,15 +192,34 @@ class _IssuesFormState extends State<IssuesForm> {
     _formKey.currentState!.save();
 
     try {
-      await Provider.of<IssuesProvider>(context, listen: false)
-          .send(widget.issue!);
+      Issues itemResponse =
+          await Provider.of<IssuesProvider>(context, listen: false)
+              .send(widget.issue!);
 
       await Util.showDialogNotification(
           context: context,
           title: "Thành Công",
           content: "Đã gửi yêu cầu cứu hộ khẩn cấp");
 
-      Navigator.pushReplacementNamed(context, WaitScreen.routeName);
+      Navigator.pushNamed(
+        context,
+        WaitWebSocketScreen.routeName,
+        arguments: WaitWebSocketArguments(
+          message: "Chỉ một lúc thôi...\nHệ thống đang tìm người hỗ trợ bạn.",
+          destination:
+              '/topic/issue/memberWaitPartner/' + itemResponse.id.toString(),
+          callback: (stompFrame) {
+            if (stompFrame.body != null) {
+              Navigator.pushReplacementNamed(
+                  context, SendRescueConfirmScreen.routeName);
+              //Navigator.pop(context);
+
+              /*Map<String, dynamic> result = json.decode(frame.body!);
+              setState(() => result['content']);*/
+            }
+          },
+        ),
+      );
     } catch (error) {
       await Util.showDialogNotification(
           context: context, content: error.toString());
