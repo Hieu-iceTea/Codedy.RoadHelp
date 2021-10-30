@@ -50,4 +50,30 @@ class IssuesProvider with ChangeNotifier {
     _items.removeWhere((element) => element.id == id);
     notifyListeners();
   }
+
+  //#region - Extend -
+  Future<List<Issues>> fetchAllDataByStatusSent() async {
+    try {
+      List<Issues> _itemsLoaded = await IssuesRepository.findAllByStatusSent();
+      _items.clear();
+      _items.addAll(_itemsLoaded);
+      notifyListeners();
+      return _items;
+    } catch (error) {
+      rethrow;
+    }
+  }
+
+  Future<String> partnerConfirmMember(Issues item) async {
+    String message = await IssuesRepository.partnerConfirmMember(
+        item.id!, authProvider!.authData.currentUser!.id!);
+
+    Issues itemReload = findById(item.id!);
+    final index = _items.indexWhere((element) => element.id == item.id);
+    _items[index] = itemReload;
+    notifyListeners();
+
+    return message;
+  }
+//#endregion
 }
