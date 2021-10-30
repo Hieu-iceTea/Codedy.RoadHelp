@@ -330,41 +330,41 @@ VALUE (16, 12, 'tiem8.jpg');
 #endregion
 
 # #region Insert issue
-INSERT INTO issue(id, user_member_id, longitude, latitude,category, phone,address,description, status)
-VALUE (1, 1,  '21.012252', '105.840863','1',  '032 87 99 000',  'Đường Lê Duẩn','', '0');
+INSERT INTO issue(id, user_member_id,user_partner_id, latitude, longitude,category, phone,address,description, status)
+VALUE (1, 6, NULL, '21.012252', '105.840863','0',  '032 87 99 000',  'Đường Lê Duẩn','Lốp trước bị thủng hết hơi, không thể di chuyển, hãy giúp tôi', '0');
 
-INSERT INTO issue(id, user_member_id, longitude, latitude,category, phone,address,description, status)
-VALUE (2, 2,  '21.012125', '105.839031','1',  '0868 6633 15',  'Đường Lê Duẩn','', '0');
+INSERT INTO issue(id, user_member_id,user_partner_id, latitude, longitude,category, phone,address,description, status)
+VALUE (2, 7, NULL, '21.012125', '105.839031','1',  '0868 6633 15',  'Đường Lê Duẩn','', '0');
 
-INSERT INTO issue(id, user_member_id, longitude, latitude,category, phone,address,description, status)
-VALUE (3, 3, '21.010844', '105.839912','2',  '0868 6633 16',  'Ven Hồ Ba Mẫu','', '0');
+INSERT INTO issue(id, user_member_id,user_partner_id, latitude, longitude,category, phone,address,description, status)
+VALUE (3, 8, NULL, '21.010844', '105.839912','2',  '0868 6633 16',  'Ven Hồ Ba Mẫu','', '0');
 
-INSERT INTO issue(id, user_member_id,user_partner_id, longitude, latitude,category, phone,address,description, status) 
-VALUE (4, 4, 9, '21.009477', '105.841029','1',  '0868 6633 17',  'Ven Hồ Ba Mẫu','', '5');
+INSERT INTO issue(id, user_member_id,user_partner_id, latitude, longitude,category, phone,address,description, status)
+VALUE (4, 9, 4, '21.009477', '105.841029','1',  '0868 6633 17',  'Ven Hồ Ba Mẫu','', '1');
 
-INSERT INTO issue(id, user_member_id,user_partner_id, longitude, latitude,category, phone,address,description, status) 
-VALUE (5, 5, 8, '21.008315', '105.841887','1',  '0869 6633 18',  'Ven Hồ Ba Mẫu','', '5');
+INSERT INTO issue(id, user_member_id,user_partner_id, latitude, longitude,category, phone,address,description, status)
+VALUE (5, 10, 4, '21.008315', '105.841887','3',  '0869 6633 18',  'Ven Hồ Ba Mẫu','', '2');
 
-INSERT INTO issue(id, user_member_id,user_partner_id, longitude, latitude,category, phone,address,description, status) 
-VALUE (6, 6, 7, '21.008075', '105.843947','2',  '0869 6633 19',  'Ven Hồ Ba Mẫu','', '5');
+INSERT INTO issue(id, user_member_id,user_partner_id, latitude, longitude,category, phone,address,description, status)
+VALUE (6, 9, NULL, '21.008075', '105.843947','3',  '0869 6633 19',  'Ven Hồ Ba Mẫu','', '0');
 
-INSERT INTO issue(id, user_member_id,user_partner_id, longitude, latitude,category, phone,address,description, status) 
-VALUE (7, 7, 6, '21.008706', '105.845481','1',  '0869 6633 20',  'Ven Hồ Ba Mẫu','', '5');
+INSERT INTO issue(id, user_member_id,user_partner_id, latitude, longitude,category, phone,address,description, status)
+VALUE (7, 6, 4, '21.008706', '105.845481','1',  '0869 6633 20',  'Ven Hồ Ba Mẫu','', '4');
 
-INSERT INTO issue(id, user_member_id,user_partner_id, longitude, latitude,category, phone,address,description, status) 
-VALUE (8, 8, 5, '21.009637', '105.845857','1',  '0870 6633 21',  'Ven Hồ Ba Mẫu','', '5');
+INSERT INTO issue(id, user_member_id,user_partner_id, latitude, longitude,category, phone,address,description, status)
+VALUE (8, 7, 4, '21.009637', '105.845857','1',  '0870 6633 21',  'Ven Hồ Ba Mẫu','', '5');
 
-INSERT INTO issue(id, user_member_id,user_partner_id, longitude, latitude,category, phone,address,description, status) 
-VALUE (9, 9, 4, '21.011054', '105.846041','2',  '0870 6633 22',  'Ven Hồ Ba Mẫu','', '5');
+INSERT INTO issue(id, user_member_id,user_partner_id, latitude, longitude,category, phone,address,description, status)
+VALUE (9, 10, NULL, '21.011054', '105.846041','0',  '0870 6633 22',  'Ven Hồ Ba Mẫu','', '0');
 
-INSERT INTO issue(id, user_member_id,user_partner_id, longitude, latitude,category, phone,address,description, status) 
-VALUE (10, 10, 3, '21.013774', '105.841152','1',  '0870 6633 23',  'Đường Lê Duẩn','', '5');
+INSERT INTO issue(id, user_member_id,user_partner_id, latitude, longitude,category, phone,address,description, status)
+VALUE (10, 9, 4, '21.013774', '105.841152','1',  '0870 6633 23',  'Đường Lê Duẩn','', '1');
 
-INSERT INTO issue(id, user_member_id,user_partner_id, longitude, latitude,category, phone,address,description, status) 
-VALUE (11, 11, 2, '21.014415', '105.840133','1',  '0871 6633 24',  'Đường Lê Duẩn','', '5');
+INSERT INTO issue(id, user_member_id,user_partner_id, latitude, longitude,category, phone,address,description, status)
+VALUE (11, 10, 4, '21.014415', '105.840133','1',  '0871 6633 24',  'Đường Lê Duẩn','', '2');
 
-INSERT INTO issue(id, user_member_id,user_partner_id, longitude, latitude,category, phone,address,description, status) 
-VALUE (12, 12, 1, '21.013804', '105.839543','2',  '0871 6633 25',  'Đường Lê Duẩn','', '5');
+INSERT INTO issue(id, user_member_id,user_partner_id, latitude, longitude,category, phone,address,description, status)
+VALUE (12, 11, NULL, '21.013804', '105.839543','1',  '0871 6633 25',  'Đường Lê Duẩn','', '0');
 
 
 #endregion
