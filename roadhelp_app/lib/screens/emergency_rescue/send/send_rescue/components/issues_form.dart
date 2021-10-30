@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:roadhelp/providers/issues_provider.dart';
+import 'package:roadhelp/screens/emergency_rescue/send/wait/wait_screen.dart';
 
 import '/components/custom_surfix_icon.dart';
 import '/components/default_button.dart';
@@ -198,7 +199,7 @@ class _IssuesFormState extends State<IssuesForm> {
           title: "Thành Công",
           content: "Đã gửi yêu cầu cứu hộ khẩn cấp");
 
-      //Navigator.of(context).pop();
+      Navigator.pushReplacementNamed(context, WaitScreen.routeName);
     } catch (error) {
       await Util.showDialogNotification(
           context: context, content: error.toString());
