@@ -50,4 +50,18 @@ class IssuesProvider with ChangeNotifier {
     _items.removeWhere((element) => element.id == id);
     notifyListeners();
   }
+
+  //#region - Extend -
+  Future<List<Issues>> fetchAllDataByStatusSent() async {
+    try {
+      List<Issues> _itemsLoaded = await IssuesRepository.findAllByStatusSent();
+      _items.clear();
+      _items.addAll(_itemsLoaded);
+      notifyListeners();
+      return _items;
+    } catch (error) {
+      rethrow;
+    }
+  }
+//#endregion
 }

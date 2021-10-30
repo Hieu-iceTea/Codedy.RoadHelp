@@ -17,7 +17,7 @@ class Body extends StatefulWidget {
 class _BodyState extends State<Body> {
   Future<List<Issues>> _fetchAllData(BuildContext context) async {
     return await Provider.of<IssuesProvider>(context, listen: false)
-        .fetchAllData();
+        .fetchAllDataByStatusSent();
   }
 
   @override

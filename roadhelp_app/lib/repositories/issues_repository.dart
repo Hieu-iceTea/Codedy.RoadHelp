@@ -51,4 +51,16 @@ class IssuesRepository {
       url: _url + id.toString(),
     );
   }
+
+  //#region - Extend -
+  static Future<List<Issues>> findAllByStatusSent() async {
+    var responseBody = await HttpHelper.get(
+      url: _url + "byStatusSent",
+    );
+
+    return responseBody
+        .map<Issues>((element) => Issues.fromJson(element))
+        .toList();
+  }
+//#endregion
 }
