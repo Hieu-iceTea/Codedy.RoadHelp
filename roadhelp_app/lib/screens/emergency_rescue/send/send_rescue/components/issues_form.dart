@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:provider/provider.dart';
+import 'package:roadhelp/providers/issues_provider.dart';
 
 import '/components/custom_surfix_icon.dart';
 import '/components/default_button.dart';
@@ -188,8 +190,8 @@ class _IssuesFormState extends State<IssuesForm> {
     _formKey.currentState!.save();
 
     try {
-      /*await Provider.of<IssuesProvider>(context, listen: false)
-          .create(widget.issue!);*/
+      await Provider.of<IssuesProvider>(context, listen: false)
+          .send(widget.issue!);
 
       await Util.showDialogNotification(
           context: context,

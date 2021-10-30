@@ -89,6 +89,7 @@ public class IssueRestController {
     // Member Gửi yêu cầu cứu hộ
     @PostMapping(path = {"/send", "/send/"})
     public LinkedHashMap<String, Object> sendIssue(@RequestBody Issue issue) {
+        issue.setStatus(IssueStatus.sent);
         return this.store(issue);
     }
 

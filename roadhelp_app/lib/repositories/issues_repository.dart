@@ -75,5 +75,14 @@ class IssuesRepository {
 
     return responseBody['message'];
   }
+
+  static Future<Issues> send(Issues item) async {
+    var responseBody = await HttpHelper.post(
+      url: _url + "send",
+      body: item.toJson(),
+    );
+
+    return Issues.fromJson(responseBody);
+  }
 //#endregion
 }
