@@ -45,7 +45,7 @@ class HttpHelper {
         throw HttpException('❌ Failed to fetch all data. \nStatusCode: ' +
             response.statusCode.toString() +
             "\nMessage: " +
-            (json.decode(response.body)['message'] ?? ""));
+            (json.decode(utf8.decode(response.bodyBytes))['message'] ?? ""));
       }
     } catch (error) {
       rethrow;
@@ -80,7 +80,7 @@ class HttpHelper {
         throw HttpException('❌ Error. \nStatusCode: ' +
             response.statusCode.toString() +
             "\nMessage: " +
-            (json.decode(response.body)['message'] ?? ""));
+            (json.decode(utf8.decode(response.bodyBytes))['message'] ?? ""));
       }
     } catch (error) {
       rethrow;
@@ -115,7 +115,7 @@ class HttpHelper {
         throw HttpException('❌ Error. \nStatusCode: ' +
             response.statusCode.toString() +
             "\nMessage: " +
-            (json.decode(response.body)['message'] ?? ""));
+            (json.decode(utf8.decode(response.bodyBytes))['message'] ?? ""));
       }
     } catch (error) {
       rethrow;
@@ -147,7 +147,7 @@ class HttpHelper {
         throw HttpException('❌ Could not delete item. \nStatusCode: ' +
             response.statusCode.toString() +
             "\nMessage: " +
-            (json.decode(response.body)['message'] ?? ""));
+            (json.decode(utf8.decode(response.bodyBytes))['message'] ?? ""));
       }
 
       return json.decode(utf8.decode(response.bodyBytes));

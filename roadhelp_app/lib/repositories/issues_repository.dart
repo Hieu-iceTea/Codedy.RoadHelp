@@ -62,5 +62,18 @@ class IssuesRepository {
         .map<Issues>((element) => Issues.fromJson(element))
         .toList();
   }
+
+  static Future<String> partnerConfirmMember(
+      int issueId, int userPartnerId) async {
+    var responseBody = await HttpHelper.put(
+      url: _url +
+          issueId.toString() +
+          "/partner-confirm-member/" +
+          userPartnerId.toString(),
+      body: null,
+    );
+
+    return responseBody['message'];
+  }
 //#endregion
 }

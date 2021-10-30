@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:roadhelp/config/size_config.dart';
+import 'package:roadhelp/helper/util.dart';
 import 'package:roadhelp/models/issues.dart';
 import 'package:roadhelp/providers/issues_provider.dart';
 import 'package:roadhelp/screens/emergency_rescue/receive/receive_rescue_details/components/map_image.dart';
@@ -65,7 +66,7 @@ class Body extends StatelessWidget {
                           ),
                           child: DefaultButton(
                             text: "Tôi muốn đi hỗ trợ",
-                            press: () {},
+                            press: () => _partnerConfirmMember(context),
                           ),
                         ),
                       ),
@@ -82,5 +83,21 @@ class Body extends StatelessWidget {
         //child: Body(issue: arguments.issue),
       ),
     );
+  }
+
+  Future<void> _partnerConfirmMember(context) async {
+    try {
+      String message = await Provider.of<IssuesProvider>(context, listen: false)
+          .partnerConfirmMember(issue);
+
+      await Util.showDialogNotification(
+        context: context,
+        title: "Thành công",
+        content: message,
+      );
+    } catch (error) {
+      await Util.showDialogNotification(
+          context: context, content: error.toString());
+    }
   }
 }

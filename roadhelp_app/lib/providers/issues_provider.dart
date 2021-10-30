@@ -63,5 +63,17 @@ class IssuesProvider with ChangeNotifier {
       rethrow;
     }
   }
+
+  Future<String> partnerConfirmMember(Issues item) async {
+    String message = await IssuesRepository.partnerConfirmMember(
+        item.id!, authProvider!.authData.currentUser!.id!);
+
+    Issues itemReload = findById(item.id!);
+    final index = _items.indexWhere((element) => element.id == item.id);
+    _items[index] = itemReload;
+    notifyListeners();
+
+    return message;
+  }
 //#endregion
 }

@@ -2,10 +2,12 @@ package com.codedy.roadhelp.rest;
 
 import com.codedy.roadhelp.model.Issue;
 import com.codedy.roadhelp.model.RatingIssue;
+import com.codedy.roadhelp.model.User;
 import com.codedy.roadhelp.model.enums.IssueStatus;
 import com.codedy.roadhelp.rest.exception.RestNotFoundException;
 import com.codedy.roadhelp.service.issues.IssuesService;
 import com.codedy.roadhelp.service.ratingIssue.RatingIssueService;
+import com.codedy.roadhelp.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,6 +24,9 @@ public class IssueRestController {
 
     @Autowired
     private RatingIssueService ratingIssueService;
+
+    @Autowired
+    private UserService userService;
     //endregion
 
 
@@ -164,8 +169,8 @@ public class IssueRestController {
     }
 
     // Partner Xác nhận giúp
-    @PutMapping(path = {"/{id}/partner-confirm-member", "/{id}/partner-confirm-member"})
-    public String partnerConfirmMember(@PathVariable int id) {
+    @PutMapping(path = {"/{id}/partner-confirm-member/{userPartnerId}", "/{id}/partner-confirm-member/{userPartnerId}/"})
+    public LinkedHashMap<String, Object> partnerConfirmMember(@PathVariable int id, @PathVariable int userPartnerId) {
         Issue issue = issuesService.findById(id);
 
         if (issue == null) {
@@ -173,14 +178,24 @@ public class IssueRestController {
         }
 
         if (issue.getStatus() != IssueStatus.sent) {
-            return "Lỗi: Không trong trạng thái 'sent', Status hiện tại: " + issue.getStatus();
+            throw new RuntimeException("Lỗi: Không trong trạng thái 'sent', Status hiện tại: " + issue.getStatus());
         }
 
+        // Set UserPartner :
+        User userPartner = userService.findById(userPartnerId);
+        if (userPartner == null) {
+            throw new RestNotFoundException("userPartner id not found - " + id);
+        }
+        issue.setUserPartner(userPartner);
+
+        // Set Status :
         issue.setStatus(IssueStatus.waitMemberConfirm);
 
         issuesService.save(issue);
 
-        return "Partner xác nhận muốn hỗ trợ: '" + issue.getUserMember().getFirstName() + " " + issue.getUserMember().getLastName();
+        LinkedHashMap<String, Object> response = new LinkedHashMap<>();
+        response.put("message", "Bạn đã xác nhận muốn hỗ trợ: '" + issue.getUserMember().getFirstName() + " " + issue.getUserMember().getLastName() + "'");
+        return response;
     }
 
     // Partner Xem đánh giá sau khi hỗ trợ xong
