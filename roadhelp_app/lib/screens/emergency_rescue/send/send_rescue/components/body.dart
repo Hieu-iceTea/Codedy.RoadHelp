@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:roadhelp/config/size_config.dart';
 
-import 'form_receive_rescue.dart';
-
+import '/config/size_config.dart';
+import 'issues_form.dart';
 
 class Body extends StatelessWidget {
+  const Body({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -12,28 +13,32 @@ class Body extends StatelessWidget {
         width: double.infinity,
         child: Padding(
           padding:
-          EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
+              EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
           child: SingleChildScrollView(
             child: Column(
               children: [
                 SizedBox(height: SizeConfig.screenHeight * 0.04),
                 Text(
-                  "Emergency Rescue",
+                  "Gọi Cứu Hộ Khẩn",
                   style: TextStyle(
                     color: Colors.black,
                     fontSize: getProportionateScreenWidth(28),
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                SizedBox(height: SizeConfig.screenHeight * 0.05),
-                // Text(
-                //   "Sign in with your email and password  \nor continue with social media",
-                //   textAlign: TextAlign.center,
-                // ),
-                SizedBox(height: SizeConfig.screenHeight * 0.05),
-                FormReceiveRescue(),
-                SizedBox(height: SizeConfig.screenHeight * 0.08),
-                SizedBox(height: getProportionateScreenHeight(20)),
+                const Text(
+                  "Vui vòng nhập đầy đủ các thông tin dưới đây\nđể gọi cứu hộ.",
+                  textAlign: TextAlign.center,
+                ),
+                SizedBox(height: SizeConfig.screenHeight * 0.06),
+                IssuesForm(),
+                SizedBox(height: getProportionateScreenHeight(30)),
+                Text(
+                  "Sẽ cần một chút thời gian để các đối tác\ndi chuyển tới vị trí của bạn và hỗ trợ.",
+                  textAlign: TextAlign.center,
+                  style: Theme.of(context).textTheme.caption,
+                ),
+                SizedBox(height: SizeConfig.screenHeight * 0.03),
               ],
             ),
           ),
