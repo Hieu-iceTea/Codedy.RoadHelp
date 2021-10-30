@@ -34,8 +34,8 @@ class _MapImagesState extends State<MapImages> {
   @override
   void didChangeDependencies() {
     if (widget.latitude != null && widget.longitude != null) {
-      //LatLng latLng = LatLng(widget.latitude!, widget.longitude!);
-      LatLng latLng = const LatLng(18.731120, 105.662068);
+      LatLng latLng = LatLng(widget.latitude!, widget.longitude!);
+      //LatLng latLng = const LatLng(18.731120, 105.662068);
       _showPreview(latLng);
     }
 
