@@ -122,7 +122,7 @@ class _IssuesFormState extends State<IssuesForm> {
         return null;
       },
       decoration: const InputDecoration(
-        labelText: "Địa chỉ hiện tại",
+        labelText: "Mô tả địa chỉ hiện tại",
         hintText: "Nhập địa chỉ của bạn",
         // If  you are using latest version of flutter then lable text and hint text shown like this
         // if you r using flutter less then 1.20.* then maybe this is not working properly
@@ -147,7 +147,7 @@ class _IssuesFormState extends State<IssuesForm> {
         return null;
       },
       decoration: const InputDecoration(
-        labelText: "Mô tả",
+        labelText: "Mô tả sự số",
         hintText: "Nhập mô tả chi tiết",
         // If  you are using latest version of flutter then lable text and hint text shown like this
         // if you r using flutter less then 1.20.* then maybe this is not working properly
