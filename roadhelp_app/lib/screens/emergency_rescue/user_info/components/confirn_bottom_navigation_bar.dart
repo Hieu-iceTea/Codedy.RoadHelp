@@ -18,7 +18,7 @@ class ConfirnBottomNavigationBar extends StatelessWidget {
       ),
       // height: 174,
       decoration: BoxDecoration(
-        color: const Color(0xFFF6F7F9),
+        color: const Color(0xFFF5F6F9),
         borderRadius: const BorderRadius.only(
           topLeft: Radius.circular(30),
           topRight: Radius.circular(30),
