@@ -1,9 +1,12 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:roadhelp/providers/issues_provider.dart';
-import 'package:roadhelp/screens/emergency_rescue/send/send_rescue_confirm/send_rescue_confirm_screen.dart';
+import 'package:roadhelp/repositories/issues_repository.dart';
 import 'package:roadhelp/screens/emergency_rescue/send/wait_websocket/wait_websocket_screen.dart';
+import 'package:roadhelp/screens/emergency_rescue/user_info/user_info_screen.dart';
 
 import '/components/custom_surfix_icon.dart';
 import '/components/default_button.dart';
@@ -208,14 +211,26 @@ class _IssuesFormState extends State<IssuesForm> {
           message: "Chỉ một lúc thôi...\nHệ thống đang tìm người hỗ trợ bạn.",
           destination:
               '/topic/issue/memberWaitPartner/' + itemResponse.id.toString(),
-          callback: (stompFrame) {
+          callback: (stompFrame) async {
             if (stompFrame.body != null) {
-              Navigator.pushReplacementNamed(
-                  context, SendRescueConfirmScreen.routeName);
-              //Navigator.pop(context);
+              Map<String, dynamic> response = json.decode(stompFrame.body!);
+              IssueStatus issueStatus = IssueStatus.values.firstWhere(
+                (element) =>
+                    element.toString() ==
+                    "IssueStatus." + response['data']['issueStatus'],
+              );
 
-              /*Map<String, dynamic> result = json.decode(frame.body!);
-              setState(() => result['content']);*/
+              if (issueStatus == IssueStatus.waitMemberConfirm) {
+                Issues issue =
+                    await IssuesRepository.findById(itemResponse.id!);
+
+                Navigator.pushReplacementNamed(
+                  context,
+                  UserInfoScreen.routeName,
+                  arguments: UserInfoArguments(user: issue.userPartner!),
+                );
+                //Navigator.pop(context);
+              }
             }
           },
         ),
