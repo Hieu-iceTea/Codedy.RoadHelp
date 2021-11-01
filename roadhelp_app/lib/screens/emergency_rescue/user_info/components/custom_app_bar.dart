@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:roadhelp/config/constants.dart';
 import 'package:roadhelp/config/size_config.dart';
+import 'package:roadhelp/helper/util.dart';
 
 class CustomAppBar extends StatelessWidget {
   @override
@@ -30,10 +31,19 @@ class CustomAppBar extends StatelessWidget {
                     backgroundColor: Colors.white,
                     padding: EdgeInsets.zero,
                   ),
-                  onPressed: () => Navigator.pop(context),
+                  onPressed: () async {
+                    bool confirm = await Util.confirmDialog(
+                      context: context,
+                      content: "Bạn muốn hủy gọi cứu hộ khẩn lần này?",
+                    );
+                    if (confirm) {
+                      //TODO: Xử lý tiếp ở đây
+                      Navigator.pop(context);
+                    }
+                  },
                   child: SvgPicture.asset(
-                    "assets/icons/Back ICon.svg",
-                    height: 15,
+                    "assets/icons/Close.svg",
+                    height: 25,
                   ),
                 ),
               ),

@@ -41,11 +41,6 @@ class ConfirnBottomNavigationBar extends StatelessWidget {
               text: "Xác nhận",
               press: () {},
             ),
-            SizedBox(height: getProportionateScreenHeight(15)),
-            DefaultButton(
-              text: "Hủy",
-              press: () {},
-            )
           ],
         ),
       ),

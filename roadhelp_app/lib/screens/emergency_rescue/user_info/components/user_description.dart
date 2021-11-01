@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:roadhelp/components/rounded_icon_btn.dart';
 import 'package:roadhelp/config/constants.dart';
 import 'package:roadhelp/config/size_config.dart';
+import 'package:roadhelp/helper/url_launcher_helper.dart';
+import 'package:roadhelp/helper/util.dart';
 import 'package:roadhelp/models/user.dart';
 
 class UserDescription extends StatelessWidget {
@@ -24,11 +27,18 @@ class UserDescription extends StatelessWidget {
             textAlign: TextAlign.center,
           ),
         ),
+        const SizedBox(height: 5),
+        const Center(
+          child: Text(
+            "Đã xác nhận muốn hỗ trợ bạn",
+            textAlign: TextAlign.center,
+          ),
+        ),
         const SizedBox(height: 15),
         Padding(
           padding: EdgeInsets.only(
             left: getProportionateScreenWidth(10),
-            right: getProportionateScreenWidth(64),
+            right: getProportionateScreenWidth(10),
             bottom: getProportionateScreenWidth(10),
           ),
           child: Column(
@@ -39,6 +49,20 @@ class UserDescription extends StatelessWidget {
                   user.phone!,
                   style: TextStyle(color: kTextColor),
                 ),
+                trailing: user.phone != null
+                    ? RoundedIconBtn(
+                        icon: Icons.phone_in_talk,
+                        showShadow: true,
+                        press: () {
+                          try {
+                            UrlLauncherHelper.launchURL("tel:" + user.phone!);
+                          } catch (e) {
+                            Util.showDialogNotification(
+                                context: context, content: e.toString());
+                          }
+                        },
+                      )
+                    : Container(),
               ),
               ListTile(
                 leading: Icon(Icons.location_on_outlined),
@@ -50,11 +74,18 @@ class UserDescription extends StatelessWidget {
               ListTile(
                 leading: Icon(Icons.access_time),
                 title: Text(
-                  "15 phút di chuyển",
+                  "Khoảng 15 phút di chuyển",
                   style: TextStyle(color: kTextColor),
                 ),
               ),
             ],
+          ),
+        ),
+        const SizedBox(height: 15),
+        const Center(
+          child: Text(
+            "Sẽ cần một chút thời gian để tôi\ndi chuyển tới vị trí của bạn và hỗ trợ.",
+            textAlign: TextAlign.center,
           ),
         ),
       ],

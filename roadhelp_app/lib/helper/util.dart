@@ -50,4 +50,35 @@ class Util {
       ),
     );
   }
+
+  static Future<bool> confirmDialog(
+      {required BuildContext context, String? title, String? content}) async {
+    bool result = false;
+
+    await showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: Text(title ?? 'Xác nhận'),
+        content: content != null ? Text(content) : null,
+        actions: <Widget>[
+          TextButton(
+            child: const Text('Không'),
+            onPressed: () {
+              result = false;
+              Navigator.of(ctx).pop();
+            },
+          ),
+          TextButton(
+            child: const Text('Okay'),
+            onPressed: () {
+              result = true;
+              Navigator.of(ctx).pop();
+            },
+          ),
+        ],
+      ),
+    );
+
+    return result;
+  }
 }
