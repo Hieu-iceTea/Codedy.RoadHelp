@@ -5,10 +5,10 @@ import 'package:roadhelp/config/enums.dart';
 import 'package:roadhelp/config/size_config.dart';
 import 'package:roadhelp/helper/url_launcher_helper.dart';
 import 'package:roadhelp/helper/util.dart';
-import 'package:roadhelp/models/issues.dart';
+import 'package:roadhelp/models/issue.dart';
 
 class IssueDescription extends StatelessWidget {
-  final Issues issue;
+  final Issue issue;
   bool isPartner;
 
   IssueDescription({

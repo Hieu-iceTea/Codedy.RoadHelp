@@ -4,9 +4,9 @@ import 'package:roadhelp/config/constants.dart';
 
 import '/config/enums.dart';
 import '/models/garage.dart';
-import '/models/issues.dart';
+import '/models/issue.dart';
 import '/models/rating_garage.dart';
-import '/models/rating_issues.dart';
+import '/models/rating_issue.dart';
 import 'authority.dart';
 import 'base_model.dart';
 
@@ -55,9 +55,9 @@ class User extends BaseModel {
 
   //Relationship
   List<Authority>? authorities;
-  List<Issues>? memberIssues;
-  List<Issues>? partnerIssues;
-  List<RatingIssues>? ratingIssues;
+  List<Issue>? memberIssues;
+  List<Issue>? partnerIssues;
+  List<RatingIssue>? ratingIssues;
   List<RatingGarage>? ratingGarages;
   List<Garage>? garages;
 
@@ -122,16 +122,16 @@ class User extends BaseModel {
       garages:
           json['garages'] != null ? Garage.fromJsonToList(json['garages']) : [],
       memberIssues: json['memberIssues'] != null
-          ? Issues.fromJsonToList(json['memberIssues'])
+          ? Issue.fromJsonToList(json['memberIssues'])
           : [],
       partnerIssues: json['partnerIssues'] != null
-          ? Issues.fromJsonToList(json['partnerIssues'])
+          ? Issue.fromJsonToList(json['partnerIssues'])
           : [],
       ratingGarages: json['ratingGarages'] != null
           ? RatingGarage.fromJsonToList(json['ratingGarages'])
           : [],
       ratingIssues: json['ratingIssues'] != null
-          ? RatingIssues.fromJsonToList(json['ratingIssues'])
+          ? RatingIssue.fromJsonToList(json['ratingIssues'])
           : [],
       //
       id: json['id'],

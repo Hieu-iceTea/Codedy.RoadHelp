@@ -2,9 +2,9 @@ import 'dart:convert';
 
 import '/models/user.dart';
 import 'base_model.dart';
-import 'issues.dart';
+import 'issue.dart';
 
-class RatingIssues extends BaseModel {
+class RatingIssue extends BaseModel {
   //
   int? userMemberId;
   int? issueId;
@@ -14,10 +14,10 @@ class RatingIssues extends BaseModel {
   String? comment;
 
   //Relationship
-  Issues? issue;
+  Issue? issue;
   User? userMember;
 
-  RatingIssues({
+  RatingIssue({
     this.userMemberId,
     this.issueId,
     this.ratePoint,
@@ -44,15 +44,15 @@ class RatingIssues extends BaseModel {
         );
 
   //
-  factory RatingIssues.fromJson(Map<String, dynamic> json) {
-    return RatingIssues(
+  factory RatingIssue.fromJson(Map<String, dynamic> json) {
+    return RatingIssue(
       issueId: json['issueId'],
       userMemberId: json['userMemberId'],
       //
       ratePoint: json['ratePoint'],
       comment: json['comment'],
       //Relationship
-      issue: json['issue'] != null ? Issues.fromJson(json['issue']) : null,
+      issue: json['issue'] != null ? Issue.fromJson(json['issue']) : null,
       userMember:
           json['userMember'] != null ? User.fromJson(json['userMember']) : null,
       //
@@ -67,9 +67,9 @@ class RatingIssues extends BaseModel {
   }
 
   //
-  static List<RatingIssues> fromJsonToList(dynamic json) {
+  static List<RatingIssue> fromJsonToList(dynamic json) {
     return json
-        .map<RatingIssues>((element) => RatingIssues.fromJson(element))
+        .map<RatingIssue>((element) => RatingIssue.fromJson(element))
         .toList();
   }
 

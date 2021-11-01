@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:roadhelp/config/size_config.dart';
-import 'package:roadhelp/models/issues.dart';
+import 'package:roadhelp/models/issue.dart';
 
 import 'components/body.dart';
 
@@ -28,7 +28,7 @@ class IssueDetailsScreen extends StatelessWidget {
 }
 
 class IssueDetailsArguments {
-  final Issues issue;
+  final Issue issue;
   final bool isPartner;
 
   IssueDetailsArguments({required this.issue, this.isPartner = false});

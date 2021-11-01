@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:roadhelp/components/rounded_icon_btn.dart';
 import 'package:roadhelp/config/size_config.dart';
-import 'package:roadhelp/models/issues.dart';
+import 'package:roadhelp/models/issue.dart';
 
 class IssueRating extends StatelessWidget {
   const IssueRating({
@@ -9,7 +9,7 @@ class IssueRating extends StatelessWidget {
     required this.issue,
   }) : super(key: key);
 
-  final Issues issue;
+  final Issue issue;
 
   @override
   Widget build(BuildContext context) {

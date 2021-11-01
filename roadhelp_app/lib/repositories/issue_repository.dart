@@ -1,12 +1,12 @@
-import 'package:roadhelp/models/issues.dart';
+import 'package:roadhelp/models/issue.dart';
 
 import '/config/constants.dart';
 import '/helper/http_helper.dart';
 
-class IssuesRepository {
+class IssueRepository {
   static const String _url = baseApiUrl + "api/v1/issues/";
 
-  static Future<List<Issues>> findAll() async {
+  static Future<List<Issue>> findAll() async {
     var responseBody = await HttpHelper.get(
       url: _url,
     );
@@ -16,34 +16,34 @@ class IssuesRepository {
     ];*/
 
     return responseBody
-        .map<Issues>((element) => Issues.fromJson(element))
+        .map<Issue>((element) => Issue.fromJson(element))
         .toList();
   }
 
-  static Future<Issues> findById(int id) async {
+  static Future<Issue> findById(int id) async {
     var responseBody = await HttpHelper.get(
       url: _url + id.toString(),
     );
 
-    return Issues.fromJson(responseBody);
+    return Issue.fromJson(responseBody);
   }
 
-  static Future<Issues> create(Issues item) async {
+  static Future<Issue> create(Issue item) async {
     var responseBody = await HttpHelper.post(
       url: _url,
       body: item.toJson(),
     );
 
-    return Issues.fromJson(responseBody);
+    return Issue.fromJson(responseBody);
   }
 
-  static Future<Issues> update(Issues item) async {
+  static Future<Issue> update(Issue item) async {
     var responseBody = await HttpHelper.put(
       url: _url + item.id.toString(),
       body: item.toJson(),
     );
 
-    return Issues.fromJson(responseBody);
+    return Issue.fromJson(responseBody);
   }
 
   static Future<dynamic> deleteById(int id) async {
@@ -53,13 +53,13 @@ class IssuesRepository {
   }
 
   //#region - Extend -
-  static Future<List<Issues>> findAllByStatusSent() async {
+  static Future<List<Issue>> findAllByStatusSent() async {
     var responseBody = await HttpHelper.get(
       url: _url + "byStatusSent",
     );
 
     return responseBody
-        .map<Issues>((element) => Issues.fromJson(element))
+        .map<Issue>((element) => Issue.fromJson(element))
         .toList();
   }
 
@@ -88,13 +88,13 @@ class IssuesRepository {
     return responseBody['message'];
   }
 
-  static Future<Issues> send(Issues item) async {
+  static Future<Issue> send(Issue item) async {
     var responseBody = await HttpHelper.post(
       url: _url + "send",
       body: item.toJson(),
     );
 
-    return Issues.fromJson(responseBody);
+    return Issue.fromJson(responseBody);
   }
 //#endregion
 }

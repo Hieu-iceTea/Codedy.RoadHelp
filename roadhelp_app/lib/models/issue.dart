@@ -1,11 +1,11 @@
 import 'dart:convert';
 
 import '/config/enums.dart';
-import '/models/rating_issues.dart';
+import '/models/rating_issue.dart';
 import '/models/user.dart';
 import 'base_model.dart';
 
-class Issues extends BaseModel {
+class Issue extends BaseModel {
   //
   int? userMemberId;
   int? userPartnerId;
@@ -22,9 +22,9 @@ class Issues extends BaseModel {
   //Relationship
   User? userMember;
   User? userPartner;
-  RatingIssues? ratingIssue;
+  RatingIssue? ratingIssue;
 
-  Issues({
+  Issue({
     this.userMemberId,
     this.userPartnerId,
     this.address,
@@ -57,8 +57,8 @@ class Issues extends BaseModel {
         );
 
   //
-  factory Issues.fromJson(Map<String, dynamic> json) {
-    return Issues(
+  factory Issue.fromJson(Map<String, dynamic> json) {
+    return Issue(
       userMemberId: json['userMemberId'],
       userPartnerId: json['userPartnerId'],
       //
@@ -78,7 +78,7 @@ class Issues extends BaseModel {
           ? User.fromJson(json['userPartner'])
           : null,
       ratingIssue: json['ratingIssue'] != null
-          ? RatingIssues.fromJson(json['ratingIssue'])
+          ? RatingIssue.fromJson(json['ratingIssue'])
           : null,
       //
       id: json['id'],
@@ -92,8 +92,8 @@ class Issues extends BaseModel {
   }
 
   //
-  static List<Issues> fromJsonToList(dynamic json) {
-    return json.map<Issues>((element) => Issues.fromJson(element)).toList();
+  static List<Issue> fromJsonToList(dynamic json) {
+    return json.map<Issue>((element) => Issue.fromJson(element)).toList();
   }
 
   //

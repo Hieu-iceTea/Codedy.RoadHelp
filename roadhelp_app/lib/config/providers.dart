@@ -6,10 +6,10 @@ import '/providers/authority_provider.dart';
 import '/providers/district_provider.dart';
 import '/providers/garage_image_provider.dart';
 import '/providers/garage_provider.dart';
-import '/providers/issues_provider.dart';
+import '/providers/issue_provider.dart';
 import '/providers/province_provider.dart';
 import '/providers/rating_garage_provider.dart';
-import '/providers/rating_issues_provider.dart';
+import '/providers/rating_issue_provider.dart';
 import '/providers/user_provider.dart';
 import '/providers/ward_provider.dart';
 
@@ -47,9 +47,9 @@ final List<SingleChildWidget> providers = [
       previousData != null ? previousData.items : [],
     ),
   ),
-  ChangeNotifierProxyProvider<AuthProvider, IssuesProvider>(
-    create: (ctx) => IssuesProvider(null, []),
-    update: (ctx, authProvider, previousData) => IssuesProvider(
+  ChangeNotifierProxyProvider<AuthProvider, IssueProvider>(
+    create: (ctx) => IssueProvider(null, []),
+    update: (ctx, authProvider, previousData) => IssueProvider(
       authProvider,
       previousData != null ? previousData.items : [],
     ),
@@ -68,9 +68,9 @@ final List<SingleChildWidget> providers = [
       previousData != null ? previousData.items : [],
     ),
   ),
-  ChangeNotifierProxyProvider<AuthProvider, RatingIssuesProvider>(
-    create: (ctx) => RatingIssuesProvider(null, []),
-    update: (ctx, authProvider, previousData) => RatingIssuesProvider(
+  ChangeNotifierProxyProvider<AuthProvider, RatingIssueProvider>(
+    create: (ctx) => RatingIssueProvider(null, []),
+    update: (ctx, authProvider, previousData) => RatingIssueProvider(
       authProvider,
       previousData != null ? previousData.items : [],
     ),

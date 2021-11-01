@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:roadhelp/providers/garage_provider.dart';
-import 'package:roadhelp/providers/issues_provider.dart';
+import 'package:roadhelp/providers/issue_provider.dart';
 
 import 'components/body.dart';
 
@@ -27,7 +27,7 @@ class ReceiveRescueScreen extends StatelessWidget {
             "Nhận cứu hộ khẩn cấp",
             style: TextStyle(color: Colors.black),
           ),
-          Consumer<IssuesProvider>(
+          Consumer<IssueProvider>(
             builder: (context, value, child) => Text(
               "${value.items.length} người đang cần bạn hỗ trợ",
               style: Theme.of(context).textTheme.caption,
