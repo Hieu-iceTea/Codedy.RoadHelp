@@ -36,11 +36,44 @@ class IssueDescription extends StatelessWidget {
               children: [
                 ListTile(
                   leading: Icon(Icons.person),
-                  title: Text(
-                    issue.userMember!.firstName! +
-                        " " +
-                        issue.userMember!.lastName!,
-                    style: TextStyle(color: kTextColor),
+                  title: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "Người gặp nạn:",
+                        style: TextStyle(
+                          color: kTextColor.withOpacity(0.8),
+                          fontSize: 13,
+                        ),
+                      ),
+                      Text(
+                        issue.userMember!.firstName! +
+                            " " +
+                            issue.userMember!.lastName!,
+                        style: TextStyle(color: kTextColor),
+                      ),
+                    ],
+                  ),
+                ),
+                ListTile(
+                  leading: Icon(Icons.person),
+                  title: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "Người giúp đỡ:",
+                        style: TextStyle(
+                          color: kTextColor.withOpacity(0.8),
+                          fontSize: 13,
+                        ),
+                      ),
+                      Text(
+                        issue.userPartner!.firstName! +
+                            " " +
+                            issue.userPartner!.lastName!,
+                        style: TextStyle(color: kTextColor),
+                      ),
+                    ],
                   ),
                 ),
                 ListTile(
@@ -61,6 +94,20 @@ class IssueDescription extends StatelessWidget {
                   leading: Icon(Icons.description),
                   title: Text(
                     issue.description!,
+                    style: TextStyle(color: kTextColor),
+                  ),
+                ),
+                ListTile(
+                  leading: Icon(Icons.info),
+                  title: Text(
+                    issue.status!.name,
+                    style: TextStyle(color: kTextColor),
+                  ),
+                ),
+                ListTile(
+                  leading: Icon(Icons.access_time),
+                  title: Text(
+                    "08/08/2021 15:36",
                     style: TextStyle(color: kTextColor),
                   ),
                 ),
