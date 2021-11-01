@@ -221,15 +221,16 @@ class _IssuesFormState extends State<IssuesForm> {
               );
 
               if (issueStatus == IssueStatus.waitMemberConfirm) {
-                Issues issue =
+                Issues issueReload =
                     await IssuesRepository.findById(itemResponse.id!);
 
                 Navigator.pushReplacementNamed(
                   context,
                   UserInfoScreen.routeName,
                   arguments: UserInfoArguments(
-                    user: issue.userPartner!,
-                    onConfirm: () {},
+                    user: issueReload.userPartner!,
+                    onConfirm: () =>
+                        _memberConfirmPartner(context, issueReload),
                     onCancel: () {},
                   ),
                 );
@@ -239,6 +240,25 @@ class _IssuesFormState extends State<IssuesForm> {
           },
         ),
       );
+    } catch (error) {
+      await Util.showDialogNotification(
+          context: context, content: error.toString());
+    }
+  }
+
+  Future<void> _memberConfirmPartner(context, Issues issue) async {
+    try {
+      String message = await Provider.of<IssuesProvider>(context, listen: false)
+          .memberConfirmPartner(issue);
+
+      await Util.showDialogNotification(
+        context: context,
+        title: "Thành công",
+        content: message,
+      );
+
+      //TODO: chuyển đến màn hình chi tiết issue
+
     } catch (error) {
       await Util.showDialogNotification(
           context: context, content: error.toString());

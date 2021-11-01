@@ -112,7 +112,7 @@ public class IssueRestController {
 
     // Member Xác nhận thông tin người giúp đỡ mình
     @PutMapping(path = {"/{id}/member-confirm-partner", "/{id}/member-confirm-partner/"})
-    public String memberConfirmPartner(@PathVariable int id) {
+    public LinkedHashMap<String, Object> memberConfirmPartner(@PathVariable int id) {
         Issue issue = issuesService.findById(id);
 
         if (issue == null) {
@@ -120,14 +120,25 @@ public class IssueRestController {
         }
 
         if (issue.getStatus() != IssueStatus.waitMemberConfirm) {
-            return "Lỗi: Không trong trạng thái chờ member xác nhận, Status hiện tại: " + issue.getStatus();
+            throw new RuntimeException("Lỗi: Không trong trạng thái 'chờ khách hàng xác nhận', Status hiện tại: " + issue.getStatus());
+            //throw new RuntimeException("Lỗi: Không trong trạng thái 'waitMemberConfirm', Status hiện tại: " + issue.getStatus());
         }
 
         issue.setStatus(IssueStatus.memberConfirmPartner);
 
         issuesService.save(issue);
 
-        return "Xác nhận '" + issue.getUserPartner().getFirstName() + " " + issue.getUserPartner().getLastName() + "' là người hỗ trợ!";
+        // Gửi thông báo tới máy Partner bằng WebSocket :
+        LinkedHashMap<String, Object> data = new LinkedHashMap<>();
+        data.put("issueStatus", issue.getStatus());
+        WebSocketDto webSocketDto = new WebSocketDto();
+        webSocketDto.setData(data);
+        webSocketDto.setMessage("Issue này Member đã xác nhận Partner tới giúp."); // Không cần thiết, chỉ test thôi
+        simpMessagingTemplate.convertAndSend("/topic/issue/partnerWaitMember/" + issue.getId(), webSocketDto);
+
+        LinkedHashMap<String, Object> response = new LinkedHashMap<>();
+        response.put("message", "Xác nhận '" + issue.getUserPartner().getFirstName() + " " + issue.getUserPartner().getLastName() + "' là người hỗ trợ!");
+        return response;
     }
 
     // Member xác nhận hoàn thành sau khi partner hỗ trợ xog

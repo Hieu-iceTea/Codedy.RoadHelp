@@ -76,6 +76,17 @@ class IssuesProvider with ChangeNotifier {
     return message;
   }
 
+  Future<String> memberConfirmPartner(Issues item) async {
+    String message = await IssuesRepository.memberConfirmPartner(item.id!);
+
+    Issues itemReload = findById(item.id!);
+    final index = _items.indexWhere((element) => element.id == item.id);
+    _items[index] = itemReload;
+    notifyListeners();
+
+    return message;
+  }
+
   Future<Issues> send(Issues item) async {
     if (!authProvider!.authData.isAuth) {
       throw Exception(
