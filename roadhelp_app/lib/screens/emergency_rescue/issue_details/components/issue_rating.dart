@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:roadhelp/components/rounded_icon_btn.dart';
 import 'package:roadhelp/config/size_config.dart';
+import 'package:roadhelp/helper/util.dart';
 import 'package:roadhelp/models/issue.dart';
+import 'package:roadhelp/models/rating_issue.dart';
+import 'package:roadhelp/repositories/rating_issue_repository.dart';
 
 class IssueRating extends StatelessWidget {
   const IssueRating({
@@ -11,43 +14,62 @@ class IssueRating extends StatelessWidget {
 
   final Issue issue;
 
+  Future<RatingIssue?> _fetchData(BuildContext context) async {
+    return await RatingIssueRepository.findByIssueId(issueId: issue.id!);
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Padding(
-          padding:
-              EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
-          child: Text(
-            "Đánh giá",
-            style: Theme.of(context).textTheme.headline6,
-          ),
-        ),
-        issue.ratingIssue != null
-            ? ListTile(
-                leading:
-                    Image.network(issue.ratingIssue!.userMember!.imageUrl!),
-                title: Text(
-                  issue.ratingIssue!.userMember!.firstName! +
-                      " " +
-                      issue.ratingIssue!.userMember!.lastName!,
-                  maxLines: 1,
+    return FutureBuilder<RatingIssue?>(
+        future: _fetchData(context),
+        builder: (context, snapshot) {
+          if (snapshot.hasError) {
+            return Util.showWidgetNotification(
+              content: snapshot.error.toString(),
+              isError: true,
+            );
+          } else if (snapshot.connectionState != ConnectionState.waiting) {
+            return Column(
+              children: [
+                Padding(
+                  padding: EdgeInsets.symmetric(
+                      horizontal: getProportionateScreenWidth(20)),
+                  child: Text(
+                    "Đánh giá",
+                    style: Theme.of(context).textTheme.headline6,
+                  ),
                 ),
-                subtitle: Text(getRate(issue.ratingIssue!.ratePoint!) +
-                    "\n" +
-                    issue.ratingIssue!.comment!),
-                trailing: RoundedIconBtn(
-                  icon: Icons.thumb_up,
-                  press: () {},
-                ),
-                isThreeLine: true,
-              )
-            : const Padding(
-                padding: EdgeInsets.only(top: 10, bottom: 10),
-                child: Text("Chưa có đánh giá về sự cố này."),
-              ),
-      ],
-    );
+                snapshot.data != null
+                    ? ListTile(
+                        leading:
+                            Image.network(snapshot.data!.userMember!.imageUrl!),
+                        title: Text(
+                          snapshot.data!.userMember!.firstName! +
+                              " " +
+                              snapshot.data!.userMember!.lastName!,
+                          maxLines: 1,
+                        ),
+                        subtitle: Text(getRate(snapshot.data!.ratePoint!) +
+                            "\n" +
+                            snapshot.data!.comment!),
+                        trailing: RoundedIconBtn(
+                          icon: Icons.thumb_up,
+                          press: () {},
+                        ),
+                        isThreeLine: true,
+                      )
+                    : const Padding(
+                        padding: EdgeInsets.only(top: 10, bottom: 10),
+                        child: Text("Chưa có đánh giá về sự cố này."),
+                      ),
+              ],
+            );
+          } else {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+        });
   }
 
   String getRate(int rate) {
