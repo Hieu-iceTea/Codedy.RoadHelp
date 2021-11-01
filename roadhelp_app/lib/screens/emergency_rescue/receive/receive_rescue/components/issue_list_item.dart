@@ -17,7 +17,7 @@ class IssueListItem extends StatelessWidget {
       onTap: () => Navigator.pushNamed(
         context,
         IssueDetailsScreen.routeName,
-        arguments: IssueDetailsArguments(issue: issue),
+        arguments: IssueDetailsArguments(issue: issue, isPartner: true),
       ),
       leading: Hero(
         tag: issue.id.toString(),

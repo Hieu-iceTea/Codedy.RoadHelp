@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:roadhelp/config/enums.dart';
@@ -5,6 +7,8 @@ import 'package:roadhelp/config/size_config.dart';
 import 'package:roadhelp/helper/util.dart';
 import 'package:roadhelp/models/issues.dart';
 import 'package:roadhelp/providers/issues_provider.dart';
+import 'package:roadhelp/repositories/issues_repository.dart';
+import 'package:roadhelp/screens/emergency_rescue/send/wait_websocket/wait_websocket_screen.dart';
 
 import '/components/default_button.dart';
 import 'issue_description.dart';
@@ -12,12 +16,18 @@ import 'issue_rating.dart';
 import 'map_image.dart';
 import 'top_rounded_container.dart';
 
-class Body extends StatelessWidget {
-  final Issues issue;
+class Body extends StatefulWidget {
+  Issues issue;
   bool isPartner;
 
-  Body({Key? key, required this.issue, this.isPartner = false}) : super(key: key);
+  Body({Key? key, required this.issue, this.isPartner = false})
+      : super(key: key);
 
+  @override
+  State<Body> createState() => _BodyState();
+}
+
+class _BodyState extends State<Body> {
   @override
   Widget build(BuildContext context) {
     return Consumer<IssuesProvider>(
@@ -43,8 +53,8 @@ class Body extends StatelessWidget {
             //foregroundColor: Colors.black,
             flexibleSpace: FlexibleSpaceBar(
               background: MapImages(
-                latitude: issue.latitude,
-                longitude: issue.longitude,
+                latitude: widget.issue.latitude,
+                longitude: widget.issue.longitude,
               ),
             ),
           ),
@@ -56,15 +66,16 @@ class Body extends StatelessWidget {
                   child: Column(
                     children: [
                       IssueDescription(
-                        issue: issue,
+                        issue: widget.issue,
+                        isPartner: widget.isPartner,
                       ),
                       TopRoundedContainer(
                         color: Color(0xFFF6F7F9),
                         child: Column(
                           children: [
-                            if (issue.status == IssueStatus.succeeded)
-                              IssueRating(issue: issue),
-                            if (issue.status == IssueStatus.sent)
+                            if (widget.issue.status == IssueStatus.succeeded)
+                              IssueRating(issue: widget.issue),
+                            if (widget.issue.status == IssueStatus.sent)
                               Padding(
                                 padding: EdgeInsets.only(
                                   left: SizeConfig.screenWidth * 0.15,
@@ -77,8 +88,9 @@ class Body extends StatelessWidget {
                                   press: () => _partnerConfirmMember(context),
                                 ),
                               ),
-                            if (issue.status ==
-                                IssueStatus.memberConfirmPartner && isPartner)
+                            if (widget.issue.status ==
+                                    IssueStatus.memberConfirmPartner &&
+                                widget.isPartner)
                               Padding(
                                 padding: EdgeInsets.only(
                                   left: SizeConfig.screenWidth * 0.15,
@@ -109,19 +121,51 @@ class Body extends StatelessWidget {
     );
   }
 
+  //Phần này chỉ dành cho luồng gửi-nhận cứu hộ (làm thế này hơi ẩu, nên tách ra. nhưng kệ đi) - Hiếu iceTea
   Future<void> _partnerConfirmMember(context) async {
     try {
+      // 01. Tạo & Gửi xác nhận: Partner muốn hỗ muốn trợ Member (issue)
       String message = await Provider.of<IssuesProvider>(context, listen: false)
-          .partnerConfirmMember(issue);
+          .partnerConfirmMember(widget.issue);
 
-      await Util.showDialogNotification(
-        context: context,
-        title: "Thành công",
-        content: message,
+      // 02. Chờ WebSocket phản hồi: đã có partner nhận hay chưa
+      Navigator.pushNamed(
+        context,
+        WaitWebSocketScreen.routeName,
+        arguments: WaitWebSocketArguments(
+          message: "Chỉ một lúc thôi...\nHệ thống đang tìm người hỗ trợ bạn.",
+          destination:
+              '/topic/issue/partnerWaitMember/' + widget.issue.id.toString(),
+          callback: (stompFrame) =>
+              _callbackWebSocket(stompFrame, widget.issue.id!),
+          onCancel: () {},
+        ),
       );
     } catch (error) {
       await Util.showDialogNotification(
           context: context, content: error.toString());
+    }
+  }
+
+  //Phần này chỉ dành cho luồng gửi-nhận cứu hộ (làm thế này hơi ẩu, nên tách ra. nhưng kệ đi) - Hiếu iceTea
+  Future<void> _callbackWebSocket(stompFrame, int issueId) async {
+    if (stompFrame.body != null) {
+      Map<String, dynamic> response = json.decode(stompFrame.body!);
+      IssueStatus issueStatus = IssueStatus.values.firstWhere(
+        (element) =>
+            element.toString() ==
+            "IssueStatus." + response['data']['issueStatus'],
+      );
+
+      if (issueStatus == IssueStatus.memberConfirmPartner) {
+        Issues issueReload = await IssuesRepository.findById(issueId);
+
+        Navigator.pop(context); //Thoát màn hình chờ WebSocket
+
+        setState(() {
+          widget.issue = issueReload;
+        });
+      }
     }
   }
 }

@@ -8,14 +8,14 @@ import 'package:roadhelp/helper/util.dart';
 import 'package:roadhelp/models/issues.dart';
 
 class IssueDescription extends StatelessWidget {
+  final Issues issue;
+  bool isPartner;
+
   IssueDescription({
     Key? key,
     required this.issue,
     this.isPartner = false,
   }) : super(key: key);
-
-  final Issues issue;
-  bool isPartner;
 
   @override
   Widget build(BuildContext context) {
@@ -82,13 +82,13 @@ class IssueDescription extends StatelessWidget {
                       ],
                     ),
                   ),
-                if (!isPartner ||
-                    (isPartner &&
-                        issue.status == IssueStatus.memberConfirmPartner))
                   ListTile(
                     leading: Icon(Icons.phone),
                     title: Text(
-                      issue.phone!,
+                      (!isPartner ||
+                              issue.status == IssueStatus.memberConfirmPartner)
+                          ? issue.phone!
+                          : "(Nhận hỗ trợ để hiển SĐT)",
                       style: TextStyle(color: kTextColor),
                     ),
                     trailing: (isPartner &&
