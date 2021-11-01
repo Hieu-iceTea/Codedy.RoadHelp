@@ -6,7 +6,7 @@ import com.codedy.roadhelp.model.RatingIssue;
 import com.codedy.roadhelp.model.User;
 import com.codedy.roadhelp.model.enums.IssueStatus;
 import com.codedy.roadhelp.rest.exception.RestNotFoundException;
-import com.codedy.roadhelp.service.issues.IssuesService;
+import com.codedy.roadhelp.service.issue.IssueService;
 import com.codedy.roadhelp.service.ratingIssue.RatingIssueService;
 import com.codedy.roadhelp.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +24,7 @@ public class IssueRestController {
     SimpMessagingTemplate simpMessagingTemplate;
     //region - Autowired Service -
     @Autowired
-    private IssuesService issuesService;
+    private IssueService issueService;
     @Autowired
     private RatingIssueService ratingIssueService;
     @Autowired
@@ -35,13 +35,13 @@ public class IssueRestController {
     // List
     @GetMapping(path = {"", "/", "/index"})
     public List<LinkedHashMap<String, Object>> index() {
-        return issuesService.findAll().stream().map(Issue::toApiResponse).toList();
+        return issueService.findAll().stream().map(Issue::toApiResponse).toList();
     }
 
     // Detail
     @GetMapping(path = {"/{id}", "/{id}/"})
     public LinkedHashMap<String, Object> show(@PathVariable int id) {
-        Issue issue = issuesService.findById(id);
+        Issue issue = issueService.findById(id);
 
         if (issue == null) {
             throw new RestNotFoundException("Issues id not found - " + id);
@@ -55,37 +55,43 @@ public class IssueRestController {
     public LinkedHashMap<String, Object> store(@RequestBody Issue issue) {
         issue.setId(0);
 
-        return issuesService.save(issue).toApiResponse();
+        return issueService.save(issue).toApiResponse();
     }
 
     // Update
     @PutMapping(path = {"/{id}", "/{id}/"})
     public LinkedHashMap<String, Object> update(@RequestBody Issue issue, @PathVariable int id) {
-        if (!issuesService.existsById(id)) {
+        if (!issueService.existsById(id)) {
             throw new RestNotFoundException("Issue id not found - " + id);
         }
 
         issue.setId(id);
 
-        return issuesService.save(issue).toApiResponse();
+        return issueService.save(issue).toApiResponse();
     }
 
     // Delete
     @DeleteMapping(path = {"/{id}", "/{id}/"})
     public String delete(@PathVariable int id) {
-        if (!issuesService.existsById(id)) {
+        if (!issueService.existsById(id)) {
             throw new RestNotFoundException("Issues id not found - " + id);
         }
 
-        issuesService.deleteById(id);
+        issueService.deleteById(id);
 
-        return "Deleted issues id - " + id;
+        return "Deleted issue id - " + id;
     }
     //endregion
 
 
     //region - Extend -
     // = = = = = = = = = = = = = = = For Member = = = = = = = = = = = = = = = //
+
+    // List byUserMember - Lịch sử danh sách issue của member đã gửi
+    @GetMapping(path = {"/byUserMember/{userMemberId}", "/byUserMember/{userMemberId}/"})
+    public List<LinkedHashMap<String, Object>> byUserMember(@PathVariable int userMemberId) {
+        return issueService.findAllByUserMemberId(userMemberId).stream().map(Issue::toApiResponse).toList();
+    }
 
     // Member Gửi yêu cầu cứu hộ
     @PostMapping(path = {"/send", "/send/"})
@@ -97,7 +103,7 @@ public class IssueRestController {
     // Member Xem thông tin người giúp đỡ mình
     @GetMapping(path = {"/{id}/userPartner", "/{id}/userPartner/"})
     public LinkedHashMap<String, Object> userPartner(@PathVariable int id) {
-        Issue issue = issuesService.findById(id);
+        Issue issue = issueService.findById(id);
 
         if (issue == null) {
             throw new RestNotFoundException("Issues id not found - " + id);
@@ -113,7 +119,7 @@ public class IssueRestController {
     // Member Xác nhận thông tin người giúp đỡ mình
     @PutMapping(path = {"/{id}/member-confirm-partner", "/{id}/member-confirm-partner/"})
     public LinkedHashMap<String, Object> memberConfirmPartner(@PathVariable int id) {
-        Issue issue = issuesService.findById(id);
+        Issue issue = issueService.findById(id);
 
         if (issue == null) {
             throw new RestNotFoundException("Issues id not found - " + id);
@@ -126,7 +132,7 @@ public class IssueRestController {
 
         issue.setStatus(IssueStatus.memberConfirmPartner);
 
-        issuesService.save(issue);
+        issueService.save(issue);
 
         // Gửi thông báo tới máy Partner bằng WebSocket :
         LinkedHashMap<String, Object> data = new LinkedHashMap<>();
@@ -144,7 +150,7 @@ public class IssueRestController {
     // Member xác nhận hoàn thành sau khi partner hỗ trợ xog
     @PutMapping(path = {"/{id}/setStatusSuccess", "/{id}/setStatusSuccess/"})
     public String rescueSuccess(@PathVariable int id) {
-        Issue issue = issuesService.findById(id);
+        Issue issue = issueService.findById(id);
 
         if (issue == null) {
             throw new RestNotFoundException("Issues id not found - " + id);
@@ -156,7 +162,7 @@ public class IssueRestController {
 
         issue.setStatus(IssueStatus.succeeded);
 
-        issuesService.save(issue);
+        issueService.save(issue);
 
         return "Issue có ID " + id + "được thay đổi trạng thái thành: 'Thành công'";
     }
@@ -166,7 +172,7 @@ public class IssueRestController {
     public LinkedHashMap<String, Object> ratingIssue(@RequestBody RatingIssue ratingIssue, @PathVariable int issueId) {
         ratingIssue.setId(0);
 
-        Issue issue = issuesService.findById(issueId);
+        Issue issue = issueService.findById(issueId);
         ratingIssue.setIssue(issue);
 
         return ratingIssueService.save(ratingIssue).toApiResponse();
@@ -175,16 +181,22 @@ public class IssueRestController {
 
     // = = = = = = = = = = = = = = = For Partner = = = = = = = = = = = = = = = //
 
+    // List UserPartner - Lịch sử danh sách issue của partner đã nhận
+    @GetMapping(path = {"/byUserPartner/{userPartnerId}", "/byUserPartner/{userPartnerId}/"})
+    public List<LinkedHashMap<String, Object>> byUserPartner(@PathVariable int userPartnerId) {
+        return issueService.findAllByUserPartnerId(userPartnerId).stream().map(Issue::toApiResponse).toList();
+    }
+
     // Partner Xem danh sách những người đang cần hỗ trợ
     @GetMapping(path = {"/byStatusSent", "/byStatusSent/"})
     public List<LinkedHashMap<String, Object>> showListRescue() {
-        return issuesService.findIssueByStatus(IssueStatus.sent).stream().map(Issue::toApiResponse).toList();
+        return issueService.findIssueByStatus(IssueStatus.sent).stream().map(Issue::toApiResponse).toList();
     }
 
     // Partner Xác nhận giúp
     @PutMapping(path = {"/{id}/partner-confirm-member/{userPartnerId}", "/{id}/partner-confirm-member/{userPartnerId}/"})
     public LinkedHashMap<String, Object> partnerConfirmMember(@PathVariable int id, @PathVariable int userPartnerId) {
-        Issue issue = issuesService.findById(id);
+        Issue issue = issueService.findById(id);
 
         if (issue == null) {
             throw new RestNotFoundException("Issues id not found - " + id);
@@ -204,7 +216,7 @@ public class IssueRestController {
         // Set Status :
         issue.setStatus(IssueStatus.waitMemberConfirm);
 
-        issuesService.save(issue);
+        issueService.save(issue);
 
         // Gửi thông báo tới máy member bằng WebSocket :
         LinkedHashMap<String, Object> data = new LinkedHashMap<>();

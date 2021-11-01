@@ -133,7 +133,7 @@ class _BodyState extends State<Body> {
         context,
         WaitWebSocketScreen.routeName,
         arguments: WaitWebSocketArguments(
-          message: "Chỉ một lúc thôi...\nHệ thống đang tìm người hỗ trợ bạn.",
+          message: "Chỉ một lúc thôi...\nĐang chờ khách hàng xác nhận.",
           destination:
               '/topic/issue/partnerWaitMember/' + widget.issue.id.toString(),
           callback: (stompFrame) =>
