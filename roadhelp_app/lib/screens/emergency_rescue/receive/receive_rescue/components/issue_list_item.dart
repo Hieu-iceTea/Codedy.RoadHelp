@@ -4,12 +4,14 @@ import 'package:roadhelp/models/issue.dart';
 import 'package:roadhelp/screens/emergency_rescue/issue_details/issue_details_screen.dart';
 
 class IssueListItem extends StatelessWidget {
-  const IssueListItem({
+  final Issue issue;
+  bool isPartnerReceiveNew;
+
+  IssueListItem({
     Key? key,
     required this.issue,
+    this.isPartnerReceiveNew = false,
   }) : super(key: key);
-
-  final Issue issue;
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +19,7 @@ class IssueListItem extends StatelessWidget {
       onTap: () => Navigator.pushNamed(
         context,
         IssueDetailsScreen.routeName,
-        arguments: IssueDetailsArguments(issue: issue, isPartner: true),
+        arguments: IssueDetailsArguments(issue: issue, isPartnerReceiveNew: isPartnerReceiveNew),
       ),
       leading: Hero(
         tag: issue.id.toString(),

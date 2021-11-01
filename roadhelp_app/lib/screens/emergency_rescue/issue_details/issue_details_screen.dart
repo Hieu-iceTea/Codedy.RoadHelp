@@ -21,7 +21,7 @@ class IssueDetailsScreen extends StatelessWidget {
       backgroundColor: Color(0xFFF5F6F9),
       body: Body(
         issue: arguments.issue,
-        isPartner: arguments.isPartner,
+        isPartnerReceiveNew: arguments.isPartnerReceiveNew,
       ),
     );
   }
@@ -29,7 +29,8 @@ class IssueDetailsScreen extends StatelessWidget {
 
 class IssueDetailsArguments {
   final Issue issue;
-  final bool isPartner;
+  final bool isPartnerReceiveNew;
 
-  IssueDetailsArguments({required this.issue, this.isPartner = false});
+  IssueDetailsArguments(
+      {required this.issue, this.isPartnerReceiveNew = false});
 }

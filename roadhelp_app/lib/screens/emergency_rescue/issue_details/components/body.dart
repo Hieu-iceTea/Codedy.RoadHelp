@@ -18,9 +18,9 @@ import 'top_rounded_container.dart';
 
 class Body extends StatefulWidget {
   Issue issue;
-  bool isPartner;
+  bool isPartnerReceiveNew;
 
-  Body({Key? key, required this.issue, this.isPartner = false})
+  Body({Key? key, required this.issue, this.isPartnerReceiveNew = false})
       : super(key: key);
 
   @override
@@ -67,7 +67,7 @@ class _BodyState extends State<Body> {
                     children: [
                       IssueDescription(
                         issue: widget.issue,
-                        isPartner: widget.isPartner,
+                        isPartner: widget.isPartnerReceiveNew,
                       ),
                       TopRoundedContainer(
                         color: Color(0xFFF6F7F9),
@@ -75,7 +75,8 @@ class _BodyState extends State<Body> {
                           children: [
                             if (widget.issue.status == IssueStatus.succeeded)
                               IssueRating(issue: widget.issue),
-                            if (widget.issue.status == IssueStatus.sent)
+                            if (widget.issue.status == IssueStatus.sent &&
+                                widget.isPartnerReceiveNew)
                               Padding(
                                 padding: EdgeInsets.only(
                                   left: SizeConfig.screenWidth * 0.15,
@@ -90,7 +91,7 @@ class _BodyState extends State<Body> {
                               ),
                             if (widget.issue.status ==
                                     IssueStatus.memberConfirmPartner &&
-                                widget.isPartner)
+                                widget.isPartnerReceiveNew)
                               Padding(
                                 padding: EdgeInsets.only(
                                   left: SizeConfig.screenWidth * 0.15,

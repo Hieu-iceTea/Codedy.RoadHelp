@@ -11,10 +11,7 @@ enum IssueListScreenState { receiveNew, historySent, historyReceived }
 class ReceiveRescueScreen extends StatefulWidget {
   static String routeName = "/receive_rescue";
 
-  IssueListScreenState issueListScreenState;
-
   ReceiveRescueScreen({
-    this.issueListScreenState = IssueListScreenState.receiveNew,
     Key? key,
   }) : super(key: key);
 
@@ -23,12 +20,24 @@ class ReceiveRescueScreen extends StatefulWidget {
 }
 
 class _ReceiveRescueScreenState extends State<ReceiveRescueScreen> {
+  IssueListScreenState _issueListScreenState = IssueListScreenState.receiveNew;
+  bool isFirstLoad = true;
+
   @override
   Widget build(BuildContext context) {
+    if (isFirstLoad && ModalRoute.of(context)!.settings.arguments != null) {
+      final ReceiveRescueArguments arguments =
+          ModalRoute.of(context)!.settings.arguments as ReceiveRescueArguments;
+
+      _issueListScreenState = arguments.issueListScreenState;
+
+      isFirstLoad = false;
+    }
+
     return Scaffold(
       appBar: buildAppBar(context),
       body: Body(
-        issueListScreenState: widget.issueListScreenState,
+        issueListScreenState: _issueListScreenState,
       ),
     );
   }
@@ -39,17 +48,16 @@ class _ReceiveRescueScreenState extends State<ReceiveRescueScreen> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            widget.issueListScreenState == IssueListScreenState.receiveNew
+            _issueListScreenState == IssueListScreenState.receiveNew
                 ? "Nhận cứu hộ khẩn cấp"
-                : widget.issueListScreenState ==
-                        IssueListScreenState.historyReceived
+                : _issueListScreenState == IssueListScreenState.historyReceived
                     ? "Lịch sử nhận cứu hộ"
                     : "Lịch sử gửi cứu hộ",
             style: TextStyle(color: Colors.black),
           ),
           Consumer<IssueProvider>(
             builder: (context, value, child) => Text(
-              widget.issueListScreenState == IssueListScreenState.receiveNew
+              _issueListScreenState == IssueListScreenState.receiveNew
                   ? "${value.items.length} người đang cần bạn hỗ trợ"
                   : "${value.items.length} mục",
               style: Theme.of(context).textTheme.caption,
@@ -74,8 +82,7 @@ class _ReceiveRescueScreenState extends State<ReceiveRescueScreen> {
                   ),
                   onTap: () {
                     setState(() {
-                      widget.issueListScreenState =
-                          IssueListScreenState.receiveNew;
+                      _issueListScreenState = IssueListScreenState.receiveNew;
                     });
                   },
                 ),
@@ -92,7 +99,7 @@ class _ReceiveRescueScreenState extends State<ReceiveRescueScreen> {
                   ),
                   onTap: () {
                     setState(() {
-                      widget.issueListScreenState =
+                      _issueListScreenState =
                           IssueListScreenState.historyReceived;
                     });
                   },
@@ -107,8 +114,7 @@ class _ReceiveRescueScreenState extends State<ReceiveRescueScreen> {
                 ),
                 onTap: () {
                   setState(() {
-                    widget.issueListScreenState =
-                        IssueListScreenState.historySent;
+                    _issueListScreenState = IssueListScreenState.historySent;
                   });
                 },
               ),
@@ -118,4 +124,10 @@ class _ReceiveRescueScreenState extends State<ReceiveRescueScreen> {
       ],
     );
   }
+}
+
+class ReceiveRescueArguments {
+  IssueListScreenState issueListScreenState;
+
+  ReceiveRescueArguments({required this.issueListScreenState});
 }
