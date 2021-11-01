@@ -1,5 +1,6 @@
 package com.codedy.roadhelp.rest;
 
+import com.codedy.roadhelp.dto.WebSocketDto;
 import com.codedy.roadhelp.model.Issue;
 import com.codedy.roadhelp.model.RatingIssue;
 import com.codedy.roadhelp.model.User;
@@ -9,6 +10,7 @@ import com.codedy.roadhelp.service.issues.IssuesService;
 import com.codedy.roadhelp.service.ratingIssue.RatingIssueService;
 import com.codedy.roadhelp.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.LinkedHashMap;
@@ -18,17 +20,16 @@ import java.util.List;
 @RequestMapping(path = "/api/v1/issues")
 public class IssueRestController {
 
+    @Autowired
+    SimpMessagingTemplate simpMessagingTemplate;
     //region - Autowired Service -
     @Autowired
     private IssuesService issuesService;
-
     @Autowired
     private RatingIssueService ratingIssueService;
-
     @Autowired
     private UserService userService;
     //endregion
-
 
     //region - Base -
     // List
@@ -89,6 +90,7 @@ public class IssueRestController {
     // Member Gửi yêu cầu cứu hộ
     @PostMapping(path = {"/send", "/send/"})
     public LinkedHashMap<String, Object> sendIssue(@RequestBody Issue issue) {
+        issue.setStatus(IssueStatus.sent);
         return this.store(issue);
     }
 
@@ -110,7 +112,7 @@ public class IssueRestController {
 
     // Member Xác nhận thông tin người giúp đỡ mình
     @PutMapping(path = {"/{id}/member-confirm-partner", "/{id}/member-confirm-partner/"})
-    public String memberConfirmPartner(@PathVariable int id) {
+    public LinkedHashMap<String, Object> memberConfirmPartner(@PathVariable int id) {
         Issue issue = issuesService.findById(id);
 
         if (issue == null) {
@@ -118,14 +120,25 @@ public class IssueRestController {
         }
 
         if (issue.getStatus() != IssueStatus.waitMemberConfirm) {
-            return "Lỗi: Không trong trạng thái chờ member xác nhận, Status hiện tại: " + issue.getStatus();
+            throw new RuntimeException("Lỗi: Không trong trạng thái 'chờ khách hàng xác nhận', Status hiện tại: " + issue.getStatus());
+            //throw new RuntimeException("Lỗi: Không trong trạng thái 'waitMemberConfirm', Status hiện tại: " + issue.getStatus());
         }
 
         issue.setStatus(IssueStatus.memberConfirmPartner);
 
         issuesService.save(issue);
 
-        return "Xác nhận '" + issue.getUserPartner().getFirstName() + " " + issue.getUserPartner().getLastName() + "' là người hỗ trợ!";
+        // Gửi thông báo tới máy Partner bằng WebSocket :
+        LinkedHashMap<String, Object> data = new LinkedHashMap<>();
+        data.put("issueStatus", issue.getStatus());
+        WebSocketDto webSocketDto = new WebSocketDto();
+        webSocketDto.setData(data);
+        webSocketDto.setMessage("Issue này Member đã xác nhận Partner tới giúp."); // Không cần thiết, chỉ test thôi
+        simpMessagingTemplate.convertAndSend("/topic/issue/partnerWaitMember/" + issue.getId(), webSocketDto);
+
+        LinkedHashMap<String, Object> response = new LinkedHashMap<>();
+        response.put("message", "Xác nhận '" + issue.getUserPartner().getFirstName() + " " + issue.getUserPartner().getLastName() + "' là người hỗ trợ!");
+        return response;
     }
 
     // Member xác nhận hoàn thành sau khi partner hỗ trợ xog
@@ -192,6 +205,14 @@ public class IssueRestController {
         issue.setStatus(IssueStatus.waitMemberConfirm);
 
         issuesService.save(issue);
+
+        // Gửi thông báo tới máy member bằng WebSocket :
+        LinkedHashMap<String, Object> data = new LinkedHashMap<>();
+        data.put("issueStatus", issue.getStatus());
+        WebSocketDto webSocketDto = new WebSocketDto();
+        webSocketDto.setData(data);
+        webSocketDto.setMessage("Issue này đã được Partner xác nhận giúp."); // Không cần thiết, chỉ test thôi
+        simpMessagingTemplate.convertAndSend("/topic/issue/memberWaitPartner/" + issue.getId(), webSocketDto);
 
         LinkedHashMap<String, Object> response = new LinkedHashMap<>();
         response.put("message", "Bạn đã xác nhận muốn hỗ trợ: '" + issue.getUserMember().getFirstName() + " " + issue.getUserMember().getLastName() + "'");

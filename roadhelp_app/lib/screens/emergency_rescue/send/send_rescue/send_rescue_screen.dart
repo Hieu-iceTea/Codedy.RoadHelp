@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:roadhelp/components/coustom_bottom_nav_bar.dart';
-import 'package:roadhelp/config/enums.dart';
+import 'package:roadhelp/config/size_config.dart';
+import 'package:roadhelp/models/garage.dart';
 
 import 'components/body.dart';
 
@@ -11,12 +11,17 @@ class SendRescueScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // You have to call it on your starting screen:
+    SizeConfig().init(context);
+
     return Scaffold(
       appBar: AppBar(
-        title: Text("Receive rescue"),
+        title: const Text(
+          "Gọi cứu hộ khẩn",
+          //style: TextStyle(color: Colors.black),
+        ),
       ),
       body: Body(),
-      bottomNavigationBar: CustomBottomNavBar(selectedMenu: MenuState.home),
     );
   }
 }

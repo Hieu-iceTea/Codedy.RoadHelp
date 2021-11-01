@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:roadhelp/config/enums.dart';
 import 'package:roadhelp/models/issues.dart';
-import 'package:roadhelp/screens/emergency_rescue/receive/receive_rescue_details/receive_rescue_details_screen.dart';
+import 'package:roadhelp/screens/emergency_rescue/issue_details/issue_details_screen.dart';
 
 class IssueListItem extends StatelessWidget {
   const IssueListItem({
@@ -16,8 +16,8 @@ class IssueListItem extends StatelessWidget {
     return ListTile(
       onTap: () => Navigator.pushNamed(
         context,
-        ReceiveRescueDetailsScreen.routeName,
-        arguments: ReceiveRescueDetailsArguments(issue: issue),
+        IssueDetailsScreen.routeName,
+        arguments: IssueDetailsArguments(issue: issue, isPartner: true),
       ),
       leading: Hero(
         tag: issue.id.toString(),

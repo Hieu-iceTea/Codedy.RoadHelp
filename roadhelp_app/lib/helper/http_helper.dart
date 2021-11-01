@@ -105,6 +105,8 @@ class HttpHelper {
         },
       );
 
+      var responseBody = response.body;
+
       if (response.body.isEmpty) {
         throw const HttpException('❌ Failed. ResponseBody is Empty');
       }

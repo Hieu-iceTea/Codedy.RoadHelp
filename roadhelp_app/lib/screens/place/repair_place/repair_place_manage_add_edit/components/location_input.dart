@@ -82,7 +82,7 @@ class _LocationInputState extends State<LocationInput> {
           ),
           child: _previewImageUrl == null
               ? const Text(
-                  'No Location Chosen',
+                  'Không có vị trí được chọn',
                   textAlign: TextAlign.center,
                 )
               : Image.network(
@@ -101,7 +101,7 @@ class _LocationInputState extends State<LocationInput> {
               icon: const Icon(
                 Icons.location_on,
               ),
-              label: Text('Current Location'),
+              label: Text('Vị trí hiện tại'),
               onPressed: _getCurrentUserLocation,
             ),
             TextButton.icon(
@@ -111,7 +111,7 @@ class _LocationInputState extends State<LocationInput> {
               icon: const Icon(
                 Icons.map,
               ),
-              label: Text('Select on Map'),
+              label: Text('Chọn trên bản đồ'),
               onPressed: _selectOnMap,
             ),
           ],

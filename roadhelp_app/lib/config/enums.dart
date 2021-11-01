@@ -43,17 +43,17 @@ extension IssueStatusExtension on IssueStatus {
   String get name {
     switch (this) {
       case IssueStatus.sent:
-        return 'sent';
+        return 'Vừa gửi đi';
       case IssueStatus.waitMemberConfirm:
-        return 'waitMemberConfirm';
+        return 'Chờ khách hàng xác nhận người giúp đỡ';
       case IssueStatus.memberConfirmPartner:
-        return 'memberConfirmPartner';
+        return 'Đang thực hiện'; //Khách hàng đã xác nhận người giúp đỡ (đang thực hiện)
       case IssueStatus.canceledByMember:
-        return 'canceledByMember';
+        return 'Hủy bởi thành viên';
       case IssueStatus.canceledByPartner:
-        return 'canceledByPartner';
+        return 'Hủy bởi đối tác';
       case IssueStatus.succeeded:
-        return 'succeeded';
+        return 'Đã thành công';
       default:
         return "_ERROR_";
     }

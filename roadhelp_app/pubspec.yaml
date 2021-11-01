@@ -45,6 +45,9 @@ dependencies:
 
   sliding_up_panel: ^2.0.0+1
 
+  stomp_dart_client: ^0.4.3
+  url_launcher: ^6.0.12
+
 
 dev_dependencies:
   flutter_test:

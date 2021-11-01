@@ -75,5 +75,26 @@ class IssuesRepository {
 
     return responseBody['message'];
   }
+
+  static Future<String> memberConfirmPartner(
+      int issueId) async {
+    var responseBody = await HttpHelper.put(
+      url: _url +
+          issueId.toString() +
+          "/member-confirm-partner",
+      body: null,
+    );
+
+    return responseBody['message'];
+  }
+
+  static Future<Issues> send(Issues item) async {
+    var responseBody = await HttpHelper.post(
+      url: _url + "send",
+      body: item.toJson(),
+    );
+
+    return Issues.fromJson(responseBody);
+  }
 //#endregion
 }
