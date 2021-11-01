@@ -5,11 +5,11 @@ import 'package:roadhelp/config/size_config.dart';
 import 'package:roadhelp/helper/util.dart';
 import 'package:roadhelp/models/issues.dart';
 import 'package:roadhelp/providers/issues_provider.dart';
-import 'package:roadhelp/screens/emergency_rescue/receive/receive_rescue_details/components/map_image.dart';
 
 import '/components/default_button.dart';
 import 'issue_description.dart';
 import 'issue_rating.dart';
+import 'map_image.dart';
 import 'top_rounded_container.dart';
 
 class Body extends StatelessWidget {

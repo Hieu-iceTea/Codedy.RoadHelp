@@ -10,7 +10,6 @@ import '/screens/auth/sign_up/sign_up_screen.dart';
 import '/screens/cart/cart_screen.dart';
 import '/screens/details/details_screen.dart';
 import '/screens/emergency_rescue/receive/receive_rescue/receive_rescue_screen.dart';
-import '/screens/emergency_rescue/receive/receive_rescue_details/receive_rescue_details_screen.dart';
 import '/screens/emergency_rescue/receive/receive_rescue_navigation_map/receive_rescue_navigation_map_screen.dart';
 import '/screens/emergency_rescue/send/send_rescue/send_rescue_screen.dart';
 import '/screens/emergency_rescue/send/send_rescue_confirm/send_rescue_confirm_screen.dart';
@@ -54,7 +53,6 @@ final Map<String, WidgetBuilder> routes = {
   //TODO: Chưa sửa 'routeName' của các màn hình:
   SignInPartnerScreen.routeName: (context) => const SignInPartnerScreen(),
   ReceiveRescueScreen.routeName: (context) => const ReceiveRescueScreen(),
-  ReceiveRescueDetailsScreen.routeName: (context) => const ReceiveRescueDetailsScreen(),
   ReceiveRescueNavigationMapScreen.routeName: (context) => const ReceiveRescueNavigationMapScreen(),
   SendRescueScreen.routeName: (context) => const SendRescueScreen(),
   SendRescueConfirmScreen.routeName: (context) => const SendRescueConfirmScreen(),
