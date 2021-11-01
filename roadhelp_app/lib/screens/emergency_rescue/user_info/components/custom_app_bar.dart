@@ -5,6 +5,10 @@ import 'package:roadhelp/config/size_config.dart';
 import 'package:roadhelp/helper/util.dart';
 
 class CustomAppBar extends StatelessWidget {
+  final Function onCancel;
+
+  const CustomAppBar({required this.onCancel, Key? key}) : super(key: key);
+
   @override
   // AppBar().preferredSize.height provide us the height that appy on our app bar
   Size get preferredSize => Size.fromHeight(AppBar().preferredSize.height);
@@ -37,7 +41,7 @@ class CustomAppBar extends StatelessWidget {
                       content: "Bạn muốn hủy gọi cứu hộ khẩn lần này?",
                     );
                     if (confirm) {
-                      //TODO: Xử lý tiếp ở đây
+                      onCancel();
                       Navigator.pop(context);
                     }
                   },

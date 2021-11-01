@@ -27,7 +27,7 @@ class UserInfoScreen extends StatelessWidget {
           content: "Bạn muốn hủy gọi cứu hộ khẩn lần này?",
         );
         if (confirm) {
-          //TODO: Xử lý tiếp ở đây
+          arguments.onCancel();
           return true;
         }
 
@@ -37,10 +37,11 @@ class UserInfoScreen extends StatelessWidget {
         //backgroundColor: Color(0xFFF5F6F9),
         appBar: PreferredSize(
           preferredSize: Size.fromHeight(AppBar().preferredSize.height),
-          child: CustomAppBar(),
+          child: CustomAppBar(onCancel: arguments.onCancel),
         ),
         body: Body(user: arguments.user),
-        bottomNavigationBar: ConfirnBottomNavigationBar(),
+        bottomNavigationBar:
+            ConfirnBottomNavigationBar(onConfirm: arguments.onConfirm),
       ),
     );
   }
@@ -48,6 +49,9 @@ class UserInfoScreen extends StatelessWidget {
 
 class UserInfoArguments {
   final User user;
+  final Function onConfirm;
+  final Function onCancel;
 
-  UserInfoArguments({required this.user});
+  UserInfoArguments(
+      {required this.user, required this.onConfirm, required this.onCancel});
 }

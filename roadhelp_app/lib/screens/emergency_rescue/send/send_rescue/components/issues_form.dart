@@ -227,7 +227,11 @@ class _IssuesFormState extends State<IssuesForm> {
                 Navigator.pushReplacementNamed(
                   context,
                   UserInfoScreen.routeName,
-                  arguments: UserInfoArguments(user: issue.userPartner!),
+                  arguments: UserInfoArguments(
+                    user: issue.userPartner!,
+                    onConfirm: () {},
+                    onCancel: () {},
+                  ),
                 );
                 //Navigator.pop(context);
               }

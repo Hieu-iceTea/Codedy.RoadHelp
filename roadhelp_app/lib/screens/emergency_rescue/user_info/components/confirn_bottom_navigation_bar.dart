@@ -4,7 +4,10 @@ import 'package:roadhelp/config/size_config.dart';
 import '/components/default_button.dart';
 
 class ConfirnBottomNavigationBar extends StatelessWidget {
+  final Function onConfirm;
+
   const ConfirnBottomNavigationBar({
+    required this.onConfirm,
     Key? key,
   }) : super(key: key);
 
@@ -39,7 +42,7 @@ class ConfirnBottomNavigationBar extends StatelessWidget {
             SizedBox(height: getProportionateScreenHeight(15)),
             DefaultButton(
               text: "Xác nhận",
-              press: () {},
+              press: onConfirm,
             ),
           ],
         ),
