@@ -52,7 +52,7 @@ final Map<String, WidgetBuilder> routes = {
   //NEW:
   //TODO: Chưa sửa 'routeName' của các màn hình:
   SignInPartnerScreen.routeName: (context) => const SignInPartnerScreen(),
-  ReceiveRescueScreen.routeName: (context) => const ReceiveRescueScreen(),
+  ReceiveRescueScreen.routeName: (context) => ReceiveRescueScreen(),
   ReceiveRescueNavigationMapScreen.routeName: (context) => const ReceiveRescueNavigationMapScreen(),
   SendRescueScreen.routeName: (context) => const SendRescueScreen(),
   SendRescueConfirmScreen.routeName: (context) => const SendRescueConfirmScreen(),

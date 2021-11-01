@@ -79,4 +79,19 @@ public class RatingIssueRestController {
     }
     //endregion
 
+
+    //region - Extend -
+    // List Rating Garage
+    @GetMapping(path = {"/byIssue/{issueId}", "/byIssue/{issueId}/"})
+    public LinkedHashMap<String, Object> byIssue(@PathVariable int issueId) {
+        RatingIssue ratingIssue = ratingIssueService.findByIssueId(issueId);
+
+        if (ratingIssue == null) {
+            throw new RestNotFoundException("Rating issue issueId not found - " + issueId);
+        }
+        
+        return ratingIssue.toApiResponse();
+    }
+    //endregion
+
 }

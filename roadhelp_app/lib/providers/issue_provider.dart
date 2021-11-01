@@ -64,6 +64,42 @@ class IssueProvider with ChangeNotifier {
     }
   }
 
+  Future<List<Issue>> fetchAllDataByUserMember() async {
+    if (!authProvider!.authData.isAuth) {
+      throw Exception(
+          "Chưa đăng nhập, hoặc hết thời gian đăng nhập. Vui lòng đăng xuất & đăng nhập lại");
+    }
+
+    try {
+      List<Issue> _itemsLoaded = await IssueRepository.findAllByByUserMember(
+          authProvider!.authData.userId!);
+      _items.clear();
+      _items.addAll(_itemsLoaded);
+      notifyListeners();
+      return _items;
+    } catch (error) {
+      rethrow;
+    }
+  }
+
+  Future<List<Issue>> fetchAllDataByUserPartner() async {
+    if (!authProvider!.authData.isAuth) {
+      throw Exception(
+          "Chưa đăng nhập, hoặc hết thời gian đăng nhập. Vui lòng đăng xuất & đăng nhập lại");
+    }
+
+    try {
+      List<Issue> _itemsLoaded = await IssueRepository.findAllByByUserPartner(
+          authProvider!.authData.userId!);
+      _items.clear();
+      _items.addAll(_itemsLoaded);
+      notifyListeners();
+      return _items;
+    } catch (error) {
+      rethrow;
+    }
+  }
+
   Future<String> partnerConfirmMember(Issue item) async {
     String message = await IssueRepository.partnerConfirmMember(
         item.id!, authProvider!.authData.currentUser!.id!);

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:roadhelp/config/enums.dart';
 import 'package:roadhelp/config/size_config.dart';
+import 'package:roadhelp/helper/url_launcher_helper.dart';
 import 'package:roadhelp/helper/util.dart';
 import 'package:roadhelp/models/issue.dart';
 import 'package:roadhelp/providers/issue_provider.dart';
@@ -18,9 +19,9 @@ import 'top_rounded_container.dart';
 
 class Body extends StatefulWidget {
   Issue issue;
-  bool isPartner;
+  bool isPartnerReceiveNew;
 
-  Body({Key? key, required this.issue, this.isPartner = false})
+  Body({Key? key, required this.issue, this.isPartnerReceiveNew = false})
       : super(key: key);
 
   @override
@@ -44,7 +45,15 @@ class _BodyState extends State<Body> {
               Container(
                 margin: EdgeInsets.only(right: getProportionateScreenWidth(15)),
                 child: IconButton(
-                  onPressed: () => {},
+                  onPressed: () {
+                    try {
+                      UrlLauncherHelper.launchURL(
+                          "https://www.google.com/maps/search/?api=1&query=${widget.issue.latitude},${widget.issue.longitude}");
+                    } catch (e) {
+                      Util.showDialogNotification(
+                          context: context, content: e.toString());
+                    }
+                  },
                   icon: const Icon(Icons.map),
                   tooltip: "Xem bản đồ",
                 ),
@@ -67,7 +76,7 @@ class _BodyState extends State<Body> {
                     children: [
                       IssueDescription(
                         issue: widget.issue,
-                        isPartner: widget.isPartner,
+                        isPartner: widget.isPartnerReceiveNew,
                       ),
                       TopRoundedContainer(
                         color: Color(0xFFF6F7F9),
@@ -75,7 +84,8 @@ class _BodyState extends State<Body> {
                           children: [
                             if (widget.issue.status == IssueStatus.succeeded)
                               IssueRating(issue: widget.issue),
-                            if (widget.issue.status == IssueStatus.sent)
+                            if (widget.issue.status == IssueStatus.sent &&
+                                widget.isPartnerReceiveNew)
                               Padding(
                                 padding: EdgeInsets.only(
                                   left: SizeConfig.screenWidth * 0.15,
@@ -90,7 +100,7 @@ class _BodyState extends State<Body> {
                               ),
                             if (widget.issue.status ==
                                     IssueStatus.memberConfirmPartner &&
-                                widget.isPartner)
+                                widget.isPartnerReceiveNew)
                               Padding(
                                 padding: EdgeInsets.only(
                                   left: SizeConfig.screenWidth * 0.15,

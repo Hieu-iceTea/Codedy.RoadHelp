@@ -51,4 +51,22 @@ class RatingIssueRepository {
       url: _url + id.toString(),
     );
   }
+
+  //#region - Extend -
+  static Future<RatingIssue?> findByIssueId({required int issueId}) async {
+    try {
+      var responseBody = await HttpHelper.get(
+        url: _url + "byIssue/" + issueId.toString(),
+      );
+
+      return RatingIssue.fromJson(responseBody);
+    } catch (e) {
+      if (e.toString().contains("StatusCode: 404")) {
+        return null;
+      } else {
+        rethrow;
+      }
+    }
+  }
+//#endregion
 }

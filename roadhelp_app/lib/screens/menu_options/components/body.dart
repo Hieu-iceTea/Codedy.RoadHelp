@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:roadhelp/config/enums.dart';
 import 'package:roadhelp/providers/auth_provider.dart';
 import 'package:roadhelp/screens/auth/sign_in/sign_in_screen.dart';
+import 'package:roadhelp/screens/emergency_rescue/receive/receive_rescue/receive_rescue_screen.dart';
 import 'package:roadhelp/screens/my_account/become_to_partner/become_to_partner_screen.dart';
 import 'package:roadhelp/screens/my_account/my_account/my_account_screen.dart';
 import 'package:roadhelp/screens/place/repair_place/repair_place_manage/repair_place_manage_screen.dart';
@@ -50,13 +51,24 @@ class Body extends StatelessWidget {
               press: () {},
             ),*/
             MenuItem(
-              text: "Cài Đặt",
-              icon: "assets/icons/Settings.svg",
-              press: () {},
+              text: "Lịch sử cứu hộ",
+              icon: "assets/icons/Bill Icon.svg",
+              press: () => Navigator.pushNamed(
+                context,
+                ReceiveRescueScreen.routeName,
+                arguments: ReceiveRescueArguments(
+                  issueListScreenState:
+                      (authProvider.authData.currentUser != null &&
+                              authProvider.authData.currentUser!
+                                  .hasAuthority(AuthorityRole.partner.key))
+                          ? IssueListScreenState.historyReceived
+                          : IssueListScreenState.historySent,
+                ),
+              ),
             ),
             MenuItem(
-              text: "Trung Tâm Trợ Giúp",
-              icon: "assets/icons/Question mark.svg",
+              text: "Cài Đặt",
+              icon: "assets/icons/Settings.svg",
               press: () {},
             ),
             MenuItem(

@@ -63,6 +63,26 @@ class IssueRepository {
         .toList();
   }
 
+  static Future<List<Issue>> findAllByByUserMember(int userMemberId) async {
+    var responseBody = await HttpHelper.get(
+      url: _url + "byUserMember/$userMemberId",
+    );
+
+    return responseBody
+        .map<Issue>((element) => Issue.fromJson(element))
+        .toList();
+  }
+
+  static Future<List<Issue>> findAllByByUserPartner(int userPartnerId) async {
+    var responseBody = await HttpHelper.get(
+      url: _url + "byUserPartner/$userPartnerId",
+    );
+
+    return responseBody
+        .map<Issue>((element) => Issue.fromJson(element))
+        .toList();
+  }
+
   static Future<String> partnerConfirmMember(
       int issueId, int userPartnerId) async {
     var responseBody = await HttpHelper.put(
