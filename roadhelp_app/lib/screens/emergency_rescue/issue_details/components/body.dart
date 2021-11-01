@@ -5,9 +5,9 @@ import 'package:provider/provider.dart';
 import 'package:roadhelp/config/enums.dart';
 import 'package:roadhelp/config/size_config.dart';
 import 'package:roadhelp/helper/util.dart';
-import 'package:roadhelp/models/issues.dart';
-import 'package:roadhelp/providers/issues_provider.dart';
-import 'package:roadhelp/repositories/issues_repository.dart';
+import 'package:roadhelp/models/issue.dart';
+import 'package:roadhelp/providers/issue_provider.dart';
+import 'package:roadhelp/repositories/issue_repository.dart';
 import 'package:roadhelp/screens/emergency_rescue/send/wait_websocket/wait_websocket_screen.dart';
 
 import '/components/default_button.dart';
@@ -17,7 +17,7 @@ import 'map_image.dart';
 import 'top_rounded_container.dart';
 
 class Body extends StatefulWidget {
-  Issues issue;
+  Issue issue;
   bool isPartner;
 
   Body({Key? key, required this.issue, this.isPartner = false})
@@ -30,7 +30,7 @@ class Body extends StatefulWidget {
 class _BodyState extends State<Body> {
   @override
   Widget build(BuildContext context) {
-    return Consumer<IssuesProvider>(
+    return Consumer<IssueProvider>(
       builder: (context, value, child) => CustomScrollView(
         slivers: [
           SliverAppBar(
@@ -125,7 +125,7 @@ class _BodyState extends State<Body> {
   Future<void> _partnerConfirmMember(context) async {
     try {
       // 01. Tạo & Gửi xác nhận: Partner muốn hỗ muốn trợ Member (issue)
-      String message = await Provider.of<IssuesProvider>(context, listen: false)
+      String message = await Provider.of<IssueProvider>(context, listen: false)
           .partnerConfirmMember(widget.issue);
 
       // 02. Chờ WebSocket phản hồi: đã có partner nhận hay chưa
@@ -158,7 +158,7 @@ class _BodyState extends State<Body> {
       );
 
       if (issueStatus == IssueStatus.memberConfirmPartner) {
-        Issues issueReload = await IssuesRepository.findById(issueId);
+        Issue issueReload = await IssueRepository.findById(issueId);
 
         Navigator.pop(context); //Thoát màn hình chờ WebSocket
 

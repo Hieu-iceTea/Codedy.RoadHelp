@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:roadhelp/config/enums.dart';
-import 'package:roadhelp/models/issues.dart';
+import 'package:roadhelp/models/issue.dart';
 import 'package:roadhelp/screens/emergency_rescue/issue_details/issue_details_screen.dart';
 
 class IssueListItem extends StatelessWidget {
@@ -9,7 +9,7 @@ class IssueListItem extends StatelessWidget {
     required this.issue,
   }) : super(key: key);
 
-  final Issues issue;
+  final Issue issue;
 
   @override
   Widget build(BuildContext context) {

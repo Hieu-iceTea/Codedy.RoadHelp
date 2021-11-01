@@ -3,8 +3,8 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
-import 'package:roadhelp/providers/issues_provider.dart';
-import 'package:roadhelp/repositories/issues_repository.dart';
+import 'package:roadhelp/providers/issue_provider.dart';
+import 'package:roadhelp/repositories/issue_repository.dart';
 import 'package:roadhelp/screens/emergency_rescue/issue_details/issue_details_screen.dart';
 import 'package:roadhelp/screens/emergency_rescue/send/wait_websocket/wait_websocket_screen.dart';
 import 'package:roadhelp/screens/emergency_rescue/user_info/user_info_screen.dart';
@@ -14,11 +14,11 @@ import '/components/default_button.dart';
 import '/config/enums.dart';
 import '/config/size_config.dart';
 import '/helper/util.dart';
-import '/models/issues.dart';
+import '/models/issue.dart';
 import '/screens/place/repair_place/repair_place_manage_add_edit/components/location_input.dart';
 
 class IssuesForm extends StatefulWidget {
-  Issues? issue;
+  Issue? issue;
 
   IssuesForm({Key? key}) : super(key: key);
 
@@ -35,7 +35,7 @@ class _IssuesFormState extends State<IssuesForm> {
 
   @override
   Widget build(BuildContext context) {
-    widget.issue ??= Issues(); //Khởi tạo nếu null
+    widget.issue ??= Issue(); //Khởi tạo nếu null
 
     return Form(
       key: _formKey,
@@ -197,8 +197,8 @@ class _IssuesFormState extends State<IssuesForm> {
 
     try {
       // 01. Tạo & Gửi yêu cầu hỗ trợ (issue)
-      Issues itemResponse =
-          await Provider.of<IssuesProvider>(context, listen: false)
+      Issue itemResponse =
+          await Provider.of<IssueProvider>(context, listen: false)
               .send(widget.issue!);
 
       await Util.showDialogNotification(
@@ -235,7 +235,7 @@ class _IssuesFormState extends State<IssuesForm> {
       );
 
       if (issueStatus == IssueStatus.waitMemberConfirm) {
-        Issues issueReload = await IssuesRepository.findById(issueId);
+        Issue issueReload = await IssueRepository.findById(issueId);
 
         Navigator.pushReplacementNamed(
           context,
@@ -251,9 +251,9 @@ class _IssuesFormState extends State<IssuesForm> {
     }
   }
 
-  Future<void> _memberConfirmPartner(context, Issues issue) async {
+  Future<void> _memberConfirmPartner(context, Issue issue) async {
     try {
-      String message = await Provider.of<IssuesProvider>(context, listen: false)
+      String message = await Provider.of<IssueProvider>(context, listen: false)
           .memberConfirmPartner(issue);
 
       await Util.showDialogNotification(
@@ -262,7 +262,7 @@ class _IssuesFormState extends State<IssuesForm> {
         content: message,
       );
 
-      Issues issueReload = await IssuesRepository.findById(issue.id!);
+      Issue issueReload = await IssueRepository.findById(issue.id!);
       Navigator.pushReplacementNamed(
         context,
         IssueDetailsScreen.routeName,

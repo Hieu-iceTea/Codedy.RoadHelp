@@ -1,24 +1,24 @@
 import 'package:flutter/foundation.dart';
-import 'package:roadhelp/models/issues.dart';
-import 'package:roadhelp/repositories/issues_repository.dart';
+import 'package:roadhelp/models/issue.dart';
+import 'package:roadhelp/repositories/issue_repository.dart';
 
 import 'auth_provider.dart';
 
-class IssuesProvider with ChangeNotifier {
-  List<Issues> _items = [];
+class IssueProvider with ChangeNotifier {
+  List<Issue> _items = [];
 
   final AuthProvider? authProvider;
 
-  IssuesProvider(this.authProvider, this._items);
+  IssueProvider(this.authProvider, this._items);
 
-  List<Issues> get items {
+  List<Issue> get items {
     return [..._items];
   }
 
-  Future<List<Issues>> fetchAllData() async {
+  Future<List<Issue>> fetchAllData() async {
     //https://flutter.dev/docs/cookbook/networking/fetch-data
     try {
-      List<Issues> _itemsLoaded = await IssuesRepository.findAll();
+      List<Issue> _itemsLoaded = await IssueRepository.findAll();
       _items.clear();
       _items.addAll(_itemsLoaded);
       notifyListeners();
@@ -28,33 +28,33 @@ class IssuesProvider with ChangeNotifier {
     }
   }
 
-  Issues findById(int id) {
+  Issue findById(int id) {
     return _items.firstWhere((item) => item.id == id);
   }
 
-  Future<void> create(Issues item) async {
-    Issues itemResponse = await IssuesRepository.create(item);
+  Future<void> create(Issue item) async {
+    Issue itemResponse = await IssueRepository.create(item);
     _items.add(itemResponse);
     notifyListeners();
   }
 
-  Future<void> update(Issues item) async {
-    Issues itemResponse = await IssuesRepository.update(item);
+  Future<void> update(Issue item) async {
+    Issue itemResponse = await IssueRepository.update(item);
     final index = _items.indexWhere((element) => element.id == item.id);
     _items[index] = itemResponse;
     notifyListeners();
   }
 
   Future<void> deleteById(int id) async {
-    await IssuesRepository.deleteById(id);
+    await IssueRepository.deleteById(id);
     _items.removeWhere((element) => element.id == id);
     notifyListeners();
   }
 
   //#region - Extend -
-  Future<List<Issues>> fetchAllDataByStatusSent() async {
+  Future<List<Issue>> fetchAllDataByStatusSent() async {
     try {
-      List<Issues> _itemsLoaded = await IssuesRepository.findAllByStatusSent();
+      List<Issue> _itemsLoaded = await IssueRepository.findAllByStatusSent();
       _items.clear();
       _items.addAll(_itemsLoaded);
       notifyListeners();
@@ -64,11 +64,11 @@ class IssuesProvider with ChangeNotifier {
     }
   }
 
-  Future<String> partnerConfirmMember(Issues item) async {
-    String message = await IssuesRepository.partnerConfirmMember(
+  Future<String> partnerConfirmMember(Issue item) async {
+    String message = await IssueRepository.partnerConfirmMember(
         item.id!, authProvider!.authData.currentUser!.id!);
 
-    Issues itemReload = findById(item.id!);
+    Issue itemReload = findById(item.id!);
     final index = _items.indexWhere((element) => element.id == item.id);
     _items[index] = itemReload;
     notifyListeners();
@@ -76,10 +76,10 @@ class IssuesProvider with ChangeNotifier {
     return message;
   }
 
-  Future<String> memberConfirmPartner(Issues item) async {
-    String message = await IssuesRepository.memberConfirmPartner(item.id!);
+  Future<String> memberConfirmPartner(Issue item) async {
+    String message = await IssueRepository.memberConfirmPartner(item.id!);
 
-    Issues itemReload = findById(item.id!);
+    Issue itemReload = findById(item.id!);
     final index = _items.indexWhere((element) => element.id == item.id);
     _items[index] = itemReload;
     notifyListeners();
@@ -87,7 +87,7 @@ class IssuesProvider with ChangeNotifier {
     return message;
   }
 
-  Future<Issues> send(Issues item) async {
+  Future<Issue> send(Issue item) async {
     if (!authProvider!.authData.isAuth) {
       throw Exception(
           "Chưa đăng nhập, hoặc hết thời gian đăng nhập. Vui lòng đăng xuất & đăng nhập lại");
@@ -95,7 +95,7 @@ class IssuesProvider with ChangeNotifier {
 
     item.userMember = authProvider!.authData.currentUser;
 
-    Issues itemResponse = await IssuesRepository.send(item);
+    Issue itemResponse = await IssueRepository.send(item);
     _items.add(itemResponse);
     notifyListeners();
     return itemResponse;
