@@ -2,7 +2,7 @@ package com.codedy.roadhelp.rest;
 
 import com.codedy.roadhelp.model.RatingIssue;
 import com.codedy.roadhelp.rest.exception.RestNotFoundException;
-import com.codedy.roadhelp.service.issues.IssuesService;
+import com.codedy.roadhelp.service.issue.IssueService;
 import com.codedy.roadhelp.service.ratingIssue.RatingIssueService;
 import com.codedy.roadhelp.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +23,7 @@ public class RatingIssueRestController {
     private UserService userService;
 
     @Autowired
-    private IssuesService issuesService;
+    private IssueService issueService;
     //endregion
 
 

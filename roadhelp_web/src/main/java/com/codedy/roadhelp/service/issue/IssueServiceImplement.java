@@ -1,4 +1,4 @@
-package com.codedy.roadhelp.service.issues;
+package com.codedy.roadhelp.service.issue;
 
 
 import com.codedy.roadhelp.model.Issue;
@@ -12,13 +12,13 @@ import java.util.List;
 
 
 @Service
-public class IssuesServiceImplement extends BaseServiceImplement<Issue, Integer> implements IssuesService {
+public class IssueServiceImplement extends BaseServiceImplement<Issue, Integer> implements IssueService {
 
     //region Initialization - Autowired
     @Autowired
     private IssueRepository issueRepository;
 
-    public IssuesServiceImplement(IssueRepository repository) {
+    public IssueServiceImplement(IssueRepository repository) {
         super(repository);
     }
 

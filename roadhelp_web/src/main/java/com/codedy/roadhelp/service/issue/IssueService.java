@@ -1,4 +1,4 @@
-package com.codedy.roadhelp.service.issues;
+package com.codedy.roadhelp.service.issue;
 
 
 import com.codedy.roadhelp.model.Issue;
@@ -7,7 +7,7 @@ import com.codedy.roadhelp.service.base.BaseService;
 
 import java.util.List;
 
-public interface IssuesService extends BaseService<Issue, Integer> {
+public interface IssueService extends BaseService<Issue, Integer> {
 
     List<Issue> findIssueByStatus(IssueStatus status);
     List<Issue> findAllByUserMemberId(int userMember_id);
