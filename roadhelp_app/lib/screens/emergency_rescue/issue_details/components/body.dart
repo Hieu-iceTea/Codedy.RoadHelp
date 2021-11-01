@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:roadhelp/config/enums.dart';
 import 'package:roadhelp/config/size_config.dart';
 import 'package:roadhelp/helper/util.dart';
 import 'package:roadhelp/models/issues.dart';
@@ -8,6 +9,7 @@ import 'package:roadhelp/screens/emergency_rescue/receive/receive_rescue_details
 
 import '/components/default_button.dart';
 import 'issue_description.dart';
+import 'issue_rating.dart';
 import 'top_rounded_container.dart';
 
 class Body extends StatelessWidget {
@@ -56,25 +58,33 @@ class Body extends StatelessWidget {
                         issue: issue,
                       ),
                       TopRoundedContainer(
-                        color: const Color(0xFFF6F7F9),
-                        child: Padding(
-                          padding: EdgeInsets.only(
-                            left: SizeConfig.screenWidth * 0.15,
-                            right: SizeConfig.screenWidth * 0.15,
-                            bottom: getProportionateScreenWidth(40),
-                            top: getProportionateScreenWidth(15),
-                          ),
-                          child: DefaultButton(
-                            text: "Tôi muốn đi hỗ trợ",
-                            press: () => _partnerConfirmMember(context),
-                          ),
+                        color: Color(0xFFF6F7F9),
+                        child: Column(
+                          children: [
+                            if (issue.status != IssueStatus.sent &&
+                                issue.status != IssueStatus.waitMemberConfirm)
+                              IssueRating(issue: issue),
+                            if (issue.status == IssueStatus.sent)
+                              Padding(
+                                padding: EdgeInsets.only(
+                                  left: SizeConfig.screenWidth * 0.15,
+                                  right: SizeConfig.screenWidth * 0.15,
+                                  bottom: getProportionateScreenWidth(40),
+                                  top: getProportionateScreenWidth(15),
+                                ),
+                                child: DefaultButton(
+                                  text: "Tôi muốn đi hỗ trợ",
+                                  press: () => _partnerConfirmMember(context),
+                                ),
+                              ),
+                            const SizedBox(
+                              height: 200,
+                            ),
+                          ],
                         ),
                       ),
                     ],
                   ),
-                ),
-                const SizedBox(
-                  height: 200,
                 ),
               ],
             ),

@@ -55,27 +55,28 @@ class IssueDescription extends StatelessWidget {
                     ],
                   ),
                 ),
-                ListTile(
-                  leading: Icon(Icons.person),
-                  title: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "Người giúp đỡ:",
-                        style: TextStyle(
-                          color: kTextColor.withOpacity(0.8),
-                          fontSize: 13,
+                if (issue.userPartner != null)
+                  ListTile(
+                    leading: Icon(Icons.person),
+                    title: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "Người giúp đỡ:",
+                          style: TextStyle(
+                            color: kTextColor.withOpacity(0.8),
+                            fontSize: 13,
+                          ),
                         ),
-                      ),
-                      Text(
-                        issue.userPartner!.firstName! +
-                            " " +
-                            issue.userPartner!.lastName!,
-                        style: TextStyle(color: kTextColor),
-                      ),
-                    ],
+                        Text(
+                          issue.userPartner!.firstName! +
+                              " " +
+                              issue.userPartner!.lastName!,
+                          style: TextStyle(color: kTextColor),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
                 ListTile(
                   leading: Icon(Icons.phone),
                   title: Text(
