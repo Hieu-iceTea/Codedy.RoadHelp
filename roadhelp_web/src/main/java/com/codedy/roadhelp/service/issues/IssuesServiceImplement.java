@@ -28,4 +28,15 @@ public class IssuesServiceImplement extends BaseServiceImplement<Issue, Integer>
     }
     //endregion
 
+
+    @Override
+    public List<Issue> findAllByUserMemberId(int userMember_id) {
+        return issueRepository.findAllByUserMemberId(userMember_id);
+    }
+
+    @Override
+    public List<Issue> findAllByUserPartnerId(int userPartner_id) {
+        return issueRepository.findAllByUserPartnerId(userPartner_id);
+    }
+
 }

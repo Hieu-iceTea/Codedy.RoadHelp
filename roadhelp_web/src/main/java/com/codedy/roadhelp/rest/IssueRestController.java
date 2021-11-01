@@ -87,6 +87,12 @@ public class IssueRestController {
     //region - Extend -
     // = = = = = = = = = = = = = = = For Member = = = = = = = = = = = = = = = //
 
+    // List byUserMember - Lịch sử danh sách issue của member đã gửi
+    @GetMapping(path = {"/byUserMember/{userMemberId}", "/byUserMember/{userMemberId}/"})
+    public List<LinkedHashMap<String, Object>> byUserMember(@PathVariable int userMemberId) {
+        return issuesService.findAllByUserMemberId(userMemberId).stream().map(Issue::toApiResponse).toList();
+    }
+
     // Member Gửi yêu cầu cứu hộ
     @PostMapping(path = {"/send", "/send/"})
     public LinkedHashMap<String, Object> sendIssue(@RequestBody Issue issue) {
@@ -174,6 +180,12 @@ public class IssueRestController {
 
 
     // = = = = = = = = = = = = = = = For Partner = = = = = = = = = = = = = = = //
+
+    // List UserPartner - Lịch sử danh sách issue của partner đã nhận
+    @GetMapping(path = {"/byUserPartner/{userPartnerId}", "/byUserPartner/{userPartnerId}/"})
+    public List<LinkedHashMap<String, Object>> byUserPartner(@PathVariable int userPartnerId) {
+        return issuesService.findAllByUserPartnerId(userPartnerId).stream().map(Issue::toApiResponse).toList();
+    }
 
     // Partner Xem danh sách những người đang cần hỗ trợ
     @GetMapping(path = {"/byStatusSent", "/byStatusSent/"})
