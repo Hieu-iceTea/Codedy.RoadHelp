@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:roadhelp/config/enums.dart';
 import 'package:roadhelp/config/size_config.dart';
+import 'package:roadhelp/helper/url_launcher_helper.dart';
 import 'package:roadhelp/helper/util.dart';
 import 'package:roadhelp/models/issue.dart';
 import 'package:roadhelp/providers/issue_provider.dart';
@@ -44,7 +45,15 @@ class _BodyState extends State<Body> {
               Container(
                 margin: EdgeInsets.only(right: getProportionateScreenWidth(15)),
                 child: IconButton(
-                  onPressed: () => {},
+                  onPressed: () {
+                    try {
+                      UrlLauncherHelper.launchURL(
+                          "https://www.google.com/maps/search/?api=1&query=${widget.issue.latitude},${widget.issue.longitude}");
+                    } catch (e) {
+                      Util.showDialogNotification(
+                          context: context, content: e.toString());
+                    }
+                  },
                   icon: const Icon(Icons.map),
                   tooltip: "Xem bản đồ",
                 ),
