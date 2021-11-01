@@ -62,7 +62,7 @@ class UserDescription extends StatelessWidget {
                           }
                         },
                       )
-                    : Container(),
+                    : null,
               ),
               ListTile(
                 leading: Icon(Icons.location_on_outlined),

@@ -14,8 +14,9 @@ import 'top_rounded_container.dart';
 
 class Body extends StatelessWidget {
   final Issues issue;
+  bool isPartner;
 
-  const Body({Key? key, required this.issue}) : super(key: key);
+  Body({Key? key, required this.issue, this.isPartner = false}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -61,8 +62,7 @@ class Body extends StatelessWidget {
                         color: Color(0xFFF6F7F9),
                         child: Column(
                           children: [
-                            if (issue.status != IssueStatus.sent &&
-                                issue.status != IssueStatus.waitMemberConfirm)
+                            if (issue.status == IssueStatus.succeeded)
                               IssueRating(issue: issue),
                             if (issue.status == IssueStatus.sent)
                               Padding(
@@ -75,6 +75,20 @@ class Body extends StatelessWidget {
                                 child: DefaultButton(
                                   text: "Tôi muốn đi hỗ trợ",
                                   press: () => _partnerConfirmMember(context),
+                                ),
+                              ),
+                            if (issue.status ==
+                                IssueStatus.memberConfirmPartner && isPartner)
+                              Padding(
+                                padding: EdgeInsets.only(
+                                  left: SizeConfig.screenWidth * 0.15,
+                                  right: SizeConfig.screenWidth * 0.15,
+                                  bottom: getProportionateScreenWidth(40),
+                                  top: getProportionateScreenWidth(15),
+                                ),
+                                child: DefaultButton(
+                                  text: "Đánh dấu hoàn thành",
+                                  press: () => {},
                                 ),
                               ),
                             const SizedBox(

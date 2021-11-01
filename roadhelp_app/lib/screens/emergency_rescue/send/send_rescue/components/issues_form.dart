@@ -5,6 +5,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:roadhelp/providers/issues_provider.dart';
 import 'package:roadhelp/repositories/issues_repository.dart';
+import 'package:roadhelp/screens/emergency_rescue/issue_details/issue_details_screen.dart';
 import 'package:roadhelp/screens/emergency_rescue/send/wait_websocket/wait_websocket_screen.dart';
 import 'package:roadhelp/screens/emergency_rescue/user_info/user_info_screen.dart';
 
@@ -260,7 +261,12 @@ class _IssuesFormState extends State<IssuesForm> {
         content: message,
       );
 
-      //TODO: chuyển đến màn hình chi tiết issue
+      Issues issueReload = await IssuesRepository.findById(issue.id!);
+      Navigator.pushReplacementNamed(
+        context,
+        IssueDetailsScreen.routeName,
+        arguments: IssueDetailsArguments(issue: issueReload),
+      );
 
     } catch (error) {
       await Util.showDialogNotification(

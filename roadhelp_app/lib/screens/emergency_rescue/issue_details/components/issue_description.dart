@@ -1,16 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:roadhelp/components/rounded_icon_btn.dart';
 import 'package:roadhelp/config/constants.dart';
 import 'package:roadhelp/config/enums.dart';
 import 'package:roadhelp/config/size_config.dart';
+import 'package:roadhelp/helper/url_launcher_helper.dart';
+import 'package:roadhelp/helper/util.dart';
 import 'package:roadhelp/models/issues.dart';
 
 class IssueDescription extends StatelessWidget {
-  const IssueDescription({
+  IssueDescription({
     Key? key,
     required this.issue,
+    this.isPartner = false,
   }) : super(key: key);
 
   final Issues issue;
+  bool isPartner;
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +34,7 @@ class IssueDescription extends StatelessWidget {
         Padding(
             padding: EdgeInsets.only(
               left: getProportionateScreenWidth(10),
-              right: getProportionateScreenWidth(64),
+              right: getProportionateScreenWidth(10),
               bottom: getProportionateScreenWidth(10),
             ),
             child: Column(
@@ -77,13 +82,33 @@ class IssueDescription extends StatelessWidget {
                       ],
                     ),
                   ),
-                ListTile(
-                  leading: Icon(Icons.phone),
-                  title: Text(
-                    issue.phone!,
-                    style: TextStyle(color: kTextColor),
+                if (!isPartner ||
+                    (isPartner &&
+                        issue.status == IssueStatus.memberConfirmPartner))
+                  ListTile(
+                    leading: Icon(Icons.phone),
+                    title: Text(
+                      issue.phone!,
+                      style: TextStyle(color: kTextColor),
+                    ),
+                    trailing: (isPartner &&
+                            issue.status == IssueStatus.memberConfirmPartner &&
+                            issue.phone != null)
+                        ? RoundedIconBtn(
+                            icon: Icons.phone_in_talk,
+                            showShadow: true,
+                            press: () {
+                              try {
+                                UrlLauncherHelper.launchURL(
+                                    "tel:" + issue.phone!);
+                              } catch (e) {
+                                Util.showDialogNotification(
+                                    context: context, content: e.toString());
+                              }
+                            },
+                          )
+                        : null,
                   ),
-                ),
                 ListTile(
                   leading: Icon(Icons.location_on_outlined),
                   title: Text(
