@@ -195,6 +195,7 @@ class _IssuesFormState extends State<IssuesForm> {
     _formKey.currentState!.save();
 
     try {
+      // 01. Tạo & Gửi yêu cầu hỗ trợ (issue)
       Issues itemResponse =
           await Provider.of<IssuesProvider>(context, listen: false)
               .send(widget.issue!);
@@ -204,6 +205,7 @@ class _IssuesFormState extends State<IssuesForm> {
           title: "Thành Công",
           content: "Đã gửi yêu cầu cứu hộ khẩn cấp");
 
+      // 02. Chờ WebSocket phản hồi: đã có partner nhận hay chưa
       Navigator.pushNamed(
         context,
         WaitWebSocketScreen.routeName,
@@ -211,38 +213,39 @@ class _IssuesFormState extends State<IssuesForm> {
           message: "Chỉ một lúc thôi...\nHệ thống đang tìm người hỗ trợ bạn.",
           destination:
               '/topic/issue/memberWaitPartner/' + itemResponse.id.toString(),
-          callback: (stompFrame) async {
-            if (stompFrame.body != null) {
-              Map<String, dynamic> response = json.decode(stompFrame.body!);
-              IssueStatus issueStatus = IssueStatus.values.firstWhere(
-                (element) =>
-                    element.toString() ==
-                    "IssueStatus." + response['data']['issueStatus'],
-              );
-
-              if (issueStatus == IssueStatus.waitMemberConfirm) {
-                Issues issueReload =
-                    await IssuesRepository.findById(itemResponse.id!);
-
-                Navigator.pushReplacementNamed(
-                  context,
-                  UserInfoScreen.routeName,
-                  arguments: UserInfoArguments(
-                    user: issueReload.userPartner!,
-                    onConfirm: () =>
-                        _memberConfirmPartner(context, issueReload),
-                    onCancel: () {},
-                  ),
-                );
-                //Navigator.pop(context);
-              }
-            }
-          },
+          callback: (stompFrame) =>
+              _callbackWebSocket(stompFrame, itemResponse.id!),
         ),
       );
     } catch (error) {
       await Util.showDialogNotification(
           context: context, content: error.toString());
+    }
+  }
+
+  Future<void> _callbackWebSocket(stompFrame, int issueId) async {
+    if (stompFrame.body != null) {
+      Map<String, dynamic> response = json.decode(stompFrame.body!);
+      IssueStatus issueStatus = IssueStatus.values.firstWhere(
+        (element) =>
+            element.toString() ==
+            "IssueStatus." + response['data']['issueStatus'],
+      );
+
+      if (issueStatus == IssueStatus.waitMemberConfirm) {
+        Issues issueReload = await IssuesRepository.findById(issueId);
+
+        Navigator.pushReplacementNamed(
+          context,
+          UserInfoScreen.routeName,
+          arguments: UserInfoArguments(
+            user: issueReload.userPartner!,
+            onConfirm: () => _memberConfirmPartner(context, issueReload),
+            onCancel: () {},
+          ),
+        );
+        //Navigator.pop(context);
+      }
     }
   }
 
