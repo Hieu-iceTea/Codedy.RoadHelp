@@ -216,6 +216,7 @@ class _IssuesFormState extends State<IssuesForm> {
               '/topic/issue/memberWaitPartner/' + itemResponse.id.toString(),
           callback: (stompFrame) =>
               _callbackWebSocket(stompFrame, itemResponse.id!),
+          onCancel: () {},
         ),
       );
     } catch (error) {
