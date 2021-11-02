@@ -1,4 +1,5 @@
 import 'package:roadhelp/models/issue.dart';
+import 'package:roadhelp/models/rating_issue.dart';
 
 import '/config/constants.dart';
 import '/helper/http_helper.dart';
@@ -115,6 +116,15 @@ class IssueRepository {
     );
 
     return Issue.fromJson(responseBody);
+  }
+
+  static Future<RatingIssue> createRatingIssue(RatingIssue item) async {
+    var responseBody = await HttpHelper.post(
+      url: _url + item.issue!.id.toString() + "/ratingIssue",
+      body: item.toJson(),
+    );
+
+    return RatingIssue.fromJson(responseBody);
   }
 //#endregion
 }
