@@ -257,7 +257,7 @@ public class IssueRestController {
         issueService.save(issue);
 
         LinkedHashMap<String, Object> response = new LinkedHashMap<>();
-        response.put("message", "Issue có ID " + id + "được thay đổi trạng thái thành: 'Thành công'");
+        response.put("message", "Issue có ID " + id + " được thay đổi trạng thái thành: 'Thành công'");
         return response;
     }
 

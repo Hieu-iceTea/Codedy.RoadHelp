@@ -20,9 +20,14 @@ import 'top_rounded_container.dart';
 class Body extends StatefulWidget {
   Issue issue;
   bool isPartnerReceiveNew;
+  bool isPartnerHistoryReceived;
 
-  Body({Key? key, required this.issue, this.isPartnerReceiveNew = false})
-      : super(key: key);
+  Body({
+    Key? key,
+    required this.issue,
+    this.isPartnerReceiveNew = false,
+    this.isPartnerHistoryReceived = false,
+  }) : super(key: key);
 
   @override
   State<Body> createState() => _BodyState();
@@ -83,7 +88,12 @@ class _BodyState extends State<Body> {
                         child: Column(
                           children: [
                             if (widget.issue.status == IssueStatus.succeeded)
-                              IssueRating(issue: widget.issue),
+                              IssueRating(
+                                issue: widget.issue,
+                                isPartnerReceiveNew: widget.isPartnerReceiveNew,
+                                isPartnerHistoryReceived:
+                                    widget.isPartnerHistoryReceived,
+                              ),
                             if (widget.issue.status == IssueStatus.sent &&
                                 widget.isPartnerReceiveNew)
                               Padding(
@@ -100,7 +110,8 @@ class _BodyState extends State<Body> {
                               ),
                             if (widget.issue.status ==
                                     IssueStatus.memberConfirmPartner &&
-                                widget.isPartnerReceiveNew)
+                                (widget.isPartnerReceiveNew ||
+                                    widget.isPartnerHistoryReceived))
                               Padding(
                                 padding: EdgeInsets.only(
                                   left: SizeConfig.screenWidth * 0.15,
@@ -110,7 +121,7 @@ class _BodyState extends State<Body> {
                                 ),
                                 child: DefaultButton(
                                   text: "Đánh dấu hoàn thành",
-                                  press: () => {},
+                                  press: () => _setStatusSuccess(context),
                                 ),
                               ),
                             const SizedBox(
@@ -176,6 +187,27 @@ class _BodyState extends State<Body> {
           widget.issue = issueReload;
         });
       }
+    }
+  }
+
+  //Phần này chỉ dành cho luồng gửi-nhận cứu hộ (làm thế này hơi ẩu, nên tách ra. nhưng kệ đi) - Hiếu iceTea
+  Future<void> _setStatusSuccess(context) async {
+    try {
+      // 01. Tạo & Gửi xác nhận: Partner muốn hỗ muốn trợ Member (issue)
+      String message = await Provider.of<IssueProvider>(context, listen: false)
+          .setStatusSuccess(widget.issue);
+
+      Issue issueReload = await IssueRepository.findById(widget.issue.id!);
+
+      setState(() {
+        widget.issue = issueReload;
+      });
+
+      await Util.showDialogNotification(
+          context: context, title: "Thành công", content: message);
+    } catch (error) {
+      await Util.showDialogNotification(
+          context: context, content: error.toString());
     }
   }
 }

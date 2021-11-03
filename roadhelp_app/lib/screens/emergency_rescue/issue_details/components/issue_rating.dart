@@ -12,12 +12,16 @@ import 'package:roadhelp/repositories/rating_issue_repository.dart';
 import 'rating_form.dart';
 
 class IssueRating extends StatelessWidget {
-  const IssueRating({
+  IssueRating({
     Key? key,
     required this.issue,
+    this.isPartnerReceiveNew = false,
+    this.isPartnerHistoryReceived = false,
   }) : super(key: key);
 
   final Issue issue;
+  bool isPartnerReceiveNew;
+  bool isPartnerHistoryReceived;
 
   Future<RatingIssue?> _fetchData(BuildContext context) async {
     return await RatingIssueRepository.findByIssueId(issueId: issue.id!);
@@ -68,6 +72,7 @@ class IssueRating extends StatelessWidget {
                         child: Column(
                           children: [
                             Text("Chưa có đánh giá về sự cố này."),
+                            if(!isPartnerReceiveNew && !isPartnerHistoryReceived)
                             TextButton.icon(
                               style: TextButton.styleFrom(
                                 primary: kPrimaryColor,

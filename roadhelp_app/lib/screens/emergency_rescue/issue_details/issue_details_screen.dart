@@ -22,6 +22,7 @@ class IssueDetailsScreen extends StatelessWidget {
       body: Body(
         issue: arguments.issue,
         isPartnerReceiveNew: arguments.isPartnerReceiveNew,
+        isPartnerHistoryReceived: arguments.isPartnerHistoryReceived,
       ),
     );
   }
@@ -30,7 +31,11 @@ class IssueDetailsScreen extends StatelessWidget {
 class IssueDetailsArguments {
   final Issue issue;
   final bool isPartnerReceiveNew;
+  final bool isPartnerHistoryReceived;
 
-  IssueDetailsArguments(
-      {required this.issue, this.isPartnerReceiveNew = false});
+  IssueDetailsArguments({
+    required this.issue,
+    this.isPartnerReceiveNew = false,
+    this.isPartnerHistoryReceived = false,
+  });
 }
