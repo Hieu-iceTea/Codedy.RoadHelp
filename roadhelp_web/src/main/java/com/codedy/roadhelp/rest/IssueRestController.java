@@ -147,28 +147,6 @@ public class IssueRestController {
         return response;
     }
 
-    // Partner xác nhận hoàn thành sau khi partner hỗ trợ xog
-    @PutMapping(path = {"/{id}/setStatusSuccess", "/{id}/setStatusSuccess/"})
-    public LinkedHashMap<String, Object> setStatusSuccess(@PathVariable int id) {
-        Issue issue = issueService.findById(id);
-
-        if (issue == null) {
-            throw new RestNotFoundException("Issues id not found - " + id);
-        }
-
-        if (issue.getStatus() != IssueStatus.memberConfirmPartner) {
-            throw new RuntimeException("Lỗi: Trạng thái hiện tại không phải là memberConfirmPartner, Status hiện tại: " + issue.getStatus());
-        }
-
-        issue.setStatus(IssueStatus.succeeded);
-
-        issueService.save(issue);
-
-        LinkedHashMap<String, Object> response = new LinkedHashMap<>();
-        response.put("message", "Issue có ID " + id + "được thay đổi trạng thái thành: 'Thành công'");
-        return response;
-    }
-
     // Member viết đánh giá issue sau khi được cứu hộ xong -
     @PostMapping(path = {"/{issueId}/ratingIssue", "/{issueId}/ratingIssue/"})
     public LinkedHashMap<String, Object> ratingIssue(@RequestBody RatingIssue ratingIssue, @PathVariable int issueId) {
@@ -261,7 +239,29 @@ public class IssueRestController {
         return ratingIssueService.findByIssueId(id).toApiResponse();
     }
 
-    // Hủy bởi Member
+    // Partner xác nhận hoàn thành sau khi partner hỗ trợ xog
+    @PutMapping(path = {"/{id}/setStatusSuccess", "/{id}/setStatusSuccess/"})
+    public LinkedHashMap<String, Object> setStatusSuccess(@PathVariable int id) {
+        Issue issue = issueService.findById(id);
+
+        if (issue == null) {
+            throw new RestNotFoundException("Issues id not found - " + id);
+        }
+
+        if (issue.getStatus() != IssueStatus.memberConfirmPartner) {
+            throw new RuntimeException("Lỗi: Trạng thái hiện tại không phải là memberConfirmPartner, Status hiện tại: " + issue.getStatus());
+        }
+
+        issue.setStatus(IssueStatus.succeeded);
+
+        issueService.save(issue);
+
+        LinkedHashMap<String, Object> response = new LinkedHashMap<>();
+        response.put("message", "Issue có ID " + id + "được thay đổi trạng thái thành: 'Thành công'");
+        return response;
+    }
+
+    // Hủy bởi Partner
     @PutMapping(path = {"/{id}/canceledByPartner", "/{id}/canceledByPartner/"})
     public LinkedHashMap<String, Object> canceledByPartner(@PathVariable int id) {
         Issue issue = issueService.findById(id);
