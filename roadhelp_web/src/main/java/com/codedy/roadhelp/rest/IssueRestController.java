@@ -147,9 +147,9 @@ public class IssueRestController {
         return response;
     }
 
-    // Member xác nhận hoàn thành sau khi partner hỗ trợ xog
+    // Partner xác nhận hoàn thành sau khi partner hỗ trợ xog
     @PutMapping(path = {"/{id}/setStatusSuccess", "/{id}/setStatusSuccess/"})
-    public String rescueSuccess(@PathVariable int id) {
+    public LinkedHashMap<String, Object> setStatusSuccess(@PathVariable int id) {
         Issue issue = issueService.findById(id);
 
         if (issue == null) {
@@ -157,14 +157,16 @@ public class IssueRestController {
         }
 
         if (issue.getStatus() != IssueStatus.memberConfirmPartner) {
-            return "Lỗi: Trạng thái hiện tại không phải là memberConfirmPartner, Status hiện tại: " + issue.getStatus();
+            throw new RuntimeException("Lỗi: Trạng thái hiện tại không phải là memberConfirmPartner, Status hiện tại: " + issue.getStatus());
         }
 
         issue.setStatus(IssueStatus.succeeded);
 
         issueService.save(issue);
 
-        return "Issue có ID " + id + "được thay đổi trạng thái thành: 'Thành công'";
+        LinkedHashMap<String, Object> response = new LinkedHashMap<>();
+        response.put("message", "Issue có ID " + id + "được thay đổi trạng thái thành: 'Thành công'");
+        return response;
     }
 
     // Member viết đánh giá issue sau khi được cứu hộ xong -
@@ -176,6 +178,28 @@ public class IssueRestController {
         ratingIssue.setIssue(issue);
 
         return ratingIssueService.save(ratingIssue).toApiResponse();
+    }
+
+    // Hủy bởi Member
+    @PutMapping(path = {"/{id}/canceledByMember", "/{id}/canceledByMember/"})
+    public LinkedHashMap<String, Object> canceledByMember(@PathVariable int id) {
+        Issue issue = issueService.findById(id);
+
+        if (issue == null) {
+            throw new RestNotFoundException("Issues id not found - " + id);
+        }
+
+        if (issue.getStatus() != IssueStatus.sent || issue.getStatus() != IssueStatus.waitMemberConfirm || issue.getStatus() != IssueStatus.memberConfirmPartner) {
+            throw new RuntimeException("Lỗi: Trạng thái hiện tại không hợp lệ: " + issue.getStatus());
+        }
+
+        issue.setStatus(IssueStatus.canceledByMember);
+
+        issueService.save(issue);
+
+        LinkedHashMap<String, Object> response = new LinkedHashMap<>();
+        response.put("message", "Issue có ID " + id + "được thay đổi trạng thái thành: 'Hủy bởi khách hàng'");
+        return response;
     }
 
 
@@ -235,6 +259,28 @@ public class IssueRestController {
     @GetMapping(path = {"/{id}/ratingIssue", "/{id}/ratingIssue/"})
     public LinkedHashMap<String, Object> ratingIssue(@PathVariable int id) {
         return ratingIssueService.findByIssueId(id).toApiResponse();
+    }
+
+    // Hủy bởi Member
+    @PutMapping(path = {"/{id}/canceledByPartner", "/{id}/canceledByPartner/"})
+    public LinkedHashMap<String, Object> canceledByPartner(@PathVariable int id) {
+        Issue issue = issueService.findById(id);
+
+        if (issue == null) {
+            throw new RestNotFoundException("Issues id not found - " + id);
+        }
+
+        if (issue.getStatus() != IssueStatus.waitMemberConfirm || issue.getStatus() != IssueStatus.memberConfirmPartner) {
+            throw new RuntimeException("Lỗi: Trạng thái hiện tại không hợp lệ: " + issue.getStatus());
+        }
+
+        issue.setStatus(IssueStatus.canceledByPartner);
+
+        issueService.save(issue);
+
+        LinkedHashMap<String, Object> response = new LinkedHashMap<>();
+        response.put("message", "Issue có ID " + id + "được thay đổi trạng thái thành: 'Hủy bởi đối tác'");
+        return response;
     }
     //endregion
 
