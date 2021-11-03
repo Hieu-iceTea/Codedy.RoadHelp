@@ -34,110 +34,123 @@ class Body extends StatefulWidget {
 }
 
 class _BodyState extends State<Body> {
+  Future<void> _refreshData(BuildContext context) async {
+    Issue issueReload = await IssueRepository.findById(widget.issue.id!);
+
+    setState(() {
+      widget.issue = issueReload;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Consumer<IssueProvider>(
-      builder: (context, value, child) => CustomScrollView(
-        slivers: [
-          SliverAppBar(
-            expandedHeight: 300,
-            pinned: true,
-            title: const Text(
-              "Chi tiết sự cố",
-              style: TextStyle(color: Colors.black),
-            ),
-            actions: [
-              Container(
-                margin: EdgeInsets.only(right: getProportionateScreenWidth(15)),
-                child: IconButton(
-                  onPressed: () {
-                    try {
-                      UrlLauncherHelper.launchURL(
-                          "https://www.google.com/maps/search/?api=1&query=${widget.issue.latitude},${widget.issue.longitude}");
-                    } catch (e) {
-                      Util.showDialogNotification(
-                          context: context, content: e.toString());
-                    }
-                  },
-                  icon: const Icon(Icons.map),
-                  tooltip: "Xem bản đồ",
+      builder: (context, value, child) => RefreshIndicator(
+        onRefresh: () => _refreshData(context),
+        child: CustomScrollView(
+          slivers: [
+            SliverAppBar(
+              expandedHeight: 300,
+              pinned: true,
+              title: const Text(
+                "Chi tiết sự cố",
+                style: TextStyle(color: Colors.black),
+              ),
+              actions: [
+                Container(
+                  margin:
+                      EdgeInsets.only(right: getProportionateScreenWidth(15)),
+                  child: IconButton(
+                    onPressed: () {
+                      try {
+                        UrlLauncherHelper.launchURL(
+                            "https://www.google.com/maps/search/?api=1&query=${widget.issue.latitude},${widget.issue.longitude}");
+                      } catch (e) {
+                        Util.showDialogNotification(
+                            context: context, content: e.toString());
+                      }
+                    },
+                    icon: const Icon(Icons.map),
+                    tooltip: "Xem bản đồ",
+                  ),
+                )
+              ],
+              //foregroundColor: Colors.black,
+              flexibleSpace: FlexibleSpaceBar(
+                background: MapImages(
+                  latitude: widget.issue.latitude,
+                  longitude: widget.issue.longitude,
                 ),
-              )
-            ],
-            //foregroundColor: Colors.black,
-            flexibleSpace: FlexibleSpaceBar(
-              background: MapImages(
-                latitude: widget.issue.latitude,
-                longitude: widget.issue.longitude,
               ),
             ),
-          ),
-          SliverList(
-            delegate: SliverChildListDelegate(
-              [
-                TopRoundedContainer(
-                  color: Colors.white,
-                  child: Column(
-                    children: [
-                      IssueDescription(
-                        issue: widget.issue,
-                        isPartner: widget.isPartnerReceiveNew,
-                      ),
-                      TopRoundedContainer(
-                        color: Color(0xFFF6F7F9),
-                        child: Column(
-                          children: [
-                            if (widget.issue.status == IssueStatus.succeeded)
-                              IssueRating(
-                                issue: widget.issue,
-                                isPartnerReceiveNew: widget.isPartnerReceiveNew,
-                                isPartnerHistoryReceived:
-                                    widget.isPartnerHistoryReceived,
-                              ),
-                            if (widget.issue.status == IssueStatus.sent &&
-                                widget.isPartnerReceiveNew)
-                              Padding(
-                                padding: EdgeInsets.only(
-                                  left: SizeConfig.screenWidth * 0.15,
-                                  right: SizeConfig.screenWidth * 0.15,
-                                  bottom: getProportionateScreenWidth(40),
-                                  top: getProportionateScreenWidth(15),
-                                ),
-                                child: DefaultButton(
-                                  text: "Tôi muốn đi hỗ trợ",
-                                  press: () => _partnerConfirmMember(context),
-                                ),
-                              ),
-                            if (widget.issue.status ==
-                                    IssueStatus.memberConfirmPartner &&
-                                (widget.isPartnerReceiveNew ||
-                                    widget.isPartnerHistoryReceived))
-                              Padding(
-                                padding: EdgeInsets.only(
-                                  left: SizeConfig.screenWidth * 0.15,
-                                  right: SizeConfig.screenWidth * 0.15,
-                                  bottom: getProportionateScreenWidth(40),
-                                  top: getProportionateScreenWidth(15),
-                                ),
-                                child: DefaultButton(
-                                  text: "Đánh dấu hoàn thành",
-                                  press: () => _setStatusSuccess(context),
-                                ),
-                              ),
-                            const SizedBox(
-                              height: 200,
-                            ),
-                          ],
+            SliverList(
+              delegate: SliverChildListDelegate(
+                [
+                  TopRoundedContainer(
+                    color: Colors.white,
+                    child: Column(
+                      children: [
+                        IssueDescription(
+                          issue: widget.issue,
+                          isPartner: widget.isPartnerReceiveNew,
                         ),
-                      ),
-                    ],
+                        TopRoundedContainer(
+                          color: Color(0xFFF6F7F9),
+                          child: Column(
+                            children: [
+                              if (widget.issue.status == IssueStatus.succeeded)
+                                IssueRating(
+                                  issue: widget.issue,
+                                  isPartnerReceiveNew:
+                                      widget.isPartnerReceiveNew,
+                                  isPartnerHistoryReceived:
+                                      widget.isPartnerHistoryReceived,
+                                ),
+                              if (widget.issue.status == IssueStatus.sent &&
+                                  widget.isPartnerReceiveNew)
+                                Padding(
+                                  padding: EdgeInsets.only(
+                                    left: SizeConfig.screenWidth * 0.15,
+                                    right: SizeConfig.screenWidth * 0.15,
+                                    bottom: getProportionateScreenWidth(40),
+                                    top: getProportionateScreenWidth(15),
+                                  ),
+                                  child: DefaultButton(
+                                    text: "Tôi muốn đi hỗ trợ",
+                                    press: () => _partnerConfirmMember(context),
+                                  ),
+                                ),
+                              if (widget.issue.status ==
+                                      IssueStatus.memberConfirmPartner &&
+                                  (widget.isPartnerReceiveNew ||
+                                      widget.isPartnerHistoryReceived))
+                                Padding(
+                                  padding: EdgeInsets.only(
+                                    left: SizeConfig.screenWidth * 0.15,
+                                    right: SizeConfig.screenWidth * 0.15,
+                                    bottom: getProportionateScreenWidth(40),
+                                    top: getProportionateScreenWidth(15),
+                                  ),
+                                  child: DefaultButton(
+                                    text: "Đánh dấu hoàn thành",
+                                    press: () => _setStatusSuccess(context),
+                                  ),
+                                ),
+                              const SizedBox(
+                                height: 200,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-              ],
-            ),
-          )
-        ],
-        //child: Body(issue: arguments.issue),
+                ],
+              ),
+            )
+          ],
+          //child: Body(issue: arguments.issue),
+        ),
       ),
     );
   }
