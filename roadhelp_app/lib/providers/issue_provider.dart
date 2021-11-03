@@ -124,6 +124,39 @@ class IssueProvider with ChangeNotifier {
     return message;
   }
 
+  Future<String> setStatusSuccess(Issue item) async {
+    String message = await IssueRepository.setStatusSuccess(item.id!);
+
+    Issue itemReload = findById(item.id!);
+    final index = _items.indexWhere((element) => element.id == item.id);
+    _items[index] = itemReload;
+    notifyListeners();
+
+    return message;
+  }
+
+  Future<String> canceledByMember(Issue item) async {
+    String message = await IssueRepository.canceledByMember(item.id!);
+
+    Issue itemReload = findById(item.id!);
+    final index = _items.indexWhere((element) => element.id == item.id);
+    _items[index] = itemReload;
+    notifyListeners();
+
+    return message;
+  }
+
+  Future<String> canceledByPartner(Issue item) async {
+    String message = await IssueRepository.canceledByPartner(item.id!);
+
+    Issue itemReload = findById(item.id!);
+    final index = _items.indexWhere((element) => element.id == item.id);
+    _items[index] = itemReload;
+    notifyListeners();
+
+    return message;
+  }
+
   Future<Issue> send(Issue item) async {
     if (!authProvider!.authData.isAuth) {
       throw Exception(

@@ -109,6 +109,42 @@ class IssueRepository {
     return responseBody['message'];
   }
 
+  static Future<String> setStatusSuccess(
+      int issueId) async {
+    var responseBody = await HttpHelper.put(
+      url: _url +
+          issueId.toString() +
+          "/setStatusSuccess",
+      body: null,
+    );
+
+    return responseBody['message'];
+  }
+
+  static Future<String> canceledByMember(
+      int issueId) async {
+    var responseBody = await HttpHelper.put(
+      url: _url +
+          issueId.toString() +
+          "/canceledByMember",
+      body: null,
+    );
+
+    return responseBody['message'];
+  }
+
+  static Future<String> canceledByPartner(
+      int issueId) async {
+    var responseBody = await HttpHelper.put(
+      url: _url +
+          issueId.toString() +
+          "/canceledByPartner",
+      body: null,
+    );
+
+    return responseBody['message'];
+  }
+
   static Future<Issue> send(Issue item) async {
     var responseBody = await HttpHelper.post(
       url: _url + "send",
