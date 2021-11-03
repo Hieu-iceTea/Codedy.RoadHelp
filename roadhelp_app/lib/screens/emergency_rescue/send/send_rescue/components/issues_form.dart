@@ -219,7 +219,7 @@ class _IssuesFormState extends State<IssuesForm> {
               '/topic/issue/memberWaitPartner/' + itemResponse.id.toString(),
           callback: (stompFrame) =>
               _callbackWebSocket(stompFrame, itemResponse.id!),
-          onCancel: () => _onCancel(context, itemResponse),
+          onCancel: () => _canceledByMember(context, itemResponse),
         ),
       );
     } catch (error) {
@@ -277,7 +277,7 @@ class _IssuesFormState extends State<IssuesForm> {
     }
   }
 
-  Future<bool> _onCancel(context, Issue issue) async {
+  Future<bool> _canceledByMember(context, Issue issue) async {
     try {
       String message = await Provider.of<IssueProvider>(context, listen: false)
           .canceledByMember(issue);
