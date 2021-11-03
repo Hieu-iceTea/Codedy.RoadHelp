@@ -82,33 +82,34 @@ class IssueDescription extends StatelessWidget {
                       ],
                     ),
                   ),
-                  ListTile(
-                    leading: Icon(Icons.phone),
-                    title: Text(
-                      (!isPartner ||
-                              issue.status == IssueStatus.memberConfirmPartner)
-                          ? issue.phone!
-                          : "(Nhận hỗ trợ để hiển SĐT)",
-                      style: TextStyle(color: kTextColor),
-                    ),
-                    trailing: (isPartner &&
-                            issue.status == IssueStatus.memberConfirmPartner &&
-                            issue.phone != null)
-                        ? RoundedIconBtn(
-                            icon: Icons.phone_in_talk,
-                            showShadow: true,
-                            press: () {
-                              try {
-                                UrlLauncherHelper.launchURL(
-                                    "tel:" + issue.phone!);
-                              } catch (e) {
-                                Util.showDialogNotification(
-                                    context: context, content: e.toString());
-                              }
-                            },
-                          )
-                        : null,
+                ListTile(
+                  leading: Icon(Icons.phone),
+                  title: Text(
+                    (!isPartner ||
+                            issue.status == IssueStatus.memberConfirmPartner ||
+                            issue.status == IssueStatus.succeeded)
+                        ? issue.phone!
+                        : "(Nhận hỗ trợ để hiển SĐT)",
+                    style: TextStyle(color: kTextColor),
                   ),
+                  trailing: (isPartner &&
+                          issue.status == IssueStatus.memberConfirmPartner &&
+                          issue.phone != null)
+                      ? RoundedIconBtn(
+                          icon: Icons.phone_in_talk,
+                          showShadow: true,
+                          press: () {
+                            try {
+                              UrlLauncherHelper.launchURL(
+                                  "tel:" + issue.phone!);
+                            } catch (e) {
+                              Util.showDialogNotification(
+                                  context: context, content: e.toString());
+                            }
+                          },
+                        )
+                      : null,
+                ),
                 ListTile(
                   leading: Icon(Icons.location_on_outlined),
                   title: Text(
