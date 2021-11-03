@@ -175,6 +175,14 @@ public class IssueRestController {
 
         issueService.save(issue);
 
+        // Gửi thông báo tới máy member bằng WebSocket :
+        LinkedHashMap<String, Object> data = new LinkedHashMap<>();
+        data.put("issueStatus", issue.getStatus());
+        WebSocketDto webSocketDto = new WebSocketDto();
+        webSocketDto.setData(data);
+        webSocketDto.setMessage("Issue này đã Bị hủy bởi Member."); // Không cần thiết, chỉ test thôi
+        simpMessagingTemplate.convertAndSend("/topic/issue/partnerWaitMember/" + issue.getId(), webSocketDto);
+
         LinkedHashMap<String, Object> response = new LinkedHashMap<>();
         response.put("message", "Issue có ID " + id + " được thay đổi trạng thái thành: 'Hủy bởi khách hàng'");
         return response;

@@ -154,7 +154,8 @@ class _BodyState extends State<Body> {
         context,
         WaitWebSocketScreen.routeName,
         arguments: WaitWebSocketArguments(
-          message: "Chỉ một lúc thôi...\nKhách hàng đang xem thông tin của bạn.",
+          message:
+              "Chỉ một lúc thôi...\nKhách hàng đang xem thông tin của bạn.",
           destination:
               '/topic/issue/partnerWaitMember/' + widget.issue.id.toString(),
           callback: (stompFrame) =>
@@ -187,6 +188,22 @@ class _BodyState extends State<Body> {
           widget.issue = issueReload;
         });
       }
+
+      if (issueStatus == IssueStatus.canceledByMember) {
+        Issue issueReload = await IssueRepository.findById(issueId);
+
+        Navigator.pop(context); //Thoát màn hình chờ WebSocket
+
+        setState(() {
+          widget.issue = issueReload;
+        });
+
+        Util.showDialogNotification(
+          context: context,
+          title: "Thông báo",
+          content: "Khách hàng đã hủy cứu hộ này",
+        );
+      }
     }
   }
 
@@ -214,7 +231,9 @@ class _BodyState extends State<Body> {
   //Phần này chỉ dành cho luồng gửi-nhận cứu hộ (làm thế này hơi ẩu, nên tách ra. nhưng kệ đi) - Hiếu iceTea
   Future<bool> _canceledByPartner(context, Issue issue) async {
     await Util.showDialogNotification(
-        context: context, content: "Chỉ khách hàng mới được hủy, đối tác không được phép hủy - Hệ thống không cho phép điều này.");
+        context: context,
+        content:
+            "Chỉ khách hàng mới được hủy, đối tác không được phép hủy - Hệ thống không cho phép điều này.");
 
     return false;
 
