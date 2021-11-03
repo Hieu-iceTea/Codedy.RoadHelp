@@ -22,8 +22,7 @@ class WaitWebSocketScreen extends StatelessWidget {
           content: "Bạn muốn hủy cứu hộ này?",
         );
         if (confirm) {
-          arguments.onCancel();
-          return true;
+          return arguments.onCancel();
         }
 
         return false;
@@ -49,7 +48,7 @@ class WaitWebSocketArguments {
   String destination;
   Function(StompFrame) callback;
 
-  final Function onCancel;
+  final Future<bool> Function() onCancel;
 
   WaitWebSocketArguments({
     required this.message,

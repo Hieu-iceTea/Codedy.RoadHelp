@@ -167,7 +167,7 @@ public class IssueRestController {
             throw new RestNotFoundException("Issues id not found - " + id);
         }
 
-        if (issue.getStatus() != IssueStatus.sent || issue.getStatus() != IssueStatus.waitMemberConfirm || issue.getStatus() != IssueStatus.memberConfirmPartner) {
+        if (issue.getStatus() == IssueStatus.canceledByPartner || issue.getStatus() == IssueStatus.succeeded) {
             throw new RuntimeException("Lỗi: Trạng thái hiện tại không hợp lệ: " + issue.getStatus());
         }
 
@@ -176,7 +176,7 @@ public class IssueRestController {
         issueService.save(issue);
 
         LinkedHashMap<String, Object> response = new LinkedHashMap<>();
-        response.put("message", "Issue có ID " + id + "được thay đổi trạng thái thành: 'Hủy bởi khách hàng'");
+        response.put("message", "Issue có ID " + id + " được thay đổi trạng thái thành: 'Hủy bởi khách hàng'");
         return response;
     }
 
@@ -270,7 +270,7 @@ public class IssueRestController {
             throw new RestNotFoundException("Issues id not found - " + id);
         }
 
-        if (issue.getStatus() != IssueStatus.waitMemberConfirm || issue.getStatus() != IssueStatus.memberConfirmPartner) {
+        if (issue.getStatus() == IssueStatus.canceledByMember || issue.getStatus() == IssueStatus.succeeded) {
             throw new RuntimeException("Lỗi: Trạng thái hiện tại không hợp lệ: " + issue.getStatus());
         }
 
@@ -279,7 +279,7 @@ public class IssueRestController {
         issueService.save(issue);
 
         LinkedHashMap<String, Object> response = new LinkedHashMap<>();
-        response.put("message", "Issue có ID " + id + "được thay đổi trạng thái thành: 'Hủy bởi đối tác'");
+        response.put("message", "Issue có ID " + id + " được thay đổi trạng thái thành: 'Hủy bởi đối tác'");
         return response;
     }
     //endregion

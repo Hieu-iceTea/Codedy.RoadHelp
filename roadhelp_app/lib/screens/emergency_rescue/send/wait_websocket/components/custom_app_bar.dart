@@ -5,7 +5,7 @@ import 'package:roadhelp/config/size_config.dart';
 import 'package:roadhelp/helper/util.dart';
 
 class CustomAppBar extends StatelessWidget {
-  final Function onCancel;
+  final Future<bool> Function() onCancel;
 
   const CustomAppBar({required this.onCancel, Key? key}) : super(key: key);
 
@@ -41,8 +41,9 @@ class CustomAppBar extends StatelessWidget {
                       content: "Bạn muốn hủy cứu hộ này?",
                     );
                     if (confirm) {
-                      onCancel();
-                      Navigator.pop(context);
+                      if (await onCancel()) {
+                        Navigator.pop(context);
+                      }
                     }
                   },
                   child: SvgPicture.asset(

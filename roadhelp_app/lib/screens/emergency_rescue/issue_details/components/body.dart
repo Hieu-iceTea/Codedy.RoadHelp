@@ -159,7 +159,7 @@ class _BodyState extends State<Body> {
               '/topic/issue/partnerWaitMember/' + widget.issue.id.toString(),
           callback: (stompFrame) =>
               _callbackWebSocket(stompFrame, widget.issue.id!),
-          onCancel: () {},
+          onCancel: () => Future.value(true),
         ),
       );
     } catch (error) {
