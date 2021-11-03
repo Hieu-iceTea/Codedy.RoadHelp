@@ -13,7 +13,7 @@ class IssueProvider with ChangeNotifier {
   IssueProvider(this.authProvider, this._items);
 
   List<Issue> get items {
-    return [..._items];
+    return [..._items.reversed];
   }
 
   Future<List<Issue>> fetchAllData() async {
