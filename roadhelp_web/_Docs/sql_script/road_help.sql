@@ -33,7 +33,7 @@ CREATE TABLE IF NOT EXISTS `users`
     `gender`     int, #1 nam, 2 nữ
     `first_name` VARCHAR(64),
     `last_name`  VARCHAR(64),
-    `phone`      VARCHAR(16),
+    `phone`      VARCHAR(16) UNIQUE NULL,
     `address`    VARCHAR(128),
     `rate_avg`   DOUBLE       DEFAULT 0,
 
@@ -61,7 +61,7 @@ CREATE TABLE IF NOT EXISTS `garage`
     `ward_id`         INT         NOT NULL,
 
     `name`            VARCHAR(64) NOT NULL,
-    `phone`           VARCHAR(16),
+    `phone`           VARCHAR(16) UNIQUE NOT NULL,
     `rate_avg`        DOUBLE       DEFAULT 0,
     `address`         VARCHAR(128),
     `longitude`       double,
@@ -229,7 +229,7 @@ INSERT INTO users (id, username, email, password, image, gender, first_name, las
 VALUE (12, 'Member_B', 'member_b.codedy@gmail.com', '$2y$10$//Od0OmEqRwFepW3wynrYOwslyvaS.snzBbpWwskF1Zrg5fNI.eTe','member_b.jpg', 1, 'CODEDY', 'Member B', '0871 6633 25','Hà tây', FALSE);
 
 INSERT INTO users (id, username, email, password, image, gender, first_name, last_name,phone,address, active)
-VALUE (13, 'ManhHung', 'ManhHung@fpt.edu.vn ', '$2y$10$//Od0OmEqRwFepW3wynrYOwslyvaS.snzBbpWwskF1Zrg5fNI.eTe','ManhHung.jpg', 2, 'Manh', 'Hung', '0871 6633 24','Hà tây', TRUE);
+VALUE (13, 'ManhHung', 'ManhHung@fpt.edu.vn ', '$2y$10$//Od0OmEqRwFepW3wynrYOwslyvaS.snzBbpWwskF1Zrg5fNI.eTe','ManhHung.jpg', 2, 'Manh', 'Hung', '0871 6633 36','Hà tây', TRUE);
 
 
 
