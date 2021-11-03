@@ -159,7 +159,7 @@ class _BodyState extends State<Body> {
               '/topic/issue/partnerWaitMember/' + widget.issue.id.toString(),
           callback: (stompFrame) =>
               _callbackWebSocket(stompFrame, widget.issue.id!),
-          onCancel: () => Future.value(true),
+          onCancel: () => _canceledByPartner(context, widget.issue),
         ),
       );
     } catch (error) {
@@ -209,5 +209,31 @@ class _BodyState extends State<Body> {
       await Util.showDialogNotification(
           context: context, content: error.toString());
     }
+  }
+
+  //Phần này chỉ dành cho luồng gửi-nhận cứu hộ (làm thế này hơi ẩu, nên tách ra. nhưng kệ đi) - Hiếu iceTea
+  Future<bool> _canceledByPartner(context, Issue issue) async {
+    await Util.showDialogNotification(
+        context: context, content: "Chỉ khách hàng mới được hủy, đối tác không được phép hủy - Hệ thống không cho phép điều này.");
+
+    return false;
+
+    /*try {
+      String message = await Provider.of<IssueProvider>(context, listen: false)
+          .canceledByPartner(issue);
+
+      await Util.showDialogNotification(
+        context: context,
+        title: "Hủy thành công",
+        content: message,
+      );
+
+      return true;
+    } catch (error) {
+      await Util.showDialogNotification(
+          context: context, content: error.toString());
+    }
+
+    return false;*/
   }
 }
