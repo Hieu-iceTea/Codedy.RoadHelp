@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:roadhelp/components/rounded_icon_btn.dart';
 import 'package:roadhelp/config/constants.dart';
 import 'package:roadhelp/config/enums.dart';
@@ -134,7 +135,7 @@ class IssueDescription extends StatelessWidget {
                 ListTile(
                   leading: Icon(Icons.access_time),
                   title: Text(
-                    "08/08/2021 15:36",
+                    DateFormat('dd/MM/yyyy HH:mm:ss').format(issue.createdAt!.toLocal()),
                     style: TextStyle(color: kTextColor),
                   ),
                 ),
