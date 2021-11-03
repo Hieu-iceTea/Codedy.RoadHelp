@@ -27,8 +27,7 @@ class UserInfoScreen extends StatelessWidget {
           content: "Bạn muốn hủy gọi cứu hộ khẩn lần này?",
         );
         if (confirm) {
-          arguments.onCancel();
-          return true;
+          return arguments.onCancel();
         }
 
         return false;
@@ -50,7 +49,7 @@ class UserInfoScreen extends StatelessWidget {
 class UserInfoArguments {
   final User user;
   final Function onConfirm;
-  final Function onCancel;
+  final Future<bool> Function() onCancel;
 
   UserInfoArguments(
       {required this.user, required this.onConfirm, required this.onCancel});

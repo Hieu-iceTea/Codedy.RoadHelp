@@ -246,7 +246,7 @@ class _IssuesFormState extends State<IssuesForm> {
           arguments: UserInfoArguments(
             user: issueReload.userPartner!,
             onConfirm: () => _memberConfirmPartner(context, issueReload),
-            onCancel: () {},
+            onCancel: () => _canceledByMember(context, issueReload),
           ),
         );
         //Navigator.pop(context);
