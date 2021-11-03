@@ -23,6 +23,9 @@ class _UserImageState extends State<UserImage> {
               child: ClipOval(
                 child: Image.network(
                   widget.imageUrl!,
+                  height: 115,
+                  width: 115,
+                  fit: BoxFit.cover,
                 ),
               ),
             )

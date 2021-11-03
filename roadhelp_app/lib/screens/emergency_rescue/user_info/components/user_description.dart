@@ -30,7 +30,7 @@ class UserDescription extends StatelessWidget {
         const SizedBox(height: 5),
         const Center(
           child: Text(
-            "Đã xác nhận muốn hỗ trợ bạn",
+            "Muốn hỗ trợ bạn",
             textAlign: TextAlign.center,
           ),
         ),
@@ -84,7 +84,7 @@ class UserDescription extends StatelessWidget {
         const SizedBox(height: 15),
         const Center(
           child: Text(
-            "Sẽ cần một chút thời gian để tôi\ndi chuyển tới vị trí của bạn và hỗ trợ.",
+            "Bạn cần xác nhận để tôi tới giúp bạn.\nSẽ cần một chút thời gian để tôi\ndi chuyển tới vị trí của bạn và hỗ trợ.",
             textAlign: TextAlign.center,
           ),
         ),
