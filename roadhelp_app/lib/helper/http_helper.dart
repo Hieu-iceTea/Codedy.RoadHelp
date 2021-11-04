@@ -157,4 +157,44 @@ class HttpHelper {
       rethrow;
     }
   }
+
+
+  static Future<dynamic> multipartRequest({required String method,
+    required String url,
+    required Map<String, String> fields,
+    required List<http.MultipartFile> files}) async {
+    try {
+      var request = http.MultipartRequest(method, Uri.parse(url))
+        ..fields.addAll(fields)
+        ..files.addAll(files);
+
+      var response = await request.send().timeout(
+        const Duration(seconds: 5),
+        onTimeout: () {
+          // Time has run out, do what you wanted to do.
+          throw TimeoutException(
+              'Hết thời gian chờ máy chủ phản hồi. Vui lòng kiểm tra internet và thử lại!');
+        },
+      );
+
+      //Get the response from the server
+      var responseBodyBytes = await response.stream.toBytes();
+      var responseBody = String.fromCharCodes(responseBodyBytes);
+
+      if (responseBody.isEmpty) {
+        throw const HttpException('❌ Failed. ResponseBody is Empty');
+      }
+
+      if (response.statusCode == 200) {
+        return json.decode(utf8.decode(responseBodyBytes));
+      } else {
+        throw HttpException('❌ Error. \nStatusCode: ' +
+            response.statusCode.toString() +
+            "\nMessage: " +
+            (json.decode(utf8.decode(responseBodyBytes))['message'] ?? ""));
+      }
+    } catch (error) {
+      rethrow;
+    }
+  }
 }
