@@ -147,26 +147,6 @@ public class IssueRestController {
         return response;
     }
 
-    // Member xác nhận hoàn thành sau khi partner hỗ trợ xog
-    @PutMapping(path = {"/{id}/setStatusSuccess", "/{id}/setStatusSuccess/"})
-    public String rescueSuccess(@PathVariable int id) {
-        Issue issue = issueService.findById(id);
-
-        if (issue == null) {
-            throw new RestNotFoundException("Issues id not found - " + id);
-        }
-
-        if (issue.getStatus() != IssueStatus.memberConfirmPartner) {
-            return "Lỗi: Trạng thái hiện tại không phải là memberConfirmPartner, Status hiện tại: " + issue.getStatus();
-        }
-
-        issue.setStatus(IssueStatus.succeeded);
-
-        issueService.save(issue);
-
-        return "Issue có ID " + id + "được thay đổi trạng thái thành: 'Thành công'";
-    }
-
     // Member viết đánh giá issue sau khi được cứu hộ xong -
     @PostMapping(path = {"/{issueId}/ratingIssue", "/{issueId}/ratingIssue/"})
     public LinkedHashMap<String, Object> ratingIssue(@RequestBody RatingIssue ratingIssue, @PathVariable int issueId) {
@@ -176,6 +156,36 @@ public class IssueRestController {
         ratingIssue.setIssue(issue);
 
         return ratingIssueService.save(ratingIssue).toApiResponse();
+    }
+
+    // Hủy bởi Member
+    @PutMapping(path = {"/{id}/canceledByMember", "/{id}/canceledByMember/"})
+    public LinkedHashMap<String, Object> canceledByMember(@PathVariable int id) {
+        Issue issue = issueService.findById(id);
+
+        if (issue == null) {
+            throw new RestNotFoundException("Issues id not found - " + id);
+        }
+
+        if (issue.getStatus() == IssueStatus.canceledByPartner || issue.getStatus() == IssueStatus.succeeded) {
+            throw new RuntimeException("Lỗi: Trạng thái hiện tại không hợp lệ: " + issue.getStatus());
+        }
+
+        issue.setStatus(IssueStatus.canceledByMember);
+
+        issueService.save(issue);
+
+        // Gửi thông báo tới máy member bằng WebSocket :
+        LinkedHashMap<String, Object> data = new LinkedHashMap<>();
+        data.put("issueStatus", issue.getStatus());
+        WebSocketDto webSocketDto = new WebSocketDto();
+        webSocketDto.setData(data);
+        webSocketDto.setMessage("Issue này đã Bị hủy bởi Member."); // Không cần thiết, chỉ test thôi
+        simpMessagingTemplate.convertAndSend("/topic/issue/partnerWaitMember/" + issue.getId(), webSocketDto);
+
+        LinkedHashMap<String, Object> response = new LinkedHashMap<>();
+        response.put("message", "Issue có ID " + id + " được thay đổi trạng thái thành: 'Hủy bởi khách hàng'");
+        return response;
     }
 
 
@@ -235,6 +245,50 @@ public class IssueRestController {
     @GetMapping(path = {"/{id}/ratingIssue", "/{id}/ratingIssue/"})
     public LinkedHashMap<String, Object> ratingIssue(@PathVariable int id) {
         return ratingIssueService.findByIssueId(id).toApiResponse();
+    }
+
+    // Partner xác nhận hoàn thành sau khi partner hỗ trợ xog
+    @PutMapping(path = {"/{id}/setStatusSuccess", "/{id}/setStatusSuccess/"})
+    public LinkedHashMap<String, Object> setStatusSuccess(@PathVariable int id) {
+        Issue issue = issueService.findById(id);
+
+        if (issue == null) {
+            throw new RestNotFoundException("Issues id not found - " + id);
+        }
+
+        if (issue.getStatus() != IssueStatus.memberConfirmPartner) {
+            throw new RuntimeException("Lỗi: Trạng thái hiện tại không phải là memberConfirmPartner, Status hiện tại: " + issue.getStatus());
+        }
+
+        issue.setStatus(IssueStatus.succeeded);
+
+        issueService.save(issue);
+
+        LinkedHashMap<String, Object> response = new LinkedHashMap<>();
+        response.put("message", "Issue có ID " + id + " được thay đổi trạng thái thành: 'Thành công'");
+        return response;
+    }
+
+    // Hủy bởi Partner
+    @PutMapping(path = {"/{id}/canceledByPartner", "/{id}/canceledByPartner/"})
+    public LinkedHashMap<String, Object> canceledByPartner(@PathVariable int id) {
+        Issue issue = issueService.findById(id);
+
+        if (issue == null) {
+            throw new RestNotFoundException("Issues id not found - " + id);
+        }
+
+        if (issue.getStatus() == IssueStatus.canceledByMember || issue.getStatus() == IssueStatus.succeeded) {
+            throw new RuntimeException("Lỗi: Trạng thái hiện tại không hợp lệ: " + issue.getStatus());
+        }
+
+        issue.setStatus(IssueStatus.canceledByPartner);
+
+        issueService.save(issue);
+
+        LinkedHashMap<String, Object> response = new LinkedHashMap<>();
+        response.put("message", "Issue có ID " + id + " được thay đổi trạng thái thành: 'Hủy bởi đối tác'");
+        return response;
     }
     //endregion
 

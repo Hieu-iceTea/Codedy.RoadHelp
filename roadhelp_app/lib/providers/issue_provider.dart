@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:roadhelp/models/issue.dart';
+import 'package:roadhelp/models/rating_issue.dart';
 import 'package:roadhelp/repositories/issue_repository.dart';
 
 import 'auth_provider.dart';
@@ -12,7 +13,7 @@ class IssueProvider with ChangeNotifier {
   IssueProvider(this.authProvider, this._items);
 
   List<Issue> get items {
-    return [..._items];
+    return [..._items.reversed];
   }
 
   Future<List<Issue>> fetchAllData() async {
@@ -123,6 +124,39 @@ class IssueProvider with ChangeNotifier {
     return message;
   }
 
+  Future<String> setStatusSuccess(Issue item) async {
+    String message = await IssueRepository.setStatusSuccess(item.id!);
+
+    Issue itemReload = findById(item.id!);
+    final index = _items.indexWhere((element) => element.id == item.id);
+    _items[index] = itemReload;
+    notifyListeners();
+
+    return message;
+  }
+
+  Future<String> canceledByMember(Issue item) async {
+    String message = await IssueRepository.canceledByMember(item.id!);
+
+    Issue itemReload = findById(item.id!);
+    final index = _items.indexWhere((element) => element.id == item.id);
+    _items[index] = itemReload;
+    notifyListeners();
+
+    return message;
+  }
+
+  Future<String> canceledByPartner(Issue item) async {
+    String message = await IssueRepository.canceledByPartner(item.id!);
+
+    Issue itemReload = findById(item.id!);
+    final index = _items.indexWhere((element) => element.id == item.id);
+    _items[index] = itemReload;
+    notifyListeners();
+
+    return message;
+  }
+
   Future<Issue> send(Issue item) async {
     if (!authProvider!.authData.isAuth) {
       throw Exception(
@@ -135,6 +169,21 @@ class IssueProvider with ChangeNotifier {
     _items.add(itemResponse);
     notifyListeners();
     return itemResponse;
+  }
+
+  Future<void> createRatingIssue(RatingIssue item) async {
+    if (!authProvider!.authData.isAuth) {
+      throw Exception(
+          "Chưa đăng nhập, hoặc hết thời gian đăng nhập. Vui lòng đăng xuất & đăng nhập lại");
+    }
+
+    item.userMember = authProvider!.authData.currentUser;
+
+    RatingIssue itemResponse = await IssueRepository.createRatingIssue(item);
+    final index = _items.indexWhere((element) => element.id == item.issue!.id);
+    _items[index] =
+        await IssueRepository.findById(itemResponse.issue!.id!); //Reload item
+    notifyListeners();
   }
 //#endregion
 }

@@ -46,9 +46,9 @@ class Authority extends BaseModel {
       //TODO: Thử thay thế cái này xem đc ko: json.decode(json['user'])
       //
       id: json['id'],
-      //createdAt: json['createdAt'],
+      createdAt: json['createdAt'] != null ? DateTime.fromMillisecondsSinceEpoch(json['createdAt'], isUtc: true) : null,
       createdBy: json['createdBy'],
-      //updatedAt: json['updatedAt'],
+      updatedAt: json['updatedAt'] != null ? DateTime.fromMillisecondsSinceEpoch(json['updatedAt'], isUtc: true) : null,
       updatedBy: json['updatedBy'],
       version: json['version'],
       deleted: json['deleted'],
@@ -73,7 +73,7 @@ class Authority extends BaseModel {
       'id': id,
       //'createdAt': createdAt,
       'createdBy': createdBy,
-      //'updatedAt': updatedAt,
+      //'updatedAt': updatedAt, //DateTime.now().millisecondsSinceEpoch | updatedAt.millisecondsSinceEpoch
       'updatedBy': updatedBy,
       'version': version,
       'deleted': deleted,

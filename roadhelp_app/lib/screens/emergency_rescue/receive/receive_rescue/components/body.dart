@@ -57,6 +57,8 @@ class _BodyState extends State<Body> {
                     issue: value.items[index],
                     isPartnerReceiveNew: widget.issueListScreenState ==
                         IssueListScreenState.receiveNew,
+                    isPartnerHistoryReceived: widget.issueListScreenState ==
+                        IssueListScreenState.historyReceived,
                   ),
                   separatorBuilder: (context, index) => const Divider(),
                 ),

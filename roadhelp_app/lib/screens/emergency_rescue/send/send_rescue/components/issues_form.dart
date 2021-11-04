@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
+import 'package:roadhelp/helper/keyboard.dart';
 import 'package:roadhelp/providers/issue_provider.dart';
 import 'package:roadhelp/repositories/issue_repository.dart';
 import 'package:roadhelp/screens/emergency_rescue/issue_details/issue_details_screen.dart';
@@ -180,6 +181,8 @@ class _IssuesFormState extends State<IssuesForm> {
   }
 
   Future<void> _submitForm() async {
+    KeyboardUtil.hideKeyboard(context);
+
     if (!_formKey.currentState!.validate()) {
       return;
     }
@@ -188,7 +191,7 @@ class _IssuesFormState extends State<IssuesForm> {
       await Util.showDialogNotification(
           context: context,
           title: "Thiếu thông tin",
-          content: "Vui lòng chọn vị trí trên bản đồ");
+          content: "Vui lòng cập nhật vị trí bản đồ");
 
       return;
     }
@@ -216,7 +219,7 @@ class _IssuesFormState extends State<IssuesForm> {
               '/topic/issue/memberWaitPartner/' + itemResponse.id.toString(),
           callback: (stompFrame) =>
               _callbackWebSocket(stompFrame, itemResponse.id!),
-          onCancel: () {},
+          onCancel: () => _canceledByMember(context, itemResponse),
         ),
       );
     } catch (error) {
@@ -243,7 +246,7 @@ class _IssuesFormState extends State<IssuesForm> {
           arguments: UserInfoArguments(
             user: issueReload.userPartner!,
             onConfirm: () => _memberConfirmPartner(context, issueReload),
-            onCancel: () {},
+            onCancel: () => _canceledByMember(context, issueReload),
           ),
         );
         //Navigator.pop(context);
@@ -268,10 +271,29 @@ class _IssuesFormState extends State<IssuesForm> {
         IssueDetailsScreen.routeName,
         arguments: IssueDetailsArguments(issue: issueReload),
       );
-
     } catch (error) {
       await Util.showDialogNotification(
           context: context, content: error.toString());
     }
+  }
+
+  Future<bool> _canceledByMember(context, Issue issue) async {
+    try {
+      String message = await Provider.of<IssueProvider>(context, listen: false)
+          .canceledByMember(issue);
+
+      await Util.showDialogNotification(
+        context: context,
+        title: "Hủy thành công",
+        content: message,
+      );
+
+      return true;
+    } catch (error) {
+      await Util.showDialogNotification(
+          context: context, content: error.toString());
+    }
+
+    return false;
   }
 }

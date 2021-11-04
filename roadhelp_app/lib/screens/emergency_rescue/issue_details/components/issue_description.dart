@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:roadhelp/components/rounded_icon_btn.dart';
 import 'package:roadhelp/config/constants.dart';
 import 'package:roadhelp/config/enums.dart';
@@ -82,33 +83,34 @@ class IssueDescription extends StatelessWidget {
                       ],
                     ),
                   ),
-                  ListTile(
-                    leading: Icon(Icons.phone),
-                    title: Text(
-                      (!isPartner ||
-                              issue.status == IssueStatus.memberConfirmPartner)
-                          ? issue.phone!
-                          : "(Nhận hỗ trợ để hiển SĐT)",
-                      style: TextStyle(color: kTextColor),
-                    ),
-                    trailing: (isPartner &&
-                            issue.status == IssueStatus.memberConfirmPartner &&
-                            issue.phone != null)
-                        ? RoundedIconBtn(
-                            icon: Icons.phone_in_talk,
-                            showShadow: true,
-                            press: () {
-                              try {
-                                UrlLauncherHelper.launchURL(
-                                    "tel:" + issue.phone!);
-                              } catch (e) {
-                                Util.showDialogNotification(
-                                    context: context, content: e.toString());
-                              }
-                            },
-                          )
-                        : null,
+                ListTile(
+                  leading: Icon(Icons.phone),
+                  title: Text(
+                    (!isPartner ||
+                            issue.status == IssueStatus.memberConfirmPartner ||
+                            issue.status == IssueStatus.succeeded)
+                        ? issue.phone!
+                        : "(Nhận hỗ trợ để hiển SĐT)",
+                    style: TextStyle(color: kTextColor),
                   ),
+                  trailing: (isPartner &&
+                          issue.status == IssueStatus.memberConfirmPartner &&
+                          issue.phone != null)
+                      ? RoundedIconBtn(
+                          icon: Icons.phone_in_talk,
+                          showShadow: true,
+                          press: () {
+                            try {
+                              UrlLauncherHelper.launchURL(
+                                  "tel:" + issue.phone!);
+                            } catch (e) {
+                              Util.showDialogNotification(
+                                  context: context, content: e.toString());
+                            }
+                          },
+                        )
+                      : null,
+                ),
                 ListTile(
                   leading: Icon(Icons.location_on_outlined),
                   title: Text(
@@ -133,7 +135,7 @@ class IssueDescription extends StatelessWidget {
                 ListTile(
                   leading: Icon(Icons.access_time),
                   title: Text(
-                    "08/08/2021 15:36",
+                    DateFormat('dd/MM/yyyy HH:mm:ss').format(issue.createdAt!.toLocal()),
                     style: TextStyle(color: kTextColor),
                   ),
                 ),

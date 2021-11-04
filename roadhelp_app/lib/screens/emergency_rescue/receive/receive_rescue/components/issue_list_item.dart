@@ -6,11 +6,13 @@ import 'package:roadhelp/screens/emergency_rescue/issue_details/issue_details_sc
 class IssueListItem extends StatelessWidget {
   final Issue issue;
   bool isPartnerReceiveNew;
+  bool isPartnerHistoryReceived;
 
   IssueListItem({
     Key? key,
     required this.issue,
     this.isPartnerReceiveNew = false,
+    this.isPartnerHistoryReceived = false,
   }) : super(key: key);
 
   @override
@@ -19,7 +21,11 @@ class IssueListItem extends StatelessWidget {
       onTap: () => Navigator.pushNamed(
         context,
         IssueDetailsScreen.routeName,
-        arguments: IssueDetailsArguments(issue: issue, isPartnerReceiveNew: isPartnerReceiveNew),
+        arguments: IssueDetailsArguments(
+          issue: issue,
+          isPartnerReceiveNew: isPartnerReceiveNew,
+          isPartnerHistoryReceived: isPartnerHistoryReceived,
+        ),
       ),
       leading: Hero(
         tag: issue.id.toString(),

@@ -45,11 +45,11 @@ extension IssueStatusExtension on IssueStatus {
       case IssueStatus.sent:
         return 'Vừa gửi đi';
       case IssueStatus.waitMemberConfirm:
-        return 'Chờ khách hàng xác nhận người giúp đỡ';
+        return 'Chờ khách hàng xác nhận đối tác';
       case IssueStatus.memberConfirmPartner:
         return 'Đang thực hiện'; //Khách hàng đã xác nhận người giúp đỡ (đang thực hiện)
       case IssueStatus.canceledByMember:
-        return 'Hủy bởi thành viên';
+        return 'Hủy bởi khách hàng';
       case IssueStatus.canceledByPartner:
         return 'Hủy bởi đối tác';
       case IssueStatus.succeeded:

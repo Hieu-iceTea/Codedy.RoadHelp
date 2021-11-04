@@ -62,9 +62,9 @@ class Ward extends BaseModel {
           json['district'] != null ? District.fromJson(json['district']) : null,
       //
       id: json['id'],
-      //createdAt: json['createdAt'],
+      createdAt: json['createdAt'] != null ? DateTime.fromMillisecondsSinceEpoch(json['createdAt'], isUtc: true) : null,
       createdBy: json['createdBy'],
-      //updatedAt: json['updatedAt'],
+      updatedAt: json['updatedAt'] != null ? DateTime.fromMillisecondsSinceEpoch(json['updatedAt'], isUtc: true) : null,
       updatedBy: json['updatedBy'],
       version: json['version'],
       deleted: json['deleted'],
@@ -91,7 +91,7 @@ class Ward extends BaseModel {
       'id': id,
       //'createdAt': createdAt,
       'createdBy': createdBy,
-      //'updatedAt': updatedAt,
+      //'updatedAt': updatedAt, //DateTime.now().millisecondsSinceEpoch | updatedAt.millisecondsSinceEpoch
       'updatedBy': updatedBy,
       'version': version,
       'deleted': deleted,
