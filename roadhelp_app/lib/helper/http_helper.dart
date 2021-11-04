@@ -163,6 +163,7 @@ class HttpHelper {
     required String url,
     required Map<String, String> fields,
     required List<http.MultipartFile> files}) async {
+    //https://pub.dev/documentation/http/latest/http/MultipartRequest-class.html
     try {
       var request = http.MultipartRequest(method, Uri.parse(url))
         ..fields.addAll(fields)

@@ -13,7 +13,13 @@ class ImageItem extends StatelessWidget {
       children: [
         ClipRRect(
           borderRadius: const BorderRadius.all(Radius.circular(10)),
-          child: Image.network(imageUrl),
+          child: AspectRatio(
+            aspectRatio: 3 / 2,
+            child: Image.network(
+              imageUrl,
+              fit: BoxFit.cover,
+            ),
+          ),
         ),
         Positioned(
             top: -15,
