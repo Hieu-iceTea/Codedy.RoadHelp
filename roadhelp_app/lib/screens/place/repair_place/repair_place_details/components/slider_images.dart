@@ -29,8 +29,11 @@ class _SliderImagesState extends State<SliderImages> {
             child: Hero(
               tag: widget.garage.id.toString(),
               child: widget.garage.garageImages.isNotEmpty
-                  ? Image.network(
-                      widget.garage.garageImages[selectedImage].imageUrl!)
+                  ? FadeInImage.assetNetwork(
+                      placeholder: "assets/images/placeholder_processing.gif",
+                      image:
+                          widget.garage.garageImages[selectedImage].imageUrl!,
+                    )
                   : const Center(child: Text("No Image")),
             ),
           ),
@@ -69,9 +72,12 @@ class _SliderImagesState extends State<SliderImages> {
               color: kPrimaryColor.withOpacity(selectedImage == index ? 1 : 0)),
         ),
         child: Hero(
-            tag: widget.garage.garageImages[index].imageUrl! +
-                "RepairPlaceDetails_RepairPlaceManageImage",
-            child: Image.network(widget.garage.garageImages[index].imageUrl!)),
+          tag: widget.garage.garageImages[index].imageUrl! +
+              "RepairPlaceDetails_RepairPlaceManageImage",
+          child: FadeInImage.assetNetwork(
+              placeholder: "assets/images/placeholder_processing.gif",
+              image: widget.garage.garageImages[index].imageUrl!),
+        ),
       ),
     );
   }
