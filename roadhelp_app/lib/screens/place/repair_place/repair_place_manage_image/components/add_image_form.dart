@@ -1,7 +1,34 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 
 class AddImageForm extends StatelessWidget {
-  const AddImageForm({Key? key}) : super(key: key);
+  final Function(File) onSelectImage;
+
+  const AddImageForm({
+    required this.onSelectImage,
+    Key? key,
+  }) : super(key: key);
+
+  Future<void> _takeImage() async {
+    XFile? imageXFile = await ImagePicker().pickImage(
+      source: ImageSource.gallery,
+      maxWidth: 600,
+    );
+    if (imageXFile == null) {
+      return;
+    }
+    File imageFile = File(imageXFile.path);
+
+    onSelectImage(imageFile);
+
+    /*final appDir = await syspaths.getApplicationDocumentsDirectory();
+    final fileName = path.basename(imageFile.path);
+    final savedImage =
+    await File(imageFile.path).copy('${appDir.path}/$fileName');
+    widget.onSelectImage(savedImage);*/
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -12,7 +39,7 @@ class AddImageForm extends StatelessWidget {
       ),
       child: IconButton(
         icon: const Icon(Icons.add_a_photo),
-        onPressed: () {},
+        onPressed: () => _takeImage(),
       ),
     );
   }
