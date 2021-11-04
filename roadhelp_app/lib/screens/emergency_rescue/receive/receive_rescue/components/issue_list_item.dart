@@ -34,8 +34,9 @@ class IssueListItem extends StatelessWidget {
           child: issue.userMember?.imageUrl != null
               ? AspectRatio(
                   aspectRatio: 1 / 1,
-                  child: Image.network(
-                    issue.userMember!.imageUrl!,
+                  child: FadeInImage.assetNetwork(
+                    placeholder: "assets/images/placeholder_processing.gif",
+                    image: issue.userMember!.imageUrl!,
                     fit: BoxFit.cover,
                   ),
                 )

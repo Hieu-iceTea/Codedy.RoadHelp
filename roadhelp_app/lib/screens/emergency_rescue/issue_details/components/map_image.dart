@@ -49,8 +49,9 @@ class _MapImagesState extends State<MapImages> {
             alignment: Alignment.center,
             child: const Text('No Location Chosen'),
           )
-        : Image.network(
-            _previewImageUrl!,
+        : FadeInImage.assetNetwork(
+            placeholder: "assets/images/placeholder_processing.gif",
+            image: _previewImageUrl!,
             fit: BoxFit.cover,
             //width: double.infinity,
           );

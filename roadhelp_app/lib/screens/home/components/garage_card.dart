@@ -27,8 +27,7 @@ class GarageCard extends StatelessWidget {
           onTap: () => Navigator.pushNamed(
             context,
             RepairPlaceDetailsScreen.routeName,
-            arguments:
-                RepairPlaceDetailsArguments(garage: garage),
+            arguments: RepairPlaceDetailsArguments(garage: garage),
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -46,10 +45,9 @@ class GarageCard extends StatelessWidget {
                     child: ClipRRect(
                       borderRadius: const BorderRadius.all(Radius.circular(6)),
                       child: garage.garageImages.isNotEmpty
-                          ? Image.network(
-                              garage.garageImages[0].imageUrl!,
-                              //height: double.infinity,
-                              //width: 80,
+                          ? FadeInImage.assetNetwork(
+                              placeholder: "assets/images/placeholder_processing2.gif",
+                              image: garage.garageImages[0].imageUrl!,
                               fit: BoxFit.cover,
                             )
                           : const Text("No\nImage",
@@ -78,7 +76,8 @@ class GarageCard extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(width: 4),
-                      SvgPicture.asset("assets/icons/Star Icon.svg", height: 14),
+                      SvgPicture.asset("assets/icons/Star Icon.svg",
+                          height: 14),
                     ],
                   ),
                   InkWell(

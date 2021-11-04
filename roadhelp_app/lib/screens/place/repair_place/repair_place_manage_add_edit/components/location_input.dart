@@ -20,6 +20,8 @@ class _LocationInputState extends State<LocationInput> {
   String? _previewImageUrl;
   LatLng? _latLngSelected;
 
+  bool isLoadLocation = false;
+
   void _showPreview(LatLng latLng) {
     final staticMapImageUrl = LocationHelper.generateLocationPreviewImage(
       latitude: latLng.latitude,
@@ -41,12 +43,19 @@ class _LocationInputState extends State<LocationInput> {
 
   Future<void> _getCurrentUserLocation() async {
     try {
+      setState(() {
+        isLoadLocation = true;
+      });
       final locData = await Location().getLocation();
       _latLngSelected = LatLng(locData.latitude!, locData.longitude!);
       _showPreview(_latLngSelected!);
       widget.onSelectPlace(_latLngSelected!);
     } catch (error) {
       return;
+    } finally {
+      setState(() {
+        isLoadLocation = false;
+      });
     }
   }
 
@@ -80,16 +89,24 @@ class _LocationInputState extends State<LocationInput> {
           decoration: BoxDecoration(
             border: Border.all(width: 1, color: Colors.grey),
           ),
-          child: _previewImageUrl == null
-              ? const Text(
-                  'Không có vị trí được chọn',
-                  textAlign: TextAlign.center,
-                )
-              : Image.network(
-                  _previewImageUrl!,
-                  fit: BoxFit.cover,
+          child: isLoadLocation
+              ? Container(
+                  child:
+                      Image.asset("assets/images/placeholder_processing2.gif"),
+                  color: kSecondaryColor.withOpacity(0.1),
                   width: double.infinity,
-                ),
+                )
+              : _previewImageUrl == null
+                  ? const Text(
+                      'Không có vị trí được chọn',
+                      textAlign: TextAlign.center,
+                    )
+                  : FadeInImage.assetNetwork(
+                      placeholder: "assets/images/placeholder_processing.gif",
+                      image: _previewImageUrl!,
+                      fit: BoxFit.cover,
+                      width: double.infinity,
+                    ),
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
