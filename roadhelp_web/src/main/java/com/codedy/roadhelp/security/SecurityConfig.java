@@ -65,17 +65,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
                 //Config:
                 // Only PARTNER
-                .antMatchers(HttpMethod.GET, "/api/v1/garages/byPartner/**").hasAuthority("ROLE_PARTNER")
-                .antMatchers(HttpMethod.GET, "/api/v1/issues/byStatusSent/**").hasAuthority("ROLE_PARTNER")
-                .antMatchers(HttpMethod.GET, "/api/v1/issues/**").hasAuthority("ROLE_PARTNER")
-                .antMatchers(HttpMethod.PUT, "/api/v1/issues/**/partner-confirm-member/**").hasAuthority("ROLE_PARTNER")
-                .antMatchers(HttpMethod.GET, "/api/v1/garages/byPartner/**").hasAuthority("ROLE_PARTNER")
-                .antMatchers(HttpMethod.POST, "/api/v1/garages/**").hasAuthority("ROLE_PARTNER")
-                .antMatchers(HttpMethod.PUT, "/api/v1/garages/**").hasAuthority("ROLE_PARTNER")
-                .antMatchers(HttpMethod.PUT, "/api/v1/garages/**/setActive/**").hasAuthority("ROLE_PARTNER")
-                .antMatchers(HttpMethod.GET, "/api/v1/user/**/ratingIssue/**").hasAuthority("ROLE_PARTNER")
-                .antMatchers(HttpMethod.POST, "/api/v1/garageImages/**").hasAuthority("ROLE_PARTNER")
-                .antMatchers(HttpMethod.PUT, "/api/v1/garageImages/**").hasAuthority("ROLE_PARTNER")
 
 
                 // Only MEMBER
@@ -87,6 +76,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.PUT, "/api/v1/issues/**/setStatusSuccess/**").hasAuthority("ROLE_MEMBER")
                 .antMatchers(HttpMethod.POST, "/api/v1/issues/**/ratingIssue/**").hasAuthority("ROLE_MEMBER")
                 .antMatchers(HttpMethod.GET, "/api/v1/garages/**").hasAuthority("ROLE_MEMBER")
+                .antMatchers("/api/v1/issues/byUserMember/**").hasAuthority("ROLE_MEMBER")
+                .antMatchers("/api/v1/issues/**/canceledByMember/**").hasAuthority("ROLE_MEMBER")
 
 
                 // Both: MEMBER & PARTNER
@@ -102,7 +93,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.GET, "/api/v1/districts/**").hasAnyAuthority("ROLE_PARTNER", "ROLE_MEMBER")
                 .antMatchers(HttpMethod.GET, "/api/v1/wards/**").hasAnyAuthority("ROLE_PARTNER", "ROLE_MEMBER")
                 .antMatchers("/api/v1/ratingGarages/byGarage/**").hasAnyAuthority("ROLE_PARTNER", "ROLE_MEMBER")
-
+                .antMatchers(HttpMethod.GET, "/api/v1/garages/byPartner/**").hasAnyAuthority("ROLE_PARTNER", "ROLE_MEMBER")
+                .antMatchers(HttpMethod.GET, "/api/v1/issues/byStatusSent/**").hasAnyAuthority("ROLE_PARTNER", "ROLE_MEMBER")
+                .antMatchers(HttpMethod.GET, "/api/v1/issues/**").hasAnyAuthority("ROLE_PARTNER", "ROLE_MEMBER")
+                .antMatchers(HttpMethod.PUT, "/api/v1/issues/**/partner-confirm-member/**").hasAnyAuthority("ROLE_PARTNER", "ROLE_MEMBER")
+                .antMatchers(HttpMethod.GET, "/api/v1/garages/byPartner/**").hasAnyAuthority("ROLE_PARTNER", "ROLE_MEMBER")
+                .antMatchers(HttpMethod.POST, "/api/v1/garages/**").hasAnyAuthority("ROLE_PARTNER", "ROLE_MEMBER")
+                .antMatchers(HttpMethod.PUT, "/api/v1/garages/**").hasAnyAuthority("ROLE_PARTNER", "ROLE_MEMBER")
+                .antMatchers(HttpMethod.PUT, "/api/v1/garages/**/setActive/**").hasAnyAuthority("ROLE_PARTNER", "ROLE_MEMBER")
+                .antMatchers(HttpMethod.GET, "/api/v1/user/**/ratingIssue/**").hasAnyAuthority("ROLE_PARTNER", "ROLE_MEMBER")
+                .antMatchers(HttpMethod.POST, "/api/v1/garageImages/**").hasAnyAuthority("ROLE_PARTNER", "ROLE_MEMBER")
+                .antMatchers(HttpMethod.PUT, "/api/v1/garageImages/**").hasAnyAuthority("ROLE_PARTNER", "ROLE_MEMBER")
+                .antMatchers(HttpMethod.PUT, "/api/v1/issues/**/setStatusSuccess/**").hasAnyAuthority("ROLE_PARTNER", "ROLE_MEMBER")
+                .antMatchers("/api/v1/issues/**/canceledByPartner").hasAnyAuthority("ROLE_PARTNER", "ROLE_MEMBER")
 
 
 
