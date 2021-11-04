@@ -50,7 +50,7 @@ class _MapImagesState extends State<MapImages> {
             child: const Text('No Location Chosen'),
           )
         : FadeInImage.assetNetwork(
-            placeholder: "assets/images/placeholder_processing.gif",
+            placeholder: "assets/images/placeholder_processing_map.gif",
             image: _previewImageUrl!,
             fit: BoxFit.cover,
             //width: double.infinity,

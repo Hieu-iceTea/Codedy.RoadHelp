@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:roadhelp/helper/location_helper.dart';
+import 'package:roadhelp/helper/util.dart';
 
 class CustomMap extends StatefulWidget {
   LatLng? initialCameraPosition;
@@ -35,11 +36,19 @@ class _CustomMapState extends State<CustomMap> {
       return widget.initialCameraPosition!;
     }
 
-    var currentLocation = await LocationHelper.getCurrentLocation();
-    if (currentLocation == null) {
-      return const LatLng(21.0291518, 105.8523056); //Hồ Gươm, Hà Nội
+    try {
+      var currentLocation = await LocationHelper.getCurrentLocation();
+      /*if (currentLocation == null) {
+        return const LatLng(21.0291518, 105.8523056); //Hồ Gươm, Hà Nội
+      }*/
+      return LatLng(currentLocation.latitude!, currentLocation.longitude!);
+    } catch (error) {
+      Util.showDialogNotification(
+          context: context, title: "Đã xảy ra lỗi!", content: error.toString());
     }
-    return LatLng(currentLocation.latitude!, currentLocation.longitude!);
+
+    //Mặc định nếu null: Hồ Gươm, Hà Nội
+    return const LatLng(21.0291518, 105.8523056);
   }
 
   ArgumentCallback<LatLng>? _onTap(LatLng position) {

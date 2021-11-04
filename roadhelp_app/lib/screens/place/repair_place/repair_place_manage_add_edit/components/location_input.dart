@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:location/location.dart';
 import 'package:roadhelp/config/constants.dart';
+import 'package:roadhelp/helper/util.dart';
 import 'package:roadhelp/screens/map_picker/map_picker_screen.dart';
 
 import '/helper/location_helper.dart';
@@ -46,12 +46,14 @@ class _LocationInputState extends State<LocationInput> {
       setState(() {
         isLoadLocation = true;
       });
-      final locData = await Location().getLocation();
-      _latLngSelected = LatLng(locData.latitude!, locData.longitude!);
+      var currentLocation = await LocationHelper.getCurrentLocation();
+      _latLngSelected =
+          LatLng(currentLocation.latitude!, currentLocation.longitude!);
       _showPreview(_latLngSelected!);
       widget.onSelectPlace(_latLngSelected!);
     } catch (error) {
-      return;
+      Util.showDialogNotification(
+          context: context, title: "Đã xảy ra lỗi!", content: error.toString());
     } finally {
       setState(() {
         isLoadLocation = false;
@@ -96,7 +98,7 @@ class _LocationInputState extends State<LocationInput> {
                   color: kSecondaryColor.withOpacity(0.1),
                   width: double.infinity,
                 )*/
-              Image.asset("assets/images/placeholder_processing.gif")
+              Image.asset("assets/images/placeholder_processing_location.gif")
               : _previewImageUrl == null
                   ? const Text(
                       'Không có vị trí được chọn',
