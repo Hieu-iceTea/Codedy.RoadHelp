@@ -73,8 +73,8 @@ class GarageProvider with ChangeNotifier {
 
   Future<void> removeGarageImage(GarageImage garageImage) async {
     await GarageImageRepository.deleteById(garageImage.id!);
-    final index =
-        _items.indexWhere((element) => element.id == garageImage.garageId);
+    final index = _items.indexWhere((element) =>
+        element.id == (garageImage.garageId ?? garageImage.garage!.id));
     _items[index]
         .garageImages
         .removeWhere((element) => element.id == garageImage.id);

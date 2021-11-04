@@ -75,7 +75,7 @@ public class GarageImageRestController {
 
     // Delete
     @DeleteMapping(path = {"/{id}", "/{id}/"})
-    public String delete(@PathVariable int id) {
+    public LinkedHashMap<String, Object> delete(@PathVariable int id) {
         if (!garageImageService.existsById(id)) {
             throw new RestNotFoundException("GarageImage id not found - " + id);
         }
@@ -85,7 +85,9 @@ public class GarageImageRestController {
 
         garageImageService.deleteById(id);
 
-        return "Deleted garageImage id - " + id;
+        LinkedHashMap<String, Object> response = new LinkedHashMap<>();
+        response.put("message", "Deleted garageImage id - " + id);
+        return response;
     }
     //endregion
 

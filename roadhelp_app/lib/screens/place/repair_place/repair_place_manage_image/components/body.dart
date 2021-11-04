@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:roadhelp/helper/util.dart';
 import 'package:roadhelp/models/garage.dart';
 import 'package:roadhelp/providers/garage_provider.dart';
 
@@ -19,7 +20,7 @@ class Body extends StatelessWidget {
           padding: const EdgeInsets.all(25),
           itemCount: garage.garageImages.length + 1,
           itemBuilder: (context, index) => index != garage.garageImages.length
-              ? ImageItem(imageUrl: garage.garageImages[index].imageUrl!)
+              ? ImageItem(garageImage: garage.garageImages[index])
               : AddImageForm(
                   onSelectImage: (imageFileSelected) =>
                       onSelectImage(context, imageFileSelected)),
@@ -35,9 +36,15 @@ class Body extends StatelessWidget {
   }
 
   Future<void> onSelectImage(context, imageFileSelected) async {
-    await Provider.of<GarageProvider>(context, listen: false).createGarageImage(
-      garageId: garage.id!,
-      imageFile: imageFileSelected,
-    );
+    try {
+      await Provider.of<GarageProvider>(context, listen: false)
+          .createGarageImage(
+        garageId: garage.id!,
+        imageFile: imageFileSelected,
+      );
+    } catch (error) {
+      await Util.showDialogNotification(
+          context: context, content: error.toString());
+    }
   }
 }
