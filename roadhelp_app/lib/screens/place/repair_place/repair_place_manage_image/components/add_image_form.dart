@@ -23,11 +23,7 @@ class AddImageForm extends StatelessWidget {
 
     onSelectImage(imageFile);
 
-    /*final appDir = await syspaths.getApplicationDocumentsDirectory();
-    final fileName = path.basename(imageFile.path);
-    final savedImage =
-    await File(imageFile.path).copy('${appDir.path}/$fileName');
-    widget.onSelectImage(savedImage);*/
+    //final fileName = path.basename(imageFile.path); //import 'package:path/path.dart' as path;
   }
 
   @override
