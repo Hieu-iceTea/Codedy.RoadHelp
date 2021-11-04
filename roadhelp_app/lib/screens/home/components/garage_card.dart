@@ -28,7 +28,7 @@ class GarageCard extends StatelessWidget {
             context,
             RepairPlaceDetailsScreen.routeName,
             arguments:
-                RepairPlaceDetailsArguments(garage: garage, isManage: true),
+                RepairPlaceDetailsArguments(garage: garage),
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
