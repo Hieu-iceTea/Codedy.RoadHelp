@@ -90,12 +90,13 @@ class _LocationInputState extends State<LocationInput> {
             border: Border.all(width: 1, color: Colors.grey),
           ),
           child: isLoadLocation
-              ? Container(
+              ? /*Container(
                   child:
                       Image.asset("assets/images/placeholder_processing2.gif"),
                   color: kSecondaryColor.withOpacity(0.1),
                   width: double.infinity,
-                )
+                )*/
+              Image.asset("assets/images/placeholder_processing.gif")
               : _previewImageUrl == null
                   ? const Text(
                       'Không có vị trí được chọn',
