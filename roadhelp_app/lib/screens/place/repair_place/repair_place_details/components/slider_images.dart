@@ -68,7 +68,10 @@ class _SliderImagesState extends State<SliderImages> {
           border: Border.all(
               color: kPrimaryColor.withOpacity(selectedImage == index ? 1 : 0)),
         ),
-        child: Image.network(widget.garage.garageImages[index].imageUrl!),
+        child: Hero(
+            tag: widget.garage.garageImages[index].imageUrl! +
+                "RepairPlaceDetails_RepairPlaceManageImage",
+            child: Image.network(widget.garage.garageImages[index].imageUrl!)),
       ),
     );
   }
