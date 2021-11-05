@@ -2,7 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class MyAccountPic extends StatelessWidget {
-  const MyAccountPic({Key? key}) : super(key: key);
+  String? imageUrl;
+
+  MyAccountPic({
+    required this.imageUrl,
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -13,8 +18,13 @@ class MyAccountPic extends StatelessWidget {
         fit: StackFit.expand,
         clipBehavior: Clip.none,
         children: [
-          CircleAvatar(
-            backgroundImage: AssetImage("assets/images/Profile Image.png"),
+          imageUrl != null
+              ? CircleAvatar(
+            backgroundImage: NetworkImage(imageUrl!),
+          )
+              : const CircleAvatar(
+            backgroundImage:
+            AssetImage("assets/images/Profile Image.png"),
           ),
         ],
       ),
