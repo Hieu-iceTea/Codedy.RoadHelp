@@ -264,6 +264,26 @@ class _RepairPlaceFormState extends State<RepairPlaceForm> {
       return;
     }
 
+    if (widget.garage?.province == null ||
+        widget.garage?.district == null ||
+        widget.garage?.ward == null) {
+      await Util.showDialogNotification(
+          context: context,
+          title: "Thiếu thông tin",
+          content: "Vui lòng cập nhật Tỉnh/Huyện/Xã");
+
+      return;
+    }
+
+    if (widget.garage?.latitude == null || widget.garage?.longitude == null) {
+      await Util.showDialogNotification(
+          context: context,
+          title: "Thiếu thông tin",
+          content: "Vui lòng cập nhật vị trí bản đồ");
+
+      return;
+    }
+
     _formKey.currentState!.save();
 
     try {
