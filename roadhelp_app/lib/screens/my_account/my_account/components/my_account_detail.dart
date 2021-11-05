@@ -14,7 +14,7 @@ class MyAccountDetail extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+      padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -27,63 +27,67 @@ class MyAccountDetail extends StatelessWidget {
             child: Column(
               children: [
                 ListTile(
+                  leading: Icon(Icons.person),
                   title: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "User name: ",
+                        "Tên tài khoản: ",
                         style: TextStyle(
                           color: kPrimaryColor.withOpacity(0.8),
-                          fontSize: 17,
+                          fontSize: 20,
                         ),
                       ),
                       Text(
                         user.username!,
-                        style: TextStyle(color: kTextColor, fontSize: 20),
+                        style: TextStyle(color: kTextColor, fontSize: 22),
                       ),
                     ],
                   ),
                 ),
                 SizedBox(height: 12),
                 ListTile(
+                  leading: Icon(Icons.person),
                   title: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "Full name: ",
+                        "Họ và tên: ",
                         style: TextStyle(
                           color: kPrimaryColor.withOpacity(0.8),
-                          fontSize: 17,
+                          fontSize: 20,
                         ),
                       ),
                       Text(
                         user.firstName! + " " + user.lastName!,
-                        style: TextStyle(color: kTextColor, fontSize: 20),
+                        style: TextStyle(color: kTextColor, fontSize: 22),
                       ),
                     ],
                   ),
                 ),
                 SizedBox(height: 12),
                 ListTile(
+                  leading: Icon(Icons.phone_in_talk),
                   title: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "Phone: ",
+                        "Số điện thoại: ",
                         style: TextStyle(
                           color: kPrimaryColor.withOpacity(0.8),
-                          fontSize: 17,
+                          fontSize: 20,
                         ),
                       ),
                       Text(
                         user.phone!,
-                        style: TextStyle(color: kTextColor, fontSize: 20),
+                        style: TextStyle(color: kTextColor, fontSize: 22),
                       ),
                     ],
                   ),
                 ),
                 SizedBox(height: 12),
                 ListTile(
+                  leading: Icon(Icons.email),
                   title: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -91,31 +95,32 @@ class MyAccountDetail extends StatelessWidget {
                         "Email: ",
                         style: TextStyle(
                           color: kPrimaryColor.withOpacity(0.8),
-                          fontSize: 17,
+                          fontSize: 20,
                         ),
                       ),
                       Text(
                         user.email!,
-                        style: TextStyle(color: kTextColor, fontSize: 20),
+                        style: TextStyle(color: kTextColor, fontSize: 22),
                       ),
                     ],
                   ),
                 ),
                 SizedBox(height: 12),
                 ListTile(
+                  leading: Icon(Icons.trending_up_outlined),
                   title: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "Gender: ",
+                        "Giới tính: ",
                         style: TextStyle(
                           color: kPrimaryColor.withOpacity(0.8),
-                          fontSize: 17,
+                          fontSize: 20,
                         ),
                       ),
                       Text(
                         user.gender!.name,
-                        style: TextStyle(color: kTextColor, fontSize: 20),
+                        style: TextStyle(color: kTextColor, fontSize: 22),
                       ),
                     ],
                   ),
