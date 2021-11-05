@@ -42,6 +42,13 @@ class GarageProvider with ChangeNotifier {
   }
 
   Future<void> create(Garage item) async {
+    if (!authProvider!.authData.isAuth) {
+      throw Exception(
+          "Chưa đăng nhập, hoặc hết thời gian đăng nhập. Vui lòng đăng xuất & đăng nhập lại");
+    }
+
+    item.userPartner = authProvider!.authData.currentUser;
+
     Garage itemResponse = await GarageRepository.create(item);
     _items.add(itemResponse);
     notifyListeners();

@@ -61,7 +61,7 @@ CREATE TABLE IF NOT EXISTS `garage`
     `ward_id`         INT         NOT NULL,
 
     `name`            VARCHAR(64) NOT NULL,
-    `phone`           VARCHAR(16) UNIQUE NOT NULL,
+    `phone`           VARCHAR(16) NOT NULL,
     `rate_avg`        DOUBLE       DEFAULT 0,
     `address`         VARCHAR(128),
     `longitude`       double,
