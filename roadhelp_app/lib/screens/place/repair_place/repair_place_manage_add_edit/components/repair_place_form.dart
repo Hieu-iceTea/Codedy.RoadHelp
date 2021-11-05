@@ -3,7 +3,6 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:roadhelp/helper/util.dart';
 import 'package:roadhelp/models/garage.dart';
-import 'package:roadhelp/models/user.dart';
 import 'package:roadhelp/providers/garage_provider.dart';
 import 'package:roadhelp/screens/place/repair_place/repair_place/components/location_filter_form.dart';
 
@@ -22,6 +21,7 @@ class RepairPlaceForm extends StatefulWidget {
 }
 
 class _RepairPlaceFormState extends State<RepairPlaceForm> {
+  Garage _garage = Garage(); //khởi tạo giá trị ban đầu, cập nhật ở initState()
   final _formKey = GlobalKey<FormState>();
   final _provinceDistrictWardController = TextEditingController();
 
@@ -38,6 +38,9 @@ class _RepairPlaceFormState extends State<RepairPlaceForm> {
     address = widget.garage?.address;
     description = widget.garage?.description;*/
 
+    //Lấy giá trị từ widget.garage, nếu nó null thì khởi tạo :
+    _garage = widget.garage ?? Garage();
+
     //widget.garage ??= Garage(); //Khởi tạo nếu null
 
     super.initState();
@@ -45,8 +48,8 @@ class _RepairPlaceFormState extends State<RepairPlaceForm> {
 
   @override
   Widget build(BuildContext context) {
-    widget.garage ??= Garage(); //Khởi tạo nếu null
-    final String modeStr = widget.garage?.id == null ? "Thêm mới" : "Cập nhật";
+    //widget.garage ??= Garage(); //Khởi tạo nếu null
+    final String modeStr = _garage.id == null ? "Thêm mới" : "Cập nhật";
 
     return Form(
       key: _formKey,
@@ -75,8 +78,8 @@ class _RepairPlaceFormState extends State<RepairPlaceForm> {
 
   TextFormField buildNameFormField() {
     return TextFormField(
-      initialValue: widget.garage?.name,
-      onSaved: (newValue) => widget.garage!.name = newValue,
+      initialValue: _garage.name,
+      onSaved: (newValue) => _garage.name = newValue,
       validator: (value) {
         if (value!.isEmpty) {
           return "Please Enter your name";
@@ -99,9 +102,9 @@ class _RepairPlaceFormState extends State<RepairPlaceForm> {
 
   TextFormField buildPhoneFormField() {
     return TextFormField(
-      initialValue: widget.garage?.phone,
+      initialValue: _garage.phone,
       keyboardType: TextInputType.phone,
-      onSaved: (newValue) => widget.garage!.phone = newValue,
+      onSaved: (newValue) => _garage.phone = newValue,
       validator: (value) {
         if (value!.isEmpty) {
           return "Please Enter your phone";
@@ -124,8 +127,8 @@ class _RepairPlaceFormState extends State<RepairPlaceForm> {
 
   TextFormField buildAddressFormField() {
     return TextFormField(
-      initialValue: widget.garage?.address,
-      onSaved: (newValue) => widget.garage!.address = newValue,
+      initialValue: _garage.address,
+      onSaved: (newValue) => _garage.address = newValue,
       validator: (value) {
         if (value!.isEmpty) {
           return "Please Enter your address";
@@ -146,14 +149,14 @@ class _RepairPlaceFormState extends State<RepairPlaceForm> {
 
   TextFormField buildProvinceDistrictWardSelectDialog() {
     String initialValue = "";
-    if (widget.garage?.province?.name != null &&
-        widget.garage?.district?.name != null &&
-        widget.garage?.ward?.name != null) {
-      initialValue = widget.garage!.province!.name! +
+    if (_garage.province?.name != null &&
+        _garage.district?.name != null &&
+        _garage.ward?.name != null) {
+      initialValue = _garage.province!.name! +
           " / " +
-          widget.garage!.district!.name! +
+          _garage.district!.name! +
           " / " +
-          widget.garage!.ward!.name!;
+          _garage.ward!.name!;
 
       _provinceDistrictWardController.text = initialValue;
     }
@@ -161,7 +164,7 @@ class _RepairPlaceFormState extends State<RepairPlaceForm> {
     return TextFormField(
       controller: _provinceDistrictWardController,
       //initialValue: initialValue, //Không thể cùng lúc dùng controller và initialValue
-      //onSaved: (newValue) => widget.garage!.name = newValue,
+      //onSaved: (newValue) => _garage.name = newValue,
       onTap: () => _showMyDialog(),
       readOnly: true,
       validator: (value) {
@@ -189,11 +192,11 @@ class _RepairPlaceFormState extends State<RepairPlaceForm> {
 
   TextFormField buildDescriptionFormField() {
     return TextFormField(
-      initialValue: widget.garage?.description,
+      initialValue: _garage.description,
       keyboardType: TextInputType.multiline,
       minLines: 2,
       maxLines: 5,
-      onSaved: (newValue) => widget.garage!.description = newValue,
+      onSaved: (newValue) => _garage.description = newValue,
       validator: (value) {
         if (value!.isEmpty) {
           return "Please Enter description";
@@ -215,11 +218,11 @@ class _RepairPlaceFormState extends State<RepairPlaceForm> {
   Widget buildLocationInput() {
     return LocationInput(
       onSelectPlace: (latLngSelected) {
-        widget.garage!.latitude = latLngSelected.latitude;
-        widget.garage!.longitude = latLngSelected.longitude;
+        _garage.latitude = latLngSelected.latitude;
+        _garage.longitude = latLngSelected.longitude;
       },
-      latLngInitial: widget.garage?.latitude != null
-          ? LatLng(widget.garage!.latitude!, widget.garage!.longitude!)
+      latLngInitial: _garage.latitude != null
+          ? LatLng(_garage.latitude!, _garage.longitude!)
           : null,
     );
   }
@@ -244,9 +247,9 @@ class _RepairPlaceFormState extends State<RepairPlaceForm> {
           ),
           content: LocationFilterForm(
             onSubmit: (provinceSelected, districtSelected, wardSelected) {
-              widget.garage!.province = provinceSelected;
-              widget.garage!.district = districtSelected;
-              widget.garage!.ward = wardSelected;
+              _garage.province = provinceSelected;
+              _garage.district = districtSelected;
+              _garage.ward = wardSelected;
               _provinceDistrictWardController.text = provinceSelected.name! +
                   " / " +
                   districtSelected.name! +
@@ -264,9 +267,9 @@ class _RepairPlaceFormState extends State<RepairPlaceForm> {
       return;
     }
 
-    if (widget.garage?.province == null ||
-        widget.garage?.district == null ||
-        widget.garage?.ward == null) {
+    if (_garage.province == null ||
+        _garage.district == null ||
+        _garage.ward == null) {
       await Util.showDialogNotification(
           context: context,
           title: "Thiếu thông tin",
@@ -275,7 +278,7 @@ class _RepairPlaceFormState extends State<RepairPlaceForm> {
       return;
     }
 
-    if (widget.garage?.latitude == null || widget.garage?.longitude == null) {
+    if (_garage.latitude == null || _garage.longitude == null) {
       await Util.showDialogNotification(
           context: context,
           title: "Thiếu thông tin",
@@ -287,12 +290,12 @@ class _RepairPlaceFormState extends State<RepairPlaceForm> {
     _formKey.currentState!.save();
 
     try {
-      if (widget.garage!.id == null) {
+      if (_garage.id == null) {
         await Provider.of<GarageProvider>(context, listen: false)
-            .create(widget.garage!);
+            .create(_garage);
       } else {
         await Provider.of<GarageProvider>(context, listen: false)
-            .update(widget.garage!);
+            .update(_garage);
       }
 
       Navigator.of(context).pop();

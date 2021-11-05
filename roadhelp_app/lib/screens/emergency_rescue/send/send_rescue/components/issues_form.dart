@@ -19,7 +19,7 @@ import '/models/issue.dart';
 import '/screens/place/repair_place/repair_place_manage_add_edit/components/location_input.dart';
 
 class IssuesForm extends StatefulWidget {
-  Issue? issue;
+  Issue? issue; //Không cần truyền giá trị vào, vì chỉ create, ko update
 
   IssuesForm({Key? key}) : super(key: key);
 
@@ -28,6 +28,7 @@ class IssuesForm extends StatefulWidget {
 }
 
 class _IssuesFormState extends State<IssuesForm> {
+  Issue _issue = Issue(); //khởi tạo giá trị ban đầu, cập nhật ở initState()
   final _formKey = GlobalKey<FormState>();
 
   List<IssueCategory> issueCategories = IssueCategory.values;
@@ -35,8 +36,16 @@ class _IssuesFormState extends State<IssuesForm> {
   //IssueCategory? issueCategorySelected;
 
   @override
+  void initState() {
+    //Lấy giá trị từ widget.issue, nếu nó null thì khởi tạo :
+    _issue = widget.issue ?? Issue();
+
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    widget.issue ??= Issue(); //Khởi tạo nếu null
+    //widget.issue ??= Issue(); //Khởi tạo nếu null
 
     return Form(
       key: _formKey,
@@ -73,10 +82,10 @@ class _IssuesFormState extends State<IssuesForm> {
         );
       }).toList(),
       //value: widget.issue!.category,
-      onSaved: (newValue) => widget.issue!.category = newValue,
+      onSaved: (newValue) => _issue.category = newValue,
       onChanged: (newValue) {
         setState(() {
-          widget.issue!.category = newValue!;
+          _issue.category = newValue!;
         });
       },
       validator: (value) {
@@ -97,9 +106,9 @@ class _IssuesFormState extends State<IssuesForm> {
 
   TextFormField buildPhoneFormField() {
     return TextFormField(
-      initialValue: widget.issue?.phone,
+      initialValue: _issue.phone,
       keyboardType: TextInputType.phone,
-      onSaved: (newValue) => widget.issue!.phone = newValue,
+      onSaved: (newValue) => _issue.phone = newValue,
       validator: (value) {
         if (value!.isEmpty) {
           return "Vui lòng nhập số điện thoại của bạn";
@@ -122,8 +131,8 @@ class _IssuesFormState extends State<IssuesForm> {
 
   TextFormField buildAddressFormField() {
     return TextFormField(
-      initialValue: widget.issue?.address,
-      onSaved: (newValue) => widget.issue!.address = newValue,
+      initialValue: _issue.address,
+      onSaved: (newValue) => _issue.address = newValue,
       validator: (value) {
         if (value!.isEmpty) {
           return "Vui lòng nhập địa chỉ của bạn";
@@ -144,11 +153,11 @@ class _IssuesFormState extends State<IssuesForm> {
 
   TextFormField buildDescriptionFormField() {
     return TextFormField(
-      initialValue: widget.issue?.description,
+      initialValue: _issue.description,
       keyboardType: TextInputType.multiline,
       minLines: 2,
       maxLines: 5,
-      onSaved: (newValue) => widget.issue!.description = newValue,
+      onSaved: (newValue) => _issue.description = newValue,
       validator: (value) {
         if (value!.isEmpty) {
           return "Vui lòng nhập mô tả";
@@ -170,13 +179,12 @@ class _IssuesFormState extends State<IssuesForm> {
   Widget buildLocationInput() {
     return LocationInput(
       onSelectPlace: (latLngSelected) {
-        widget.issue!.latitude = latLngSelected.latitude;
-        widget.issue!.longitude = latLngSelected.longitude;
+        _issue.latitude = latLngSelected.latitude;
+        _issue.longitude = latLngSelected.longitude;
       },
-      latLngInitial:
-          widget.issue?.latitude != null && widget.issue?.longitude != null
-              ? LatLng(widget.issue!.latitude!, widget.issue!.longitude!)
-              : null,
+      latLngInitial: _issue.latitude != null && _issue.longitude != null
+          ? LatLng(_issue.latitude!, _issue.longitude!)
+          : null,
     );
   }
 
@@ -187,7 +195,7 @@ class _IssuesFormState extends State<IssuesForm> {
       return;
     }
 
-    if (widget.issue?.latitude == null && widget.issue?.longitude == null) {
+    if (_issue.latitude == null && _issue.longitude == null) {
       await Util.showDialogNotification(
           context: context,
           title: "Thiếu thông tin",
@@ -201,8 +209,7 @@ class _IssuesFormState extends State<IssuesForm> {
     try {
       // 01. Tạo & Gửi yêu cầu hỗ trợ (issue)
       Issue itemResponse =
-          await Provider.of<IssueProvider>(context, listen: false)
-              .send(widget.issue!);
+          await Provider.of<IssueProvider>(context, listen: false).send(_issue);
 
       await Util.showDialogNotification(
           context: context,
