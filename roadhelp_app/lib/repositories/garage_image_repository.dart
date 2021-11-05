@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:http/http.dart' as http;
 import 'package:roadhelp/models/garage_image.dart';
 
 import '/config/constants.dart';
@@ -51,4 +54,20 @@ class GarageImageRepository {
       url: _url + id.toString(),
     );
   }
+
+  //#region - Extend -
+  static Future<GarageImage> addImageByGarageId(
+      {required int garageId, required File imageFile}) async {
+    var responseBody = await HttpHelper.multipartRequest(
+      method: "POST",
+      url: _url + "addImageByGarageId/" + garageId.toString(),
+      fields: {},
+      files: [
+        await http.MultipartFile.fromPath("imageFile", imageFile.path),
+      ],
+    );
+
+    return GarageImage.fromJson(responseBody);
+  }
+//#endregion
 }

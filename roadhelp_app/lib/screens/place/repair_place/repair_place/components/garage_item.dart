@@ -27,8 +27,9 @@ class GarageItem extends StatelessWidget {
               child: garage.garageImages.isNotEmpty
                   ? AspectRatio(
                       aspectRatio: 3 / 2,
-                      child: Image.network(
-                        garage.garageImages[0].imageUrl!,
+                      child: FadeInImage.assetNetwork(
+                        placeholder: "assets/images/placeholder_processing.gif",
+                        image: garage.garageImages[0].imageUrl!,
                         fit: BoxFit.cover,
                       ),
                     )

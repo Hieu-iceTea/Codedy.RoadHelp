@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/foundation.dart';
 import 'package:roadhelp/models/garage.dart';
 import 'package:roadhelp/models/garage_image.dart';
@@ -59,19 +61,20 @@ class GarageProvider with ChangeNotifier {
   }
 
   //image
-  Future<void> createGarageImage(GarageImage garageImage) async {
+  Future<void> createGarageImage(
+      {required int garageId, required File imageFile}) async {
     GarageImage garageImageResponse =
-        await GarageImageRepository.create(garageImage);
-    final index =
-        _items.indexWhere((element) => element.id == garageImage.garageId);
+        await GarageImageRepository.addImageByGarageId(
+            garageId: garageId, imageFile: imageFile);
+    final index = _items.indexWhere((element) => element.id == garageId);
     _items[index].garageImages.add(garageImageResponse);
     notifyListeners();
   }
 
   Future<void> removeGarageImage(GarageImage garageImage) async {
     await GarageImageRepository.deleteById(garageImage.id!);
-    final index =
-        _items.indexWhere((element) => element.id == garageImage.garageId);
+    final index = _items.indexWhere((element) =>
+        element.id == (garageImage.garageId ?? garageImage.garage!.id));
     _items[index]
         .garageImages
         .removeWhere((element) => element.id == garageImage.id);

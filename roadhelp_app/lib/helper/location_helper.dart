@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
@@ -23,19 +24,19 @@ class LocationHelper {
     return json.decode(response.body)['results'][0]['formatted_address'];
   }
 
-  static Future<LocationData?> getCurrentLocation() async {
+  static Future<LocationData> getCurrentLocation() async {
     //https://pub.dev/packages/location
     Location location = Location();
 
     bool _serviceEnabled;
     PermissionStatus _permissionGranted;
-    LocationData? _locationData;
+    LocationData _locationData;
 
     _serviceEnabled = await location.serviceEnabled();
     if (!_serviceEnabled) {
       _serviceEnabled = await location.requestService();
       if (!_serviceEnabled) {
-        return null;
+        throw Exception("Dịch vụ vị trí đang tắt. Hãy bật vị trí và thử lại");
       }
     }
 
@@ -43,15 +44,19 @@ class LocationHelper {
     if (_permissionGranted == PermissionStatus.denied) {
       _permissionGranted = await location.requestPermission();
       if (_permissionGranted != PermissionStatus.granted) {
-        return null;
+        throw Exception("Không có quyền truy cập vị trí thiết bị. Hãy cho phép truy cập vị trí và thử lại");
       }
     }
 
     try {
-      _locationData = await location.getLocation();
+      _locationData = await location.getLocation().timeout(
+        const Duration(seconds: 5),
+        onTimeout: () {
+          throw TimeoutException('Hết thời gian chờ định vị vị trí phản hồi');
+        },
+      );
     } catch (error) {
-      print(error);
-      return null;
+      rethrow;
     }
 
     //location.enableBackgroundMode(enable: true);

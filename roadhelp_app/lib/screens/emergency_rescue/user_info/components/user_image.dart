@@ -21,8 +21,9 @@ class _UserImageState extends State<UserImage> {
       child: widget.imageUrl != null && widget.imageUrl!.isNotEmpty
           ? CircleAvatar(
               child: ClipOval(
-                child: Image.network(
-                  widget.imageUrl!,
+                child: FadeInImage.assetNetwork(
+                  placeholder: "assets/images/placeholder_processing.gif",
+                  image: widget.imageUrl!,
                   height: 115,
                   width: 115,
                   fit: BoxFit.cover,

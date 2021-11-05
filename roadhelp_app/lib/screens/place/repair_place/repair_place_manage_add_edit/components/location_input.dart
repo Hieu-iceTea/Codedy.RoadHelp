@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:location/location.dart';
 import 'package:roadhelp/config/constants.dart';
+import 'package:roadhelp/helper/util.dart';
 import 'package:roadhelp/screens/map_picker/map_picker_screen.dart';
 
 import '/helper/location_helper.dart';
@@ -19,6 +19,8 @@ class LocationInput extends StatefulWidget {
 class _LocationInputState extends State<LocationInput> {
   String? _previewImageUrl;
   LatLng? _latLngSelected;
+
+  bool isLoadLocation = false;
 
   void _showPreview(LatLng latLng) {
     final staticMapImageUrl = LocationHelper.generateLocationPreviewImage(
@@ -41,12 +43,21 @@ class _LocationInputState extends State<LocationInput> {
 
   Future<void> _getCurrentUserLocation() async {
     try {
-      final locData = await Location().getLocation();
-      _latLngSelected = LatLng(locData.latitude!, locData.longitude!);
+      setState(() {
+        isLoadLocation = true;
+      });
+      var currentLocation = await LocationHelper.getCurrentLocation();
+      _latLngSelected =
+          LatLng(currentLocation.latitude!, currentLocation.longitude!);
       _showPreview(_latLngSelected!);
       widget.onSelectPlace(_latLngSelected!);
     } catch (error) {
-      return;
+      Util.showDialogNotification(
+          context: context, title: "Đã xảy ra lỗi!", content: error.toString());
+    } finally {
+      setState(() {
+        isLoadLocation = false;
+      });
     }
   }
 
@@ -80,16 +91,25 @@ class _LocationInputState extends State<LocationInput> {
           decoration: BoxDecoration(
             border: Border.all(width: 1, color: Colors.grey),
           ),
-          child: _previewImageUrl == null
-              ? const Text(
-                  'Không có vị trí được chọn',
-                  textAlign: TextAlign.center,
-                )
-              : Image.network(
-                  _previewImageUrl!,
-                  fit: BoxFit.cover,
+          child: isLoadLocation
+              ? /*Container(
+                  child:
+                      Image.asset("assets/images/placeholder_processing2.gif"),
+                  color: kSecondaryColor.withOpacity(0.1),
                   width: double.infinity,
-                ),
+                )*/
+              Image.asset("assets/images/placeholder_processing_location.gif")
+              : _previewImageUrl == null
+                  ? const Text(
+                      'Không có vị trí được chọn',
+                      textAlign: TextAlign.center,
+                    )
+                  : FadeInImage.assetNetwork(
+                      placeholder: "assets/images/placeholder_processing.gif",
+                      image: _previewImageUrl!,
+                      fit: BoxFit.cover,
+                      width: double.infinity,
+                    ),
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
