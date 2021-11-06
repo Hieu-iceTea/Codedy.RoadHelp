@@ -71,6 +71,8 @@ class _ReceiveRescueScreenState extends State<ReceiveRescueScreen> {
             itemBuilder: (context) => [
               if (authProvider.authData.currentUser != null &&
                   authProvider.authData.currentUser!
+                      .hasAuthority(AuthorityRole.partner.key) &&
+                  !authProvider.authData.currentUser!
                       .hasAuthority(AuthorityRole.partner.key))
                 PopupMenuItem(
                   child: Row(
@@ -88,6 +90,8 @@ class _ReceiveRescueScreenState extends State<ReceiveRescueScreen> {
                 ),
               if (authProvider.authData.currentUser != null &&
                   authProvider.authData.currentUser!
+                      .hasAuthority(AuthorityRole.partner.key) &&
+                  !authProvider.authData.currentUser!
                       .hasAuthority(AuthorityRole.partner.key))
                 PopupMenuItem(
                   child: Row(

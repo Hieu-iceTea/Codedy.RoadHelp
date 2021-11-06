@@ -22,7 +22,7 @@ class Body extends StatelessWidget {
                   SizedBox(height: SizeConfig.screenHeight * 0.03),
                   Text("Đăng kí đối tác", style: headingStyle),
                   Text(
-                    "Vui lòng xác nhận lại thông tin \n để đăng kí làm đối tác.",
+                    "Vui lòng xác nhận lại thông tin\nđể đăng kí làm đối tác.",
                     textAlign: TextAlign.center,
                   ),
                   SizedBox(height: SizeConfig.screenHeight * 0.06),
