@@ -25,4 +25,15 @@ class AuthRepository {
 
     return Auth.fromJson(responseBody);
   }
+
+  //#region - Extend -
+  static Future<Auth> becomeToPartner(int userMemberId) async {
+    var responseBody = await HttpHelper.post(
+      url: _url + "become-to-partner/" + userMemberId.toString(),
+      //body: null,
+    );
+
+    return Auth.fromJson(responseBody);
+  }
+//#endregion
 }

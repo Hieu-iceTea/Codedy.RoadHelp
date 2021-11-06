@@ -109,4 +109,19 @@ class AuthProvider with ChangeNotifier {
 
     super.notifyListeners();
   }
+
+  //#region - Extend -
+  Future<Auth> becomeToPartner() async {
+    Auth itemResponse =
+        await AuthRepository.becomeToPartner(_authData.currentUser!.id!);
+
+    //_authData = itemResponse;
+
+    //Reload currentUser
+    _authData.currentUser = await UserRepository.findById(_authData.userId!);
+
+    notifyListeners();
+    return _authData;
+  }
+//#endregion
 }
