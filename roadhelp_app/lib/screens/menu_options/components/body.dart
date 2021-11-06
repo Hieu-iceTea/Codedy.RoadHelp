@@ -29,7 +29,9 @@ class Body extends StatelessWidget {
             ),
             if (authProvider.authData.currentUser != null &&
                 authProvider.authData.currentUser!
-                    .hasAuthority(AuthorityRole.member.key))
+                    .hasAuthority(AuthorityRole.member.key) &&
+                !authProvider.authData.currentUser!
+                    .hasAuthority(AuthorityRole.partner.key))
               MenuItem(
                 text: "Trở Thành Đối Tác",
                 icon: "assets/icons/Flash Icon.svg",
@@ -60,6 +62,8 @@ class Body extends StatelessWidget {
                   issueListScreenState:
                       (authProvider.authData.currentUser != null &&
                               authProvider.authData.currentUser!
+                                  .hasAuthority(AuthorityRole.partner.key) &&
+                              !authProvider.authData.currentUser!
                                   .hasAuthority(AuthorityRole.partner.key))
                           ? IssueListScreenState.historyReceived
                           : IssueListScreenState.historySent,
