@@ -25,26 +25,6 @@ class Body extends StatelessWidget {
               MyAccountDetail(
                 user: authProvider.authData.currentUser!,
               ),
-              // SizedBox(height: 15),
-              // MyAccountDetail(
-              //   title: "Full name",
-              //   content: "Codedy",
-              // ),
-              // SizedBox(height: 15),
-              // MyAccountDetail(
-              //   title: "Phone",
-              //   content: "0978123456",
-              // ),
-              // SizedBox(height: 15),
-              // MyAccountDetail(
-              //   title: "Email",
-              //   content: "codedy@gmail.com",
-              // ),
-              // SizedBox(height: 15),
-              // MyAccountDetail(
-              //   title: "Gender",
-              //   content: "male",
-              // ),
             ],
           ),
         ),

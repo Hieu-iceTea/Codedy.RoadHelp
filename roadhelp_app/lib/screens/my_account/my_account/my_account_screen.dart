@@ -25,7 +25,6 @@ class MyAccountScreen extends StatelessWidget {
         ],
       ),
       body: Body(),
-      bottomNavigationBar: CustomBottomNavBar(selectedMenu: MenuState.profile),
     );
   }
 }
