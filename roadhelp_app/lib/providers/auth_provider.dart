@@ -117,6 +117,8 @@ class AuthProvider with ChangeNotifier {
 
     //_authData = itemResponse;
 
+    _authData.message = itemResponse.message;
+
     //Reload currentUser
     _authData.currentUser = await UserRepository.findById(_authData.userId!);
 

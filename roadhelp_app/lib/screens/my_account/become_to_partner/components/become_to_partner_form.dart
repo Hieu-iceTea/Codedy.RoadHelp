@@ -1,4 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:roadhelp/helper/keyboard.dart';
+import 'package:roadhelp/helper/util.dart';
+import 'package:roadhelp/models/auth.dart';
+import 'package:roadhelp/providers/auth_provider.dart';
 import 'package:roadhelp/screens/home/home_screen.dart';
 import 'package:roadhelp/screens/my_account/success_partner/success_partner_screen.dart';
 
@@ -7,7 +12,6 @@ import '/components/default_button.dart';
 import '/components/form_error.dart';
 import '../../../../config/constants.dart';
 import '../../../../config/size_config.dart';
-
 
 class BeComeToPartnerForm extends StatefulWidget {
   @override
@@ -20,8 +24,6 @@ class _BeComeToPartnerFormState extends State<BeComeToPartnerForm> {
   String? phoneNumber;
   String? email;
   String? username;
-
-
 
   void addError({String? error}) {
     if (!errors.contains(error))
@@ -43,15 +45,14 @@ class _BeComeToPartnerFormState extends State<BeComeToPartnerForm> {
       key: _formKey,
       child: Column(
         children: [
-
           // buildPasswordFormField(),
           // SizedBox(height: getProportionateScreenHeight(30)),
           // buildConformPassFormField(),
           // SizedBox(height: getProportionateScreenHeight(30)),
-         // buildFirstNameFormField(),
+          // buildFirstNameFormField(),
           //SizedBox(height: getProportionateScreenHeight(30)),
-         //buildLastNameFormField(),
-         //SizedBox(height: getProportionateScreenHeight(30)),
+          //buildLastNameFormField(),
+          //SizedBox(height: getProportionateScreenHeight(30)),
 
           buildUserNameFormField(),
           SizedBox(height: getProportionateScreenHeight(30)),
@@ -64,21 +65,12 @@ class _BeComeToPartnerFormState extends State<BeComeToPartnerForm> {
           SizedBox(height: getProportionateScreenHeight(40)),
           DefaultButton(
             text: "Đăng Kí",
-            press: () {
-              if (_formKey.currentState!.validate()) {
-               //Navigator.pushNamed(context, PartnerSuccessScreen.routeName);
-                Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => PartnerSuccessScreen("Hoàn thành","Yêu cầu nâng cấp tài khoản của bạn đã được \n ghi nhận tại hệ thống. Bạn vui lòng đợi \n Admin kiểm duyệt nhé!!", HomeScreen.routeName),)
-                );
-              }
-            },
+            press: _submitForm,
           ),
         ],
       ),
     );
   }
-
-
 
   TextFormField buildPhoneNumberFormField() {
     return TextFormField(
@@ -295,4 +287,31 @@ class _BeComeToPartnerFormState extends State<BeComeToPartnerForm> {
     );
   }
 
+  Future<void> _submitForm() async {
+    if (!_formKey.currentState!.validate()) {
+      return;
+    }
+
+    _formKey.currentState!.save();
+    KeyboardUtil.hideKeyboard(context);
+
+    try {
+      Auth authResponse =
+          await Provider.of<AuthProvider>(context, listen: false)
+              .becomeToPartner();
+
+      /*await Util.showDialogNotification(
+          context: context, title: "Thông báo", content: authResponse.message);*/
+
+      Navigator.of(context).push(MaterialPageRoute(
+        builder: (context) => PartnerSuccessScreen(
+            "Hoàn thành",
+            "Yêu cầu nâng cấp tài khoản của bạn đã được \n ghi nhận tại hệ thống. Bạn vui lòng đợi \n Admin kiểm duyệt nhé!!",
+            HomeScreen.routeName),
+      ));
+    } catch (error) {
+      await Util.showDialogNotification(
+          context: context, content: error.toString());
+    }
+  }
 }
