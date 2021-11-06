@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:roadhelp/helper/keyboard.dart';
 import 'package:roadhelp/helper/util.dart';
 import 'package:roadhelp/models/auth.dart';
+import 'package:roadhelp/models/user.dart';
 import 'package:roadhelp/providers/auth_provider.dart';
 import 'package:roadhelp/screens/home/home_screen.dart';
 import 'package:roadhelp/screens/my_account/success_partner/success_partner_screen.dart';
@@ -13,15 +14,29 @@ import '../../../../config/constants.dart';
 import '../../../../config/size_config.dart';
 
 class BeComeToPartnerForm extends StatefulWidget {
+  User? user;
+
+  BeComeToPartnerForm({
+    this.user,
+    Key? key,
+  }) : super(key: key);
+
   @override
   _BeComeToPartnerFormState createState() => _BeComeToPartnerFormState();
 }
 
 class _BeComeToPartnerFormState extends State<BeComeToPartnerForm> {
+  User _user = User(); //khởi tạo giá trị ban đầu, cập nhật ở initState()
+
   final _formKey = GlobalKey<FormState>();
-  String? phoneNumber;
-  String? email;
-  String? username;
+
+  @override
+  void initState() {
+    //Lấy giá trị từ widget.user, nếu nó null thì khởi tạo :
+    _user = widget.user ?? User();
+
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +51,7 @@ class _BeComeToPartnerFormState extends State<BeComeToPartnerForm> {
           buildEmailFormField(),
           SizedBox(height: getProportionateScreenHeight(40)),
           DefaultButton(
-            text: "Đăng Kí",
+            text: "Xác nhận",
             press: _submitForm,
           ),
         ],
@@ -46,8 +61,11 @@ class _BeComeToPartnerFormState extends State<BeComeToPartnerForm> {
 
   TextFormField buildPhoneNumberFormField() {
     return TextFormField(
+      enabled: false,
+      //readOnly: true,
+      initialValue: _user.phone,
       keyboardType: TextInputType.phone,
-      onSaved: (newValue) => phoneNumber = newValue,
+      onSaved: (newValue) => _user.phone = newValue,
       validator: (value) {
         if (value!.isEmpty) {
           return kPhoneNumberNullError;
@@ -67,8 +85,11 @@ class _BeComeToPartnerFormState extends State<BeComeToPartnerForm> {
 
   TextFormField buildUserNameFormField() {
     return TextFormField(
+      enabled: false,
+      //readOnly: true,
+      initialValue: _user.username,
       keyboardType: TextInputType.name,
-      onSaved: (newValue) => username = newValue,
+      onSaved: (newValue) => _user.username = newValue,
       validator: (value) {
         if (value!.isEmpty) {
           return kUserNameNullError;
@@ -90,8 +111,11 @@ class _BeComeToPartnerFormState extends State<BeComeToPartnerForm> {
 
   TextFormField buildEmailFormField() {
     return TextFormField(
+      enabled: false,
+      //readOnly: true,
+      initialValue: _user.email,
       keyboardType: TextInputType.emailAddress,
-      onSaved: (newValue) => email = newValue,
+      onSaved: (newValue) => _user.email = newValue,
       validator: (value) {
         if (value!.isEmpty) {
           return kEmailNullError;
@@ -127,12 +151,15 @@ class _BeComeToPartnerFormState extends State<BeComeToPartnerForm> {
       /*await Util.showDialogNotification(
           context: context, title: "Thông báo", content: authResponse.message);*/
 
-      Navigator.of(context).push(MaterialPageRoute(
-        builder: (context) => PartnerSuccessScreen(
+      Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (context) => PartnerSuccessScreen(
             "Hoàn thành",
             "Yêu cầu nâng cấp tài khoản của bạn đã được \n ghi nhận tại hệ thống. Bạn vui lòng đợi \n Admin kiểm duyệt nhé!!",
-            HomeScreen.routeName),
-      ));
+            HomeScreen.routeName,
+          ),
+        ),
+      );
     } catch (error) {
       await Util.showDialogNotification(
           context: context, content: error.toString());
