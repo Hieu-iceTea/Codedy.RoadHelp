@@ -1,4 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:roadhelp/components/custom_surfix_icon.dart';
+import 'package:roadhelp/config/enums.dart';
+import 'package:roadhelp/helper/util.dart';
+import 'package:roadhelp/models/auth.dart';
+import 'package:roadhelp/models/user.dart';
+import 'package:roadhelp/providers/auth_provider.dart';
+import 'package:roadhelp/providers/user_provider.dart';
 
 import '/components/default_button.dart';
 import '/components/form_error.dart';
@@ -8,34 +16,25 @@ import '/screens/login_success/login_success_screen.dart';
 import '../../../../config/size_config.dart';
 
 class FormEditMyAccount extends StatefulWidget {
+  User? user;
+
+  FormEditMyAccount({Key? key, this.user}) : super(key: key);
+
   @override
   _FormEditMyAccountState createState() => _FormEditMyAccountState();
 }
 
 class _FormEditMyAccountState extends State<FormEditMyAccount> {
+  User _user = User();
   final _formKey = GlobalKey<FormState>();
-  String? username;
-  String? firstName;
-  String? lastName;
-  String? email;
-  String? phoneNumber;
-  String? gender;
-  List<String>? genderListItems = ['Male', 'Female'];
-  bool? remember = false;
-  final List<String?> errors = [];
 
-  void addError({String? error}) {
-    if (!errors.contains(error))
-      setState(() {
-        errors.add(error);
-      });
-  }
+  List<UserGender> userGenders = UserGender.values;
 
-  void removeError({String? error}) {
-    if (errors.contains(error))
-      setState(() {
-        errors.remove(error);
-      });
+  @override
+  void initState() {
+    _user = widget.user ?? User();
+
+    super.initState();
   }
 
   @override
@@ -44,8 +43,6 @@ class _FormEditMyAccountState extends State<FormEditMyAccount> {
       key: _formKey,
       child: Column(
         children: [
-          buildUserNameFormField(),
-          SizedBox(height: getProportionateScreenHeight(30)),
           buildFirstNameFormField(),
           SizedBox(height: getProportionateScreenHeight(30)),
           buildLastNameFormField(),
@@ -56,178 +53,159 @@ class _FormEditMyAccountState extends State<FormEditMyAccount> {
           SizedBox(height: getProportionateScreenHeight(30)),
           buildGenderDropdownFormField(),
           SizedBox(height: getProportionateScreenHeight(20)),
-          FormError(errors: errors),
-          SizedBox(height: getProportionateScreenHeight(20)),
           DefaultButton(
-            text: "Save",
-            press: () {
-              if (_formKey.currentState!.validate()) {
-                _formKey.currentState!.save();
-                // if all are valid then go to success screen
-                KeyboardUtil.hideKeyboard(context);
-                Navigator.pushNamed(context, LoginSuccessScreen.routeName);
-              }
-            },
+            text: "Lưu",
+            press: () => _saveForm(),
           ),
         ],
       ),
     );
   }
 
-  TextFormField buildUserNameFormField() {
-    return TextFormField(
-      onSaved: (newValue) => username = newValue,
-      onChanged: (value) {
-        return null;
-      },
-      validator: (value) {
-        if (value!.isEmpty) {
-          addError(error: kUserNameNullError);
-          return "";
-        }
-        return null;
-      },
-      decoration: InputDecoration(
-        labelText: "User Name",
-        hintText: "Enter your username",
-        floatingLabelBehavior: FloatingLabelBehavior.always,
-      ),
-    );
-  }
-
   TextFormField buildFirstNameFormField() {
     return TextFormField(
-      onSaved: (newValue) => firstName = newValue,
+      initialValue: _user.firstName,
+      onSaved: (newValue) => _user.firstName = newValue,
       onChanged: (value) {
         return null;
       },
       validator: (value) {
         if (value!.isEmpty) {
-          addError(error: kFirstNameNullError);
-          return "";
+          return "Xin hãy điền họ của bạn";
         }
         return null;
       },
       decoration: InputDecoration(
-        labelText: "First Name",
-        hintText: "Enter your first name",
+        labelText: "Họ",
+        hintText: "Nhập họ của bạn",
         floatingLabelBehavior: FloatingLabelBehavior.always,
+        suffixIcon: CustomSurffixIcon(svgIcon: "assets/icons/User.svg"),
       ),
     );
   }
 
   TextFormField buildLastNameFormField() {
     return TextFormField(
-      onSaved: (newValue) => lastName = newValue,
+      initialValue: _user.lastName,
+      onSaved: (newValue) => _user.lastName = newValue,
       onChanged: (value) {
         return null;
       },
       validator: (value) {
         if (value!.isEmpty) {
-          addError(error: kLastNameNullError);
-          return "";
+          return "Xin hãy điền tên của bạn";
         }
         return null;
       },
       decoration: InputDecoration(
-        labelText: "Last Name",
-        hintText: "Enter your last name",
+        labelText: "Tên",
+        hintText: "Nhập tên của bạn",
         floatingLabelBehavior: FloatingLabelBehavior.always,
+        suffixIcon: CustomSurffixIcon(svgIcon: "assets/icons/User.svg"),
       ),
     );
   }
 
   TextFormField buildPhoneNumberFormField() {
     return TextFormField(
+      initialValue: _user.phone,
       keyboardType: TextInputType.phone,
-      onSaved: (newValue) => phoneNumber = newValue,
+      onSaved: (newValue) => _user.phone = newValue,
       onChanged: (value) {
-        if (value.isNotEmpty) {
-          removeError(error: kPhoneNumberNullError);
-        } else if (phoneNumberValidatorRegExp.hasMatch(value)) {
-          removeError(error: kPhoneNumberNullError);
-        }
         return null;
       },
       validator: (value) {
         if (value!.isEmpty) {
-          addError(error: kPhoneNumberNullError);
-          return "";
-        } else if (!phoneNumberValidatorRegExp.hasMatch(value)) {
-          addError(error: kPhoneNumberNullError);
-          return "";
+          return "Vui lòng nhập điện thoại của bạn";
+        }
+        if (value.length < 10) {
+          return "Kích thước phải lớn hơn 10";
         }
         return null;
       },
       decoration: InputDecoration(
-        labelText: "Phone Number",
-        hintText: "Enter your phone number",
+        labelText: "Số điện thoại",
+        hintText: "Nhập số điện thoại của bạn",
         floatingLabelBehavior: FloatingLabelBehavior.always,
+        suffixIcon: CustomSurffixIcon(svgIcon: "assets/icons/Phone.svg"),
       ),
     );
   }
 
   TextFormField buildEmailFormField() {
     return TextFormField(
+      initialValue: _user.email,
       keyboardType: TextInputType.emailAddress,
-      onSaved: (newValue) => email = newValue,
+      onSaved: (newValue) => _user.email = newValue,
       onChanged: (value) {
-        if (value.isNotEmpty) {
-          removeError(error: kEmailNullError);
-        } else if (emailValidatorRegExp.hasMatch(value)) {
-          removeError(error: kInvalidEmailError);
-        }
         return null;
       },
       validator: (value) {
         if (value!.isEmpty) {
-          addError(error: kEmailNullError);
-          return "";
+          return "Vui lòng nhập email của bạn";
         } else if (!emailValidatorRegExp.hasMatch(value)) {
-          addError(error: kInvalidEmailError);
-          return "";
+          return "Email của bạn sai định dạng";
         }
         return null;
       },
       decoration: InputDecoration(
         labelText: "Email",
-        hintText: "Enter your email",
+        hintText: "Nhập email của bạn",
         floatingLabelBehavior: FloatingLabelBehavior.always,
+        suffixIcon: CustomSurffixIcon(svgIcon: "assets/icons/Mail.svg"),
       ),
     );
   }
 
   DropdownButtonFormField buildGenderDropdownFormField() {
     return DropdownButtonFormField(
+      value: _user.gender,
       isExpanded: true,
-      onSaved: (newValue) => gender = newValue,
-      value: gender,
       icon: const Icon(Icons.arrow_drop_down),
-      //style: const TextStyle(color: kPrimaryColor),
+      items: userGenders.map<DropdownMenuItem<UserGender>>((UserGender value) {
+        return DropdownMenuItem<UserGender>(
+          value: value,
+          child: Text(value.name),
+        );
+      }).toList(),
+      onSaved: (newValue) => _user.gender = newValue,
       onChanged: (newValue) {
         setState(() {
-          //dropdownCityValue = newValue!;
+          _user.gender = newValue!;
         });
       },
       validator: (value) {
         if (value == null) {
-          return "Please Select your gender";
+          return "Vui lòng chọn giới tính của bạn";
         }
         return null;
       },
       decoration: const InputDecoration(
-        labelText: "Province",
-        hintText: "-- Select Province --",
+        labelText: "Giới tính",
+        // hintText: "-- Chọn Giới tính của bạn --",
         floatingLabelBehavior: FloatingLabelBehavior.always,
         contentPadding:
-        EdgeInsets.only(top: 20, bottom: 20, left: 42, right: 22),
+            EdgeInsets.only(top: 20, bottom: 20, left: 42, right: 22),
       ),
-      items: genderListItems?.map<DropdownMenuItem<String>>((String value) {
-        return DropdownMenuItem<String>(
-          value: value,
-          child: Text(value),
-        );
-      }).toList(),
     );
+  }
+
+  Future<void> _saveForm() async {
+    if (!_formKey.currentState!.validate()) {
+      return;
+    }
+
+    _formKey.currentState!.save();
+
+    try {
+      if (_user.id != null) {
+        await Provider.of<AuthProvider>(context, listen: false).updateCurrentUser(_user);
+
+        Navigator.of(context).pop();
+      }
+    } catch (error) {
+      await Util.showDialogNotification(
+          context: context, content: error.toString());
+    }
   }
 }
