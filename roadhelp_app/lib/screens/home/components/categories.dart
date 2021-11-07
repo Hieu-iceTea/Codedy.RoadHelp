@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:roadhelp/config/enums.dart';
+import 'package:roadhelp/models/user.dart';
 import 'package:roadhelp/screens/emergency_rescue/receive/receive_rescue/receive_rescue_screen.dart';
 import 'package:roadhelp/screens/emergency_rescue/send/send_rescue/send_rescue_screen.dart';
 import 'package:roadhelp/screens/place/gas_place/gas_place_screen.dart';
@@ -8,6 +10,13 @@ import 'package:roadhelp/screens/place/repair_place/repair_place/repair_place_sc
 import '../../../config/size_config.dart';
 
 class Categories extends StatelessWidget {
+  User currentUser;
+
+  Categories({
+    required this.currentUser,
+    Key? key,
+  }) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     List<Map<String, dynamic>> categories = [
@@ -21,20 +30,27 @@ class Categories extends StatelessWidget {
         "text": "Cứu Hộ Khẩn",
         "routeName": SendRescueScreen.routeName,
       },
+      if (!currentUser.hasAuthority(AuthorityRole.partner.key))
+        {
+          "icon": "assets/icons/Cash.svg",
+          "text": "Nhận Cứu Hộ",
+          "routeName": ReceiveRescueScreen.routeName,
+        },
       {
         "icon": "assets/icons/Bill Icon.svg",
         "text": "Cây Xăng",
         "routeName": GasPlaceScreen.routeName,
       },
-      {
-        "icon": "assets/icons/Gift Icon.svg",
-        "text": "Quà Tặng",
-        "routeName": null,
-      },
+      if (currentUser.hasAuthority(AuthorityRole.partner.key))
+        {
+          "icon": "assets/icons/Question mark.svg",
+          "text": "Hỗ Trợ K.Hàng",
+          "routeName": null,
+        },
       {
         "icon": "assets/icons/Discover.svg",
-        "text": "Nhận Cứu Hộ",
-        "routeName": ReceiveRescueScreen.routeName,
+        "text": "Xem Thêm",
+        "routeName": null,
       },
     ];
     return Padding(
