@@ -35,12 +35,12 @@ class MyAccountDetail extends StatelessWidget {
                         "Tên tài khoản: ",
                         style: TextStyle(
                           color: kPrimaryColor.withOpacity(0.8),
-                          fontSize: 20,
+                          fontSize: 15,
                         ),
                       ),
                       Text(
                         user.username!,
-                        style: TextStyle(color: kTextColor, fontSize: 22),
+                        style: TextStyle(color: kTextColor, fontSize: 17),
                       ),
                     ],
                   ),
@@ -55,12 +55,12 @@ class MyAccountDetail extends StatelessWidget {
                         "Họ và tên: ",
                         style: TextStyle(
                           color: kPrimaryColor.withOpacity(0.8),
-                          fontSize: 20,
+                          fontSize: 15,
                         ),
                       ),
                       Text(
                         user.firstName! + " " + user.lastName!,
-                        style: TextStyle(color: kTextColor, fontSize: 22),
+                        style: TextStyle(color: kTextColor, fontSize: 17),
                       ),
                     ],
                   ),
@@ -75,12 +75,12 @@ class MyAccountDetail extends StatelessWidget {
                         "Số điện thoại: ",
                         style: TextStyle(
                           color: kPrimaryColor.withOpacity(0.8),
-                          fontSize: 20,
+                          fontSize: 15,
                         ),
                       ),
                       Text(
                         user.phone!,
-                        style: TextStyle(color: kTextColor, fontSize: 22),
+                        style: TextStyle(color: kTextColor, fontSize: 17),
                       ),
                     ],
                   ),
@@ -95,12 +95,12 @@ class MyAccountDetail extends StatelessWidget {
                         "Email: ",
                         style: TextStyle(
                           color: kPrimaryColor.withOpacity(0.8),
-                          fontSize: 20,
+                          fontSize: 15,
                         ),
                       ),
                       Text(
                         user.email!,
-                        style: TextStyle(color: kTextColor, fontSize: 22),
+                        style: TextStyle(color: kTextColor, fontSize: 17),
                       ),
                     ],
                   ),
@@ -115,12 +115,12 @@ class MyAccountDetail extends StatelessWidget {
                         "Giới tính: ",
                         style: TextStyle(
                           color: kPrimaryColor.withOpacity(0.8),
-                          fontSize: 20,
+                          fontSize: 15,
                         ),
                       ),
                       Text(
                         user.gender!.name,
-                        style: TextStyle(color: kTextColor, fontSize: 22),
+                        style: TextStyle(color: kTextColor, fontSize: 17),
                       ),
                     ],
                   ),

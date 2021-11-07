@@ -4,12 +4,15 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:roadhelp/helper/http_helper.dart';
 import 'package:roadhelp/models/auth.dart';
+import 'package:roadhelp/models/user.dart';
 import 'package:roadhelp/repositories/auth_repository.dart';
 import 'package:roadhelp/repositories/user_repository.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthProvider with ChangeNotifier {
   /// NOTE: Phần này chỉ phục vụ xác thực, không phải là entity model có thật trong database
+
+  User _item = User();
 
   Auth _authData = Auth();
   Timer? _authTimer;
@@ -108,6 +111,13 @@ class AuthProvider with ChangeNotifier {
     }
 
     super.notifyListeners();
+  }
+
+  Future<void> updateCurrentUser(User item) async {
+    User itemResponse = await UserRepository.update(item);
+    _item = itemResponse;
+    notifyListeners();
+
   }
 
   //#region - Extend -
