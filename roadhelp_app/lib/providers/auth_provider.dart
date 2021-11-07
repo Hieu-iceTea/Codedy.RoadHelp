@@ -91,7 +91,7 @@ class AuthProvider with ChangeNotifier {
 
     _setAutoLogoutTimer();
 
-    //notifyListeners();
+    notifyListeners();
     return true;
   }
 
