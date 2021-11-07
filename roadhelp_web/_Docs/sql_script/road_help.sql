@@ -39,6 +39,11 @@ CREATE TABLE IF NOT EXISTS `users`
 
     `active`     BOOLEAN      DEFAULT TRUE,
 
+    `request_become_partner`    BOOL DEFAULT FALSE,
+    `verification_member_code`  CHAR(16),
+    `verification_partner_code` CHAR(16),
+    `reset_password_code`       CHAR(16),
+
     `created_by` NVARCHAR(32) DEFAULT 'Codedy',
     `created_at` TIMESTAMP    DEFAULT CURRENT_TIMESTAMP,
     `updated_by` NVARCHAR(32) DEFAULT 'Codedy',

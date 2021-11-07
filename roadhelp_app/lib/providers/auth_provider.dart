@@ -135,5 +135,19 @@ class AuthProvider with ChangeNotifier {
     notifyListeners();
     return _authData;
   }
+
+  Future<Auth> becomeToPartnerVerification(
+      String verificationPartnerCode) async {
+    Auth itemResponse = await AuthRepository.becomeToPartnerVerification(
+        _authData.currentUser!.id!, verificationPartnerCode);
+
+    _authData.message = itemResponse.message;
+
+    //Reload currentUser
+    _authData.currentUser = await UserRepository.findById(_authData.userId!);
+
+    notifyListeners();
+    return _authData;
+  }
 //#endregion
 }

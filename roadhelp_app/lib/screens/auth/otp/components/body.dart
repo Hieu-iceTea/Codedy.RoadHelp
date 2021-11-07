@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../config/constants.dart';
@@ -5,6 +6,17 @@ import '../../../../config/size_config.dart';
 import 'otp_form.dart';
 
 class Body extends StatelessWidget {
+  String to;
+  Function(String) onSubmit;
+  Function() onResend;
+
+  Body({
+    required this.to,
+    required this.onSubmit,
+    required this.onResend,
+    Key? key,
+  }) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -17,19 +29,22 @@ class Body extends StatelessWidget {
             children: [
               SizedBox(height: SizeConfig.screenHeight * 0.05),
               Text(
-                "OTP Verification",
+                "Xác minh OTP",
                 style: headingStyle,
               ),
-              Text("We sent your code to +1 898 860 ***"),
+              Text(
+                "Chúng tôi đã gửi mã xác minh của bạn đến " + to,
+                textAlign: TextAlign.center,
+              ),
               buildTimer(),
-              OtpForm(),
+              OtpForm(onSubmit: onSubmit),
               SizedBox(height: SizeConfig.screenHeight * 0.1),
               GestureDetector(
                 onTap: () {
-                  // OTP code resend
+                  onResend();
                 },
                 child: Text(
-                  "Resend OTP Code",
+                  "Gửi lại mã OTP",
                   style: TextStyle(decoration: TextDecoration.underline),
                 ),
               )
@@ -44,7 +59,7 @@ class Body extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Text("This code will expired in "),
+        Text("Bạn có thể gửi lại mã trong "),
         TweenAnimationBuilder(
           tween: Tween(begin: 30.0, end: 0.0),
           duration: Duration(seconds: 30),

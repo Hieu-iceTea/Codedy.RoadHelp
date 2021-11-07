@@ -9,11 +9,31 @@ class OtpScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
+
+    final OtpArguments arguments =
+        ModalRoute.of(context)!.settings.arguments as OtpArguments;
+
     return Scaffold(
       appBar: AppBar(
-        title: Text("OTP Verification"),
+        title: Text("Xác minh OTP"),
       ),
-      body: Body(),
+      body: Body(
+        to: arguments.to,
+        onSubmit: arguments.onSubmit,
+        onResend: arguments.onResend,
+      ),
     );
   }
+}
+
+class OtpArguments {
+  String to;
+  Function(String) onSubmit;
+  Function() onResend;
+
+  OtpArguments({
+    required this.to,
+    required this.onSubmit,
+    required this.onResend,
+  });
 }

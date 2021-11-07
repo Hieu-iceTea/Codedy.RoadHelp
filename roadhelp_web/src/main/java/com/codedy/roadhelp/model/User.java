@@ -46,6 +46,14 @@ public class User extends BaseModel implements Serializable {
     private Boolean active;
 
     private double rateAvg;
+
+    private boolean requestBecomePartner;
+
+    private String verificationMemberCode;
+
+    private String verificationPartnerCode;
+
+    private String resetPasswordCode;
     //endregion
 
 
@@ -209,6 +217,38 @@ public class User extends BaseModel implements Serializable {
     public void setRateAvg(double rateAvg) {
         this.rateAvg = rateAvg;
     }
+
+    public boolean isRequestBecomePartner() {
+        return requestBecomePartner;
+    }
+
+    public void setRequestBecomePartner(boolean requestBecomePartner) {
+        this.requestBecomePartner = requestBecomePartner;
+    }
+
+    public String getVerificationMemberCode() {
+        return verificationMemberCode;
+    }
+
+    public void setVerificationMemberCode(String verificationMemberCode) {
+        this.verificationMemberCode = verificationMemberCode;
+    }
+
+    public String getVerificationPartnerCode() {
+        return verificationPartnerCode;
+    }
+
+    public void setVerificationPartnerCode(String verificationPartnerCode) {
+        this.verificationPartnerCode = verificationPartnerCode;
+    }
+
+    public String getResetPasswordCode() {
+        return resetPasswordCode;
+    }
+
+    public void setResetPasswordCode(String resetPasswordCode) {
+        this.resetPasswordCode = resetPasswordCode;
+    }
     //endregion
 
 
@@ -237,6 +277,10 @@ public class User extends BaseModel implements Serializable {
         hashMap.put("address", address);
         hashMap.put("active", active);
         hashMap.put("rateAvg", rateAvg);
+        hashMap.put("requestBecomePartner", requestBecomePartner);
+        hashMap.put("verificationMemberCode", verificationMemberCode);
+        hashMap.put("verificationPartnerCode", verificationPartnerCode);
+        hashMap.put("resetPasswordCode", resetPasswordCode);
 
         return hashMap;
     }

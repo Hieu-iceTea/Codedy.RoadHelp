@@ -107,6 +107,7 @@ class _SignFormState extends State<SignForm> {
         }
         return null;
       },
+      textInputAction: TextInputAction.next,
       decoration: const InputDecoration(
         labelText: "Tài Khoản",
         hintText: "Nhập tài khoản...",
@@ -140,6 +141,7 @@ class _SignFormState extends State<SignForm> {
         }
         return null;
       },
+      onEditingComplete: _submitForm,
       decoration: const InputDecoration(
         labelText: "Mật Khẩu",
         hintText: "Nhập mật khẩu...",
