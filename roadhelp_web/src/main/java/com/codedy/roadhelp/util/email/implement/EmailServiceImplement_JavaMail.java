@@ -20,8 +20,8 @@ public class EmailServiceImplement_JavaMail implements EmailService {
     //region - Config Fields -
     private final String host = "smtp.gmail.com";
     private final int port = 587;
-    private final String username = "Demo.Hieu.iceTea@gmail.com";
-    private final String password = "xxolhnrisazzytbj"; //FoodMate_Spring
+    private final String username = "RoadHelp.Codedy@gmail.com";
+    private final String password = "lpivzmuylxjhhugk"; //Spring_API_CodedyRoadHelp
     //endregion
 
 
