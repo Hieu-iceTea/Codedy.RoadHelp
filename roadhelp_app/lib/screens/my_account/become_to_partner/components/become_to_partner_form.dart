@@ -5,6 +5,7 @@ import 'package:roadhelp/helper/util.dart';
 import 'package:roadhelp/models/auth.dart';
 import 'package:roadhelp/models/user.dart';
 import 'package:roadhelp/providers/auth_provider.dart';
+import 'package:roadhelp/screens/auth/otp/otp_screen.dart';
 import 'package:roadhelp/screens/home/home_screen.dart';
 import 'package:roadhelp/screens/my_account/success_partner/success_partner_screen.dart';
 
@@ -51,7 +52,7 @@ class _BeComeToPartnerFormState extends State<BeComeToPartnerForm> {
           buildEmailFormField(),
           SizedBox(height: getProportionateScreenHeight(40)),
           DefaultButton(
-            text: "Xác nhận",
+            text: "Tiếp tục",
             press: _submitForm,
           ),
         ],
@@ -151,6 +152,32 @@ class _BeComeToPartnerFormState extends State<BeComeToPartnerForm> {
       /*await Util.showDialogNotification(
           context: context, title: "Thông báo", content: authResponse.message);*/
 
+      Navigator.pushNamed(
+        context,
+        OtpScreen.routeName,
+        arguments: OtpArguments(
+          to: widget.user!.email!,
+          onSubmit: _submitVerificationPartnerCode,
+          onResend: () {},
+        ),
+      );
+    } catch (error) {
+      await Util.showDialogNotification(
+          context: context, content: error.toString());
+    }
+  }
+
+  Future<void> _submitVerificationPartnerCode(
+      String verificationPartnerCode) async {
+    try {
+      Auth authResponse =
+          await Provider.of<AuthProvider>(context, listen: false)
+              .becomeToPartnerVerification(verificationPartnerCode);
+
+      /*await Util.showDialogNotification(
+          context: context, title: "Thông báo", content: authResponse.message);*/
+
+      //
       Navigator.of(context).push(
         MaterialPageRoute(
           builder: (context) => PartnerSuccessScreen(

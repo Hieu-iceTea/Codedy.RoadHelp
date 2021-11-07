@@ -202,7 +202,7 @@ public class AuthController {
 
     private void sendEmail_VerificationPartnerCode(String toEmail, Map<String, Object> mailData) {
 
-        toEmail = "DinhHieu8896@gmail.com"; //Test Only //TODO
+        //toEmail = "DinhHieu8896@gmail.com"; //Test Only
 
         // Cách 1. Gửi mail đơn giản:
         emailService.sendSimpleMessage(toEmail, "Thông báo mã xác minh trở thành đối tác", "Mã xác minh của bạn là: " + mailData.get("verificationPartnerCode"));
