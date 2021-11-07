@@ -50,9 +50,9 @@ class LocationHelper {
 
     try {
       _locationData = await location.getLocation().timeout(
-        const Duration(seconds: 5),
+        const Duration(seconds: 10),
         onTimeout: () {
-          throw TimeoutException('Hết thời gian chờ định vị vị trí phản hồi');
+          throw TimeoutException('Hết thời gian chờ định vị vị trí phản hồi, Hãy di chuyển tới vị trí thông thoáng hơn để bắt sóng GPS tốt hơn.');
         },
       );
     } catch (error) {
