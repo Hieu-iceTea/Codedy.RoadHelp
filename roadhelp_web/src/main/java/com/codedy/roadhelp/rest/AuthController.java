@@ -30,6 +30,8 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/auth")
 public class AuthController {
+
+    //region - Autowired Service -
     @Autowired
     AuthenticationManager authenticationManager;
 
@@ -45,10 +47,16 @@ public class AuthController {
     @Qualifier("emailServiceImplement_SpringMail")
     @Autowired
     private EmailService emailService;
+    //endregion
 
+
+    //region - Config -
     @Value("${bezkoder.app.jwtExpirationMs}")
     private int jwtExpirationMs;
+    //endregion
 
+
+    //region - Base -
     @PostMapping("/login")
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
 
@@ -133,32 +141,14 @@ public class AuthController {
         return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
 
     }
+    //endregion
 
+
+    //region - Extend -
     @PostMapping(path = {"/become-to-partner/{userMemberId}", "/become-to-partner/{userMemberId}/"})
     public ResponseEntity<?> becomeToPartner(@PathVariable int userMemberId) {
 
         User user = userService.findById(userMemberId);
-
-        /*List<Authority> auths = user.getAuthorities();
-
-        String role = "ROLE_PARTNER";
-
-        Authority authority = new Authority();
-
-        for (var auth : auths) {
-            if (!Objects.equals(auth.getAuthority(), role)) {
-                authority.setUser(user);
-                authority.setAuthority("ROLE_PARTNER");
-
-                List<Authority> authorities = new ArrayList<>();
-                authorities.add(authority);
-                authority.setId(authority.getId());
-
-                authorityService.save(authority);
-
-                return ResponseEntity.ok(new MessageResponse("Become to partner successfully!"));
-            }
-        }*/
 
         String verificationPartnerCode = String.valueOf(Common.random(1000, 9999));
 
@@ -172,9 +162,7 @@ public class AuthController {
         }};
         this.sendEmail_VerificationPartnerCode(user.getEmail(), mail_data);
 
-        return ResponseEntity.ok(new MessageResponse("Become to partner successfully!"));
-
-        //return ResponseEntity.ok(new MessageResponse("Become to partner failure!"));
+        return ResponseEntity.ok(new MessageResponse("Successfully! Please check email and verification code"));
     }
 
     @PostMapping(path = {"/become-to-partner/{userMemberId}/verification/{verificationPartnerCode}", "/become-to-partner/{userMemberId}/verification/{verificationPartnerCode}/"})
@@ -209,10 +197,12 @@ public class AuthController {
 
         return ResponseEntity.ok(new MessageResponse("Become to partner failure!"));
     }
+    //endregion
+
 
     private void sendEmail_VerificationPartnerCode(String toEmail, Map<String, Object> mailData) {
 
-        toEmail = "DinhHieu8896@gmail.com"; //Test Only
+        toEmail = "DinhHieu8896@gmail.com"; //Test Only //TODO
 
         // Cách 1. Gửi mail đơn giản:
         emailService.sendSimpleMessage(toEmail, "Thông báo mã xác minh trở thành đối tác", "Mã xác minh của bạn là: " + mailData.get("verificationPartnerCode"));

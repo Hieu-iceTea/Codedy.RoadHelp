@@ -35,5 +35,19 @@ class AuthRepository {
 
     return Auth.fromJson(responseBody);
   }
+
+  static Future<Auth> becomeToPartnerVerification(
+      int userMemberId, String verificationPartnerCode) async {
+    var responseBody = await HttpHelper.post(
+      url: _url +
+          "become-to-partner/" +
+          userMemberId.toString() +
+          "/verification/" +
+          verificationPartnerCode,
+      //body: null,
+    );
+
+    return Auth.fromJson(responseBody);
+  }
 //#endregion
 }
