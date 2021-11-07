@@ -174,6 +174,22 @@ public class AuthController {
             throw new RuntimeException("Mã xác thực không khớp.");
         }
 
+        user.setRequestBecomePartner(true);
+        user.setVerificationPartnerCode(null); //Xóa mã
+        userService.save(user);
+
+        return ResponseEntity.ok(new MessageResponse("Request become partner successfully"));
+    }
+
+    @PostMapping(path = {"/confirm-become-to-partner/{userMemberId}", "/confirm-become-to-partner/{userMemberId}/"})
+    public ResponseEntity<?> confirmBecomeToPartnerVerification(@PathVariable int userMemberId) {
+
+        User user = userService.findById(userMemberId);
+
+        if (!user.isRequestBecomePartner()) {
+            throw new RuntimeException("Tài khoản này không trong trạng thái 'yêu cầu trở thành đối tác'");
+        }
+
         List<Authority> auths = user.getAuthorities();
 
         String role = "ROLE_PARTNER";
@@ -191,6 +207,16 @@ public class AuthController {
 
                 authorityService.save(authority);
 
+                //Cập nhật user
+                user.setRequestBecomePartner(false);
+                userService.save(user);
+
+                // 02. Gửi mail thông báo admin đã xác nhận nâng cấp tài khoản parter:
+                Map<String, Object> mail_data = new HashMap<>() {{
+                    //put("key", "value");
+                }};
+                this.sendEmail_NotificationNewPartnerAccount(user.getEmail(), mail_data);
+
                 return ResponseEntity.ok(new MessageResponse("Become to partner successfully!"));
             }
         }
@@ -206,6 +232,13 @@ public class AuthController {
 
         // Cách 1. Gửi mail đơn giản:
         emailService.sendSimpleMessage(toEmail, "Thông báo mã xác minh trở thành đối tác", "Mã xác minh của bạn là: " + mailData.get("verificationPartnerCode"));
+
+    }
+
+    private void sendEmail_NotificationNewPartnerAccount(String toEmail, Map<String, Object> mailData) {
+
+        // Cách 1. Gửi mail đơn giản:
+        emailService.sendSimpleMessage(toEmail, "Bạn đã trở thành đối tác của RoadHelp Codedy", "Chúng tôi đã xem xét và phê duyệt yêu cầu nâng cấp tài khoản đối tác của bạn. Hãy khởi động lại ứng dụng để trải nghiệm đầy đủ tính năng của tài khoản đối tác. Cảm ơn bạn.");
 
     }
 
