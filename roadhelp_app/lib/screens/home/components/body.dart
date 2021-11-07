@@ -22,7 +22,7 @@ class Body extends StatelessWidget {
             SendRescueBanner(),
             Consumer<AuthProvider>(
               builder: (context, authProvider, child) => Categories(
-                currentUser: authProvider.authData.currentUser!,
+                currentUser: authProvider.authData.currentUser,
               ),
             ),
             SpecialOffers(),

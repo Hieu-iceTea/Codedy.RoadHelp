@@ -10,7 +10,7 @@ import 'package:roadhelp/screens/place/repair_place/repair_place/repair_place_sc
 import '../../../config/size_config.dart';
 
 class Categories extends StatelessWidget {
-  User currentUser;
+  User? currentUser;
 
   Categories({
     required this.currentUser,
@@ -30,7 +30,8 @@ class Categories extends StatelessWidget {
         "text": "Cứu Hộ Khẩn",
         "routeName": SendRescueScreen.routeName,
       },
-      if (!currentUser.hasAuthority(AuthorityRole.partner.key))
+      if (currentUser != null &&
+          currentUser!.hasAuthority(AuthorityRole.partner.key))
         {
           "icon": "assets/icons/Cash.svg",
           "text": "Nhận Cứu Hộ",
@@ -41,7 +42,8 @@ class Categories extends StatelessWidget {
         "text": "Cây Xăng",
         "routeName": GasPlaceScreen.routeName,
       },
-      if (currentUser.hasAuthority(AuthorityRole.partner.key))
+      if (currentUser != null &&
+          !currentUser!.hasAuthority(AuthorityRole.partner.key))
         {
           "icon": "assets/icons/Question mark.svg",
           "text": "Hỗ Trợ K.Hàng",
