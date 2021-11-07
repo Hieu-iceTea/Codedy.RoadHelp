@@ -177,6 +177,39 @@ public class AuthController {
         //return ResponseEntity.ok(new MessageResponse("Become to partner failure!"));
     }
 
+    @PostMapping(path = {"/become-to-partner/{userMemberId}/verification/{verificationPartnerCode}", "/become-to-partner/{userMemberId}/verification/{verificationPartnerCode}/"})
+    public ResponseEntity<?> becomeToPartnerVerification(@PathVariable int userMemberId, @PathVariable String verificationPartnerCode) {
+
+        User user = userService.findById(userMemberId);
+
+        if (!user.getVerificationPartnerCode().equals(verificationPartnerCode)) {
+            throw new RuntimeException("Mã xác thực không khớp.");
+        }
+
+        List<Authority> auths = user.getAuthorities();
+
+        String role = "ROLE_PARTNER";
+
+        Authority authority = new Authority();
+
+        for (var auth : auths) {
+            if (!Objects.equals(auth.getAuthority(), role)) {
+                authority.setUser(user);
+                authority.setAuthority("ROLE_PARTNER");
+
+                List<Authority> authorities = new ArrayList<>();
+                authorities.add(authority);
+                authority.setId(authority.getId());
+
+                authorityService.save(authority);
+
+                return ResponseEntity.ok(new MessageResponse("Become to partner successfully!"));
+            }
+        }
+
+        return ResponseEntity.ok(new MessageResponse("Become to partner failure!"));
+    }
+
     private void sendEmail_VerificationPartnerCode(String toEmail, Map<String, Object> mailData) {
 
         toEmail = "DinhHieu8896@gmail.com"; //Test Only
