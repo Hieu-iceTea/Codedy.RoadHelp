@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.text.Normalizer;
 import java.util.Locale;
+import java.util.Random;
 import java.util.regex.Pattern;
 
 /**
@@ -43,6 +44,12 @@ public class Common {
 
         // Cách 2: Of course, if you prefer, you can inline the above into a one-liner:
         //return new BigDecimal(value).setScale(places, RoundingMode.HALF_UP).doubleValue();
+    }
+
+    public static int random(int min, int max) {
+        Random rand = new Random();
+        return rand.nextInt((max - min) + 1) + min;
+        //return rand.nextInt(max - min) + min;
     }
 
 }

@@ -9,7 +9,10 @@ import com.codedy.roadhelp.security.jwt.JwtUtils;
 import com.codedy.roadhelp.service.authority.AuthorityService;
 import com.codedy.roadhelp.service.user.UserDetailsImpl;
 import com.codedy.roadhelp.service.user.UserService;
+import com.codedy.roadhelp.util.Common;
+import com.codedy.roadhelp.util.email.EmailService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -17,11 +20,8 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCrypt;
-import org.springframework.security.web.authentication.WebAuthenticationDetails;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -41,6 +41,10 @@ public class AuthController {
 
     @Autowired
     JwtUtils jwtUtils;
+
+    @Qualifier("emailServiceImplement_SpringMail")
+    @Autowired
+    private EmailService emailService;
 
     @Value("${bezkoder.app.jwtExpirationMs}")
     private int jwtExpirationMs;
@@ -98,7 +102,7 @@ public class AuthController {
 
 
         // Tự động đăng nhập
-        if (autoLogin == true){
+        if (autoLogin == true) {
             Authentication authentication = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(userRequest.getUsername(), userRequest.getPassword()));
 
@@ -135,7 +139,7 @@ public class AuthController {
 
         User user = userService.findById(userMemberId);
 
-        List<Authority> auths = user.getAuthorities();
+        /*List<Authority> auths = user.getAuthorities();
 
         String role = "ROLE_PARTNER";
 
@@ -154,8 +158,32 @@ public class AuthController {
 
                 return ResponseEntity.ok(new MessageResponse("Become to partner successfully!"));
             }
-        }
+        }*/
 
-        return ResponseEntity.ok(new MessageResponse("Become to partner failure!"));
+        String verificationPartnerCode = String.valueOf(Common.random(1000, 9999));
+
+        // 01. Cập nhật DB
+        user.setVerificationPartnerCode(verificationPartnerCode);
+        userService.save(user);
+
+        // 02. Gửi mail
+        Map<String, Object> mail_data = new HashMap<>() {{
+            put("verificationPartnerCode", verificationPartnerCode);
+        }};
+        this.sendEmail_VerificationPartnerCode(user.getEmail(), mail_data);
+
+        return ResponseEntity.ok(new MessageResponse("Become to partner successfully!"));
+
+        //return ResponseEntity.ok(new MessageResponse("Become to partner failure!"));
     }
+
+    private void sendEmail_VerificationPartnerCode(String toEmail, Map<String, Object> mailData) {
+
+        toEmail = "DinhHieu8896@gmail.com"; //Test Only
+
+        // Cách 1. Gửi mail đơn giản:
+        emailService.sendSimpleMessage(toEmail, "Thông báo mã xác minh trở thành đối tác", "Mã xác minh của bạn là: " + mailData.get("verificationPartnerCode"));
+
+    }
+
 }
