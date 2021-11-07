@@ -30,6 +30,12 @@ class User extends BaseModel {
   String? address;
   double? rateAvg;
 
+  //
+  bool? requestBecomePartner;
+  String? verificationMemberCode;
+  String? verificationPartnerCode;
+  String? resetPasswordCode;
+
   //Xử lý sau khi get API (chuyển từ image -> imageUrl):
   String? get imageUrl {
     if (image != null) {
@@ -80,6 +86,10 @@ class User extends BaseModel {
     this.ratingIssues,
     this.ratingGarages,
     this.garages,
+    this.requestBecomePartner,
+    this.verificationMemberCode,
+    this.verificationPartnerCode,
+    this.resetPasswordCode,
     //
     int? id,
     DateTime? createdAt,
@@ -115,6 +125,10 @@ class User extends BaseModel {
       address: json['address'],
       active: json['active'],
       rateAvg: json['rateAvg'],
+      requestBecomePartner: json['requestBecomePartner'],
+      verificationMemberCode: json['verificationMemberCode'],
+      verificationPartnerCode: json['verificationPartnerCode'],
+      resetPasswordCode: json['resetPasswordCode'],
       //Relationship
       authorities: json['authorities'] != null
           ? Authority.fromJsonToList(json['authorities'])
@@ -163,6 +177,10 @@ class User extends BaseModel {
       'active': active,
       'address': address,
       'rateAvg': rateAvg,
+      'requestBecomePartner': requestBecomePartner,
+      'verificationMemberCode': verificationMemberCode,
+      'verificationPartnerCode': verificationPartnerCode,
+      'resetPasswordCode': resetPasswordCode,
       //
       'id': id,
       //'createdAt': createdAt,
