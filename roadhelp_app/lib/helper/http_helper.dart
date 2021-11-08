@@ -167,7 +167,8 @@ class HttpHelper {
     try {
       var request = http.MultipartRequest(method, Uri.parse(url))
         ..fields.addAll(fields)
-        ..files.addAll(files);
+        ..files.addAll(files)
+        ..headers.addAll(_authHeader);
 
       var response = await request.send().timeout(
         const Duration(seconds: 15),
