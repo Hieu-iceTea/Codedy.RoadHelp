@@ -29,8 +29,11 @@ class MyApp extends StatelessWidget {
                   future: authProvider.tryAutoLogin(),
                   builder: (ctx, snapshot) =>
                       snapshot.connectionState == ConnectionState.waiting
-                          ? const Center(
-                              child: CircularProgressIndicator(),
+                          ? Container(
+                              child: const Center(
+                                child: CircularProgressIndicator(),
+                              ),
+                              color: Colors.white,
                             )
                           : SignInScreen(),
                 ),
