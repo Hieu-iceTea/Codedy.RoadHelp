@@ -62,8 +62,6 @@ class Body extends StatelessWidget {
                   issueListScreenState:
                       (authProvider.authData.currentUser != null &&
                               authProvider.authData.currentUser!
-                                  .hasAuthority(AuthorityRole.partner.key) &&
-                              !authProvider.authData.currentUser!
                                   .hasAuthority(AuthorityRole.partner.key))
                           ? IssueListScreenState.historyReceived
                           : IssueListScreenState.historySent,
