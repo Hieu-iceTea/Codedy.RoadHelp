@@ -144,13 +144,13 @@ class _LocationFilterFormState extends State<LocationFilterForm> {
       },
       validator: (value) {
         if (value == null) {
-          return "Please Select your province";
+          return "Vui lòng chọn Tỉnh/TP";
         }
         return null;
       },
       decoration: const InputDecoration(
-        labelText: "Province",
-        hintText: "-- Select Province --",
+        labelText: "Tỉnh/Thành Phố",
+        hintText: "-- Chọn Tỉnh/TP --",
         floatingLabelBehavior: FloatingLabelBehavior.always,
         contentPadding:
             EdgeInsets.only(top: 20, bottom: 20, left: 42, right: 22),
@@ -186,13 +186,13 @@ class _LocationFilterFormState extends State<LocationFilterForm> {
       },
       validator: (value) {
         if (value == null) {
-          return "Please Select your district";
+          return "Vui lòng chọn Quận/Huyện";
         }
         return null;
       },
       decoration: const InputDecoration(
-        labelText: "District",
-        hintText: "-- Select District --",
+        labelText: "Quận/Huyện",
+        hintText: "-- Chọn Quận/Huyện --",
         floatingLabelBehavior: FloatingLabelBehavior.always,
         contentPadding:
             EdgeInsets.only(top: 20, bottom: 20, left: 42, right: 22),
@@ -221,13 +221,13 @@ class _LocationFilterFormState extends State<LocationFilterForm> {
       },
       validator: (value) {
         if (value == null) {
-          return "Please Select your ward";
+          return "Vui lòng chọn Phường/Xã";
         }
         return null;
       },
       decoration: const InputDecoration(
-        labelText: "Ward",
-        hintText: "-- Select Ward --",
+        labelText: "Phường/Xã",
+        hintText: "-- Chọn Phường/Xã --",
         floatingLabelBehavior: FloatingLabelBehavior.always,
         contentPadding:
             EdgeInsets.only(top: 20, bottom: 20, left: 42, right: 22),
