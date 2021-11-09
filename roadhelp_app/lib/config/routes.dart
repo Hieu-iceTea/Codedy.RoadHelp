@@ -1,4 +1,5 @@
 import 'package:flutter/widgets.dart';
+import 'package:roadhelp/screens/my_account/change_password_success/change_password_success_screen.dart';
 import 'package:roadhelp/screens/place/repair_place/repair_place_manage_image/repair_place_manage_image_screen.dart';
 
 import '/screens/auth/complete_profile/complete_profile_screen.dart';
@@ -41,6 +42,7 @@ final Map<String, WidgetBuilder> routes = {
   SignInScreen.routeName: (context) => SignInScreen(),
   ForgotPasswordScreen.routeName: (context) => ForgotPasswordScreen(),
   LoginSuccessScreen.routeName: (context) => LoginSuccessScreen(),
+  ChangePasswordSuccessScreen.routeName: (context) => ChangePasswordSuccessScreen(),
   EditMyAccountSuccess.routeName: (context) => EditMyAccountSuccess(),
   SignUpScreen.routeName: (context) => SignUpScreen(),
   CompleteProfileScreen.routeName: (context) => CompleteProfileScreen(),
