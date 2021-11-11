@@ -13,7 +13,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 class AuthProvider with ChangeNotifier {
   /// NOTE: Phần này chỉ phục vụ xác thực, không phải là entity model có thật trong database
 
-  User _item = User();
 
   Auth _authData = Auth();
   Timer? _authTimer;
@@ -114,10 +113,13 @@ class AuthProvider with ChangeNotifier {
     super.notifyListeners();
   }
 
-  Future<void> updateCurrentUser(User item) async {
+  Future<User> updateCurrentUser(User item) async {
     User itemResponse = await UserRepository.update(item);
-    _item = itemResponse;
+    //Reload currentUser
+    _authData.currentUser = await UserRepository.findById(_authData.userId!);
     notifyListeners();
+    return itemResponse;
+
   }
 
   Future<User> updateAvatarUser({required File imageFile}) async {
