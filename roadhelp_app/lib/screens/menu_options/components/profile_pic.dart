@@ -20,7 +20,7 @@ class ProfilePic extends StatelessWidget {
         children: [
           imageUrl != null
               ? CircleAvatar(
-                  backgroundImage: NetworkImage(imageUrl!),
+                  backgroundImage: imageUrl != null ? NetworkImage(imageUrl!) : NetworkImage("assets/images/profile.png"),
                 )
               : const CircleAvatar(
                   backgroundImage:
