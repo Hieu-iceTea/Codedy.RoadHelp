@@ -1,8 +1,31 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:image_picker/image_picker.dart';
+
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:image_picker/image_picker.dart';
 
 class MyAccountPic extends StatelessWidget {
-  const MyAccountPic({Key? key}) : super(key: key);
+  final Function(File) onSelectImage;
+  String? imageUrl;
+
+  MyAccountPic({required this.imageUrl, required this.onSelectImage, Key? key})
+      : super(key: key);
+
+  Future<void> _takeImage() async {
+    XFile? imageXFile = await ImagePicker().pickImage(
+      source: ImageSource.gallery,
+      maxWidth: 600,
+    );
+    if (imageXFile == null) {
+      return;
+    }
+    File imageFile = File(imageXFile.path);
+
+    onSelectImage(imageFile);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +37,7 @@ class MyAccountPic extends StatelessWidget {
         clipBehavior: Clip.none,
         children: [
           CircleAvatar(
-            backgroundImage: AssetImage("assets/images/Profile Image.png"),
+            backgroundImage: NetworkImage(imageUrl!),
           ),
           Positioned(
             right: -16,
@@ -31,7 +54,7 @@ class MyAccountPic extends StatelessWidget {
                   primary: Colors.white,
                   backgroundColor: Color(0xFFF5F6F9),
                 ),
-                onPressed: () {},
+                onPressed: () => _takeImage(),
                 child: SvgPicture.asset("assets/icons/Camera Icon.svg"),
               ),
             ),
@@ -41,3 +64,4 @@ class MyAccountPic extends StatelessWidget {
     );
   }
 }
+

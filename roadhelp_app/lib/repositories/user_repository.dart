@@ -1,3 +1,9 @@
+import 'dart:io';
+
+import 'package:flutter/cupertino.dart';
+
+import 'package:http/http.dart' as http;
+
 import '/config/constants.dart';
 import '/helper/http_helper.dart';
 import '/models/user.dart';
@@ -47,5 +53,18 @@ class UserRepository {
     return await HttpHelper.delete(
       url: _url + id.toString(),
     );
+  }
+
+  static Future<User> updateAvatar({required int userId, required File imageFile}) async {
+    var responseBody = await HttpHelper.multipartRequest(
+        method: "PUT",
+        url: _url + userId.toString() + "/update-avatar",
+        fields: {},
+        files: [
+          await http.MultipartFile.fromPath("imageFile", imageFile.path),
+        ],
+    );
+
+    return User.fromJson(responseBody);
   }
 }

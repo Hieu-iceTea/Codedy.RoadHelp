@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:roadhelp/helper/http_helper.dart';
@@ -117,7 +118,17 @@ class AuthProvider with ChangeNotifier {
     User itemResponse = await UserRepository.update(item);
     _item = itemResponse;
     notifyListeners();
+  }
 
+  Future<User> updateAvatarUser({required File imageFile}) async {
+    int? userId = _authData.currentUser!.id;
+    User itemResponse = await UserRepository.updateAvatar(userId: userId!, imageFile: imageFile);
+
+    //Reload currentUser
+    _authData.currentUser = await UserRepository.findById(_authData.userId!);
+
+    notifyListeners();
+    return itemResponse;
   }
 
   //#region - Extend -
