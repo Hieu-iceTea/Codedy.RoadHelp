@@ -58,6 +58,11 @@ class MyAccountDetail extends StatelessWidget {
                           fontSize: 15,
                         ),
                       ),
+
+                      if(user.firstName == null || user.lastName == null)
+                      Text("Bạn chưa cập nhập họ và tên"),
+
+                        if (user.firstName != null || user.lastName != null)
                       Text(
                         user.firstName! + " " + user.lastName!,
                         style: TextStyle(color: kTextColor, fontSize: 17),
@@ -118,6 +123,11 @@ class MyAccountDetail extends StatelessWidget {
                           fontSize: 15,
                         ),
                       ),
+
+                      if(user.gender == null)
+                        Text("Bạn chưa cập nhật giới tính"),
+
+                      if(user.gender != null)
                       Text(
                         user.gender!.name,
                         style: TextStyle(color: kTextColor, fontSize: 17),
