@@ -120,6 +120,14 @@ class AuthProvider with ChangeNotifier {
 
   }
 
+  Future<User?> changePassword(String password, String oldPassword) async {
+    int? userId = _authData.currentUser!.id;
+    User itemResponse = await UserRepository.changePassword(password, oldPassword, userId!);
+    _item = itemResponse;
+    notifyListeners();
+    return _authData.currentUser;
+  }
+
   //#region - Extend -
   Future<Auth> becomeToPartner() async {
     Auth itemResponse =

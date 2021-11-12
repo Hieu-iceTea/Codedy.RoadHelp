@@ -5,6 +5,7 @@ import 'package:roadhelp/providers/auth_provider.dart';
 import 'package:roadhelp/screens/auth/sign_in/sign_in_screen.dart';
 import 'package:roadhelp/screens/emergency_rescue/receive/receive_rescue/receive_rescue_screen.dart';
 import 'package:roadhelp/screens/my_account/become_to_partner/become_to_partner_screen.dart';
+import 'package:roadhelp/screens/my_account/change_password/change_password_screen.dart';
 import 'package:roadhelp/screens/my_account/my_account/my_account_screen.dart';
 import 'package:roadhelp/screens/place/repair_place/repair_place_manage/repair_place_manage_screen.dart';
 
@@ -69,9 +70,10 @@ class Body extends StatelessWidget {
               ),
             ),
             MenuItem(
-              text: "Cài Đặt",
+              text: "Đổi mật khẩu",
               icon: "assets/icons/Settings.svg",
-              press: () {},
+              press: () =>
+                  Navigator.pushNamed(context, ChangePasswordScreen.routeName),
             ),
             MenuItem(
               text: "Đăng Xuất",
