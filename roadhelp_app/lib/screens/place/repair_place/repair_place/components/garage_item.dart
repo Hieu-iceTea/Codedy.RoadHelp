@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:roadhelp/components/rounded_icon_btn.dart';
+import 'package:roadhelp/helper/url_launcher_helper.dart';
+import 'package:roadhelp/helper/util.dart';
 import 'package:roadhelp/models/garage.dart';
 import 'package:roadhelp/screens/place/repair_place/repair_place_details/repair_place_details_screen.dart';
 
@@ -36,11 +38,19 @@ class GarageItem extends StatelessWidget {
                   : const Text("No\nImage", textAlign: TextAlign.center),
             )),
         title: Text(garage.name!),
-        subtitle: Text(garage.phone! + '\n' + garage.address! + '| 2 Km'),
+        subtitle: Text(garage.phone! + '\n' + garage.address!/* + '| 2 Km'*/),
         trailing: RoundedIconBtn(
           icon: Icons.directions,
           showShadow: true,
-          press: () {},
+          press: () {
+            try {
+              UrlLauncherHelper.launchURL(
+                  "https://www.google.com/maps/search/?api=1&query=${garage.latitude},${garage.longitude}");
+            } catch (e) {
+              Util.showDialogNotification(
+                  context: context, content: e.toString());
+            }
+          },
         ),
         isThreeLine: true,
       ),
