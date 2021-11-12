@@ -13,8 +13,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 class AuthProvider with ChangeNotifier {
   /// NOTE: Phần này chỉ phục vụ xác thực, không phải là entity model có thật trong database
 
-  User _item = User();
-
   Auth _authData = Auth();
   Timer? _authTimer;
   final String _authDataKey = "Auth_Data";
@@ -137,9 +135,10 @@ class AuthProvider with ChangeNotifier {
   Future<User?> changePassword(String password, String oldPassword) async {
     int? userId = _authData.currentUser!.id;
     User itemResponse = await UserRepository.changePassword(password, oldPassword, userId!);
-    _item = itemResponse;
+    //Reload currentUser
+    _authData.currentUser = await UserRepository.findById(_authData.userId!);
     notifyListeners();
-    return _authData.currentUser;
+    return itemResponse;
   }
 
   //#region - Extend -
