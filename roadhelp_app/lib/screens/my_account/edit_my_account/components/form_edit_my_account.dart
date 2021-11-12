@@ -77,8 +77,6 @@ class _FormEditMyAccountState extends State<FormEditMyAccount> {
               press: () {
                 if (_formKey.currentState!.validate()) {
                   _saveForm();
-                  Navigator.pushNamed(
-                      context, EditMyAccountSuccess.routeName);
                 }
               }),
         ],
@@ -260,7 +258,7 @@ Future<void> _saveForm() async {
     if (_user.id != null) {
       await Provider.of<AuthProvider>(context, listen: false).updateCurrentUser(_user);
 
-      // Navigator.of(context).pop();
+      Navigator.of(context).pop();
     }
   } catch (error) {
     await Util.showDialogNotification(
