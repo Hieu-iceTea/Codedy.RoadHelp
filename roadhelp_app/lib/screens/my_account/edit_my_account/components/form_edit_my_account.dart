@@ -7,6 +7,7 @@ import 'package:roadhelp/models/auth.dart';
 import 'package:roadhelp/models/user.dart';
 import 'package:roadhelp/providers/auth_provider.dart';
 import 'package:roadhelp/providers/user_provider.dart';
+import 'package:roadhelp/screens/my_account/my_account/my_account_screen.dart';
 
 import '/components/default_button.dart';
 import '/components/form_error.dart';
@@ -30,6 +31,22 @@ class _FormEditMyAccountState extends State<FormEditMyAccount> {
 
   List<UserGender> userGenders = UserGender.values;
 
+  final List<String?> errors = [];
+
+  void addError({String? error}) {
+    if (!errors.contains(error))
+      setState(() {
+        errors.add(error);
+      });
+  }
+
+  void removeError({String? error}) {
+    if (errors.contains(error))
+      setState(() {
+        errors.remove(error);
+      });
+  }
+
   @override
   void initState() {
     _user = widget.user ?? User();
@@ -52,11 +69,15 @@ class _FormEditMyAccountState extends State<FormEditMyAccount> {
           buildEmailFormField(),
           SizedBox(height: getProportionateScreenHeight(30)),
           buildGenderDropdownFormField(),
+          FormError(errors: errors),
           SizedBox(height: getProportionateScreenHeight(20)),
           DefaultButton(
-            text: "Lưu",
-            press: () => _saveForm(),
-          ),
+              text: "Lưu",
+              press: () {
+                if (_formKey.currentState!.validate()) {
+                  _saveForm();
+                }
+              }),
         ],
       ),
     );
@@ -64,18 +85,29 @@ class _FormEditMyAccountState extends State<FormEditMyAccount> {
 
   TextFormField buildFirstNameFormField() {
     return TextFormField(
+      keyboardType: TextInputType.name,
       initialValue: _user.firstName,
       onSaved: (newValue) => _user.firstName = newValue,
       onChanged: (value) {
-        return null;
+        if (value.trim().isNotEmpty) {
+          removeError(error: kShortFirstNameError);
+        } else if (value.trim().length >= 2) {
+          removeError(error: kShortFirstNameError);
+        }
+
+        _user.firstName = value;
       },
       validator: (value) {
-        if (value!.isEmpty) {
-          return "Xin hãy điền họ của bạn";
+        if (value!.trim().isEmpty) {
+          addError(error: kShortFirstNameError);
+          return "";
+        } else if (value.trim().length < 2) {
+          addError(error: kShortFirstNameError);
+          return "";
         }
         return null;
       },
-      decoration: InputDecoration(
+      decoration: const InputDecoration(
         labelText: "Họ",
         hintText: "Nhập họ của bạn",
         floatingLabelBehavior: FloatingLabelBehavior.always,
@@ -86,18 +118,29 @@ class _FormEditMyAccountState extends State<FormEditMyAccount> {
 
   TextFormField buildLastNameFormField() {
     return TextFormField(
+      keyboardType: TextInputType.name,
       initialValue: _user.lastName,
       onSaved: (newValue) => _user.lastName = newValue,
       onChanged: (value) {
-        return null;
+        if (value.trim().isNotEmpty) {
+          removeError(error: kNamelNullError);
+        } else if (value.trim().length >= 2) {
+          removeError(error: kShortLastNameError);
+        }
+
+        _user.firstName = value;
       },
       validator: (value) {
-        if (value!.isEmpty) {
-          return "Xin hãy điền tên của bạn";
+        if (value!.trim().isEmpty) {
+          addError(error: kNamelNullError);
+          return "";
+        } else if (value.trim().length < 2) {
+          addError(error: kShortLastNameError);
+          return "";
         }
         return null;
       },
-      decoration: InputDecoration(
+      decoration: const InputDecoration(
         labelText: "Tên",
         hintText: "Nhập tên của bạn",
         floatingLabelBehavior: FloatingLabelBehavior.always,
@@ -112,18 +155,24 @@ class _FormEditMyAccountState extends State<FormEditMyAccount> {
       keyboardType: TextInputType.phone,
       onSaved: (newValue) => _user.phone = newValue,
       onChanged: (value) {
-        return null;
+        if (value.isNotEmpty) {
+          removeError(error: kPhoneNumberNullError);
+        } else if (phoneValidatorRegExp.hasMatch(value)) {
+          removeError(error: kInvalidPhoneNumberError);
+        }
+        return;
       },
       validator: (value) {
         if (value!.isEmpty) {
-          return "Vui lòng nhập điện thoại của bạn";
-        }
-        if (value.length < 10) {
-          return "Kích thước phải lớn hơn 10";
+          addError(error: kPhoneNumberNullError);
+          return "";
+        } else if (!phoneValidatorRegExp.hasMatch(value)) {
+          addError(error: kInvalidPhoneNumberError);
+          return "";
         }
         return null;
       },
-      decoration: InputDecoration(
+      decoration: const InputDecoration(
         labelText: "Số điện thoại",
         hintText: "Nhập số điện thoại của bạn",
         floatingLabelBehavior: FloatingLabelBehavior.always,
@@ -138,17 +187,24 @@ class _FormEditMyAccountState extends State<FormEditMyAccount> {
       keyboardType: TextInputType.emailAddress,
       onSaved: (newValue) => _user.email = newValue,
       onChanged: (value) {
+        if (value.isNotEmpty) {
+          removeError(error: kEmailNullError);
+        } else if (emailValidatorRegExp.hasMatch(value)) {
+          removeError(error: kInvalidEmailError);
+        }
         return null;
       },
       validator: (value) {
         if (value!.isEmpty) {
-          return "Vui lòng nhập email của bạn";
+          addError(error: kEmailNullError);
+          return "";
         } else if (!emailValidatorRegExp.hasMatch(value)) {
-          return "Email của bạn sai định dạng";
+          addError(error: kInvalidEmailError);
+          return "";
         }
         return null;
       },
-      decoration: InputDecoration(
+      decoration: const InputDecoration(
         labelText: "Email",
         hintText: "Nhập email của bạn",
         floatingLabelBehavior: FloatingLabelBehavior.always,
@@ -182,7 +238,7 @@ class _FormEditMyAccountState extends State<FormEditMyAccount> {
       },
       decoration: const InputDecoration(
         labelText: "Giới tính",
-        // hintText: "-- Chọn Giới tính của bạn --",
+        hintText: "-- Chọn Giới tính của bạn --",
         floatingLabelBehavior: FloatingLabelBehavior.always,
         contentPadding:
             EdgeInsets.only(top: 20, bottom: 20, left: 42, right: 22),
@@ -190,22 +246,22 @@ class _FormEditMyAccountState extends State<FormEditMyAccount> {
     );
   }
 
-  Future<void> _saveForm() async {
-    if (!_formKey.currentState!.validate()) {
-      return;
-    }
-
-    _formKey.currentState!.save();
-
-    try {
-      if (_user.id != null) {
-        await Provider.of<AuthProvider>(context, listen: false).updateCurrentUser(_user);
-
-        Navigator.of(context).pop();
-      }
-    } catch (error) {
-      await Util.showDialogNotification(
-          context: context, content: error.toString());
-    }
+Future<void> _saveForm() async {
+  if (!_formKey.currentState!.validate()) {
+    return;
   }
+
+  _formKey.currentState!.save();
+
+  try {
+    if (_user.id != null) {
+      await Provider.of<AuthProvider>(context, listen: false).updateCurrentUser(_user);
+
+      Navigator.of(context).pop();
+    }
+  } catch (error) {
+    await Util.showDialogNotification(
+        context: context, content: error.toString());
+  }
+}
 }
