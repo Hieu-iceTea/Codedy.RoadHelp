@@ -16,9 +16,9 @@ class Body extends StatelessWidget {
         ),
         SizedBox(height: SizeConfig.screenHeight * 0.08),
         Text(
-          "Edit My Account Success",
+          "Chỉnh sửa tài khoản thành công",
           style: TextStyle(
-            fontSize: getProportionateScreenWidth(30),
+            fontSize: getProportionateScreenWidth(20),
             fontWeight: FontWeight.bold,
             color: Colors.black,
           ),
@@ -27,7 +27,7 @@ class Body extends StatelessWidget {
         SizedBox(
           width: SizeConfig.screenWidth * 0.6,
           child: DefaultButton(
-            text: "Back to my account",
+            text: "Tài khoản của tôi",
             press: () {
               Navigator.pushNamed(context, MyAccountScreen.routeName);
             },
