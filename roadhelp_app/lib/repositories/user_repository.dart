@@ -57,6 +57,19 @@ class UserRepository {
     );
   }
 
+  static Future<User> updateAvatar({required int userId, required File imageFile}) async {
+    var responseBody = await HttpHelper.multipartRequest(
+        method: "PUT",
+        url: _url + userId.toString() + "/update-avatar",
+        fields: {},
+        files: [
+          await http.MultipartFile.fromPath("imageFile", imageFile.path),
+        ],
+      );
+
+    return User.fromJson(responseBody);
+  }
+
   static Future<User> changePassword(
       String password, String oldPassword, int userId) async {
     var requestBody = new Map();
