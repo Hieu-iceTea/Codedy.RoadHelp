@@ -114,8 +114,10 @@ class AuthProvider with ChangeNotifier {
 
   Future<User> updateCurrentUser(User item) async {
     User itemResponse = await UserRepository.update(item);
+
     //Reload currentUser
     _authData.currentUser = await UserRepository.findById(_authData.userId!);
+
     notifyListeners();
     return itemResponse;
 
@@ -135,8 +137,10 @@ class AuthProvider with ChangeNotifier {
   Future<User?> changePassword(String password, String oldPassword) async {
     int? userId = _authData.currentUser!.id;
     User itemResponse = await UserRepository.changePassword(password, oldPassword, userId!);
+    
     //Reload currentUser
     _authData.currentUser = await UserRepository.findById(_authData.userId!);
+
     notifyListeners();
     return itemResponse;
   }

@@ -14,14 +14,14 @@ class MyAccountDetail extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+      padding: EdgeInsets.symmetric(horizontal: 0, vertical: 10),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
             padding: EdgeInsets.only(
-              left: getProportionateScreenWidth(10),
-              right: getProportionateScreenWidth(10),
+              /*left: getProportionateScreenWidth(10),
+              right: getProportionateScreenWidth(10),*/
               bottom: getProportionateScreenWidth(10),
             ),
             child: Column(
@@ -72,7 +72,7 @@ class MyAccountDetail extends StatelessWidget {
                 ),
                 SizedBox(height: 12),
                 ListTile(
-                  leading: Icon(Icons.phone_in_talk),
+                  leading: Icon(Icons.phone),
                   title: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [

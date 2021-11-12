@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:roadhelp/components/rounded_icon_btn.dart';
 import 'package:roadhelp/config/size_config.dart';
+import 'package:roadhelp/helper/url_launcher_helper.dart';
+import 'package:roadhelp/helper/util.dart';
 import 'package:roadhelp/models/garage.dart';
 import 'package:roadhelp/providers/garage_provider.dart';
 import 'package:roadhelp/screens/place/repair_place/repair_place_details/components/garage_rating.dart';
@@ -45,8 +46,16 @@ class Body extends StatelessWidget {
                             top: getProportionateScreenWidth(15),
                           ),
                           child: DefaultButton(
-                            text: "View on map",
-                            press: () {},
+                            text: "Xem trên bản đồ",
+                            press: () {
+                              try {
+                                UrlLauncherHelper.launchURL(
+                                    "https://www.google.com/maps/search/?api=1&query=${garage.latitude},${garage.longitude}");
+                              } catch (e) {
+                                Util.showDialogNotification(
+                                    context: context, content: e.toString());
+                              }
+                            },
                           ),
                         ),
                       ),

@@ -32,11 +32,11 @@ class GarageRating extends StatelessWidget {
                 child: (garage.ratingGarages != null &&
                         garage.ratingGarages!.isNotEmpty)
                     ? Text(
-                        "Reviews (" + snapshot.data!.length.toString() + ")",
+                        "Đánh giá (" + snapshot.data!.length.toString() + ")",
                         style: Theme.of(context).textTheme.headline6,
                       )
                     : Text(
-                        "Reviews (0)",
+                        "Đánh giá (0)",
                         style: Theme.of(context).textTheme.headline6,
                       ),
               ),
