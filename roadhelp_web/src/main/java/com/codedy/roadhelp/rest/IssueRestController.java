@@ -1,6 +1,7 @@
 package com.codedy.roadhelp.rest;
 
 import com.codedy.roadhelp.dto.WebSocketDto;
+import com.codedy.roadhelp.model.Garage;
 import com.codedy.roadhelp.model.Issue;
 import com.codedy.roadhelp.model.RatingIssue;
 import com.codedy.roadhelp.model.User;
@@ -13,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 
@@ -48,6 +50,31 @@ public class IssueRestController {
         }
 
         return issue.toApiResponse();
+    }
+    // danh sách issue gần nhất
+    @GetMapping(path = {"/nearBy", "/nearBy/"})
+    public List<LinkedHashMap<String, Object>> listIssueNearByPartner(@RequestParam(required = false, defaultValue = "0") double latitude,
+                                                                       @RequestParam(required = false, defaultValue = "0") double longitude,
+                                                                       @RequestParam(required = false, defaultValue = "0") int distance) {
+
+        List<Issue> issueNearby = new ArrayList<>();
+        for (Issue issue: issueService.findIssueByStatus(IssueStatus.sent)
+        ) {
+            double value = calculateDistanceInMeters(issue.getLatitude(), issue.getLongitude(),latitude, longitude);
+            if(value <= distance) {
+                issueNearby.add(issue);
+            }
+        }
+
+        return issueNearby.stream().map(Issue::toApiResponse).toList();
+    }
+    // tính khoảng cách
+    public double calculateDistanceInMeters(double lat1, double long1, double lat2,
+                                            double long2) {
+
+
+        double dist = org.apache.lucene.util.SloppyMath.haversinMeters(lat1, long1, lat2, long2);
+        return dist;
     }
 
     // Create

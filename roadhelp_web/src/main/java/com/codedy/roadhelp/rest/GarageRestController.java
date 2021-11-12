@@ -9,6 +9,8 @@ import com.codedy.roadhelp.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 
@@ -49,6 +51,32 @@ public class GarageRestController {
         }
 
         return garage.toApiResponse();
+    }
+
+    // danh sách tiệm sửa xe gần nhất
+    @GetMapping(path = {"/nearBy", "/nearBy/"})
+    public List<LinkedHashMap<String, Object>> listGarageNearByPartner(@RequestParam(required = false, defaultValue = "0") double latitude,
+                                                    @RequestParam(required = false, defaultValue = "0") double longitude,
+                                                    @RequestParam(required = false, defaultValue = "0") int distance) {
+        List<Garage> garages = garageService.findAll();
+        List<Garage> garageNearby = new ArrayList<>();
+        for (Garage garage: garages
+             ) {
+        double value = calculateDistanceInMeters(garage.getLatitude(), garage.getLongitude(),latitude, longitude);
+        if(value <= distance) {
+            garageNearby.add(garage);
+        }
+        }
+
+        return garageNearby.stream().map(Garage::toApiResponse).toList();
+    }
+    // tính khoảng cách
+    public double calculateDistanceInMeters(double lat1, double long1, double lat2,
+                                            double long2) {
+
+
+        double dist = org.apache.lucene.util.SloppyMath.haversinMeters(lat1, long1, lat2, long2);
+        return dist;
     }
 
     // Create

@@ -3,6 +3,8 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 
 import 'package:http/http.dart' as http;
+import 'dart:collection';
+import 'dart:convert';
 
 import '/config/constants.dart';
 import '/helper/http_helper.dart';
@@ -63,6 +65,21 @@ class UserRepository {
         files: [
           await http.MultipartFile.fromPath("imageFile", imageFile.path),
         ],
+      );
+
+    return User.fromJson(responseBody);
+  }
+}
+
+  static Future<User> changePassword(
+      String password, String oldPassword, int userId) async {
+    var requestBody = new Map();
+    requestBody['password'] = password;
+    requestBody['oldPassword'] = oldPassword;
+    String jsonConvert = jsonEncode(requestBody);
+    var responseBody = await HttpHelper.put(
+      url: _url + userId.toString() + "/change-password",
+      body: jsonConvert,
     );
 
     return User.fromJson(responseBody);

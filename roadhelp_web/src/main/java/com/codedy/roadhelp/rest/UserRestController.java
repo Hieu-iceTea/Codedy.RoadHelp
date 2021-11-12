@@ -1,9 +1,12 @@
 package com.codedy.roadhelp.rest;
 
 
+import com.codedy.roadhelp.model.RatingGarage;
+import com.codedy.roadhelp.model.RatingIssue;
 import com.codedy.roadhelp.model.User;
 import com.codedy.roadhelp.payload.response.MessageResponse;
 import com.codedy.roadhelp.rest.exception.RestNotFoundException;
+import com.codedy.roadhelp.service.ratingIssue.RatingIssueService;
 import com.codedy.roadhelp.service.user.UserService;
 import com.codedy.roadhelp.util.storage.service.StorageService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +36,8 @@ public class UserRestController {
     @Autowired
     private StorageService storageService;
     //endregion
+    @Autowired
+    private RatingIssueService ratingIssueService;
 
 
     //region - Base -
@@ -56,6 +61,19 @@ public class UserRestController {
         }
 
         return user.toApiResponse();
+
+    }
+    // Partner Xem tất cả đánh giá về mình
+    @GetMapping(path = {"/user/{id}/ratingIssue", "/user/{id}/ratingIssue/"})
+    public List<LinkedHashMap<String, Object>> rating(@PathVariable int id) {
+
+        User user = userService.findById(id);
+        if (user == null) {
+            throw new RestNotFoundException("User id not found - " + id);
+            //throw new RuntimeException("User id not found - " + id);
+        }
+
+        return user.getRatingIssues().stream().map(RatingIssue::toApiResponse).toList();
 
     }
 
