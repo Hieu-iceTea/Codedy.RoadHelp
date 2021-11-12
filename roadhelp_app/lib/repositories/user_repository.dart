@@ -69,7 +69,6 @@ class UserRepository {
 
     return User.fromJson(responseBody);
   }
-}
 
   static Future<User> changePassword(
       String password, String oldPassword, int userId) async {
