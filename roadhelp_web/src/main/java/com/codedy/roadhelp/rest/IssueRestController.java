@@ -1,7 +1,6 @@
 package com.codedy.roadhelp.rest;
 
 import com.codedy.roadhelp.dto.WebSocketDto;
-import com.codedy.roadhelp.model.Garage;
 import com.codedy.roadhelp.model.Issue;
 import com.codedy.roadhelp.model.RatingIssue;
 import com.codedy.roadhelp.model.User;
@@ -34,9 +33,20 @@ public class IssueRestController {
     //endregion
 
     //region - Base -
+
     // List
     @GetMapping(path = {"", "/", "/index"})
-    public List<LinkedHashMap<String, Object>> index() {
+    public List<LinkedHashMap<String, Object>> index(@RequestParam(required = false, defaultValue = "0") double latitude,
+                                                     @RequestParam(required = false, defaultValue = "0") double longitude,
+                                                     @RequestParam(required = false, defaultValue = "0") int distance) {
+
+        // Nếu có Vị trí gần nhất
+        if (latitude != 0 || longitude != 0 || distance > 0) { //Vị trí latitude, longitude có thể là số âm không nhỉ ??
+            List<Issue> issues = issueService.findAll(); //TODO: hiệu năng kém
+
+            return this.filterNearMe(issues, latitude, longitude, distance).stream().map(Issue::toApiResponse).toList();
+        }
+
         return issueService.findAll().stream().map(Issue::toApiResponse).toList();
     }
 
@@ -50,31 +60,6 @@ public class IssueRestController {
         }
 
         return issue.toApiResponse();
-    }
-    // danh sách issue gần nhất
-    @GetMapping(path = {"/nearBy", "/nearBy/"})
-    public List<LinkedHashMap<String, Object>> listIssueNearByPartner(@RequestParam(required = false, defaultValue = "0") double latitude,
-                                                                       @RequestParam(required = false, defaultValue = "0") double longitude,
-                                                                       @RequestParam(required = false, defaultValue = "0") int distance) {
-
-        List<Issue> issueNearby = new ArrayList<>();
-        for (Issue issue: issueService.findIssueByStatus(IssueStatus.sent)
-        ) {
-            double value = calculateDistanceInMeters(issue.getLatitude(), issue.getLongitude(),latitude, longitude);
-            if(value <= distance) {
-                issueNearby.add(issue);
-            }
-        }
-
-        return issueNearby.stream().map(Issue::toApiResponse).toList();
-    }
-    // tính khoảng cách
-    public double calculateDistanceInMeters(double lat1, double long1, double lat2,
-                                            double long2) {
-
-
-        double dist = org.apache.lucene.util.SloppyMath.haversinMeters(lat1, long1, lat2, long2);
-        return dist;
     }
 
     // Create
@@ -317,6 +302,30 @@ public class IssueRestController {
         response.put("message", "Issue có ID " + id + " được thay đổi trạng thái thành: 'Hủy bởi đối tác'");
         return response;
     }
+    //endregion
+
+
+    //region - Common Method -
+
+    // Tính khoảng cách
+    private double calculateDistanceInMeters(double lat1, double long1, double lat2, double long2) {
+        return org.apache.lucene.util.SloppyMath.haversinMeters(lat1, long1, lat2, long2);
+    }
+
+    // Lọc theo vị trí gần tôi
+    private List<Issue> filterNearMe(List<Issue> issues, double latitude, double longitude, int distance) {
+        List<Issue> issueNearMe = new ArrayList<>();
+
+        for (Issue issue : issues) {
+            double value = calculateDistanceInMeters(issue.getLatitude(), issue.getLongitude(), latitude, longitude);
+            if (value <= distance) {
+                issueNearMe.add(issue);
+            }
+        }
+
+        return issueNearMe;
+    }
+
     //endregion
 
 }
