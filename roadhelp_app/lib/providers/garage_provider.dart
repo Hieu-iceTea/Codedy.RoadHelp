@@ -22,11 +22,18 @@ class GarageProvider with ChangeNotifier {
       {String? name, int? provinceId, int? districtId, int? wardId}) async {
     //https://flutter.dev/docs/cookbook/networking/fetch-data
     try {
+      double? latitude;
+      double? longitude;
+      int? distance;
+
       List<Garage> _itemsLoaded = await GarageRepository.findAll(
         name: name,
         provinceId: provinceId,
         districtId: districtId,
         wardId: wardId,
+        latitude: latitude,
+        longitude: longitude,
+        distance: distance,
       );
       _items.clear();
       _items.addAll(_itemsLoaded);
