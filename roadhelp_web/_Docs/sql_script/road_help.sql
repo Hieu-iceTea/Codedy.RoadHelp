@@ -381,6 +381,9 @@ VALUE (11, 10, 4, '21.014415', '105.840133','1',  '0871 6633 24',  'Đường L�
 INSERT INTO issue(id, user_member_id,user_partner_id, latitude, longitude,category, phone,address,description, status)
 VALUE (12, 11, NULL, '21.013804', '105.839543','1',  '0871 6633 25',  'Đường Lê Duẩn','', '0');
 
+INSERT INTO issue(id, user_member_id,user_partner_id, latitude, longitude,category, phone,address,description, status)
+VALUE (13, 10, NULL, '18.7312677', '105.6624692','2',  '0868 6633 15',  'Đường Thăng Long, TP Vinh','Xe không nổ máy được, hãy giúp tôi.', '0');
+
 
 #endregion
 
