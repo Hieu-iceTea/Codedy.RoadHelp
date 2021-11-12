@@ -4,6 +4,7 @@ import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:roadhelp/helper/http_helper.dart';
+import 'package:roadhelp/helper/location_helper.dart';
 import 'package:roadhelp/models/auth.dart';
 import 'package:roadhelp/models/user.dart';
 import 'package:roadhelp/repositories/auth_repository.dart';
@@ -71,6 +72,9 @@ class AuthProvider with ChangeNotifier {
   }
 
   Future<bool> tryAutoLogin() async {
+    //Refresh: Current Location - Lấy vị trí mới khi khởi động ứng dụng
+    LocationHelper.getCurrentLocationCache(refresh: true); //TODO: gọi tạm ở đây
+
     final prefs = await SharedPreferences.getInstance();
     if (!prefs.containsKey(_authDataKey)) {
       return false;
@@ -137,7 +141,7 @@ class AuthProvider with ChangeNotifier {
   Future<User?> changePassword(String password, String oldPassword) async {
     int? userId = _authData.currentUser!.id;
     User itemResponse = await UserRepository.changePassword(password, oldPassword, userId!);
-    
+
     //Reload currentUser
     _authData.currentUser = await UserRepository.findById(_authData.userId!);
 

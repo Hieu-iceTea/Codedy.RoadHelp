@@ -28,9 +28,9 @@ class GarageProvider with ChangeNotifier {
       int? distance = 30 * 1000; // Mặc định: 30Km
 
       if (provinceId == null || districtId == null || wardId == null) {
-        var currentLocation = await LocationHelper.getCurrentLocation();
-        latitude = currentLocation.latitude!;
-        longitude = currentLocation.longitude!;
+        var currentLocation = await LocationHelper.getCurrentLocationCache();
+        latitude = currentLocation.latitude;
+        longitude = currentLocation.longitude;
       }
 
       List<Garage> _itemsLoaded = await GarageRepository.findAll(
