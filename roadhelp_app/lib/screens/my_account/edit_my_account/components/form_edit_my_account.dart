@@ -7,6 +7,7 @@ import 'package:roadhelp/models/auth.dart';
 import 'package:roadhelp/models/user.dart';
 import 'package:roadhelp/providers/auth_provider.dart';
 import 'package:roadhelp/providers/user_provider.dart';
+import 'package:roadhelp/screens/my_account/edit_account_success/edit_my_account_success_screen.dart';
 import 'package:roadhelp/screens/my_account/my_account/my_account_screen.dart';
 
 import '/components/default_button.dart';
@@ -76,6 +77,8 @@ class _FormEditMyAccountState extends State<FormEditMyAccount> {
               press: () {
                 if (_formKey.currentState!.validate()) {
                   _saveForm();
+                  Navigator.pushNamed(
+                      context, EditMyAccountSuccess.routeName);
                 }
               }),
         ],
@@ -257,7 +260,7 @@ Future<void> _saveForm() async {
     if (_user.id != null) {
       await Provider.of<AuthProvider>(context, listen: false).updateCurrentUser(_user);
 
-      Navigator.of(context).pop();
+      // Navigator.of(context).pop();
     }
   } catch (error) {
     await Util.showDialogNotification(

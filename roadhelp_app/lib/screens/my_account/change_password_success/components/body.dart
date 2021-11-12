@@ -18,7 +18,7 @@ class Body extends StatelessWidget {
         Text(
           "Đổi mật khẩu thành công",
           style: TextStyle(
-            fontSize: getProportionateScreenWidth(30),
+            fontSize: getProportionateScreenWidth(25),
             fontWeight: FontWeight.bold,
             color: Colors.black,
           ),
