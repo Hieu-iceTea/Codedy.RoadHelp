@@ -117,21 +117,31 @@ public class GarageRestController {
     }
 
     // Tìm kiếm tiệm sửa xe theo tên, Vị trí gần nhất
-    @GetMapping(path = {"/nearBy", "/nearBy/"})
-    public List<LinkedHashMap<String, Object>> listGarageNearByPartner(@RequestParam(required = false, defaultValue = "0") double latitude,
-                                                                       @RequestParam(required = false, defaultValue = "0") double longitude,
-                                                                       @RequestParam(required = false, defaultValue = "0") int distance) {
-        List<Garage> garages = garageService.findAll();
-        List<Garage> garageNearby = new ArrayList<>();
-        for (Garage garage : garages
-        ) {
-            double value = calculateDistanceInMeters(garage.getLatitude(), garage.getLongitude(), latitude, longitude);
-            if (value <= distance) {
-                garageNearby.add(garage);
-            }
+    @GetMapping(path = {"/searchNearMe", "/searchNearMe/"})
+    public List<LinkedHashMap<String, Object>> searchNearMe(@RequestParam(required = false, defaultValue = "") String name,
+                                                            @RequestParam(required = false, defaultValue = "0") double latitude,
+                                                            @RequestParam(required = false, defaultValue = "0") double longitude,
+                                                            @RequestParam(required = false, defaultValue = "0") int distance) {
+
+        // 1. Có tất cả tên và Vị trí gần nhất
+        if (!name.isEmpty() && (latitude >= 1 || longitude >= 1 || distance >= 1)) {
+            List<Garage> garages = garageService.findByNameContaining(name);
+            return this.filterNearMe(garages, latitude, longitude, distance).stream().map(Garage::toApiResponse).toList();
         }
 
-        return garageNearby.stream().map(Garage::toApiResponse).toList();
+        // 2. Chỉ có tên
+        if (!name.isEmpty()) {
+            return garageService.findByNameContaining(name).stream().map(Garage::toApiResponse).toList();
+        }
+
+        // 3. Nếu chỉ có Vị trí gần nhất
+        if (latitude >= 1 || longitude >= 1 || distance >= 1) {
+            List<Garage> garages = garageService.findAll(); //TODO: hiệu năng kém
+            return this.filterNearMe(garages, latitude, longitude, distance).stream().map(Garage::toApiResponse).toList();
+        }
+
+        //Mặc định getAll()
+        return garageService.findAll().stream().map(Garage::toApiResponse).toList();
     }
 
     //Danh sách tiệm sửa xe nổi bật
@@ -175,9 +185,23 @@ public class GarageRestController {
 
     //region - Common Method -
 
-    // tính khoảng cách
-    public double calculateDistanceInMeters(double lat1, double long1, double lat2, double long2) {
+    // Tính khoảng cách
+    private double calculateDistanceInMeters(double lat1, double long1, double lat2, double long2) {
         return org.apache.lucene.util.SloppyMath.haversinMeters(lat1, long1, lat2, long2);
+    }
+
+    // Lọc theo vị trí gần tôi
+    private List<Garage> filterNearMe(List<Garage> garages, double latitude, double longitude, int distance) {
+        List<Garage> garageNearMe = new ArrayList<>();
+
+        for (Garage garage : garages) {
+            double value = calculateDistanceInMeters(garage.getLatitude(), garage.getLongitude(), latitude, longitude);
+            if (value <= distance) {
+                garageNearMe.add(garage);
+            }
+        }
+
+        return garageNearMe;
     }
 
     //endregion
