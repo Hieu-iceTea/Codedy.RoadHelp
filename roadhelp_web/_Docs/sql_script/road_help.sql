@@ -277,6 +277,9 @@ VALUE (11,5,32,2, 476,'Garage Quang Huy 3', 4.1,21.014415, 105.840133, 'Đườn
 INSERT INTO garage (id,user_partner_id,district_id,province_id,ward_id,name,rate_avg,latitude, longitude, address, description, phone, active,is_featured)
 VALUE (12,5,32,2, 476,'Garage Quang Huy 4', 5.0,21.013804, 105.839543, 'Đường Lê Duẩn', 'chuyên sửa xe', '0873 6633 22', TRUE,0);
 
+INSERT INTO garage (id,user_partner_id,district_id,province_id,ward_id,name,rate_avg,latitude, longitude, address, description, phone, active,is_featured)
+VALUE (13,4,285,20, 4148,'Sữa Xe Máy Thanh Đào', 4.8,18.741316, 105.6586408, 'Đường Thăng Long, TP Vinh', 'Uy tín, Chất lượng, Sửa nhanh', '0987179107', TRUE,1);
+
 
 #endregion
 
@@ -328,6 +331,13 @@ VALUE (15, 11, 'tiem6.jpg');
 
 INSERT INTO garageimage (id, garage_id,image)
 VALUE (16, 12, 'tiem8.jpg');
+
+INSERT INTO garageimage (id, garage_id,image)
+VALUE (17, 13, 'sua-xe-may-thanh-dao-1.jpg');
+
+INSERT INTO garageimage (id, garage_id,image)
+VALUE (18, 13, 'sua-xe-may-thanh-dao-2.jpg');
+
 
 
 
@@ -411,6 +421,13 @@ VALUE (11, 11, 2, 4, 'Tốt');
 
 INSERT INTO ratingGarage (id, user_member_id, garage_id, rate_point, comment) 
 VALUE (12, 12, 1, 5, 'Tốt');
+
+INSERT INTO ratingGarage (id, user_member_id, garage_id, rate_point, comment)
+VALUE (13, 10, 13, 5, 'Rất tốt');
+
+INSERT INTO ratingGarage (id, user_member_id, garage_id, rate_point, comment)
+VALUE (14, 11, 13, 4, 'Uy Tín');
+
 
 
 #endregion
