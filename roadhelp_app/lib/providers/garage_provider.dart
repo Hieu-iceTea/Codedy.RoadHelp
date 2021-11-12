@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/foundation.dart';
+import 'package:roadhelp/helper/location_helper.dart';
 import 'package:roadhelp/models/garage.dart';
 import 'package:roadhelp/models/garage_image.dart';
 import 'package:roadhelp/providers/auth_provider.dart';
@@ -22,11 +23,24 @@ class GarageProvider with ChangeNotifier {
       {String? name, int? provinceId, int? districtId, int? wardId}) async {
     //https://flutter.dev/docs/cookbook/networking/fetch-data
     try {
+      double? latitude; // Test: 21.007688
+      double? longitude; // Test: 105.841373
+      int? distance = 30 * 1000; // Mặc định: 30Km
+
+      if (provinceId == null || districtId == null || wardId == null) {
+        var currentLocation = await LocationHelper.getCurrentLocationCache();
+        latitude = currentLocation.latitude;
+        longitude = currentLocation.longitude;
+      }
+
       List<Garage> _itemsLoaded = await GarageRepository.findAll(
         name: name,
         provinceId: provinceId,
         districtId: districtId,
         wardId: wardId,
+        latitude: latitude,
+        longitude: longitude,
+        distance: distance,
       );
       _items.clear();
       _items.addAll(_itemsLoaded);
