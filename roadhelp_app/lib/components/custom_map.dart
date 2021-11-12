@@ -26,7 +26,8 @@ class _CustomMapState extends State<CustomMap> {
 
   @override
   void initState() {
-    _markers = widget.markers;
+    //_markers = widget.markers;
+    _markers = {};
 
     super.initState();
   }
@@ -84,7 +85,7 @@ class _CustomMapState extends State<CustomMap> {
               zoom: 16,
             ),
             onTap: _onTap,
-            markers: _markers,
+            markers: _markers.isNotEmpty ? _markers : widget.markers,
             myLocationEnabled: true,
             myLocationButtonEnabled: true,
             padding: const EdgeInsets.only(
