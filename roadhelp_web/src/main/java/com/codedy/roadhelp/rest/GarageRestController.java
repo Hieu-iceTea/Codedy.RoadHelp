@@ -37,7 +37,7 @@ public class GarageRestController {
                                                      @RequestParam(required = false, defaultValue = "0") int districtId,
                                                      @RequestParam(required = false, defaultValue = "0") int wardId) {
         //return garageService.findAll().stream().map(Garage::toApiResponse).toList();
-        return this.search(name, provinceId, districtId, wardId);
+        return this.searchLocal(name, provinceId, districtId, wardId);
     }
 
     // Detail
@@ -92,10 +92,10 @@ public class GarageRestController {
 
     // Tìm kiếm tiệm sửa xe theo tên, Tỉnh/Huyện/Xã
     @GetMapping(path = {"/search", "/search"})
-    public List<LinkedHashMap<String, Object>> search(@RequestParam(required = false, defaultValue = "") String name,
-                                                      @RequestParam(required = false, defaultValue = "0") int provinceId,
-                                                      @RequestParam(required = false, defaultValue = "0") int districtId,
-                                                      @RequestParam(required = false, defaultValue = "0") int wardId) {
+    public List<LinkedHashMap<String, Object>> searchLocal(@RequestParam(required = false, defaultValue = "") String name,
+                                                           @RequestParam(required = false, defaultValue = "0") int provinceId,
+                                                           @RequestParam(required = false, defaultValue = "0") int districtId,
+                                                           @RequestParam(required = false, defaultValue = "0") int wardId) {
         // 1. Có tất cả tên và tỉnh/huyện/xã
         if (!name.isEmpty() && (provinceId >= 1 || districtId >= 1 || wardId >= 1)) {
             return garageService.findAllByProvinceIdAndDistrictIdAndWardIdAndNameContaining(provinceId, districtId, wardId, name).stream().map(Garage::toApiResponse).toList();
