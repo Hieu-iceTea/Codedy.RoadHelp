@@ -54,9 +54,25 @@ class IssueRepository {
   }
 
   //#region - Extend -
-  static Future<List<Issue>> findAllByStatusSent() async {
+  static Future<List<Issue>> findAllByStatusSent({
+    double? latitude,
+    double? longitude,
+    int? distance}) async {
+
+    String url = _url + "byStatusSent?";
+
+    if (latitude != null) {
+      url += "&latitude=$latitude";
+    }
+    if (longitude != null) {
+      url += "&longitude=$longitude";
+    }
+    if (distance != null) {
+      url += "&distance=$distance";
+    }
+
     var responseBody = await HttpHelper.get(
-      url: _url + "byStatusSent",
+      url: url,
     );
 
     return responseBody
