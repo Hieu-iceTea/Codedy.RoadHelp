@@ -58,7 +58,7 @@ class _ReceiveRescueScreenState extends State<ReceiveRescueScreen> {
           Consumer<IssueProvider>(
             builder: (context, value, child) => Text(
               _issueListScreenState == IssueListScreenState.receiveNew
-                  ? "${value.items.length} người đang cần bạn hỗ trợ"
+                  ? "${value.items.length} người gần bạn đang cần bạn hỗ trợ"
                   : "${value.items.length} mục",
               style: Theme.of(context).textTheme.caption,
             ),

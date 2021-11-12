@@ -92,7 +92,7 @@ class GarageDescription extends StatelessWidget {
             child: Row(
               children: [
                 Text(
-                  "Xem chi tiết hơn",
+                  "Xem thêm",
                   style: TextStyle(
                       fontWeight: FontWeight.w600, color: kPrimaryColor),
                 ),
