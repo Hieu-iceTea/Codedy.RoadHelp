@@ -35,6 +35,7 @@ import '/screens/emergency_rescue/send/wait_websocket/wait_websocket_screen.dart
 import '/screens/emergency_rescue/user_info/user_info_screen.dart';
 import '/screens/emergency_rescue/issue_details/issue_details_screen.dart';
 import '/screens/admin/confirm_become_partner/user_request_become_partner/user_request_become_partner_screen.dart';
+import '/screens/admin/confirm_become_partner/user_details/user_details_screen.dart';
 
 // We use name route
 // All our routes will be available here
@@ -75,4 +76,5 @@ final Map<String, WidgetBuilder> routes = {
   UserInfoScreen.routeName: (context) => const UserInfoScreen(),
   IssueDetailsScreen.routeName: (context) => const IssueDetailsScreen(),
   UserRequestBecomePartnerScreen.routeName: (context) => const UserRequestBecomePartnerScreen(),
+  UserDetailsScreen.routeName: (context) => const UserDetailsScreen(),
 };
