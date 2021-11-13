@@ -51,7 +51,7 @@ class Body extends StatelessWidget {
               ),
             if (authProvider.authData.currentUser != null &&
                 authProvider.authData.currentUser!
-                    .hasAuthority(AuthorityRole.partner.key))
+                    .hasAuthority(AuthorityRole.admin.key))
               MenuItem(
                 text: "Phê duyệt yêu cầu trở thành đối tác",
                 icon: "assets/icons/Flash Icon.svg",
