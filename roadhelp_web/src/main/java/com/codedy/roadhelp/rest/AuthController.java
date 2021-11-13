@@ -5,6 +5,7 @@ import com.codedy.roadhelp.model.User;
 import com.codedy.roadhelp.payload.request.LoginRequest;
 import com.codedy.roadhelp.payload.response.JwtResponse;
 import com.codedy.roadhelp.payload.response.MessageResponse;
+import com.codedy.roadhelp.rest.exception.RestNotFoundException;
 import com.codedy.roadhelp.security.jwt.JwtUtils;
 import com.codedy.roadhelp.service.authority.AuthorityService;
 import com.codedy.roadhelp.service.user.UserDetailsImpl;
@@ -242,10 +243,14 @@ public class AuthController {
 
     }
 
-    @PostMapping(path = {"/reset-password/{userId}", "/reset-password/{userId}/"})
-    public ResponseEntity<?> resetPassword(@PathVariable int userId) {
+    @PostMapping(path = {"/reset-password", "/reset-password/"})
+    public ResponseEntity<?> resetPassword(@RequestParam String email){
 
-        User user = userService.findById(userId);
+        User user = userService.findByEmail(email);
+
+        if (user == null) {
+            throw new RestNotFoundException("Email not found - " + email);
+        }
 
         String resetPasswordCode = String.valueOf(Common.random(1000, 9999));
 
@@ -290,6 +295,7 @@ public class AuthController {
 
     private void sendEmail_ResetPasswordCode(String toEmail, Map<String, Object> mailData) {
         emailService.sendSimpleMessage(toEmail, "Thông báo mã xác minh", "Mã xác minh của bạn là: " + mailData.get("resetPasswordCode"));
+
 
     }
 }

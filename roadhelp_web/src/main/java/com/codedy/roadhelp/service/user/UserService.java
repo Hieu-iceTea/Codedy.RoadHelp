@@ -6,6 +6,6 @@ import com.codedy.roadhelp.service.base.BaseService;
 
 public interface UserService extends BaseService<User, Integer> {
 
-    //
+    User findByEmail(String email);
 
 }
