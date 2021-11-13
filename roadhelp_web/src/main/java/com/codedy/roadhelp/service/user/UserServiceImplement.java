@@ -38,6 +38,11 @@ public class UserServiceImplement extends BaseServiceImplement<User, Integer> im
 
         return UserDetailsImpl.build(user);
     }
+
+    @Override
+    public User findByEmail(String email) {
+        return userRepository.findByEmail(email);
+    }
     //endregion
 
     @Override

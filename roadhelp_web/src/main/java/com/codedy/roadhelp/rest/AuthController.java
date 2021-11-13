@@ -5,6 +5,7 @@ import com.codedy.roadhelp.model.User;
 import com.codedy.roadhelp.payload.request.LoginRequest;
 import com.codedy.roadhelp.payload.response.JwtResponse;
 import com.codedy.roadhelp.payload.response.MessageResponse;
+import com.codedy.roadhelp.rest.exception.RestNotFoundException;
 import com.codedy.roadhelp.security.jwt.JwtUtils;
 import com.codedy.roadhelp.service.authority.AuthorityService;
 import com.codedy.roadhelp.service.user.UserDetailsImpl;
@@ -250,4 +251,59 @@ public class AuthController {
 
     }
 
+    @PostMapping(path = {"/reset-password", "/reset-password/"})
+    public ResponseEntity<?> resetPassword(@RequestParam String email){
+
+        User user = userService.findByEmail(email);
+
+        if (user == null) {
+            throw new RestNotFoundException("Email not found - " + email);
+        }
+
+        String resetPasswordCode = String.valueOf(Common.random(1000, 9999));
+
+        // 01. Cập nhật DB
+        user.setResetPasswordCode(resetPasswordCode);
+        userService.save(user);
+
+        // 02. Gửi mail
+        Map<String, Object> mail_data = new HashMap<>() {{
+            put("resetPasswordCode", resetPasswordCode);
+        }};
+        this.sendEmail_ResetPasswordCode(user.getEmail(), mail_data);
+
+        return ResponseEntity.ok(new MessageResponse("Successfully! Please check email and verification code"));
+
+    }
+
+    @PostMapping(path = {"/reset-password/{userId}/verification/{resetPasswordCode}", "/reset-password/{userId}/verification/{resetPasswordCode}/"})
+    public ResponseEntity<?> resetPasswordVerification(@PathVariable int userId, @PathVariable String resetPasswordCode) {
+
+        User user = userService.findById(userId);
+
+        if (!user.getResetPasswordCode().equals(resetPasswordCode)) {
+            throw new RuntimeException("Mã xác thực không khớp.");
+        }
+
+        user.setResetPasswordCode(null); //Xóa mã
+        userService.save(user);
+
+        return ResponseEntity.ok(new MessageResponse("Reset password successfully"));
+    }
+
+    @PostMapping(path = {"/confirm-reset-password/{userId}", "/confirm-reset-password/{userId}/"})
+    public ResponseEntity<?> resetPassword(@Valid @RequestBody HashMap<String, String> requestBody, @PathVariable int userId) {
+        User user = userService.findById(userId);
+        String password = requestBody.get("password");
+        user.setPassword(BCrypt.hashpw(password, BCrypt.gensalt(12)));
+
+        userService.save(user);
+        return ResponseEntity.ok(new MessageResponse("Reset password successfully!"));
+    }
+
+    private void sendEmail_ResetPasswordCode(String toEmail, Map<String, Object> mailData) {
+        emailService.sendSimpleMessage(toEmail, "Thông báo mã xác minh", "Mã xác minh của bạn là: " + mailData.get("resetPasswordCode"));
+
+
+    }
 }

@@ -12,6 +12,9 @@ public interface UserRepository extends BaseRepository<User, Integer>{
     User findByPartnerIssuesId(int partnerIssues_id);
     User findUserPartnerByPartnerIssuesId(int partnerIssues_id);
     User findUserPartnerByMemberIssuesId(int memberIssues_id);
+  
+    //
+    User findByEmail(String email);
 
     // Danh sách user đang yêu cầu trở thành partner
     List<User> findAllByRequestBecomePartner(boolean requestBecomePartner);

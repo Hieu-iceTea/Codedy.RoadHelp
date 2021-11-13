@@ -8,6 +8,8 @@ import java.util.List;
 
 public interface UserService extends BaseService<User, Integer> {
 
+    User findByEmail(String email);
+  
     List<User> findAllByRequestBecomePartner(boolean requestBecomePartner);
 
 }
