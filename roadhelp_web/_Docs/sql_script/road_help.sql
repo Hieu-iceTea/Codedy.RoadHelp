@@ -470,6 +470,8 @@ INSERT INTO authorities (username, authority)
 VALUES
 ('Host', 'ROLE_HOST'),
 ('Admin', 'ROLE_ADMIN'),
+('Admin', 'ROLE_PARTNER'),
+('Admin', 'ROLE_MEMBER'),
 ('Admin_Demo', 'ROLE_ADMIN'),
 ('Partner', 'ROLE_PARTNER'),
 ('Partner', 'ROLE_MEMBER'),
