@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 
 @Service
@@ -39,5 +40,9 @@ public class UserServiceImplement extends BaseServiceImplement<User, Integer> im
     }
     //endregion
 
+    @Override
+    public List<User> findAllByRequestBecomePartner(boolean requestBecomePartner) {
+        return userRepository.findAllByRequestBecomePartner(requestBecomePartner);
+    }
 
 }

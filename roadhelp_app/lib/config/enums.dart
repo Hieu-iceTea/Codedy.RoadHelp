@@ -89,6 +89,7 @@ extension UserGenderExtension on UserGender {
 enum AuthorityRole {
   member,
   partner,
+  admin,
 }
 
 extension AuthorityExtension on AuthorityRole {
@@ -98,6 +99,8 @@ extension AuthorityExtension on AuthorityRole {
         return 'ROLE_MEMBER';
       case AuthorityRole.partner:
         return 'ROLE_PARTNER';
+      case AuthorityRole.admin:
+        return 'ROLE_ADMIN';
     }
   }
 
@@ -107,6 +110,8 @@ extension AuthorityExtension on AuthorityRole {
         return 'Thành viên';
       case AuthorityRole.partner:
         return 'Đối tác';
+      case AuthorityRole.admin:
+        return 'Quản trị';
     }
   }
 }

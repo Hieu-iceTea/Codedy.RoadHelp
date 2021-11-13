@@ -1,4 +1,5 @@
 import 'package:roadhelp/models/auth.dart';
+import 'package:roadhelp/models/user.dart';
 
 import '/config/constants.dart';
 import '/helper/http_helper.dart';
@@ -48,6 +49,25 @@ class AuthRepository {
     );
 
     return Auth.fromJson(responseBody);
+  }
+
+  // Admin - Làm tạm
+  static Future<Auth> adminConfirmBecomeToPartner(int userMemberId) async {
+    var responseBody = await HttpHelper.post(
+      url: _url + "confirm-become-to-partner/" + userMemberId.toString(),
+      //body: null,
+    );
+
+    return Auth.fromJson(responseBody);
+  }
+
+  // Admin - Làm tạm
+  static Future<List<User>> findAllUserRequestBecomePartner() async {
+    var responseBody = await HttpHelper.get(
+      url: _url + "userRequestBecomePartner",
+    );
+
+    return responseBody.map<User>((element) => User.fromJson(element)).toList();
   }
 //#endregion
 }
