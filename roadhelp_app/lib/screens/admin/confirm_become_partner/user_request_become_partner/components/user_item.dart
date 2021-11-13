@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:roadhelp/helper/util.dart';
 import 'package:roadhelp/models/user.dart';
+import 'package:roadhelp/repositories/auth_repository.dart';
 import 'package:roadhelp/screens/admin/confirm_become_partner/user_details/user_details_screen.dart';
 
 class UserItem extends StatelessWidget {
@@ -18,7 +20,22 @@ class UserItem extends StatelessWidget {
         UserDetailsScreen.routeName,
         arguments: UserDetailsArguments(
           user: user,
-          onConfirm: () {},
+          onConfirm: () async {
+            try {
+              await AuthRepository.adminConfirmBecomeToPartner(user.id!);
+
+              await Util.showDialogNotification(
+                context: context,
+                title: "Thành công",
+                content: "Đã xác nhận tài khoản này trở thành đối tác",
+              );
+
+              Navigator.pop(context);
+            } catch (error) {
+              await Util.showDialogNotification(
+                  context: context, content: error.toString());
+            }
+          },
           //onCancel: () {},
         ),
       ),
