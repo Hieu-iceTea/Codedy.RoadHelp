@@ -197,44 +197,44 @@ CREATE TABLE IF NOT EXISTS `authorities`
 
 # Default password: 123456
 #region Insert Users
-INSERT INTO users (id, username, email, password, image, gender, first_name, last_name,phone,address, active)
-VALUE (1, 'Host', 'host.codedy@gmail.com', '$2y$10$//Od0OmEqRwFepW3wynrYOwslyvaS.snzBbpWwskF1Zrg5fNI.eTe','host.jpg', 1, 'CODEDY', 'Host', '032 87 99 000','Hà Nội', TRUE);
+INSERT INTO users (id, username, email, password, image, gender, first_name, last_name,phone,address, active, request_become_partner)
+VALUE (1, 'Host', 'host.codedy@gmail.com', '$2y$10$//Od0OmEqRwFepW3wynrYOwslyvaS.snzBbpWwskF1Zrg5fNI.eTe','host.jpg', 1, 'CODEDY', 'Host', '032 87 99 000','Hà Nội', TRUE, FALSE);
 
-INSERT INTO users (id, username, email, password, image, gender, first_name, last_name,phone,address, active)
-VALUE (2, 'Admin', 'admin.codedy@gmail.com', '$2y$10$//Od0OmEqRwFepW3wynrYOwslyvaS.snzBbpWwskF1Zrg5fNI.eTe','admin.jpg', 1, 'CODEDY', 'Admin', '0868 6633 15','Hoàn Kiếm', TRUE);
+INSERT INTO users (id, username, email, password, image, gender, first_name, last_name,phone,address, active, request_become_partner)
+VALUE (2, 'Admin', 'admin.codedy@gmail.com', '$2y$10$//Od0OmEqRwFepW3wynrYOwslyvaS.snzBbpWwskF1Zrg5fNI.eTe','admin.jpg', 1, 'CODEDY', 'Admin', '0868 6633 13','Hoàn Kiếm', TRUE, FALSE);
 
-INSERT INTO users (id, username, email, password, image, gender, first_name, last_name,phone,address, active)
-VALUE (3, 'Admin_Demo', 'admin_demo.codedy@gmail.com', '$2y$10$//Od0OmEqRwFepW3wynrYOwslyvaS.snzBbpWwskF1Zrg5fNI.eTe','admin_demo.jpg', 1, 'CODEDY', 'Admin Demo', '0868 6633 16','Hồ Tây', FALSE);
+INSERT INTO users (id, username, email, password, image, gender, first_name, last_name,phone,address, active, request_become_partner)
+VALUE (3, 'Admin_Demo', 'admin_demo.codedy@gmail.com', '$2y$10$//Od0OmEqRwFepW3wynrYOwslyvaS.snzBbpWwskF1Zrg5fNI.eTe','admin_demo.jpg', 1, 'CODEDY', 'Admin Demo', '0868 6633 16','Hồ Tây', FALSE, FALSE);
 
-INSERT INTO users (id, username, email, password, image, gender, first_name, last_name,phone,address, active)
-VALUE (4, 'Partner', 'partner.codedy@gmail.com', '$2y$10$//Od0OmEqRwFepW3wynrYOwslyvaS.snzBbpWwskF1Zrg5fNI.eTe','partner.jpg', 1, 'CODEDY', 'Partner', '0868 6633 17','Hà Đông', TRUE);
+INSERT INTO users (id, username, email, password, image, gender, first_name, last_name,phone,address, active, request_become_partner)
+VALUE (4, 'Partner', 'partner.codedy@gmail.com', '$2y$10$//Od0OmEqRwFepW3wynrYOwslyvaS.snzBbpWwskF1Zrg5fNI.eTe','partner.jpg', 1, 'CODEDY', 'Partner', '0868 6633 17','Hà Đông', TRUE, FALSE);
 
-INSERT INTO users (id, username, email, password, image, gender, first_name, last_name,phone,address, active)
-VALUE (5, 'Partner_B', 'partner_b.codedy@gmail.com', '$2y$10$//Od0OmEqRwFepW3wynrYOwslyvaS.snzBbpWwskF1Zrg5fNI.eTe','partner_b.jpg', 2, 'CODEDY', 'Partner B', '0869 6633 18','Hà tây', FALSE);
+INSERT INTO users (id, username, email, password, image, gender, first_name, last_name,phone,address, active, request_become_partner)
+VALUE (5, 'Partner_B', 'partner_b.codedy@gmail.com', '$2y$10$//Od0OmEqRwFepW3wynrYOwslyvaS.snzBbpWwskF1Zrg5fNI.eTe','partner_b.jpg', 2, 'CODEDY', 'Partner B', '0869 6633 18','Hà tây', FALSE, FALSE);
 
-INSERT INTO users (id, username, email, password, image, gender, first_name, last_name,phone,address, active)
-VALUE (6, 'Member', 'member.codedy@gmail.com', '$2y$10$//Od0OmEqRwFepW3wynrYOwslyvaS.snzBbpWwskF1Zrg5fNI.eTe','member.jpg', 1, 'CODEDY', 'Member', '0869 6633 19','Hà tây', TRUE);
+INSERT INTO users (id, username, email, password, image, gender, first_name, last_name,phone,address, active, request_become_partner)
+VALUE (6, 'Member', 'member.codedy@gmail.com', '$2y$10$//Od0OmEqRwFepW3wynrYOwslyvaS.snzBbpWwskF1Zrg5fNI.eTe','member.jpg', 1, 'CODEDY', 'Member', '0869 6633 19','Hà tây', TRUE, FALSE);
 
-INSERT INTO users (id, username, email, password, image, gender, first_name, last_name,phone,address, active)
-VALUE (7, 'AnhNTTH1908059', 'AnhNTTH1908059@fpt.edu.vn', '$2y$10$//Od0OmEqRwFepW3wynrYOwslyvaS.snzBbpWwskF1Zrg5fNI.eTe','AnhNTTH1908059.jpg', 1, 'Nguyễn Trung', 'Anh', '0869 6633 20','Hà tây', TRUE);
+INSERT INTO users (id, username, email, password, image, gender, first_name, last_name,phone,address, active, request_become_partner)
+VALUE (7, 'AnhNTTH1908059', 'AnhNTTH1908059@fpt.edu.vn', '$2y$10$//Od0OmEqRwFepW3wynrYOwslyvaS.snzBbpWwskF1Zrg5fNI.eTe','AnhNTTH1908059.jpg', 1, 'Nguyễn Trung', 'Anh', '0869 6633 20','Hà tây', TRUE, FALSE);
 
-INSERT INTO users (id, username, email, password, image, gender, first_name, last_name,phone,address, active)
-VALUE (8, 'HuyVQTH1909003', 'HuyVQTH1909003@fpt.edu.vn', '$2y$10$//Od0OmEqRwFepW3wynrYOwslyvaS.snzBbpWwskF1Zrg5fNI.eTe','HuyVQTH1909003.jpg', 1, 'Vũ Quang', 'Huy', '0870 6633 21','Hà tây', TRUE);
+INSERT INTO users (id, username, email, password, image, gender, first_name, last_name,phone,address, active, request_become_partner)
+VALUE (8, 'HuyVQTH1909003', 'HuyVQTH1909003@fpt.edu.vn', '$2y$10$//Od0OmEqRwFepW3wynrYOwslyvaS.snzBbpWwskF1Zrg5fNI.eTe','HuyVQTH1909003.jpg', 1, 'Vũ Quang', 'Huy', '0870 6633 21','Hà tây', TRUE, FALSE);
 
-INSERT INTO users (id, username, email, password, image, gender, first_name, last_name,phone,address, active)
-VALUE (9, 'HungNPMTH1908050', 'HungNPMTH1908050@fpt.edu.vn', '$2y$10$//Od0OmEqRwFepW3wynrYOwslyvaS.snzBbpWwskF1Zrg5fNI.eTe','HungNPMTH1908050.jpg', 1, 'Nông Phan Mạnh', 'Hùng', '0870 6633 22','Hà tây', TRUE);
+INSERT INTO users (id, username, email, password, image, gender, first_name, last_name,phone,address, active, request_become_partner)
+VALUE (9, 'HungNPMTH1908050', 'HungNPMTH1908050@fpt.edu.vn', '$2y$10$//Od0OmEqRwFepW3wynrYOwslyvaS.snzBbpWwskF1Zrg5fNI.eTe','HungNPMTH1908050.jpg', 1, 'Nông Phan Mạnh', 'Hùng', '0870 6633 22','Hà tây', TRUE, FALSE);
 
-INSERT INTO users (id, username, email, password, image, gender, first_name, last_name,phone,address, active)
-VALUE (10, 'DinhHieu8896', 'HieuNDTH1908028@fpt.edu.vn', '$2y$10$//Od0OmEqRwFepW3wynrYOwslyvaS.snzBbpWwskF1Zrg5fNI.eTe','DinhHieu8896.jpg', 1, 'Nguyễn Đình', 'Hiếu', '0870 6633 23','Hà tây', TRUE);
+INSERT INTO users (id, username, email, password, image, gender, first_name, last_name,phone,address, active, request_become_partner)
+VALUE (10, 'DinhHieu8896', 'HieuNDTH1908028@fpt.edu.vn', '$2y$10$//Od0OmEqRwFepW3wynrYOwslyvaS.snzBbpWwskF1Zrg5fNI.eTe','DinhHieu8896.jpg', 1, 'Nguyễn Đình', 'Hiếu', '0868 6633 15','Hà tây', TRUE, FALSE);
 
-INSERT INTO users (id, username, email, password, image, gender, first_name, last_name,phone,address, active)
-VALUE (11, 'ThiDk', 'ThiDK@fpt.edu.vn ', '$2y$10$//Od0OmEqRwFepW3wynrYOwslyvaS.snzBbpWwskF1Zrg5fNI.eTe','ThiDk.jpg', 2, 'Đặng Kim', 'Thi', '0871 6633 24','Hà tây', TRUE);
+INSERT INTO users (id, username, email, password, image, gender, first_name, last_name,phone,address, active, request_become_partner)
+VALUE (11, 'ThiDk', 'ThiDK@fpt.edu.vn ', '$2y$10$//Od0OmEqRwFepW3wynrYOwslyvaS.snzBbpWwskF1Zrg5fNI.eTe','ThiDk.jpg', 2, 'Đặng Kim', 'Thi', '0871 6633 24','Hà tây', TRUE, FALSE);
 
-INSERT INTO users (id, username, email, password, image, gender, first_name, last_name,phone,address, active)
-VALUE (12, 'Member_B', 'member_b.codedy@gmail.com', '$2y$10$//Od0OmEqRwFepW3wynrYOwslyvaS.snzBbpWwskF1Zrg5fNI.eTe','member_b.jpg', 1, 'CODEDY', 'Member B', '0871 6633 25','Hà tây', FALSE);
+INSERT INTO users (id, username, email, password, image, gender, first_name, last_name,phone,address, active, request_become_partner)
+VALUE (12, 'Member_B', 'member_b.codedy@gmail.com', '$2y$10$//Od0OmEqRwFepW3wynrYOwslyvaS.snzBbpWwskF1Zrg5fNI.eTe','member_b.jpg', 1, 'CODEDY', 'Member B', '0871 6633 25','Hà tây', FALSE, TRUE);
 
-INSERT INTO users (id, username, email, password, image, gender, first_name, last_name,phone,address, active)
-VALUE (13, 'ManhHung', 'ManhHung@fpt.edu.vn ', '$2y$10$//Od0OmEqRwFepW3wynrYOwslyvaS.snzBbpWwskF1Zrg5fNI.eTe','ManhHung.jpg', 2, 'Manh', 'Hung', '0871 6633 36','Hà tây', TRUE);
+INSERT INTO users (id, username, email, password, image, gender, first_name, last_name,phone,address, active, request_become_partner)
+VALUE (13, 'ManhHung', 'ManhHung@fpt.edu.vn ', '$2y$10$//Od0OmEqRwFepW3wynrYOwslyvaS.snzBbpWwskF1Zrg5fNI.eTe','ManhHung.jpg', 2, 'Manh', 'Hung', '0871 6633 26','Hà tây', TRUE, FALSE);
 
 
 
