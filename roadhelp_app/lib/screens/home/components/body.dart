@@ -25,7 +25,7 @@ class Body extends StatelessWidget {
                 currentUser: authProvider.authData.currentUser,
               ),
             ),
-            SpecialOffers(),
+            //SpecialOffers(),
             SizedBox(height: getProportionateScreenWidth(30)),
             PopularGarages(),
             SizedBox(height: getProportionateScreenWidth(30)),
