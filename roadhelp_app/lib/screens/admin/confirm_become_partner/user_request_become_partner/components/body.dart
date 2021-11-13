@@ -12,8 +12,14 @@ class Body extends StatefulWidget {
 }
 
 class _BodyState extends State<Body> {
+  List<User> _users = [];
+
   Future<List<User>> _fetchAllData(BuildContext context) async {
-    return await AuthRepository.findAllUserRequestBecomePartner();
+    _users = await AuthRepository.findAllUserRequestBecomePartner();
+
+    setState(() {});
+
+    return _users;
   }
 
   @override
@@ -27,9 +33,9 @@ class _BodyState extends State<Body> {
               child: ListView.separated(
                 padding: EdgeInsets.symmetric(
                     horizontal: getProportionateScreenWidth(15)),
-                itemCount: snapshot.data!.length,
+                itemCount: _users.length,
                 itemBuilder: (ctx, index) => UserItem(
-                  user: snapshot.data![index],
+                  user: _users[index],
                 ),
                 separatorBuilder: (context, index) => const Divider(),
               ),
