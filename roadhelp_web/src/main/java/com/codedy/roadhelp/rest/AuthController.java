@@ -183,7 +183,7 @@ public class AuthController {
     }
 
     @PostMapping(path = {"/confirm-become-to-partner/{userMemberId}", "/confirm-become-to-partner/{userMemberId}/"})
-    public ResponseEntity<?> confirmBecomeToPartnerVerification(@PathVariable int userMemberId) {
+    public ResponseEntity<?> confirmBecomeToPartner(@PathVariable int userMemberId) {
 
         User user = userService.findById(userMemberId);
 
@@ -223,6 +223,14 @@ public class AuthController {
         }
 
         return ResponseEntity.ok(new MessageResponse("Become to partner failure!"));
+    }
+
+    // Danh sách user đang yêu cầu trở thành partner - Admin - Làm tạm
+    @GetMapping(path = {"/userRequestBecomePartner", "/userRequestBecomePartner/"})
+    public List<LinkedHashMap<String, Object>> userRequestBecomePartner() {
+
+        return userService.findAllByRequestBecomePartner(true).stream().map(User::toApiResponse).toList();
+
     }
     //endregion
 

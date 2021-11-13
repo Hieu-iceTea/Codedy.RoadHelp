@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+import 'package:roadhelp/helper/location_helper.dart';
 import 'package:roadhelp/models/issue.dart';
 import 'package:roadhelp/models/rating_issue.dart';
 import 'package:roadhelp/repositories/issue_repository.dart';
@@ -55,7 +56,19 @@ class IssueProvider with ChangeNotifier {
   //#region - Extend -
   Future<List<Issue>> fetchAllDataByStatusSent() async {
     try {
-      List<Issue> _itemsLoaded = await IssueRepository.findAllByStatusSent();
+      double? latitude; // Test: 21.007688
+      double? longitude; // Test: 105.841373
+      int? distance = 30 * 1000; // Mặc định: 30Km
+
+      var currentLocation = await LocationHelper.getCurrentLocationCache();
+      latitude = currentLocation.latitude;
+      longitude = currentLocation.longitude;
+
+      List<Issue> _itemsLoaded = await IssueRepository.findAllByStatusSent(
+        latitude: latitude,
+        longitude: longitude,
+        distance: distance,
+      );
       _items.clear();
       _items.addAll(_itemsLoaded);
       notifyListeners();

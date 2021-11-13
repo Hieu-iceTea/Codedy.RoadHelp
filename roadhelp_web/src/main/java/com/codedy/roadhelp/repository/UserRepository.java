@@ -2,6 +2,7 @@ package com.codedy.roadhelp.repository;
 
 import com.codedy.roadhelp.model.User;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface UserRepository extends BaseRepository<User, Integer>{
@@ -11,5 +12,10 @@ public interface UserRepository extends BaseRepository<User, Integer>{
     User findByPartnerIssuesId(int partnerIssues_id);
     User findUserPartnerByPartnerIssuesId(int partnerIssues_id);
     User findUserPartnerByMemberIssuesId(int memberIssues_id);
+  
+    //
     User findByEmail(String email);
+
+    // Danh sách user đang yêu cầu trở thành partner
+    List<User> findAllByRequestBecomePartner(boolean requestBecomePartner);
 }

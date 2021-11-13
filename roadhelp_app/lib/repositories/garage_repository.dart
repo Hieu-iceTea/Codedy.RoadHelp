@@ -7,7 +7,13 @@ class GarageRepository {
   static const String _url = baseApiUrl + "api/v1/garages/";
 
   static Future<List<Garage>> findAll(
-      {String? name, int? provinceId, int? districtId, int? wardId}) async {
+      {String? name,
+      int? provinceId,
+      int? districtId,
+      int? wardId,
+      double? latitude,
+      double? longitude,
+      int? distance}) async {
     String url = _url + "?";
 
     if (name != null) {
@@ -21,6 +27,15 @@ class GarageRepository {
     }
     if (wardId != null) {
       url += "&wardId=$wardId";
+    }
+    if (latitude != null) {
+      url += "&latitude=$latitude";
+    }
+    if (longitude != null) {
+      url += "&longitude=$longitude";
+    }
+    if (distance != null) {
+      url += "&distance=$distance";
     }
 
     var responseBody = await HttpHelper.get(

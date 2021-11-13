@@ -211,8 +211,18 @@ public class IssueRestController {
 
     // Partner Xem danh sách những người đang cần hỗ trợ
     @GetMapping(path = {"/byStatusSent", "/byStatusSent/"})
-    public List<LinkedHashMap<String, Object>> showListRescue() {
-        return issueService.findIssueByStatus(IssueStatus.sent).stream().map(Issue::toApiResponse).toList();
+    public List<LinkedHashMap<String, Object>> showListRescue(@RequestParam(required = false, defaultValue = "0") double latitude,
+                                                            @RequestParam(required = false, defaultValue = "0") double longitude,
+                                                            @RequestParam(required = false, defaultValue = "0") int distance) {
+
+        List<Issue> issues = issueService.findIssueByStatus(IssueStatus.sent);
+
+        // Nếu có Vị trí gần nhất
+        if (latitude != 0 || longitude != 0 || distance > 0) { //Vị trí latitude, longitude có thể là số âm không nhỉ ??
+            return this.filterNearMe(issues, latitude, longitude, distance).stream().map(Issue::toApiResponse).toList();
+        }
+
+        return issues.stream().map(Issue::toApiResponse).toList();
     }
 
     // Partner Xác nhận giúp

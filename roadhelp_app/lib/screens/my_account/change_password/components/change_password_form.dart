@@ -71,9 +71,6 @@ class _SignUpFormState extends State<ChangePasswordForm> {
               if (_formKey.currentState!.validate()) {
                 _saveForm();
                 _formKey.currentState!.save();
-                //if all are valid then go to success screen
-                Navigator.pushNamed(
-                    context, ChangePasswordSuccessScreen.routeName);
               }
             },
           ),
@@ -201,7 +198,7 @@ class _SignUpFormState extends State<ChangePasswordForm> {
         await Provider.of<AuthProvider>(context, listen: false)
             .changePassword(password!, oldPassword!);
 
-        // Navigator.of(context).pop();
+        Navigator.of(context).pop();
       }
     } catch (error) {
       await Util.showDialogNotification(

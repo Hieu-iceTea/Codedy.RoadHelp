@@ -146,7 +146,13 @@ public class GarageRestController {
         // 1. Có tất cả tên và Vị trí gần nhất
         if (!name.isEmpty() && (latitude >= 1 || longitude >= 1 || distance >= 1)) {
             List<Garage> garages = garageService.findByNameContaining(name);
-            return this.filterNearMe(garages, latitude, longitude, distance).stream().map(Garage::toApiResponse).toList();
+            List<Garage> filterGarages = this.filterNearMe(garages, latitude, longitude, distance);
+
+            if (filterGarages.isEmpty()) { //Nếu sau khi lọc mà rỗng, thì trả về danh sách theo tên (làm tạm cách này)
+                return garages.stream().map(Garage::toApiResponse).toList();
+            }
+
+            return filterGarages.stream().map(Garage::toApiResponse).toList();
         }
 
         // 2. Chỉ có tên

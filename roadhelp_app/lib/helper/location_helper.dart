@@ -1,13 +1,17 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:http/http.dart' as http;
 import 'package:location/location.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 const GOOGLE_API_KEY =
     'AIzaSyCPGSoVHrfLmvJO6TF760Sc1IlbwNUkj5M'; // demo.hieu.icetea@gmail.com / Codedy_RoadHelp_Project
 
 class LocationHelper {
+  static const String _locationDataKey = "Location_Data";
+
   static String generateLocationPreviewImage({
     required double latitude,
     required double longitude,
@@ -66,5 +70,26 @@ class LocationHelper {
     });
 
     return _locationData;
+  }
+
+  static Future<LatLng> getCurrentLocationCache({bool refresh = false}) async {
+    final sharedPreferences = await SharedPreferences.getInstance();
+
+    //Nếu không có data từ SharedPreferences || hoặc refresh == true
+    if (refresh || !sharedPreferences.containsKey(_locationDataKey)) {
+      LocationData currentLocation = await getCurrentLocation();
+      LatLng latLng =
+          LatLng(currentLocation.latitude!, currentLocation.longitude!);
+
+      //Lưu dữ liệu vào SharedPreferences
+      sharedPreferences.setString(_locationDataKey, json.encode(latLng));
+
+      return latLng;
+    }
+
+    // Lấy data từ SharedPreferences:
+    var extractedLocationData =
+        json.decode(sharedPreferences.getString(_locationDataKey)!);
+    return LatLng.fromJson(extractedLocationData)!;
   }
 }

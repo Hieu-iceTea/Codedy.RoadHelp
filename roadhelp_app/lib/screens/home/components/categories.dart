@@ -4,7 +4,6 @@ import 'package:roadhelp/config/enums.dart';
 import 'package:roadhelp/models/user.dart';
 import 'package:roadhelp/screens/emergency_rescue/receive/receive_rescue/receive_rescue_screen.dart';
 import 'package:roadhelp/screens/emergency_rescue/send/send_rescue/send_rescue_screen.dart';
-import 'package:roadhelp/screens/place/gas_place/gas_place_screen.dart';
 import 'package:roadhelp/screens/place/repair_place/repair_place/repair_place_screen.dart';
 
 import '../../../config/size_config.dart';
@@ -37,28 +36,30 @@ class Categories extends StatelessWidget {
           "text": "Nhận Cứu Hộ",
           "routeName": ReceiveRescueScreen.routeName,
         },
-      {
+      /*{
         "icon": "assets/icons/Bill Icon.svg",
         "text": "Cây Xăng",
         "routeName": GasPlaceScreen.routeName,
-      },
-      if (currentUser != null &&
+      },*/
+      /*if (currentUser != null &&
           !currentUser!.hasAuthority(AuthorityRole.partner.key))
         {
           "icon": "assets/icons/Question mark.svg",
           "text": "Hỗ Trợ K.Hàng",
           "routeName": null,
+        },*/
+      if (currentUser != null &&
+          !currentUser!.hasAuthority(AuthorityRole.partner.key))
+        {
+          "icon": "assets/icons/Discover.svg",
+          "text": "Xem Thêm",
+          "routeName": null,
         },
-      {
-        "icon": "assets/icons/Discover.svg",
-        "text": "Xem Thêm",
-        "routeName": null,
-      },
     ];
     return Padding(
       padding: EdgeInsets.all(getProportionateScreenWidth(20)),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        mainAxisAlignment: MainAxisAlignment.spaceAround, //spaceBetween
         crossAxisAlignment: CrossAxisAlignment.start,
         children: List.generate(
           categories.length,
@@ -91,13 +92,14 @@ class CategoryCard extends StatelessWidget {
     return GestureDetector(
       onTap: press,
       child: SizedBox(
-        width: getProportionateScreenWidth(55),
+        width: getProportionateScreenWidth(55), //55
         child: Column(
           children: [
             Container(
               padding: EdgeInsets.all(getProportionateScreenWidth(15)),
               height: getProportionateScreenWidth(55),
               width: getProportionateScreenWidth(55),
+              //55
               decoration: BoxDecoration(
                 color: Color(0xFFFFECDF),
                 borderRadius: BorderRadius.circular(10),
