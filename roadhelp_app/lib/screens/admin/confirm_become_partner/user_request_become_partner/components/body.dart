@@ -17,9 +17,21 @@ class _BodyState extends State<Body> {
   Future<List<User>> _fetchAllData(BuildContext context) async {
     _users = await AuthRepository.findAllUserRequestBecomePartner();
 
-    setState(() {});
+    //Dùng các cách này sẽ lỗi. xem thêm: https://stackoverflow.com/questions/61175917/setstate-callback-argument-returned-a-future-in-flutter
+    /*setState(() {
+      _users = await AuthRepository.findAllUserRequestBecomePartner();
+    });*/
+
+    //setState(() {});
 
     return _users;
+  }
+
+  Future<void> _reloadAllData() async {
+    //Dùng tạm cách này - nó call API 2 lần chưa rõ nguyên nhân
+    setState(() {
+      _fetchAllData(context);
+    });
   }
 
   @override
@@ -29,7 +41,7 @@ class _BodyState extends State<Body> {
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             return RefreshIndicator(
-              onRefresh: () => _fetchAllData(context),
+              onRefresh: () => _reloadAllData(),
               child: ListView.separated(
                 padding: EdgeInsets.symmetric(
                     horizontal: getProportionateScreenWidth(15)),
