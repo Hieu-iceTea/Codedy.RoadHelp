@@ -34,6 +34,7 @@ import '/screens/my_account/success_partner/success_partner_screen.dart';
 import '/screens/emergency_rescue/send/wait_websocket/wait_websocket_screen.dart';
 import '/screens/emergency_rescue/user_info/user_info_screen.dart';
 import '/screens/emergency_rescue/issue_details/issue_details_screen.dart';
+import '/screens/admin/confirm_become_partner/user_request_become_partner/user_request_become_partner_screen.dart';
 
 // We use name route
 // All our routes will be available here
@@ -52,7 +53,6 @@ final Map<String, WidgetBuilder> routes = {
   CartScreen.routeName: (context) => CartScreen(),
   MenuOptionsScreen.routeName: (context) => MenuOptionsScreen(),
   //NEW:
-  //TODO: Chưa sửa 'routeName' của các màn hình:
   SignInPartnerScreen.routeName: (context) => const SignInPartnerScreen(),
   ReceiveRescueScreen.routeName: (context) => ReceiveRescueScreen(),
   ReceiveRescueNavigationMapScreen.routeName: (context) => const ReceiveRescueNavigationMapScreen(),
@@ -74,4 +74,5 @@ final Map<String, WidgetBuilder> routes = {
   WaitWebSocketScreen.routeName: (context) => const WaitWebSocketScreen(),
   UserInfoScreen.routeName: (context) => const UserInfoScreen(),
   IssueDetailsScreen.routeName: (context) => const IssueDetailsScreen(),
+  UserRequestBecomePartnerScreen.routeName: (context) => const UserRequestBecomePartnerScreen(),
 };

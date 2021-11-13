@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:roadhelp/config/enums.dart';
 import 'package:roadhelp/providers/auth_provider.dart';
+import 'package:roadhelp/screens/admin/confirm_become_partner/user_request_become_partner/user_request_become_partner_screen.dart';
 import 'package:roadhelp/screens/auth/sign_in/sign_in_screen.dart';
 import 'package:roadhelp/screens/emergency_rescue/receive/receive_rescue/receive_rescue_screen.dart';
 import 'package:roadhelp/screens/my_account/become_to_partner/become_to_partner_screen.dart';
@@ -47,6 +48,15 @@ class Body extends StatelessWidget {
                 icon: "assets/icons/Shop Icon.svg",
                 press: () => Navigator.pushNamed(
                     context, RepairPlaceManageScreen.routeName),
+              ),
+            if (authProvider.authData.currentUser != null &&
+                authProvider.authData.currentUser!
+                    .hasAuthority(AuthorityRole.partner.key))
+              MenuItem(
+                text: "Phê duyệt yêu cầu trở thành đối tác",
+                icon: "assets/icons/Flash Icon.svg",
+                press: () => Navigator.pushNamed(
+                    context, UserRequestBecomePartnerScreen.routeName),
               ),
             /*MenuItem(
               text: "Thông Báo",
