@@ -4,6 +4,8 @@ import 'package:roadhelp/config/size_config.dart';
 import 'package:roadhelp/screens/auth/sign_in/sign_in_screen.dart';
 
 class ResetPasswordSuccess extends StatefulWidget {
+  static String routeName = "/reset_password_success";
+
   const ResetPasswordSuccess({Key? key}) : super(key: key);
 
   @override
