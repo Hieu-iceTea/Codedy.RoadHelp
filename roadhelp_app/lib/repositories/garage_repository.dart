@@ -93,7 +93,7 @@ class GarageRepository {
       url: _url + "featured?isFeatured=" + featured.toString(),
     );
 
-    return Garage.fromJsonToList(responseBody);
+    return [...Garage.fromJsonToList(responseBody).reversed];
   }
 
   static Future<List<Garage>> findAllByPartnerId(
