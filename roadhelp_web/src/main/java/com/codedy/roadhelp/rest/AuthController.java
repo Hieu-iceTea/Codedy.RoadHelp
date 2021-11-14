@@ -252,7 +252,7 @@ public class AuthController {
     }
 
     @PostMapping(path = {"/reset-password", "/reset-password/"})
-    public ResponseEntity<?> resetPassword(@RequestParam String email){
+    public ResponseEntity<?> resetPassword(@RequestParam(required = false, defaultValue = "") String email){
 
         User user = userService.findByEmail(email);
 
@@ -276,10 +276,10 @@ public class AuthController {
 
     }
 
-    @PostMapping(path = {"/reset-password/{userId}/verification/{resetPasswordCode}", "/reset-password/{userId}/verification/{resetPasswordCode}/"})
-    public ResponseEntity<?> resetPasswordVerification(@PathVariable int userId, @PathVariable String resetPasswordCode) {
+    @PostMapping(path = {"/reset-password/{email}/verification/{resetPasswordCode}", "/reset-password/{email}/verification/{resetPasswordCode}/"})
+    public ResponseEntity<?> resetPasswordVerification(@PathVariable String email, @PathVariable String resetPasswordCode) {
 
-        User user = userService.findById(userId);
+        User user = userService.findByEmail(email);
 
         if (!user.getResetPasswordCode().equals(resetPasswordCode)) {
             throw new RuntimeException("Mã xác thực không khớp.");

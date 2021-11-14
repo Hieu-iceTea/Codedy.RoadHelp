@@ -124,12 +124,12 @@ class AuthProvider with ChangeNotifier {
 
     notifyListeners();
     return itemResponse;
-
   }
 
   Future<User> updateAvatarUser({required File imageFile}) async {
     int? userId = _authData.currentUser!.id;
-    User itemResponse = await UserRepository.updateAvatar(userId: userId!, imageFile: imageFile);
+    User itemResponse = await UserRepository.updateAvatar(
+        userId: userId!, imageFile: imageFile);
 
     //Reload currentUser
     _authData.currentUser = await UserRepository.findById(_authData.userId!);
@@ -140,7 +140,8 @@ class AuthProvider with ChangeNotifier {
 
   Future<User?> changePassword(String password, String oldPassword) async {
     int? userId = _authData.currentUser!.id;
-    User itemResponse = await UserRepository.changePassword(password, oldPassword, userId!);
+    User itemResponse =
+        await UserRepository.changePassword(password, oldPassword, userId!);
 
     //Reload currentUser
     _authData.currentUser = await UserRepository.findById(_authData.userId!);
@@ -178,5 +179,24 @@ class AuthProvider with ChangeNotifier {
     notifyListeners();
     return _authData;
   }
+
 //#endregion
+
+  Future<Auth> resetPassword({String? email}) async {
+    Auth itemResponse = await AuthRepository.resetPassword(email: email);
+
+    _authData.message = itemResponse.message;
+
+    notifyListeners();
+    return _authData;
+  }
+
+  Future<Auth> resetPasswordVerification(String email, String resetPasswordCode) async {
+    Auth itemResponse = await AuthRepository.resetPasswordVerification(email, resetPasswordCode);
+
+    _authData.message = itemResponse.message;
+
+    notifyListeners();
+    return _authData;
+  }
 }
