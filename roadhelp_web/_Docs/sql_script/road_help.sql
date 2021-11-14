@@ -210,31 +210,38 @@ INSERT INTO users (id, username, email, password, image, gender, first_name, las
 VALUE (4, 'Partner', 'partner.codedy@gmail.com', '$2y$10$//Od0OmEqRwFepW3wynrYOwslyvaS.snzBbpWwskF1Zrg5fNI.eTe','partner.jpg', 1, 'CODEDY', 'Partner', '0868 6633 17','Hà Đông', TRUE, FALSE);
 
 INSERT INTO users (id, username, email, password, image, gender, first_name, last_name,phone,address, active, request_become_partner)
-VALUE (5, 'Partner_B', 'partner_b.codedy@gmail.com', '$2y$10$//Od0OmEqRwFepW3wynrYOwslyvaS.snzBbpWwskF1Zrg5fNI.eTe','partner_b.jpg', 2, 'CODEDY', 'Partner B', '0869 6633 18','Hà tây', FALSE, FALSE);
+VALUE (5, 'Partner_B', 'partner_b.codedy@gmail.com', '$2y$10$//Od0OmEqRwFepW3wynrYOwslyvaS.snzBbpWwskF1Zrg5fNI.eTe','partner_b.jpg', 2, 'CODEDY', 'Partner B', '0869 6633 18','Hà Tây', FALSE, FALSE);
 
 INSERT INTO users (id, username, email, password, image, gender, first_name, last_name,phone,address, active, request_become_partner)
-VALUE (6, 'Member', 'member.codedy@gmail.com', '$2y$10$//Od0OmEqRwFepW3wynrYOwslyvaS.snzBbpWwskF1Zrg5fNI.eTe','member.jpg', 1, 'CODEDY', 'Member', '0869 6633 19','Hà tây', TRUE, FALSE);
+VALUE (6, 'Member', 'member.codedy@gmail.com', '$2y$10$//Od0OmEqRwFepW3wynrYOwslyvaS.snzBbpWwskF1Zrg5fNI.eTe','member.jpg', 1, 'CODEDY', 'Member', '0869 6633 19','Hà Nội', TRUE, FALSE);
 
 INSERT INTO users (id, username, email, password, image, gender, first_name, last_name,phone,address, active, request_become_partner)
-VALUE (7, 'AnhNTTH1908059', 'AnhNTTH1908059@fpt.edu.vn', '$2y$10$//Od0OmEqRwFepW3wynrYOwslyvaS.snzBbpWwskF1Zrg5fNI.eTe','AnhNTTH1908059.jpg', 1, 'Nguyễn Trung', 'Anh', '0869 6633 20','Hà tây', TRUE, FALSE);
+VALUE (7, 'AnhNTTH1908059', 'AnhNTTH1908059@fpt.edu.vn', '$2y$10$//Od0OmEqRwFepW3wynrYOwslyvaS.snzBbpWwskF1Zrg5fNI.eTe','AnhNTTH1908059.jpg', 1, 'Nguyễn Trung', 'Anh', '0869 6633 20','Hà Nội', TRUE, FALSE);
 
 INSERT INTO users (id, username, email, password, image, gender, first_name, last_name,phone,address, active, request_become_partner)
-VALUE (8, 'HuyVQTH1909003', 'HuyVQTH1909003@fpt.edu.vn', '$2y$10$//Od0OmEqRwFepW3wynrYOwslyvaS.snzBbpWwskF1Zrg5fNI.eTe','HuyVQTH1909003.jpg', 1, 'Vũ Quang', 'Huy', '0870 6633 21','Hà tây', TRUE, FALSE);
+VALUE (8, 'HuyVQTH1909003', 'HuyVQTH1909003@fpt.edu.vn', '$2y$10$//Od0OmEqRwFepW3wynrYOwslyvaS.snzBbpWwskF1Zrg5fNI.eTe','HuyVQTH1909003.jpg', 1, 'Vũ Quang', 'Huy', '0870 6633 21','Hà Nội', TRUE, FALSE);
 
 INSERT INTO users (id, username, email, password, image, gender, first_name, last_name,phone,address, active, request_become_partner)
-VALUE (9, 'HungNPMTH1908050', 'HungNPMTH1908050@fpt.edu.vn', '$2y$10$//Od0OmEqRwFepW3wynrYOwslyvaS.snzBbpWwskF1Zrg5fNI.eTe','HungNPMTH1908050.jpg', 1, 'Nông Phan Mạnh', 'Hùng', '0870 6633 22','Hà tây', TRUE, FALSE);
+VALUE (9, 'HungNPMTH1908050', 'HungNPMTH1908050@fpt.edu.vn', '$2y$10$//Od0OmEqRwFepW3wynrYOwslyvaS.snzBbpWwskF1Zrg5fNI.eTe','HungNPMTH1908050.jpg', 1, 'Nông Phan Mạnh', 'Hùng', '0870 6633 22','Hà Nội', TRUE, FALSE);
 
 INSERT INTO users (id, username, email, password, image, gender, first_name, last_name,phone,address, active, request_become_partner)
-VALUE (10, 'DinhHieu8896', 'HieuNDTH1908028@fpt.edu.vn', '$2y$10$//Od0OmEqRwFepW3wynrYOwslyvaS.snzBbpWwskF1Zrg5fNI.eTe','DinhHieu8896.jpg', 1, 'Nguyễn Đình', 'Hiếu', '0868 6633 15','Hà tây', TRUE, FALSE);
+VALUE (10, 'DinhHieu8896', 'HieuNDTH1908028@fpt.edu.vn', '$2y$10$//Od0OmEqRwFepW3wynrYOwslyvaS.snzBbpWwskF1Zrg5fNI.eTe','DinhHieu8896.jpg', 1, 'Nguyễn Đình', 'Hiếu', '0868 6633 15','Thanh Xuân, Hà Nội', TRUE, FALSE);
 
 INSERT INTO users (id, username, email, password, image, gender, first_name, last_name,phone,address, active, request_become_partner)
-VALUE (11, 'ThiDk', 'ThiDK@fpt.edu.vn ', '$2y$10$//Od0OmEqRwFepW3wynrYOwslyvaS.snzBbpWwskF1Zrg5fNI.eTe','ThiDk.jpg', 2, 'Đặng Kim', 'Thi', '0871 6633 24','Hà tây', TRUE, FALSE);
+VALUE (11, 'ThiDk', 'ThiDK@fpt.edu.vn ', '$2y$10$//Od0OmEqRwFepW3wynrYOwslyvaS.snzBbpWwskF1Zrg5fNI.eTe','ThiDk.jpg', 2, 'Đặng Kim', 'Thi', '0871 6633 24','Hà Nội', TRUE, FALSE);
 
 INSERT INTO users (id, username, email, password, image, gender, first_name, last_name,phone,address, active, request_become_partner)
-VALUE (12, 'Member_B', 'member_b.codedy@gmail.com', '$2y$10$//Od0OmEqRwFepW3wynrYOwslyvaS.snzBbpWwskF1Zrg5fNI.eTe','member_b.jpg', 1, 'CODEDY', 'Member B', '0871 6633 25','Hà tây', FALSE, TRUE);
+VALUE (12, 'Member_B', 'member_b.codedy@gmail.com', '$2y$10$//Od0OmEqRwFepW3wynrYOwslyvaS.snzBbpWwskF1Zrg5fNI.eTe','member_b.jpg', 1, 'CODEDY', 'Member B', '0871 6633 25','Hà Nội', FALSE, TRUE);
 
 INSERT INTO users (id, username, email, password, image, gender, first_name, last_name,phone,address, active, request_become_partner)
-VALUE (13, 'ManhHung', 'ManhHung@fpt.edu.vn ', '$2y$10$//Od0OmEqRwFepW3wynrYOwslyvaS.snzBbpWwskF1Zrg5fNI.eTe','ManhHung.jpg', 2, 'Manh', 'Hung', '0871 6633 26','Hà tây', TRUE, FALSE);
+VALUE (13, 'ManhHung', 'ManhHung@fpt.edu.vn ', '$2y$10$//Od0OmEqRwFepW3wynrYOwslyvaS.snzBbpWwskF1Zrg5fNI.eTe','ManhHung.jpg', 2, 'Manh', 'Hung', '0871 6633 26','Hà Nội', TRUE, FALSE);
+
+INSERT INTO users (id, username, email, password, image, gender, first_name, last_name,phone,address, active, request_become_partner)
+VALUE (14, 'VuHVTH1908054', 'VuHVTH1908054@fpt.edu.vn', '$2y$10$//Od0OmEqRwFepW3wynrYOwslyvaS.snzBbpWwskF1Zrg5fNI.eTe','VuHVTH1908054.jpg', 1, 'Đỗ Thị Chan', 'Hòa', '0981159826','Hà Nội', TRUE, FALSE);
+
+INSERT INTO users (id, username, email, password, image, gender, first_name, last_name,phone,address, active, request_become_partner)
+VALUE (15, 'HoaDTCTH1909001', 'HoaDTCTH1909001@fpt.edu.vn', '$2y$10$//Od0OmEqRwFepW3wynrYOwslyvaS.snzBbpWwskF1Zrg5fNI.eTe','HoaDTCTH1909001.jpg', 2, 'Hà Văn', 'Vũ', '0825894329','Hà Nội', TRUE, FALSE);
+
 
 
 
@@ -278,7 +285,20 @@ INSERT INTO garage (id,user_partner_id,district_id,province_id,ward_id,name,rate
 VALUE (12,5,32,2, 476,'Garage Quang Huy 4', 5.0,21.013804, 105.839543, 'Đường Lê Duẩn', 'chuyên sửa xe', '0873 6633 22', TRUE,0);
 
 INSERT INTO garage (id,user_partner_id,district_id,province_id,ward_id,name,rate_avg,latitude, longitude, address, description, phone, active,is_featured)
-VALUE (13,4,285,20, 4148,'Sữa Xe Máy Thanh Đào', 4.8,18.741316, 105.6586408, 'Đường Thăng Long, TP Vinh', 'Uy tín, Chất lượng, Sửa nhanh', '0987179107', TRUE,1);
+VALUE (13,4,285,20, 4148,'Sửa xe máy Thanh motor', 4.9,18.726102, 105.6632644, 'Xóm 15, Nghi Kim, tp Vinh, Nghệ An', 'Chuyên sửa xe ga, xe số', '0981 416 436', TRUE,1);
+
+INSERT INTO garage (id,user_partner_id,district_id,province_id,ward_id,name,rate_avg,latitude, longitude, address, description, phone, active,is_featured)
+VALUE (14,4,285,20, 4148,'Sửa Xe Huy Mân', 4.5,18.6801207, 105.6739363, '129 Lý Thường Kiệt, Lê Lợi, tp Vinh, Nghệ An', 'Sửa chữa thay thế phụ tùng xe máy', '0977652842', TRUE,1);
+
+INSERT INTO garage (id,user_partner_id,district_id,province_id,ward_id,name,rate_avg,latitude, longitude, address, description, phone, active,is_featured)
+VALUE (15,4,285,20, 4148,'Sữa Xe Máy Thanh Đào', 4.8,18.741316, 105.6586408, 'Đường Thăng Long, Nghi Liên, TP Vinh', 'Uy tín, Chất lượng, Sửa nhanh', '0987179107', TRUE,1);
+
+INSERT INTO garage (id,user_partner_id,district_id,province_id,ward_id,name,rate_avg,latitude, longitude, address, description, phone, active,is_featured)
+VALUE (16,4,285,20, 4148,'Tiệm Sửa Xe Nhật Thái', 4.6,18.6643792, 105.6901323, 'Lê Duẩn, Trường Thi, Thành phố Vinh, Nghệ An', 'Chuyên cứu hộ xe máy', '0932 394 999', TRUE,1);
+
+INSERT INTO garage (id,user_partner_id,district_id,province_id,ward_id,name,rate_avg,latitude, longitude, address, description, phone, active,is_featured)
+VALUE (17,4,285,20, 4148,'Showroom Hiếu iceTea', 4.8,18.730966, 105.659688, 'Nghi Liên, TP Vinh, Nghệ An', 'Chuyên mua bán, sửa chữa các loại xe gắn máy tay ga xe số. Thay thế, lắp đặt phụ tùng chính hãng.', '0868 6633 15', TRUE,1);
+
 
 
 #endregion
@@ -333,10 +353,58 @@ INSERT INTO garageimage (id, garage_id,image)
 VALUE (16, 12, 'tiem8.jpg');
 
 INSERT INTO garageimage (id, garage_id,image)
-VALUE (17, 13, 'sua-xe-may-thanh-dao-1.jpg');
+VALUE (17, 15, 'sua-xe-may-thanh-dao-1.jpg');
 
 INSERT INTO garageimage (id, garage_id,image)
-VALUE (18, 13, 'sua-xe-may-thanh-dao-2.jpg');
+VALUE (18, 15, 'sua-xe-may-thanh-dao-2.jpg');
+
+INSERT INTO garageimage (id, garage_id,image)
+VALUE (19, 14, 'Thanh_Motor_1.jpg');
+
+INSERT INTO garageimage (id, garage_id,image)
+VALUE (20, 14, 'Thanh_Motor_2.jpg');
+
+INSERT INTO garageimage (id, garage_id,image)
+VALUE (21, 13, 'sua-xe-huy-man-1.jpg');
+
+INSERT INTO garageimage (id, garage_id,image)
+VALUE (22, 13, 'sua-xe-huy-man-2.jpg');
+
+INSERT INTO garageimage (id, garage_id,image)
+VALUE (23, 13, 'sua-xe-huy-man-3.jpg');
+
+INSERT INTO garageimage (id, garage_id,image)
+VALUE (24, 16, 'TiemSuaXeNhatThai-1.jpg');
+
+INSERT INTO garageimage (id, garage_id,image)
+VALUE (25, 16, 'TiemSuaXeNhatThai-2.jpg');
+
+INSERT INTO garageimage (id, garage_id,image)
+VALUE (26, 16, 'TiemSuaXeNhatThai-3.jpg');
+
+INSERT INTO garageimage (id, garage_id,image)
+VALUE (27, 16, 'TiemSuaXeNhatThai-4.jpg');
+
+INSERT INTO garageimage (id, garage_id,image)
+VALUE (28, 16, 'TiemSuaXeNhatThai-5.jpg');
+
+INSERT INTO garageimage (id, garage_id,image)
+VALUE (29, 17, 'Showroom-Hieu-iceTea-NgheAn-1.jpg');
+
+INSERT INTO garageimage (id, garage_id,image)
+VALUE (30, 17, 'Showroom-Hieu-iceTea-NgheAn-2.jpg');
+
+INSERT INTO garageimage (id, garage_id,image)
+VALUE (31, 17, 'Showroom-Hieu-iceTea-NgheAn-3.jpg');
+
+INSERT INTO garageimage (id, garage_id,image)
+VALUE (32, 17, 'Showroom-Hieu-iceTea-NgheAn-4.jpg');
+
+INSERT INTO garageimage (id, garage_id,image)
+VALUE (33, 17, 'Showroom-Hieu-iceTea-NgheAn-5.jpg');
+
+INSERT INTO garageimage (id, garage_id,image)
+VALUE (34, 17, 'Showroom-Hieu-iceTea-NgheAn-6.jpg');
 
 
 
@@ -382,7 +450,28 @@ INSERT INTO issue(id, user_member_id,user_partner_id, latitude, longitude,catego
 VALUE (12, 11, NULL, '21.013804', '105.839543','1',  '0871 6633 25',  'Đường Lê Duẩn','', '0');
 
 INSERT INTO issue(id, user_member_id,user_partner_id, latitude, longitude,category, phone,address,description, status)
-VALUE (13, 10, NULL, '18.7312677', '105.6624692','2',  '0868 6633 15',  'Đường Thăng Long, TP Vinh','Xe không nổ máy được, hãy giúp tôi.', '0');
+VALUE (13, 6, NULL, '18.671909', '105.696026','0',  '0868 6633 15',  '36 Phan Đăng Lưu, Trường Thi, TP Vinh, Nghệ An','', '0');
+
+INSERT INTO issue(id, user_member_id,user_partner_id, latitude, longitude,category, phone,address,description, status)
+VALUE (14, 14, NULL, '18.773700', '105.647588','1',  '0868 6633 16',  'Quốc Lộ 1A, Nghi Trung, Nghi Lộc, Nghệ An','', '0');
+
+INSERT INTO issue(id, user_member_id,user_partner_id, latitude, longitude,category, phone,address,description, status)
+VALUE (15, 7, NULL, '18.665677', '105.687710','2',  '0868 6633 17',  'Trần Phú, Trường Thi, Thành phố Vinh, Nghệ An','', '0');
+
+INSERT INTO issue(id, user_member_id,user_partner_id, latitude, longitude,category, phone,address,description, status)
+VALUE (16, 8, NULL, '18.758592', '105.693202','3',  '0869 6633 18',  'TP Vinh, Nghệ An','Chết máy giữa đường', '0');
+
+INSERT INTO issue(id, user_member_id,user_partner_id, latitude, longitude,category, phone,address,description, status)
+VALUE (17, 15, NULL, '18.713355', '105.661815','0',  '0869 6633 19',  'Ngõ 186, Đặng Thai Mai, Nghi Kim, TP Vinh, Nghệ An','Lốp trước bị thủng hết hơi, không thể di chuyển, hãy giúp tôi', '0');
+
+INSERT INTO issue(id, user_member_id,user_partner_id, latitude, longitude,category, phone,address,description, status)
+VALUE (18, 9, NULL, '18.735383', '105.660725','1',  '0869 6633 20',  'Nghi Liên, TP Vinh, Nghệ An','', '0');
+
+INSERT INTO issue(id, user_member_id,user_partner_id, latitude, longitude,category, phone,address,description, status)
+VALUE (19, 11, NULL, '18.718552', '105.672800','2',  '0870 6633 21',  'Nghi Phú, Thành Phố Vinh, Nghệ An','', '0');
+
+INSERT INTO issue(id, user_member_id,user_partner_id, latitude, longitude,category, phone,address,description, status)
+VALUE (20, 10, NULL, '18.669665', '105.670037','3',  '0870 6633 22',  'Đào Tấn, Cửa Nam, TP Vinh, Nghệ An','Xe không nổ máy được, hãy giúp tôi.', '0');
 
 
 #endregion
@@ -426,10 +515,34 @@ INSERT INTO ratingGarage (id, user_member_id, garage_id, rate_point, comment)
 VALUE (12, 12, 1, 5, 'Tốt');
 
 INSERT INTO ratingGarage (id, user_member_id, garage_id, rate_point, comment)
-VALUE (13, 10, 13, 5, 'Rất tốt');
+VALUE (13, 10, 15, 5, 'Hài lòng về giá cả và thái độ phục vụ');
 
 INSERT INTO ratingGarage (id, user_member_id, garage_id, rate_point, comment)
-VALUE (14, 11, 13, 4, 'Uy Tín');
+VALUE (14, 11, 15, 4, 'Uy Tín, Nhiệt tình');
+
+INSERT INTO ratingGarage (id, user_member_id, garage_id, rate_point, comment)
+VALUE (15, 10, 14, 5, 'Địa chỉ dễ tìm, nhiệt tình, cẩn thận. Vote 5☆');
+
+INSERT INTO ratingGarage (id, user_member_id, garage_id, rate_point, comment)
+VALUE (16, 11, 14, 4, 'Cửa hàng làm ăn uy tín chất lượng.lần sau tới tiếp');
+
+INSERT INTO ratingGarage (id, user_member_id, garage_id, rate_point, comment)
+VALUE (17, 10, 13, 5, 'Dịch vụ sửa xe máy rất tốt, rất chuyên nghiệp, đội ngũ thợ sửa xe đông, vui tính');
+
+INSERT INTO ratingGarage (id, user_member_id, garage_id, rate_point, comment)
+VALUE (18, 10, 16, 5, 'Cứu hộ xe rất nhiệt tình');
+
+INSERT INTO ratingGarage (id, user_member_id, garage_id, rate_point, comment)
+VALUE (19, 11, 16, 4, 'Cửa hàng uy tín');
+
+INSERT INTO ratingGarage (id, user_member_id, garage_id, rate_point, comment)
+VALUE (20, 8, 17, 5, 'NV kt kinh nghiệm.  Nhanh nhẹn.. Và rất thân thiệt. Đánh giá 5☆ luôn ủng hộ');
+
+INSERT INTO ratingGarage (id, user_member_id, garage_id, rate_point, comment)
+VALUE (21, 9, 17, 4, 'Hài lòng về giá cả và thái độ phục vụ của cửa hàng');
+
+INSERT INTO ratingGarage (id, user_member_id, garage_id, rate_point, comment)
+VALUE (22, 11, 17, 5, 'Chất lượng dịch vụ quá xuất sắc. mùa covid nắng nóng nhưng vẫn hỗ trợ giao xe tại nhà. nhân viên giao nhận vui vẻ nhiệt tình hướng dẫn');
 
 
 
