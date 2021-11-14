@@ -70,4 +70,26 @@ class AuthRepository {
     return responseBody.map<User>((element) => User.fromJson(element)).toList();
   }
 //#endregion
+  static Future<Auth> resetPassword({String? email}) async {
+
+    var responseBody = await HttpHelper.post(
+      url: _url + "reset-password?&email=$email",
+    );
+
+    return Auth.fromJson(responseBody);
+  }
+
+  static Future<Auth> resetPasswordVerification(
+      String email, String resetPasswordCode) async {
+    var responseBody = await HttpHelper.post(
+      url: _url +
+          "reset-password/" +
+          email.toString() +
+          "/verification/" +
+          resetPasswordCode,
+      //body: null,
+    );
+
+    return Auth.fromJson(responseBody);
+  }
 }

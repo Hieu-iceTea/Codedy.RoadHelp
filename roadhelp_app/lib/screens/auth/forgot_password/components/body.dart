@@ -1,4 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:roadhelp/helper/keyboard.dart';
+import 'package:roadhelp/helper/util.dart';
+import 'package:roadhelp/models/auth.dart';
+import 'package:roadhelp/providers/auth_provider.dart';
+import 'package:roadhelp/repositories/auth_repository.dart';
+import 'package:roadhelp/screens/auth/otp/otp_screen.dart';
+import 'package:roadhelp/screens/auth/reset_password/reset_password_screen.dart';
+import 'package:roadhelp/screens/auth/verify_otp_password/verify_otp_password_screen.dart';
 
 import '/components/custom_surfix_icon.dart';
 import '/components/default_button.dart';
@@ -15,7 +24,7 @@ class Body extends StatelessWidget {
       child: SingleChildScrollView(
         child: Padding(
           padding:
-          EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
+              EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
           child: Column(
             children: [
               SizedBox(height: SizeConfig.screenHeight * 0.04),
@@ -27,8 +36,8 @@ class Body extends StatelessWidget {
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              Text(
-                "Vui lòng nhập Email để lại mật khẩu!",
+              const Text(
+                "Vui lòng nhập Email của bạn!",
                 textAlign: TextAlign.center,
               ),
               SizedBox(height: SizeConfig.screenHeight * 0.1),
@@ -48,8 +57,23 @@ class ForgotPassForm extends StatefulWidget {
 
 class _ForgotPassFormState extends State<ForgotPassForm> {
   final _formKey = GlobalKey<FormState>();
-  List<String> errors = [];
+  List<String?> errors = [];
   String? email;
+
+  void addError({String? error}) {
+    if (!errors.contains(error))
+      setState(() {
+        errors.add(error);
+      });
+  }
+
+  void removeError({String? error}) {
+    if (errors.contains(error))
+      setState(() {
+        errors.remove(error);
+      });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -60,32 +84,25 @@ class _ForgotPassFormState extends State<ForgotPassForm> {
             keyboardType: TextInputType.emailAddress,
             onSaved: (newValue) => email = newValue,
             onChanged: (value) {
-              if (value.isNotEmpty && errors.contains(kEmailNullError)) {
-                setState(() {
-                  errors.remove(kEmailNullError);
-                });
-              } else if (emailValidatorRegExp.hasMatch(value) &&
-                  errors.contains(kInvalidEmailError)) {
-                setState(() {
-                  errors.remove(kInvalidEmailError);
-                });
+              if (value.isNotEmpty) {
+                removeError(error: kEmailNullError);
+              } else if (emailValidatorRegExp.hasMatch(value)) {
+                removeError(error: kInvalidEmailError);
               }
-              return null;
+
+              email = value;
             },
             validator: (value) {
-              if (value!.isEmpty && !errors.contains(kEmailNullError)) {
-                setState(() {
-                  errors.add(kEmailNullError);
-                });
-              } else if (!emailValidatorRegExp.hasMatch(value) &&
-                  !errors.contains(kInvalidEmailError)) {
-                setState(() {
-                  errors.add(kInvalidEmailError);
-                });
+              if (value!.isEmpty) {
+                addError(error: kEmailNullError);
+                return "";
+              } else if (!emailValidatorRegExp.hasMatch(value)) {
+                addError(error: kInvalidEmailError);
+                return "";
               }
               return null;
             },
-            decoration: InputDecoration(
+            decoration: const InputDecoration(
               labelText: "Email",
               hintText: "Vui lòng nhập Email...",
               // If  you are using latest version of flutter then lable text and hint text shown like this
@@ -94,14 +111,13 @@ class _ForgotPassFormState extends State<ForgotPassForm> {
               suffixIcon: CustomSurffixIcon(svgIcon: "assets/icons/email.svg"),
             ),
           ),
-          SizedBox(height: getProportionateScreenHeight(30)),
           FormError(errors: errors),
           SizedBox(height: SizeConfig.screenHeight * 0.1),
           DefaultButton(
-            text: "Continue",
+            text: "Gửi OTP",
             press: () {
               if (_formKey.currentState!.validate()) {
-                // Do what you want to do
+                _submitForm();
               }
             },
           ),
@@ -110,5 +126,43 @@ class _ForgotPassFormState extends State<ForgotPassForm> {
         ],
       ),
     );
+  }
+
+  Future<void> _submitForm() async {
+    if (!_formKey.currentState!.validate()) {
+      return;
+    }
+
+    _formKey.currentState!.save();
+    KeyboardUtil.hideKeyboard(context);
+
+    try {
+      await Provider.of<AuthProvider>(context, listen: false)
+          .resetPassword(email: email);
+      Navigator.pushNamed(context, VerifyOtpPasswordScreen.routeName,
+      arguments: VerityOtpArguments(
+        to: email!,
+        onSubmit: _submitVerificationResetPasswordCode,
+        onResend: () {},
+      ));
+    } catch (error) {
+      await Util.showDialogNotification(
+          context: context, content: error.toString());
+    }
+  }
+
+  Future<void> _submitVerificationResetPasswordCode(
+      String resetPasswordCode) async {
+    try {
+      await Provider.of<AuthProvider>(context, listen: false)
+          .resetPasswordVerification(email! ,resetPasswordCode);
+
+      Navigator.of(context).push(MaterialPageRoute(
+        builder: (context) => ResetPasswordScreen(),
+      ));
+    } catch (error) {
+      await Util.showDialogNotification(
+          context: context, content: error.toString());
+    }
   }
 }

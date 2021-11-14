@@ -1,4 +1,7 @@
 import 'package:flutter/widgets.dart';
+import 'package:roadhelp/screens/auth/reset_password/reset_password_screen.dart';
+import 'package:roadhelp/screens/auth/reset_password_success/reset_password_success_screen.dart';
+import 'package:roadhelp/screens/auth/verify_otp_password/verify_otp_password_screen.dart';
 import 'package:roadhelp/screens/my_account/change_password_success/change_password_success_screen.dart';
 import 'package:roadhelp/screens/place/repair_place/repair_place_manage_image/repair_place_manage_image_screen.dart';
 
@@ -77,4 +80,7 @@ final Map<String, WidgetBuilder> routes = {
   IssueDetailsScreen.routeName: (context) => const IssueDetailsScreen(),
   UserRequestBecomePartnerScreen.routeName: (context) => const UserRequestBecomePartnerScreen(),
   UserDetailsScreen.routeName: (context) => const UserDetailsScreen(),
+  VerifyOtpPasswordScreen.routeName: (context) => VerifyOtpPasswordScreen(),
+  ResetPasswordScreen.routeName: (context) => ResetPasswordScreen(),
+  ResetPasswordSuccess.routeName: (context) => const ResetPasswordSuccess(),
 };
