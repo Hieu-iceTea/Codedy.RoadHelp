@@ -236,6 +236,13 @@ VALUE (12, 'Member_B', 'member_b.codedy@gmail.com', '$2y$10$//Od0OmEqRwFepW3wynr
 INSERT INTO users (id, username, email, password, image, gender, first_name, last_name,phone,address, active, request_become_partner)
 VALUE (13, 'ManhHung', 'ManhHung@fpt.edu.vn ', '$2y$10$//Od0OmEqRwFepW3wynrYOwslyvaS.snzBbpWwskF1Zrg5fNI.eTe','ManhHung.jpg', 2, 'Manh', 'Hung', '0871 6633 26','Hà tây', TRUE, FALSE);
 
+INSERT INTO users (id, username, email, password, image, gender, first_name, last_name,phone,address, active, request_become_partner)
+VALUE (14, 'VuHVTH1908054', 'VuHVTH1908054@fpt.edu.vn', '$2y$10$//Od0OmEqRwFepW3wynrYOwslyvaS.snzBbpWwskF1Zrg5fNI.eTe','VuHVTH1908054.jpg', 1, 'Đỗ Thị Chan', 'Hòa', '0981159826','Hà tây', TRUE, FALSE);
+
+INSERT INTO users (id, username, email, password, image, gender, first_name, last_name,phone,address, active, request_become_partner)
+VALUE (15, 'HoaDTCTH1909001', 'HoaDTCTH1909001@fpt.edu.vn', '$2y$10$//Od0OmEqRwFepW3wynrYOwslyvaS.snzBbpWwskF1Zrg5fNI.eTe','HoaDTCTH1909001.jpg', 2, 'Hà Văn', 'Vũ', '0825894329','Hà tây', TRUE, FALSE);
+
+
 
 
 #endregion
