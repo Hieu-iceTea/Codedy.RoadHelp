@@ -278,7 +278,20 @@ INSERT INTO garage (id,user_partner_id,district_id,province_id,ward_id,name,rate
 VALUE (12,5,32,2, 476,'Garage Quang Huy 4', 5.0,21.013804, 105.839543, 'Đường Lê Duẩn', 'chuyên sửa xe', '0873 6633 22', TRUE,0);
 
 INSERT INTO garage (id,user_partner_id,district_id,province_id,ward_id,name,rate_avg,latitude, longitude, address, description, phone, active,is_featured)
-VALUE (13,4,285,20, 4148,'Sữa Xe Máy Thanh Đào', 4.8,18.741316, 105.6586408, 'Đường Thăng Long, TP Vinh', 'Uy tín, Chất lượng, Sửa nhanh', '0987179107', TRUE,1);
+VALUE (13,4,285,20, 4148,'Sửa xe máy Thanh motor', 4.9,18.726102, 105.6632644, 'Xóm 15, Nghi Kim, tp Vinh, Nghệ An', 'Chuyên sửa xe ga, xe số', '0981 416 436', TRUE,1);
+
+INSERT INTO garage (id,user_partner_id,district_id,province_id,ward_id,name,rate_avg,latitude, longitude, address, description, phone, active,is_featured)
+VALUE (14,4,285,20, 4148,'Sửa Xe Huy Mân', 4.5,18.6801207, 105.6739363, '129 Lý Thường Kiệt, Lê Lợi, tp Vinh, Nghệ An', 'Sửa chữa thay thế phụ tùng xe máy', '0977652842', TRUE,1);
+
+INSERT INTO garage (id,user_partner_id,district_id,province_id,ward_id,name,rate_avg,latitude, longitude, address, description, phone, active,is_featured)
+VALUE (15,4,285,20, 4148,'Sữa Xe Máy Thanh Đào', 4.8,18.741316, 105.6586408, 'Đường Thăng Long, Nghi Liên, TP Vinh', 'Uy tín, Chất lượng, Sửa nhanh', '0987179107', TRUE,1);
+
+INSERT INTO garage (id,user_partner_id,district_id,province_id,ward_id,name,rate_avg,latitude, longitude, address, description, phone, active,is_featured)
+VALUE (16,4,285,20, 4148,'Tiệm Sửa Xe Nhật Thái', 4.3,18.6643792, 105.6901323, 'Lê Duẩn, Trường Thi, Thành phố Vinh, Nghệ An', 'Chuyên cứu hộ xe máy', '0932 394 999', TRUE,1);
+
+INSERT INTO garage (id,user_partner_id,district_id,province_id,ward_id,name,rate_avg,latitude, longitude, address, description, phone, active,is_featured)
+VALUE (17,4,285,20, 4148,'Showroom Hiếu iceTea', 4.9,18.730966, 105.659688, 'Nghi Liên, TP Vinh, Nghệ An', 'Mua bán sửa chữa xe máy', '0868 6633 15', TRUE,1);
+
 
 
 #endregion
@@ -333,10 +346,58 @@ INSERT INTO garageimage (id, garage_id,image)
 VALUE (16, 12, 'tiem8.jpg');
 
 INSERT INTO garageimage (id, garage_id,image)
-VALUE (17, 13, 'sua-xe-may-thanh-dao-1.jpg');
+VALUE (17, 15, 'sua-xe-may-thanh-dao-1.jpg');
 
 INSERT INTO garageimage (id, garage_id,image)
-VALUE (18, 13, 'sua-xe-may-thanh-dao-2.jpg');
+VALUE (18, 15, 'sua-xe-may-thanh-dao-2.jpg');
+
+INSERT INTO garageimage (id, garage_id,image)
+VALUE (19, 14, 'Thanh_Motor_1.jpg');
+
+INSERT INTO garageimage (id, garage_id,image)
+VALUE (20, 14, 'Thanh_Motor_2.jpg');
+
+INSERT INTO garageimage (id, garage_id,image)
+VALUE (21, 13, 'sua-xe-huy-man-1.jpg');
+
+INSERT INTO garageimage (id, garage_id,image)
+VALUE (22, 13, 'sua-xe-huy-man-2.jpg');
+
+INSERT INTO garageimage (id, garage_id,image)
+VALUE (23, 13, 'sua-xe-huy-man-3.jpg');
+
+INSERT INTO garageimage (id, garage_id,image)
+VALUE (24, 16, 'TiemSuaXeNhatThai-1.jpg');
+
+INSERT INTO garageimage (id, garage_id,image)
+VALUE (25, 16, 'TiemSuaXeNhatThai-2.jpg');
+
+INSERT INTO garageimage (id, garage_id,image)
+VALUE (26, 16, 'TiemSuaXeNhatThai-3.jpg');
+
+INSERT INTO garageimage (id, garage_id,image)
+VALUE (27, 16, 'TiemSuaXeNhatThai-4.jpg');
+
+INSERT INTO garageimage (id, garage_id,image)
+VALUE (28, 16, 'TiemSuaXeNhatThai-5.jpg');
+
+INSERT INTO garageimage (id, garage_id,image)
+VALUE (29, 17, 'Showroom-Hieu-iceTea-NgheAn-1.jpg');
+
+INSERT INTO garageimage (id, garage_id,image)
+VALUE (30, 17, 'Showroom-Hieu-iceTea-NgheAn-2.jpg');
+
+INSERT INTO garageimage (id, garage_id,image)
+VALUE (31, 17, 'Showroom-Hieu-iceTea-NgheAn-3.jpg');
+
+INSERT INTO garageimage (id, garage_id,image)
+VALUE (32, 17, 'Showroom-Hieu-iceTea-NgheAn-4.jpg');
+
+INSERT INTO garageimage (id, garage_id,image)
+VALUE (33, 17, 'Showroom-Hieu-iceTea-NgheAn-5.jpg');
+
+INSERT INTO garageimage (id, garage_id,image)
+VALUE (34, 17, 'Showroom-Hieu-iceTea-NgheAn-6.jpg');
 
 
 
@@ -426,10 +487,34 @@ INSERT INTO ratingGarage (id, user_member_id, garage_id, rate_point, comment)
 VALUE (12, 12, 1, 5, 'Tốt');
 
 INSERT INTO ratingGarage (id, user_member_id, garage_id, rate_point, comment)
-VALUE (13, 10, 13, 5, 'Rất tốt');
+VALUE (13, 10, 15, 5, 'Hài lòng về giá cả và thái độ phục vụ');
 
 INSERT INTO ratingGarage (id, user_member_id, garage_id, rate_point, comment)
-VALUE (14, 11, 13, 4, 'Uy Tín');
+VALUE (14, 11, 15, 4, 'Uy Tín, Nhiệt tình');
+
+INSERT INTO ratingGarage (id, user_member_id, garage_id, rate_point, comment)
+VALUE (15, 10, 14, 5, 'Địa chỉ dễ tìm, nhiệt tình, cẩn thận. Vote 5☆');
+
+INSERT INTO ratingGarage (id, user_member_id, garage_id, rate_point, comment)
+VALUE (16, 11, 14, 4, 'Cửa hàng làm ăn uy tín chất lượng.lần sau tới tiếp');
+
+INSERT INTO ratingGarage (id, user_member_id, garage_id, rate_point, comment)
+VALUE (17, 10, 13, 5, 'Dịch vụ sửa xe máy rất tốt, rất chuyên nghiệp, đội ngũ thợ sửa xe đông, vui tính');
+
+INSERT INTO ratingGarage (id, user_member_id, garage_id, rate_point, comment)
+VALUE (18, 10, 16, 5, 'Cứu hộ xe rất nhiệt tình');
+
+INSERT INTO ratingGarage (id, user_member_id, garage_id, rate_point, comment)
+VALUE (19, 11, 16, 4, 'Cửa hàng uy tín');
+
+INSERT INTO ratingGarage (id, user_member_id, garage_id, rate_point, comment)
+VALUE (20, 8, 17, 5, 'NV kt kinh nghiệm.  Nhanh nhẹn.. Và rất thân thiệt. Đánh giá 5☆ luôn ủng hộ');
+
+INSERT INTO ratingGarage (id, user_member_id, garage_id, rate_point, comment)
+VALUE (21, 9, 17, 4, 'Hài lòng về giá cả và thái độ phục vụ của cửa hàng');
+
+INSERT INTO ratingGarage (id, user_member_id, garage_id, rate_point, comment)
+VALUE (22, 11, 17, 5, 'Chất lượng dịch vụ quá xuất sắc. mùa covid nắng nóng nhưng vẫn hỗ trợ giao xe tại nhà. nhân viên giao nhận vui vẻ nhiệt tình hướng dẫn');
 
 
 
