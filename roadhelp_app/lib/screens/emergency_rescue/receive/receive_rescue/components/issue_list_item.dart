@@ -59,10 +59,12 @@ class IssueListItem extends StatelessWidget {
                 size: 16,
                 color: Colors.black45,
               ),
-              Text(
-                issue.address!,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
+              Expanded(
+                child: Text(
+                  issue.address!,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
               ),
             ],
           ),

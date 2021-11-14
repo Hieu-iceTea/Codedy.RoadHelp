@@ -16,7 +16,7 @@ class GarageProvider with ChangeNotifier {
   GarageProvider(this.authProvider, this._items);
 
   List<Garage> get items {
-    return [..._items];
+    return [..._items.reversed];
   }
 
   Future<List<Garage>> fetchAllData(
