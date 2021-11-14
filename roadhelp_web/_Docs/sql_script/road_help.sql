@@ -450,7 +450,28 @@ INSERT INTO issue(id, user_member_id,user_partner_id, latitude, longitude,catego
 VALUE (12, 11, NULL, '21.013804', '105.839543','1',  '0871 6633 25',  'Đường Lê Duẩn','', '0');
 
 INSERT INTO issue(id, user_member_id,user_partner_id, latitude, longitude,category, phone,address,description, status)
-VALUE (13, 10, NULL, '18.7312677', '105.6624692','2',  '0868 6633 15',  'Đường Thăng Long, TP Vinh','Xe không nổ máy được, hãy giúp tôi.', '0');
+VALUE (13, 6, NULL, '18.671909', '105.696026','0',  '0868 6633 15',  '36 Phan Đăng Lưu, Trường Thi, TP Vinh, Nghệ An','', '0');
+
+INSERT INTO issue(id, user_member_id,user_partner_id, latitude, longitude,category, phone,address,description, status)
+VALUE (14, 14, NULL, '18.773700', '105.647588','1',  '0868 6633 16',  'Quốc Lộ 1A, Nghi Trung, Nghi Lộc, Nghệ An','', '0');
+
+INSERT INTO issue(id, user_member_id,user_partner_id, latitude, longitude,category, phone,address,description, status)
+VALUE (15, 7, NULL, '18.665677', '105.687710','2',  '0868 6633 17',  'Trần Phú, Trường Thi, Thành phố Vinh, Nghệ An','', '0');
+
+INSERT INTO issue(id, user_member_id,user_partner_id, latitude, longitude,category, phone,address,description, status)
+VALUE (16, 8, NULL, '18.758592', '105.693202','3',  '0869 6633 18',  'TP Vinh, Nghệ An','Chết máy giữa đường', '0');
+
+INSERT INTO issue(id, user_member_id,user_partner_id, latitude, longitude,category, phone,address,description, status)
+VALUE (17, 15, NULL, '18.713355', '105.661815','0',  '0869 6633 19',  'Ngõ 186, Đặng Thai Mai, Nghi Kim, TP Vinh, Nghệ An','Lốp trước bị thủng hết hơi, không thể di chuyển, hãy giúp tôi', '0');
+
+INSERT INTO issue(id, user_member_id,user_partner_id, latitude, longitude,category, phone,address,description, status)
+VALUE (18, 9, NULL, '18.735383', '105.660725','1',  '0869 6633 20',  'Nghi Liên, TP Vinh, Nghệ An','', '0');
+
+INSERT INTO issue(id, user_member_id,user_partner_id, latitude, longitude,category, phone,address,description, status)
+VALUE (19, 11, NULL, '18.718552', '105.672800','2',  '0870 6633 21',  'Nghi Phú, Thành Phố Vinh, Nghệ An','', '0');
+
+INSERT INTO issue(id, user_member_id,user_partner_id, latitude, longitude,category, phone,address,description, status)
+VALUE (20, 10, NULL, '18.669665', '105.670037','3',  '0870 6633 22',  'Đào Tấn, Cửa Nam, TP Vinh, Nghệ An','Xe không nổ máy được, hãy giúp tôi.', '0');
 
 
 #endregion
