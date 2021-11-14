@@ -287,10 +287,10 @@ INSERT INTO garage (id,user_partner_id,district_id,province_id,ward_id,name,rate
 VALUE (15,4,285,20, 4148,'Sữa Xe Máy Thanh Đào', 4.8,18.741316, 105.6586408, 'Đường Thăng Long, Nghi Liên, TP Vinh', 'Uy tín, Chất lượng, Sửa nhanh', '0987179107', TRUE,1);
 
 INSERT INTO garage (id,user_partner_id,district_id,province_id,ward_id,name,rate_avg,latitude, longitude, address, description, phone, active,is_featured)
-VALUE (16,4,285,20, 4148,'Tiệm Sửa Xe Nhật Thái', 4.3,18.6643792, 105.6901323, 'Lê Duẩn, Trường Thi, Thành phố Vinh, Nghệ An', 'Chuyên cứu hộ xe máy', '0932 394 999', TRUE,1);
+VALUE (16,4,285,20, 4148,'Tiệm Sửa Xe Nhật Thái', 4.6,18.6643792, 105.6901323, 'Lê Duẩn, Trường Thi, Thành phố Vinh, Nghệ An', 'Chuyên cứu hộ xe máy', '0932 394 999', TRUE,1);
 
 INSERT INTO garage (id,user_partner_id,district_id,province_id,ward_id,name,rate_avg,latitude, longitude, address, description, phone, active,is_featured)
-VALUE (17,4,285,20, 4148,'Showroom Hiếu iceTea', 4.9,18.730966, 105.659688, 'Nghi Liên, TP Vinh, Nghệ An', 'Mua bán sửa chữa xe máy', '0868 6633 15', TRUE,1);
+VALUE (17,4,285,20, 4148,'Showroom Hiếu iceTea', 4.8,18.730966, 105.659688, 'Nghi Liên, TP Vinh, Nghệ An', 'Chuyên mua bán, sửa chữa các loại xe gắn máy tay ga xe số. Thay thế, lắp đặt phụ tùng chính hãng.', '0868 6633 15', TRUE,1);
 
 
 
