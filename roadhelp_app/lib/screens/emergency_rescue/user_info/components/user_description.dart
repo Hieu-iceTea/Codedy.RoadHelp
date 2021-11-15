@@ -67,7 +67,7 @@ class UserDescription extends StatelessWidget {
               ListTile(
                 leading: Icon(Icons.location_on_outlined),
                 title: Text(
-                  user.address! + " | 2 Km",
+                  user.address! + " | 1.5 Km",
                   style: TextStyle(color: kTextColor),
                 ),
               ),

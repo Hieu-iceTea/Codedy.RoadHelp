@@ -4,6 +4,7 @@ import 'package:roadhelp/components/rounded_icon_btn.dart';
 import 'package:roadhelp/config/constants.dart';
 import 'package:roadhelp/config/enums.dart';
 import 'package:roadhelp/config/size_config.dart';
+import 'package:roadhelp/helper/location_helper.dart';
 import 'package:roadhelp/helper/url_launcher_helper.dart';
 import 'package:roadhelp/helper/util.dart';
 import 'package:roadhelp/models/issue.dart';
@@ -17,6 +18,13 @@ class IssueDescription extends StatelessWidget {
     required this.issue,
     this.isPartner = false,
   }) : super(key: key);
+
+  Future<double> _getDistanceInKilometers() async {
+    return LocationHelper.getDistanceInKilometers(
+      issue.latitude!,
+      issue.longitude!,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -111,6 +119,31 @@ class IssueDescription extends StatelessWidget {
                         )
                       : null,
                 ),
+                //if (issue.userPartner != null)
+                ListTile(
+                  leading: Icon(Icons.map_outlined),
+                  title: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "Khoảng cách:",
+                        style: TextStyle(
+                          color: kTextColor.withOpacity(0.8),
+                          fontSize: 13,
+                        ),
+                      ),
+                      FutureBuilder<double>(
+                        future: _getDistanceInKilometers(),
+                        builder: (context, snapshot) => Text(
+                          snapshot.hasData
+                              ? '${snapshot.data!.toStringAsFixed(1)} Km'
+                              : '',
+                          style: TextStyle(color: kTextColor),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
                 ListTile(
                   leading: Icon(Icons.location_on_outlined),
                   title: Text(
@@ -135,7 +168,8 @@ class IssueDescription extends StatelessWidget {
                 ListTile(
                   leading: Icon(Icons.access_time),
                   title: Text(
-                    DateFormat('dd/MM/yyyy HH:mm:ss').format(issue.createdAt!.toLocal()),
+                    DateFormat('dd/MM/yyyy HH:mm:ss')
+                        .format(issue.createdAt!.toLocal()),
                     style: TextStyle(color: kTextColor),
                   ),
                 ),
