@@ -67,7 +67,7 @@ public class AuthController {
         Date date = new Date();
         long iat = date.getTime();
         Date exp = new Date(iat + jwtExpirationMs);
-        int expiresIn = jwtExpirationMs / 1000;
+        int expiresIn = jwtExpirationMs / 1000 * 7;
 
         String notification = "Login successfully!";
 
