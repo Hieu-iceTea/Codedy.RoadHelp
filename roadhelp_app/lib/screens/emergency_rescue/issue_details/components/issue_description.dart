@@ -119,31 +119,31 @@ class IssueDescription extends StatelessWidget {
                         )
                       : null,
                 ),
-                //if (issue.userPartner != null)
-                ListTile(
-                  leading: Icon(Icons.map_outlined),
-                  title: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "Khoảng cách:",
-                        style: TextStyle(
-                          color: kTextColor.withOpacity(0.8),
-                          fontSize: 13,
+                if (isPartner)
+                  ListTile(
+                    leading: Icon(Icons.map_outlined),
+                    title: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "Khoảng cách:",
+                          style: TextStyle(
+                            color: kTextColor.withOpacity(0.8),
+                            fontSize: 13,
+                          ),
                         ),
-                      ),
-                      FutureBuilder<double>(
-                        future: _getDistanceInKilometers(),
-                        builder: (context, snapshot) => Text(
-                          snapshot.hasData
-                              ? '${snapshot.data!.toStringAsFixed(1)} Km'
-                              : '',
-                          style: TextStyle(color: kTextColor),
+                        FutureBuilder<double>(
+                          future: _getDistanceInKilometers(),
+                          builder: (context, snapshot) => Text(
+                            snapshot.hasData
+                                ? '${snapshot.data!.toStringAsFixed(1)} Km'
+                                : '',
+                            style: TextStyle(color: kTextColor),
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
-                ),
                 ListTile(
                   leading: Icon(Icons.location_on_outlined),
                   title: Text(
