@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:roadhelp/config/enums.dart';
+import 'package:roadhelp/helper/location_helper.dart';
 import 'package:roadhelp/models/issue.dart';
 import 'package:roadhelp/screens/emergency_rescue/issue_details/issue_details_screen.dart';
 
@@ -14,6 +15,13 @@ class IssueListItem extends StatelessWidget {
     this.isPartnerReceiveNew = false,
     this.isPartnerHistoryReceived = false,
   }) : super(key: key);
+
+  Future<double> _getDistanceInKilometers() async {
+    return LocationHelper.getDistanceInKilometers(
+      issue.latitude!,
+      issue.longitude!,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +51,14 @@ class IssueListItem extends StatelessWidget {
               : const Text("No\nImage", textAlign: TextAlign.center),
         ),
       ),
-      title: Text(issue.category!.name),
+      title: FutureBuilder<double>(
+        future: _getDistanceInKilometers(),
+        builder: (context, snapshot) => Text(
+            (snapshot.hasData && isPartnerReceiveNew
+                    ? '${snapshot.data!.toStringAsFixed(1)} Km | '
+                    : '') +
+                issue.category!.name),
+      ),
       subtitle: Column(
         children: [
           if (issue.description != null && issue.description!.isNotEmpty)
