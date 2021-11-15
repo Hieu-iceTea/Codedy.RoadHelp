@@ -7,8 +7,8 @@ class Util {
     await showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: Text(title ?? 'An error occurred!'),
-        content: Text(content ?? 'Something went wrong.'),
+        title: Text(title ?? 'Đã xảy ra lỗi!'),
+        content: Text(content ?? 'Có gì đó không ổn.'),
         actions: <Widget>[
           TextButton(
             child: const Text('Okay'),
@@ -37,14 +37,14 @@ class Util {
             padding: const EdgeInsets.only(top: 16, right: 16, left: 16),
             child: Text(
               title ??
-                  (isError == true ? 'An error occurred!' : "Notification!"),
+                  (isError == true ? 'Đã xảy ra lỗi!' : "Notification!"),
               style: const TextStyle(fontSize: 22),
             ),
           ),
           Padding(
             padding: const EdgeInsets.only(top: 16, right: 16, left: 16),
             child: Text(
-                content ?? (isError == true ? 'Something went wrong.' : "...")),
+                content ?? (isError == true ? 'Có gì đó không ổn.' : "...")),
           )
         ],
       ),

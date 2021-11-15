@@ -20,7 +20,7 @@ class Body extends StatelessWidget {
                 SizedBox(height: SizeConfig.screenHeight * 0.04), // 4%
                 Text("Đăng Kí Tài Khoản", style: headingStyle),
                 Text(
-                  "Vui lòng tạo tài khoản bằng số điện thoại \n để sử dụng ứng dụng!",
+                  "Vui lòng tạo tài khoản của bạn\nđể sử dụng ứng dụng",
                   textAlign: TextAlign.center,
                 ),
                 SizedBox(height: SizeConfig.screenHeight * 0.08),
@@ -43,12 +43,12 @@ class Body extends StatelessWidget {
                 //     ),
                 //   ],
                 // ),
-                SizedBox(height: getProportionateScreenHeight(0)),
-                // Text(
-                //   'By continuing your confirm that you agree \nwith our Term and Condition',
-                //   textAlign: TextAlign.center,
-                //   style: Theme.of(context).textTheme.caption,
-                // )
+                Text(
+                  'Bằng cách tiếp tục bạn xác nhận rằng\nbạn đồng ý với thỏa thuận và điều kiện của chúng tôi',
+                  textAlign: TextAlign.center,
+                  style: Theme.of(context).textTheme.caption,
+                ),
+                SizedBox(height: getProportionateScreenHeight(20)),
               ],
             ),
           ),

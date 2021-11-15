@@ -27,13 +27,14 @@ class Body extends StatelessWidget {
                   ),
                 ),
                 const Text(
-                  "Đăng nhập bằng tài khoản và mật khẩu của bạn \n hoặc tiếp tục với mạng xã hội",
+                  "Đăng nhập bằng tài khoản và mật khẩu\ncủa bạn để tiếp tục",
+                  //"Đăng nhập bằng tài khoản và mật khẩu của bạn \n hoặc tiếp tục với mạng xã hội",
                   textAlign: TextAlign.center,
                 ),
                 SizedBox(height: SizeConfig.screenHeight * 0.08),
                 SignForm(),
                 SizedBox(height: SizeConfig.screenHeight * 0.08),
-                Row(
+                /*Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     SocalCard(
@@ -49,8 +50,8 @@ class Body extends StatelessWidget {
                       press: () {},
                     ),
                   ],
-                ),
-                SizedBox(height: getProportionateScreenHeight(20)),
+                ),*/
+                //SizedBox(height: getProportionateScreenHeight(20)),
                 const NoAccountText(),
                 SizedBox(height: SizeConfig.screenHeight * 0.04),
               ],
