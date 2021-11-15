@@ -117,6 +117,10 @@ class AuthProvider with ChangeNotifier {
   }
 
   Future<User> updateCurrentUser(User item) async {
+    User itemDb = await UserRepository.findById(_authData.userId!);
+    if (itemDb.image != item.image) {
+      item.image = itemDb.image;
+    }
     User itemResponse = await UserRepository.update(item);
 
     //Reload currentUser
@@ -191,8 +195,10 @@ class AuthProvider with ChangeNotifier {
     return _authData;
   }
 
-  Future<Auth> resetPasswordVerification(String email, String resetPasswordCode) async {
-    Auth itemResponse = await AuthRepository.resetPasswordVerification(email, resetPasswordCode);
+  Future<Auth> resetPasswordVerification(
+      String email, String resetPasswordCode) async {
+    Auth itemResponse = await AuthRepository.resetPasswordVerification(
+        email, resetPasswordCode);
 
     _authData.message = itemResponse.message;
 
@@ -202,7 +208,7 @@ class AuthProvider with ChangeNotifier {
 
   Future<User?> confirmResetPassword(String email, String password) async {
     User itemResponse =
-    await AuthRepository.confirmResetPassword(password, email);
+        await AuthRepository.confirmResetPassword(password, email);
 
     notifyListeners();
     return itemResponse;
