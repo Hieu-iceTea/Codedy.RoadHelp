@@ -15,7 +15,7 @@ class GarageItem extends StatelessWidget {
     Key? key,
   }) : super(key: key);
 
-  Future<double> getDistanceInKilometers() async {
+  Future<double> _getDistanceInKilometers() async {
     return LocationHelper.getDistanceInKilometers(
       garage.latitude!,
       garage.longitude!,
@@ -52,7 +52,7 @@ class GarageItem extends StatelessWidget {
           overflow: TextOverflow.ellipsis,
         ),
         subtitle: FutureBuilder<double>(
-          future: getDistanceInKilometers(),
+          future: _getDistanceInKilometers(),
           builder: (context, snapshot) => Text(
             (snapshot.hasData
                     ? '${snapshot.data!.toStringAsFixed(1)} Km | '
