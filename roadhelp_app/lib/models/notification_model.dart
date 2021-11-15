@@ -1,6 +1,8 @@
 import 'package:roadhelp/config/constants.dart';
 
 class NotificationModel {
+  /// NOTE: Phần này chỉ phục vụ xem thông báo, không phải là entity model có thật trong database
+
   //
   int? id;
 
