@@ -11,7 +11,10 @@ import 'package:roadhelp/providers/garage_provider.dart';
 import 'location_filter_form.dart';
 
 class SearchField extends StatefulWidget {
-  const SearchField({
+  String? initialKeyword;
+
+  SearchField({
+    this.initialKeyword,
     Key? key,
   }) : super(key: key);
 
@@ -27,6 +30,11 @@ class _SearchFieldState extends State<SearchField> {
 
   @override
   Widget build(BuildContext context) {
+    if (widget.initialKeyword != null) {
+      keyword = widget.initialKeyword;
+      _submitForm();
+    }
+
     return Container(
       width: SizeConfig.screenWidth * 0.75,
       decoration: BoxDecoration(
@@ -42,6 +50,8 @@ class _SearchFieldState extends State<SearchField> {
         ],
       ),
       child: TextField(
+        //controller: new TextEditingController(text: 'Initial value'),
+        controller: TextEditingController()..text = widget.initialKeyword ?? "",
         onChanged: (value) => keyword = value,
         onEditingComplete: () => _submitForm(),
         decoration: InputDecoration(
