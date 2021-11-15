@@ -30,6 +30,7 @@ class _BeComeToPartnerFormState extends State<BeComeToPartnerForm> {
   User _user = User(); //khởi tạo giá trị ban đầu, cập nhật ở initState()
 
   final _formKey = GlobalKey<FormState>();
+  bool _isLoadingSubmit = false;
 
   @override
   void initState() {
@@ -38,8 +39,6 @@ class _BeComeToPartnerFormState extends State<BeComeToPartnerForm> {
 
     super.initState();
   }
-
-  bool isLoadingSubmit = false;
 
   @override
   Widget build(BuildContext context) {
@@ -53,7 +52,7 @@ class _BeComeToPartnerFormState extends State<BeComeToPartnerForm> {
           SizedBox(height: getProportionateScreenHeight(30)),
           buildEmailFormField(),
           SizedBox(height: getProportionateScreenHeight(40)),
-          !isLoadingSubmit
+          !_isLoadingSubmit
               ? DefaultButton(
                   text: "Tiếp tục",
                   press: _submitForm,
@@ -162,7 +161,7 @@ class _BeComeToPartnerFormState extends State<BeComeToPartnerForm> {
 
     try {
       setState(() {
-        isLoadingSubmit = true;
+        _isLoadingSubmit = true;
       });
 
       Auth authResponse =
@@ -170,7 +169,7 @@ class _BeComeToPartnerFormState extends State<BeComeToPartnerForm> {
               .becomeToPartner();
 
       setState(() {
-        isLoadingSubmit = false;
+        _isLoadingSubmit = false;
       });
 
       /*await Util.showDialogNotification(
