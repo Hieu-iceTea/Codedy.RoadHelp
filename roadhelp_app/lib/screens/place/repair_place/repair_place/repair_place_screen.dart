@@ -17,6 +17,9 @@ class RepairPlaceScreen extends StatelessWidget {
     // You have to call it on your starting screen:
     SizeConfig().init(context);
 
+    final RepairPlaceArguments? arguments =
+        ModalRoute.of(context)!.settings.arguments as RepairPlaceArguments?;
+
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Stack(
@@ -43,10 +46,16 @@ class RepairPlaceScreen extends StatelessWidget {
           ),
           Positioned(
             top: 10,
-            child: HeaderBar(),
+            child: HeaderBar(initialKeyword: arguments?.initialKeyword),
           )
         ],
       ),
     );
   }
+}
+
+class RepairPlaceArguments {
+  final String initialKeyword;
+
+  RepairPlaceArguments({required this.initialKeyword});
 }
