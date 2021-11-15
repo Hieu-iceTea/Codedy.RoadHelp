@@ -1,14 +1,18 @@
-
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:roadhelp/components/custom_surfix_icon.dart';
 import 'package:roadhelp/components/default_button.dart';
 import 'package:roadhelp/components/form_error.dart';
 import 'package:roadhelp/config/constants.dart';
 import 'package:roadhelp/config/size_config.dart';
-
+import 'package:roadhelp/helper/util.dart';
+import 'package:roadhelp/providers/auth_provider.dart';
+import 'package:roadhelp/screens/auth/reset_password_success/reset_password_success_screen.dart';
 
 class ResetPasswordForm extends StatefulWidget {
-  const ResetPasswordForm({Key? key}) : super(key: key);
+  final String emailTo;
+
+  ResetPasswordForm({Key? key, required this.emailTo}) : super(key: key);
 
   @override
   _ResetPasswordFormState createState() => _ResetPasswordFormState();
@@ -16,18 +20,12 @@ class ResetPasswordForm extends StatefulWidget {
 
 class _ResetPasswordFormState extends State<ResetPasswordForm> {
   final _formKey = GlobalKey<FormState>();
+
   // String? oldPassword;
   String? password;
   String? conform_password;
   bool remember = false;
   final List<String?> errors = [];
-
-  // @override
-  // void initState() {
-  //   _user = widget.user ?? User();
-  //
-  //   super.initState();
-  // }
 
   void addError({String? error}) {
     if (!errors.contains(error))
@@ -56,10 +54,11 @@ class _ResetPasswordFormState extends State<ResetPasswordForm> {
           SizedBox(height: getProportionateScreenHeight(40)),
           DefaultButton(
             text: "Đổi mật khẩu",
-            // press: () => _saveForm(),
             press: () {
               if (_formKey.currentState!.validate()) {
                 _saveForm();
+                Navigator.pushNamed(
+                    context, ResetPasswordSuccess.routeName);
                 _formKey.currentState!.save();
               }
             },
@@ -143,16 +142,14 @@ class _ResetPasswordFormState extends State<ResetPasswordForm> {
 
     _formKey.currentState!.save();
 
-  //   try {
-  //     if (_user.id != null) {
-  //       await Provider.of<AuthProvider>(context, listen: false)
-  //           .changePassword(password!, oldPassword!);
-  //
-  //       Navigator.of(context).pop();
-  //     }
-  //   } catch (error) {
-  //     await Util.showDialogNotification(
-  //         context: context, content: error.toString());
-  //   }
+    try {
+      await Provider.of<AuthProvider>(context, listen: false)
+          .confirmResetPassword(password!, widget.emailTo);
+
+      // Navigator.of(context).pop();
+    } catch (error) {
+      await Util.showDialogNotification(
+          context: context, content: error.toString());
+    }
   }
 }

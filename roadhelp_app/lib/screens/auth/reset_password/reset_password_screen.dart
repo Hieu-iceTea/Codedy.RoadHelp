@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:roadhelp/config/size_config.dart';
 
 import 'components/body.dart';
 
@@ -7,11 +8,23 @@ class ResetPasswordScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    SizeConfig().init(context);
+
+    final ResetPasswordArgument argument = ModalRoute.of(context)!.settings.arguments as ResetPasswordArgument;
+
     return Scaffold(
       appBar: AppBar(
         title: Text("Đặt Lại Mật Khẩu"),
       ),
-      body: Body(),
+      body: Body(emailTo: argument.emailTo,),
     );
   }
+}
+
+class ResetPasswordArgument {
+  String emailTo;
+
+  ResetPasswordArgument({
+    required this.emailTo,
+  });
 }

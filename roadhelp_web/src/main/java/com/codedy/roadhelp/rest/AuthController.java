@@ -67,7 +67,7 @@ public class AuthController {
         Date date = new Date();
         long iat = date.getTime();
         Date exp = new Date(iat + jwtExpirationMs);
-        int expiresIn = jwtExpirationMs / 1000;
+        int expiresIn = jwtExpirationMs / 1000 * 7;
 
         String notification = "Login successfully!";
 
@@ -291,9 +291,9 @@ public class AuthController {
         return ResponseEntity.ok(new MessageResponse("Reset password successfully"));
     }
 
-    @PostMapping(path = {"/confirm-reset-password/{userId}", "/confirm-reset-password/{userId}/"})
-    public ResponseEntity<?> resetPassword(@Valid @RequestBody HashMap<String, String> requestBody, @PathVariable int userId) {
-        User user = userService.findById(userId);
+    @PutMapping(path = {"/confirm-reset-password/{email}", "/confirm-reset-password/{email}/"})
+    public ResponseEntity<?> confirmResetPassword(@Valid @RequestBody HashMap<String, String> requestBody, @PathVariable String email) {
+        User user = userService.findByEmail(email);
         String password = requestBody.get("password");
         user.setPassword(BCrypt.hashpw(password, BCrypt.gensalt(12)));
 

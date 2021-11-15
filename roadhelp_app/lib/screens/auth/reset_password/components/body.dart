@@ -1,9 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:roadhelp/config/constants.dart';
 import 'package:roadhelp/config/size_config.dart';
+import 'package:roadhelp/screens/admin/confirm_become_partner/user_details/components/body.dart';
+import 'package:roadhelp/screens/auth/reset_password/components/reset_password_form.dart';
 
 
 class Body extends StatelessWidget {
+
+  final String emailTo;
+
+  Body({
+    required this.emailTo,
+    Key? key,
+}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -18,13 +28,11 @@ class Body extends StatelessWidget {
                   SizedBox(height: SizeConfig.screenHeight * 0.04), // 4%
                   Text("Đổi Mật Khẩu", style: headingStyle),
                   Text(
-                    "Vui lòng nhập mật khẩu cũ và xác nhận mật khẩu mới\n để thay đổi mật khẩu nhé!",
+                    "Vui lòng điền mật khẩu mới của bạn",
                     textAlign: TextAlign.center,
                   ),
                   SizedBox(height: SizeConfig.screenHeight * 0.08),
-                  // ChangePasswordForm(
-                  //   user: authProvider.authData.currentUser!,
-                  // ),
+                  ResetPasswordForm(emailTo: emailTo,),
                   SizedBox(height: SizeConfig.screenHeight * 0.08),
 
                   SizedBox(height: getProportionateScreenHeight(0)),

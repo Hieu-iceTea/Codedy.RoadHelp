@@ -199,4 +199,12 @@ class AuthProvider with ChangeNotifier {
     notifyListeners();
     return _authData;
   }
+
+  Future<User?> confirmResetPassword(String email, String password) async {
+    User itemResponse =
+    await AuthRepository.confirmResetPassword(password, email);
+
+    notifyListeners();
+    return itemResponse;
+  }
 }
