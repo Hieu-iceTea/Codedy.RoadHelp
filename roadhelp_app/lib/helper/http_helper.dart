@@ -42,7 +42,7 @@ class HttpHelper {
         return json.decode(utf8.decode(response.bodyBytes)); //cách này gọn nhất
       } else {
         // If the server did not return a 200 OK response, then throw an exception.
-        throw HttpException('❌ Failed to fetch all data. \nStatusCode: ' +
+        throw HttpException('❌ Không thể tìm nạp tất cả dữ liệu. \nStatusCode: ' +
             response.statusCode.toString() +
             "\nMessage: " +
             (json.decode(utf8.decode(response.bodyBytes))['message'] ?? ""));
@@ -77,7 +77,7 @@ class HttpHelper {
       if (response.statusCode == 200) {
         return json.decode(utf8.decode(response.bodyBytes));
       } else {
-        throw HttpException('❌ Error. \nStatusCode: ' +
+        throw HttpException('❌ Lỗi.\nStatusCode: ' +
             response.statusCode.toString() +
             "\nMessage: " +
             (json.decode(utf8.decode(response.bodyBytes))['message'] ?? ""));
@@ -114,7 +114,7 @@ class HttpHelper {
       if (response.statusCode == 200) {
         return json.decode(utf8.decode(response.bodyBytes));
       } else {
-        throw HttpException('❌ Error. \nStatusCode: ' +
+        throw HttpException('❌ Lỗi.\nStatusCode: ' +
             response.statusCode.toString() +
             "\nMessage: " +
             (json.decode(utf8.decode(response.bodyBytes))['message'] ?? ""));
@@ -146,7 +146,7 @@ class HttpHelper {
       }
 
       if (response.statusCode >= 400) {
-        throw HttpException('❌ Could not delete item. \nStatusCode: ' +
+        throw HttpException('❌ Không thể xóa mục. \nStatusCode: ' +
             response.statusCode.toString() +
             "\nMessage: " +
             (json.decode(utf8.decode(response.bodyBytes))['message'] ?? ""));
@@ -190,7 +190,7 @@ class HttpHelper {
       if (response.statusCode == 200) {
         return json.decode(utf8.decode(responseBodyBytes));
       } else {
-        throw HttpException('❌ Error. \nStatusCode: ' +
+        throw HttpException('❌ Lỗi.\nStatusCode: ' +
             response.statusCode.toString() +
             "\nMessage: " +
             (json.decode(utf8.decode(responseBodyBytes))['message'] ?? ""));
