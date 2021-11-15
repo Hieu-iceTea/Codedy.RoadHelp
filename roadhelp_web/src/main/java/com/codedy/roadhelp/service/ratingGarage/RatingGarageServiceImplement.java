@@ -6,6 +6,7 @@ import com.codedy.roadhelp.model.RatingGarage;
 import com.codedy.roadhelp.repository.RatingGarageRepository;
 import com.codedy.roadhelp.service.base.BaseServiceImplement;
 import com.codedy.roadhelp.service.garage.GarageService;
+import com.codedy.roadhelp.util.Common;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -54,7 +55,7 @@ public class RatingGarageServiceImplement extends BaseServiceImplement<RatingGar
         double rateAvg = ((double) totalRatePoint) / ratingGarages.size();
 
         Garage garage = garageService.findById(garageId);
-        garage.setRateAvg(rateAvg);
+        garage.setRateAvg(Common.round(rateAvg, 1)); //Làm tròn
 
         garageService.save(garage);
     }
