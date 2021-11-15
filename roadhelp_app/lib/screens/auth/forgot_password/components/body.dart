@@ -7,7 +7,6 @@ import 'package:roadhelp/providers/auth_provider.dart';
 import 'package:roadhelp/repositories/auth_repository.dart';
 import 'package:roadhelp/screens/auth/otp/otp_screen.dart';
 import 'package:roadhelp/screens/auth/reset_password/reset_password_screen.dart';
-import 'package:roadhelp/screens/auth/verify_otp_password/verify_otp_password_screen.dart';
 
 import '/components/custom_surfix_icon.dart';
 import '/components/default_button.dart';

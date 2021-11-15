@@ -82,7 +82,6 @@ final Map<String, WidgetBuilder> routes = {
   UserRequestBecomePartnerScreen.routeName: (context) => const UserRequestBecomePartnerScreen(),
   UserDetailsScreen.routeName: (context) => const UserDetailsScreen(),
   NotificationScreen.routeName: (context) => const NotificationScreen(),
-  VerifyOtpPasswordScreen.routeName: (context) => VerifyOtpPasswordScreen(),
   ResetPasswordScreen.routeName: (context) => ResetPasswordScreen(),
   ResetPasswordSuccess.routeName: (context) => const ResetPasswordSuccess(),
 };
