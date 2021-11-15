@@ -178,7 +178,7 @@ public class GarageRestController {
 
     // Member viết đánh giá garage -
     @PostMapping(path = {"/{garageId}/ratingGarage", "/{garageId}/ratingGarage/"})
-    public LinkedHashMap<String, Object> reviewGarage(@RequestBody RatingGarage ratingGarage, @PathVariable int garageId) {
+    public LinkedHashMap<String, Object> createRatingGarage(@RequestBody RatingGarage ratingGarage, @PathVariable int garageId) {
         ratingGarage.setId(0);
 
         Garage garage = garageService.findById(garageId);

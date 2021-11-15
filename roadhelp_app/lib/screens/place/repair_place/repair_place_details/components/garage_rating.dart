@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:roadhelp/components/rounded_icon_btn.dart';
+import 'package:roadhelp/config/constants.dart';
 import 'package:roadhelp/config/size_config.dart';
 import 'package:roadhelp/helper/util.dart';
 import 'package:roadhelp/models/garage.dart';
 import 'package:roadhelp/models/rating_garage.dart';
+import 'package:roadhelp/providers/garage_provider.dart';
 import 'package:roadhelp/repositories/rating_garage_repository.dart';
+import 'package:roadhelp/screens/emergency_rescue/issue_details/components/rating_form.dart';
 
 class GarageRating extends StatelessWidget {
   const GarageRating({
@@ -29,8 +33,7 @@ class GarageRating extends StatelessWidget {
               Padding(
                 padding: EdgeInsets.symmetric(
                     horizontal: getProportionateScreenWidth(20)),
-                child: (garage.ratingGarages != null &&
-                        garage.ratingGarages!.isNotEmpty)
+                child: (garage.ratingGarages.isNotEmpty)
                     ? Text(
                         "Đánh giá (" + snapshot.data!.length.toString() + ")",
                         style: Theme.of(context).textTheme.headline6,
@@ -72,7 +75,17 @@ class GarageRating extends StatelessWidget {
                   : const Padding(
                       padding: EdgeInsets.only(top: 10),
                       child: Text("Chưa có đánh giá nào về gara này."),
-                    )
+                    ),
+              TextButton.icon(
+                style: TextButton.styleFrom(
+                  primary: kPrimaryColor,
+                ),
+                icon: const Icon(
+                  Icons.create,
+                ),
+                label: const Text('Viết đánh giá'),
+                onPressed: () => _showMyDialog(context),
+              ),
             ],
           );
         } else if (snapshot.hasError) {
@@ -99,5 +112,47 @@ class GarageRating extends StatelessWidget {
     result += " (" + rate.toString() + ")";
 
     return result;
+  }
+
+  Future<void> _showMyDialog(context) async {
+    return showDialog<void>(
+      context: context,
+      //barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text(
+            'Viết đánh giá của bạn',
+            textAlign: TextAlign.center,
+          ),
+          titleTextStyle: const TextStyle(
+            fontSize: 16.0,
+            color: Colors.black,
+            fontWeight: FontWeight.w800,
+          ),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(8.0),
+          ),
+          content: RatingForm(
+            onSubmit: (ratePoint, comment) async {
+              try {
+                RatingGarage ratingGarage = RatingGarage();
+                ratingGarage.ratePoint = ratePoint.toInt();
+                ratingGarage.comment = comment;
+                //ratingGarage.garage = garage;
+
+                await Provider.of<GarageProvider>(context, listen: false)
+                    .createRatingGarage(
+                  ratingGarage: ratingGarage,
+                  garageId: garage.id!,
+                );
+              } catch (error) {
+                await Util.showDialogNotification(
+                    context: context, content: error.toString());
+              }
+            },
+          ),
+        );
+      },
+    );
   }
 }

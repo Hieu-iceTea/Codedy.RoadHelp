@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/painting.dart';
 import 'package:roadhelp/components/rounded_icon_btn.dart';
+import 'package:roadhelp/helper/location_helper.dart';
 import 'package:roadhelp/helper/url_launcher_helper.dart';
 import 'package:roadhelp/helper/util.dart';
 import 'package:roadhelp/models/garage.dart';
@@ -12,6 +14,13 @@ class GarageItem extends StatelessWidget {
     required this.garage,
     Key? key,
   }) : super(key: key);
+
+  Future<double> _getDistanceInKilometers() async {
+    return LocationHelper.getDistanceInKilometers(
+      garage.latitude!,
+      garage.longitude!,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -37,8 +46,24 @@ class GarageItem extends StatelessWidget {
                     )
                   : const Text("No\nImage", textAlign: TextAlign.center),
             )),
-        title: Text(garage.name!),
-        subtitle: Text(garage.phone! + '\n' + garage.address!/* + '| 2 Km'*/),
+        title: Text(
+          garage.name!,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+        ),
+        subtitle: FutureBuilder<double>(
+          future: _getDistanceInKilometers(),
+          builder: (context, snapshot) => Text(
+            (snapshot.hasData
+                    ? '${snapshot.data!.toStringAsFixed(1)} Km | '
+                    : '') +
+                garage.phone! +
+                '\n' +
+                garage.address!,
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
+          ),
+        ),
         trailing: RoundedIconBtn(
           icon: Icons.directions,
           showShadow: true,

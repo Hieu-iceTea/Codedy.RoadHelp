@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:roadhelp/helper/location_helper.dart';
 import 'package:roadhelp/models/garage.dart';
 import 'package:roadhelp/models/garage_image.dart';
+import 'package:roadhelp/models/rating_garage.dart';
 import 'package:roadhelp/providers/auth_provider.dart';
 import 'package:roadhelp/repositories/garage_image_repository.dart';
 import 'package:roadhelp/repositories/garage_repository.dart';
@@ -16,7 +17,7 @@ class GarageProvider with ChangeNotifier {
   GarageProvider(this.authProvider, this._items);
 
   List<Garage> get items {
-    return [..._items];
+    return [..._items.reversed];
   }
 
   Future<List<Garage>> fetchAllData(
@@ -116,6 +117,25 @@ class GarageProvider with ChangeNotifier {
     } catch (error) {
       rethrow;
     }
+  }
+
+  Future<void> createRatingGarage(
+      {required RatingGarage ratingGarage, required int garageId}) async {
+    if (!authProvider!.authData.isAuth) {
+      throw Exception(
+          "Chưa đăng nhập, hoặc hết thời gian đăng nhập. Vui lòng đăng xuất & đăng nhập lại");
+    }
+
+    ratingGarage.userMember = authProvider!.authData.currentUser;
+
+    RatingGarage itemResponse = await GarageRepository.createRatingGarage(
+      ratingGarage: ratingGarage,
+      garageId: garageId,
+    );
+
+    final index = _items.indexWhere((element) => element.id == garageId);
+    _items[index].ratingGarages.add(itemResponse);
+    notifyListeners();
   }
 //#endregion
 }

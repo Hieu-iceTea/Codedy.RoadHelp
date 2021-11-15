@@ -62,7 +62,7 @@ class HttpHelper {
         },
         body: body,
       ).timeout(
-        const Duration(seconds: 10),
+        const Duration(seconds: 15),
         onTimeout: () {
           // Time has run out, do what you wanted to do.
           throw TimeoutException(
@@ -97,7 +97,7 @@ class HttpHelper {
         },
         body: body,
       ).timeout(
-        const Duration(seconds: 10),
+        const Duration(seconds: 15),
         onTimeout: () {
           // Time has run out, do what you wanted to do.
           throw TimeoutException(
@@ -171,7 +171,7 @@ class HttpHelper {
         ..headers.addAll(_authHeader);
 
       var response = await request.send().timeout(
-        const Duration(seconds: 15),
+        const Duration(seconds: 20),
         onTimeout: () {
           // Time has run out, do what you wanted to do.
           throw TimeoutException(

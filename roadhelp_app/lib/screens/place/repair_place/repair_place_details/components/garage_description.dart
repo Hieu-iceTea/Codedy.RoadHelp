@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:roadhelp/config/constants.dart';
 import 'package:roadhelp/config/size_config.dart';
+import 'package:roadhelp/helper/util.dart';
 import 'package:roadhelp/models/garage.dart';
 
 class GarageDescription extends StatelessWidget {
@@ -33,8 +34,7 @@ class GarageDescription extends StatelessWidget {
             padding: EdgeInsets.all(getProportionateScreenWidth(15)),
             width: getProportionateScreenWidth(64),
             decoration: BoxDecoration(
-              color:
-                  garage.featured ? Color(0xFFFFE6E6) : Color(0xFFF5F6F9),
+              color: garage.featured ? Color(0xFFFFE6E6) : Color(0xFFF5F6F9),
               borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(20),
                 bottomLeft: Radius.circular(20),
@@ -42,8 +42,7 @@ class GarageDescription extends StatelessWidget {
             ),
             child: SvgPicture.asset(
               "assets/icons/Heart Icon_2.svg",
-              color:
-                  garage.featured ? Color(0xFFFF4848) : Color(0xFFDBDEE4),
+              color: garage.featured ? Color(0xFFFF4848) : Color(0xFFDBDEE4),
               height: getProportionateScreenWidth(16),
             ),
           ),
@@ -80,6 +79,7 @@ class GarageDescription extends StatelessWidget {
           child: Text(
             garage.description!,
             maxLines: 3,
+            overflow: TextOverflow.ellipsis,
           ),
         ),
         Padding(
@@ -88,9 +88,15 @@ class GarageDescription extends StatelessWidget {
             vertical: 10,
           ),
           child: GestureDetector(
-            onTap: () {},
+            onTap: () async {
+              await Util.showDialogNotification(
+                context: context,
+                title: "Mô tả chi tiết",
+                content: garage.description,
+              );
+            },
             child: Row(
-              children: [
+              children: const [
                 Text(
                   "Xem thêm",
                   style: TextStyle(

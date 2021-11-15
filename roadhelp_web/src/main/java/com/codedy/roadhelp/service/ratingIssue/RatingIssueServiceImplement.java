@@ -47,7 +47,7 @@ public class RatingIssueServiceImplement extends BaseServiceImplement<RatingIssu
         double rateAvg = ((double) totalRatePoint) / ratingIssues.size();
 
         User user = userService.findById(userPartnerId);
-        user.setRateAvg(rateAvg);
+        user.setRateAvg(Common.round(rateAvg, 1)); //Làm tròn
 
         userService.save(user);
     }*/
