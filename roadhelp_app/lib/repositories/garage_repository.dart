@@ -1,4 +1,6 @@
 import 'package:roadhelp/models/garage.dart';
+import 'package:roadhelp/models/rating_garage.dart';
+import 'package:roadhelp/repositories/rating_garage_repository.dart';
 
 import '/config/constants.dart';
 import '/helper/http_helper.dart';
@@ -103,6 +105,18 @@ class GarageRepository {
     );
 
     return Garage.fromJsonToList(responseBody);
+  }
+
+  static Future<RatingGarage> createRatingGarage(
+      {required RatingGarage ratingGarage, required int garageId}) async {
+    var responseBody = await HttpHelper.post(
+      url: _url + garageId.toString() + "/ratingGarage",
+      body: ratingGarage.toJson(),
+    );
+
+    // Reload item //TODO: Kiểm tra lại xem có cần reload không
+    return RatingGarageRepository.findById(RatingGarage.fromJson(responseBody).id!);
+    //return RatingGarage.fromJson(responseBody);
   }
 //#endregion
 }

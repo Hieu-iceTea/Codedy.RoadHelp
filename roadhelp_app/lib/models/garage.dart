@@ -30,7 +30,7 @@ class Garage extends BaseModel {
   //Relationship
   User? userPartner;
   List<GarageImage> garageImages;
-  List<RatingGarage>? ratingGarages;
+  List<RatingGarage> ratingGarages;
   Province? province;
   District? district;
   Ward? ward;
@@ -53,7 +53,7 @@ class Garage extends BaseModel {
     //Relationship:
     this.userPartner,
     this.garageImages = const [],
-    this.ratingGarages,
+    this.ratingGarages = const [],
     this.province,
     this.district,
     this.ward,
