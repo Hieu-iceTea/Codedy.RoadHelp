@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:roadhelp/models/auth.dart';
 import 'package:roadhelp/models/user.dart';
 
@@ -69,5 +71,37 @@ class AuthRepository {
 
     return responseBody.map<User>((element) => User.fromJson(element)).toList();
   }
+
 //#endregion
+  static Future<Auth> resetPassword({String? email}) async {
+    var responseBody = await HttpHelper.post(
+      url: _url + "reset-password?&email=$email",
+    );
+
+    return Auth.fromJson(responseBody);
+  }
+
+  static Future<Auth> resetPasswordVerification(
+      String email, String resetPasswordCode) async {
+    var responseBody = await HttpHelper.post(
+      url: _url +
+          "reset-password/" +
+          email.toString() +
+          "/verification/" +
+          resetPasswordCode,
+      //body: null,
+    );
+
+    return Auth.fromJson(responseBody);
+  }
+
+  static Future<User> confirmResetPassword(
+      String email, String password) async {
+    var requestBody = new Map();
+    requestBody['password'] = password;
+    String jsonConvert = jsonEncode(requestBody);
+    var responseBody = await HttpHelper.put(
+        url: _url + "confirm-reset-password/" + email, body: jsonConvert);
+    return User.fromJson(responseBody);
+  }
 }

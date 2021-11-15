@@ -16,7 +16,6 @@ class EditMyAccount extends StatelessWidget {
         title: Text("Edit my account"),
       ),
       body: Body(),
-      bottomNavigationBar: CustomBottomNavBar(selectedMenu: MenuState.profile),
     );
   }
 }
