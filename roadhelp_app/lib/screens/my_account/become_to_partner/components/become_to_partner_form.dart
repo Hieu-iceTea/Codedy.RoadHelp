@@ -39,6 +39,8 @@ class _BeComeToPartnerFormState extends State<BeComeToPartnerForm> {
     super.initState();
   }
 
+  bool isLoadingSubmit = false;
+
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -51,10 +53,24 @@ class _BeComeToPartnerFormState extends State<BeComeToPartnerForm> {
           SizedBox(height: getProportionateScreenHeight(30)),
           buildEmailFormField(),
           SizedBox(height: getProportionateScreenHeight(40)),
-          DefaultButton(
-            text: "Tiếp tục",
-            press: _submitForm,
-          ),
+          !isLoadingSubmit
+              ? DefaultButton(
+                  text: "Tiếp tục",
+                  press: _submitForm,
+                )
+              : Container(
+                  width: double.infinity,
+                  height: getProportionateScreenHeight(56),
+                  decoration: ShapeDecoration(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    color: kPrimaryColor,
+                  ),
+                  child: const Center(
+                    child: CircularProgressIndicator(color: Colors.white),
+                  ),
+                ),
         ],
       ),
     );
@@ -145,9 +161,17 @@ class _BeComeToPartnerFormState extends State<BeComeToPartnerForm> {
     KeyboardUtil.hideKeyboard(context);
 
     try {
+      setState(() {
+        isLoadingSubmit = true;
+      });
+
       Auth authResponse =
           await Provider.of<AuthProvider>(context, listen: false)
               .becomeToPartner();
+
+      setState(() {
+        isLoadingSubmit = false;
+      });
 
       /*await Util.showDialogNotification(
           context: context, title: "Thông báo", content: authResponse.message);*/
