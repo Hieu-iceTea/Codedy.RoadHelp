@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:http/http.dart' as http;
 import 'package:location/location.dart';
@@ -48,7 +49,8 @@ class LocationHelper {
     if (_permissionGranted == PermissionStatus.denied) {
       _permissionGranted = await location.requestPermission();
       if (_permissionGranted != PermissionStatus.granted) {
-        throw Exception("Không có quyền truy cập vị trí thiết bị. Hãy cho phép truy cập vị trí và thử lại");
+        throw Exception(
+            "Không có quyền truy cập vị trí thiết bị. Hãy cho phép truy cập vị trí và thử lại");
       }
     }
 
@@ -56,7 +58,8 @@ class LocationHelper {
       _locationData = await location.getLocation().timeout(
         const Duration(seconds: 10),
         onTimeout: () {
-          throw TimeoutException('Hết thời gian chờ định vị vị trí phản hồi, Hãy di chuyển tới vị trí thông thoáng hơn để bắt sóng GPS tốt hơn.');
+          throw TimeoutException(
+              'Hết thời gian chờ định vị vị trí phản hồi, Hãy di chuyển tới vị trí thông thoáng hơn để bắt sóng GPS tốt hơn.');
         },
       );
     } catch (error) {
@@ -91,5 +94,19 @@ class LocationHelper {
     var extractedLocationData =
         json.decode(sharedPreferences.getString(_locationDataKey)!);
     return LatLng.fromJson(extractedLocationData)!;
+  }
+
+  static Future<double> getDistanceInKilometers(
+      double startLatitude, double startLongitude) async {
+    var _currentLocation = await LocationHelper.getCurrentLocationCache();
+
+    var _distanceInMeters = Geolocator.distanceBetween(
+      startLatitude,
+      startLongitude,
+      _currentLocation.latitude,
+      _currentLocation.longitude,
+    );
+
+    return _distanceInMeters / 1000;
   }
 }
