@@ -270,7 +270,7 @@ INSERT INTO garage (id,user_partner_id,district_id,province_id,ward_id,name,rate
 VALUE (7,4,32,2, 476,'Sửa xe Hoa Hoa', 4.6,21.008706, 105.845481, 'Ven Hồ Ba Mẫu', 'chuyên sửa xe', '0871 6633 11', TRUE,0);
 
 INSERT INTO garage (id,user_partner_id,district_id,province_id,ward_id,name,rate_avg,latitude, longitude, address, description, phone, active,is_featured)
-VALUE (8,5,32,2, 476,'Garage Hoa Hồng', 4.7,21.009637, 105.845857, 'Ven Hồ Ba Mẫu', 'chuyên sửa xe', '0871 6633 33', TRUE,1);
+VALUE (8,5,32,2, 476,'Garage Hoa Hồng', 4.7,21.009637, 105.845857, 'Ven Hồ Ba Mẫu', 'chuyên sửa xe', '0871 6633 33', TRUE,0);
 
 INSERT INTO garage (id,user_partner_id,district_id,province_id,ward_id,name,rate_avg,latitude, longitude, address, description, phone, active,is_featured)
 VALUE (9,4,32,2, 476,'Garage Hoa Hồng 2', 4.8,21.011054, 105.846041, 'Ven Hồ Ba Mẫu', 'chuyên sửa xe', '0872 6633 44', TRUE,0);
