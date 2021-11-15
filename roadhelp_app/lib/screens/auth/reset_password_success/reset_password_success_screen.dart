@@ -46,7 +46,7 @@ class _ResetPasswordSuccessState extends State<ResetPasswordSuccess> {
             ),
             Spacer(),
             SizedBox(
-              width: SizeConfig.screenWidth * 0.6,
+              width: SizeConfig.screenWidth * 0.8,
               child: DefaultButton(
                 text: "Quay lại trang đăng nhập",
                 press: () {

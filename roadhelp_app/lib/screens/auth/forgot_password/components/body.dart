@@ -139,12 +139,23 @@ class _ForgotPassFormState extends State<ForgotPassForm> {
     try {
       await Provider.of<AuthProvider>(context, listen: false)
           .resetPassword(email: email);
-      Navigator.pushNamed(context, VerifyOtpPasswordScreen.routeName,
-      arguments: VerityOtpArguments(
-        to: email!,
-        onSubmit: _submitVerificationResetPasswordCode,
-        onResend: () {},
-      ));
+
+      // Navigator.pushNamed(context, VerifyOtpPasswordScreen.routeName,
+      // arguments: VerityOtpArguments(
+      //   to: email!,
+      //   onSubmit: _submitVerificationResetPasswordCode,
+      //   onResend: () {},
+      // ));
+
+      Navigator.pushNamed(
+        context,
+        OtpScreen.routeName,
+        arguments: OtpArguments(
+          to: email!,
+          onSubmit: _submitVerificationResetPasswordCode,
+          onResend: () {},
+        ),
+      );
     } catch (error) {
       await Util.showDialogNotification(
           context: context, content: error.toString());
@@ -155,11 +166,10 @@ class _ForgotPassFormState extends State<ForgotPassForm> {
       String resetPasswordCode) async {
     try {
       await Provider.of<AuthProvider>(context, listen: false)
-          .resetPasswordVerification(email! ,resetPasswordCode);
+          .resetPasswordVerification(email!, resetPasswordCode);
 
-      Navigator.of(context).push(MaterialPageRoute(
-        builder: (context) => ResetPasswordScreen(),
-      ));
+      Navigator.pushNamed(context, ResetPasswordScreen.routeName,
+          arguments: ResetPasswordArgument(emailTo: email!));
     } catch (error) {
       await Util.showDialogNotification(
           context: context, content: error.toString());
