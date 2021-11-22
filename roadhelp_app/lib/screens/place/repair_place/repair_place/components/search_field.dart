@@ -51,7 +51,8 @@ class _SearchFieldState extends State<SearchField> {
       ),
       child: TextField(
         //controller: new TextEditingController(text: 'Initial value'),
-        controller: TextEditingController()..text = widget.initialKeyword ?? "",
+        controller: TextEditingController()
+          ..text = widget.initialKeyword ?? keyword ?? "",
         onChanged: (value) => keyword = value,
         onEditingComplete: () => _submitForm(),
         decoration: InputDecoration(
