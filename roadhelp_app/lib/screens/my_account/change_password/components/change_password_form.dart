@@ -119,7 +119,7 @@ class _SignUpFormState extends State<ChangePasswordForm> {
       onChanged: (value) {
         if (value.isNotEmpty) {
           removeError(error: kPassNewNullError);
-        } else if (value.length >= 8) {
+        } else if (value.length >= 6) {
           removeError(error: kShortPassError);
         } else if (value != oldPassword) {
           removeError(error: kPassNewEqualOldError);
@@ -131,7 +131,7 @@ class _SignUpFormState extends State<ChangePasswordForm> {
         if (value!.isEmpty) {
           addError(error: kPassNewNullError);
           return "";
-        } else if (value.length < 8) {
+        } else if (value.length < 6) {
           addError(error: kShortPassError);
           return "";
         } else if (value == oldPassword) {
@@ -159,7 +159,7 @@ class _SignUpFormState extends State<ChangePasswordForm> {
       onChanged: (value) {
         if (value.isNotEmpty) {
           removeError(error: kPassOldNullError);
-        } else if (value.trim().length >= 8) {
+        } else if (value.trim().length >= 6) {
           removeError(error: kShortPassError);
         }
 
@@ -169,7 +169,7 @@ class _SignUpFormState extends State<ChangePasswordForm> {
         if (value!.isEmpty) {
           addError(error: kPassOldNullError);
           return "";
-        } else if (value.trim().length < 8) {
+        } else if (value.trim().length < 6) {
           addError(error: kShortPassError);
           return "";
         }

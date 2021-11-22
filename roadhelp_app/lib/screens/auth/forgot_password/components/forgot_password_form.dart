@@ -23,6 +23,7 @@ class _ForgotPasswordFormState extends State<ForgotPasswordForm> {
   final _formKey = GlobalKey<FormState>();
   List<String?> errors = [];
   String? email;
+  bool isLoadingSubmit = false;
 
   void addError({String? error}) {
     if (!errors.contains(error))
@@ -37,7 +38,6 @@ class _ForgotPasswordFormState extends State<ForgotPasswordForm> {
         errors.remove(error);
       });
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -78,14 +78,36 @@ class _ForgotPasswordFormState extends State<ForgotPasswordForm> {
           ),
           FormError(errors: errors),
           SizedBox(height: SizeConfig.screenHeight * 0.1),
-          DefaultButton(
-            text: "Gửi OTP",
-            press: () {
-              if (_formKey.currentState!.validate()) {
-                _submitForm();
-              }
-            },
-          ),
+          // DefaultButton(
+          //   text: "Gửi OTP",
+          //   press: () {
+          //     if (_formKey.currentState!.validate()) {
+          //       _submitForm();
+          //     }
+          //   },
+          // ),
+          !isLoadingSubmit
+              ? DefaultButton(
+                  text: "Gửi OTP",
+                  press: () {
+                    if (_formKey.currentState!.validate()) {
+                      _submitForm();
+                    }
+                  },
+                )
+              : Container(
+                  width: double.infinity,
+                  height: getProportionateScreenHeight(56),
+                  decoration: ShapeDecoration(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    color: kPrimaryColor,
+                  ),
+                  child: const Center(
+                    child: CircularProgressIndicator(color: Colors.white),
+                  ),
+                ),
           SizedBox(height: SizeConfig.screenHeight * 0.1),
           NoAccountText(),
         ],
@@ -102,15 +124,16 @@ class _ForgotPasswordFormState extends State<ForgotPasswordForm> {
     KeyboardUtil.hideKeyboard(context);
 
     try {
+      setState(() {
+        isLoadingSubmit = true;
+      });
+
       await Provider.of<AuthProvider>(context, listen: false)
           .resetPassword(email: email);
 
-      // Navigator.pushNamed(context, VerifyOtpPasswordScreen.routeName,
-      // arguments: VerityOtpArguments(
-      //   to: email!,
-      //   onSubmit: _submitVerificationResetPasswordCode,
-      //   onResend: () {},
-      // ));
+      setState(() {
+        isLoadingSubmit = false;
+      });
 
       Navigator.pushNamed(
         context,
