@@ -1,16 +1,16 @@
 <p align="center">
-    <a href="http://ars.codedy.epizy.com" target="_blank">
+    <a href="https://github.com/Hieu-iceTea/Codedy.RoadHelp" target="_blank">
         <img src="_Docs/Image/ic_roadhelp.png" height="100px">
     </a>
     <h1 align="center">Codedy.RoadHelp</h1>
     <h3 align="center">Cứu hộ xe & Trợ giúp đi đường</h3>
     <br>
     <p align="center">
-        <a href="https://github.com/Hieu-iceTea/Codedy.RoadHelp"><img src="https://cdn.iconscout.com/icon/free/png-512/github-153-675523.png" height="25px"></a>
+        <a href="https://github.com/Hieu-iceTea/Codedy.RoadHelp" target="_blank"><img src="https://cdn.iconscout.com/icon/free/png-512/github-153-675523.png" height="25px"></a>
     &nbsp;
-        <a href="https://www.google.com/search?q=Codedy+hieu+icetea"><img src="https://lapcamerataihaiphong.com/wp-content/uploads/2018/02/website.png" height="25px"></a>
+        <a href="https://www.google.com/search?q=Codedy+hieu+icetea" target="_blank"><img src="https://lapcamerataihaiphong.com/wp-content/uploads/2018/02/website.png" height="25px"></a>
     &nbsp;
-        <a href="http://fb.com"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Facebook_Logo_%282019%29.png/480px-Facebook_Logo_%282019%29.png" height="25px"></a>
+        <a href="http://fb.com" target="_blank"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Facebook_Logo_%282019%29.png/480px-Facebook_Logo_%282019%29.png" height="25px"></a>
     </p>
 </p>
 
@@ -87,3 +87,7 @@ All the screenshot at the link: <b> [_Docs/Image/RoadHelp_Screenshot](https://gi
 <> Web Deployed: [http://codedy-dev.github.io](http://codedy-dev.github.io)
 
 <> Link GitHub: [github.com/Hieu-iceTea/Codedy.RoadHelp](http://github.com/Hieu-iceTea/Codedy.RoadHelp)
+
+## Time line
+    Start Project: 23-09-2021 12:00
+    Final Project: 23-11-2021 10:00
