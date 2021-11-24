@@ -4,9 +4,8 @@ import 'size_config.dart';
 
 //Localhost IOS emulator 127.0.0.1 or localhost
 //Localhost Android emulator: 10.0.2.2
-//Localhost on real driver means different
-//Wifi Hieu iceTea: 192.168.1.102
-const String baseApiUrl = "http://192.168.1.106:8080/";
+//Localhost on real driver means different. Eg, Wifi Hieu_iceTea: 192.168.1.102
+const String baseApiUrl = "http://192.168.1.102:8080/";
 
 const kPrimaryColor = Color(0xFFFF7643);
 const kPrimaryLightColor = Color(0xFFFFECDF);
